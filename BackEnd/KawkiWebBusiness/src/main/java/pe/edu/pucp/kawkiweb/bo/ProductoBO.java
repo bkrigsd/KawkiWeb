@@ -2,15 +2,15 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.dao.ProductoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.ProductoDAOImpl;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
+import pe.edu.pucp.kawkiweb.dao.ProductosDAO;
 
 public class ProductoBO {
 
-    private ProductoDAO productoDAO;
+    private ProductosDAO productoDAO;
 
     public ProductoBO() {
         this.productoDAO = new ProductoDAOImpl();

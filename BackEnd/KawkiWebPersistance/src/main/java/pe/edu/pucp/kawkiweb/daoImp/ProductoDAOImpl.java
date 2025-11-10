@@ -5,29 +5,29 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import pe.edu.pucp.kawkiweb.dao.CategoriaDAO;
-import pe.edu.pucp.kawkiweb.dao.EstiloDAO;
-import pe.edu.pucp.kawkiweb.dao.ProductoDAO;
-import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
+import pe.edu.pucp.kawkiweb.dao.CategoriasDAO;
+import pe.edu.pucp.kawkiweb.dao.EstilosDAO;
+import pe.edu.pucp.kawkiweb.dao.ProductosDAO;
+import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
 
-public class ProductoDAOImpl extends BaseDAOImpl implements ProductoDAO {
+public class ProductoDAOImpl extends BaseDAOImpl implements ProductosDAO {
 
     private ProductosDTO producto;
-    private CategoriaDAO categoriaDAO;
-    private EstiloDAO estiloDAO;
-    private ProductoVarianteDAO productoVarianteDAO;
+    private CategoriasDAO categoriaDAO;
+    private EstilosDAO estiloDAO;
+    private ProductosVariantesDAO productoVarianteDAO;
 
     public ProductoDAOImpl() {
         super("PRODUCTOS");
         this.producto = null;
         this.retornarLlavePrimaria = true;
-        this.categoriaDAO = new CategoriaDAOImpl();
-        this.estiloDAO = new EstiloDAOImpl();
+        this.categoriaDAO = new CategoriasDAOImpl();
+        this.estiloDAO = new EstilosDAOImpl();
         this.productoVarianteDAO = new ProductoVarianteDAOImpl();
     }
 

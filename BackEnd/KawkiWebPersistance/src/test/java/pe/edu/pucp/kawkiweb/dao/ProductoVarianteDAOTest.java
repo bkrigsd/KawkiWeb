@@ -10,30 +10,30 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
-import pe.edu.pucp.kawkiweb.daoImp.ColorDAOImpl;
+import pe.edu.pucp.kawkiweb.daoImp.ColoresDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.ProductoDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.ProductoVarianteDAOImpl;
-import pe.edu.pucp.kawkiweb.daoImp.TallaDAOImpl;
-import pe.edu.pucp.kawkiweb.daoImp.TipoBeneficioDAOImpl;
+import pe.edu.pucp.kawkiweb.daoImp.TallasDAOImpl;
+import pe.edu.pucp.kawkiweb.daoImp.TiposBeneficioDAOImpl;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 
 public class ProductoVarianteDAOTest {
 
-    private ProductoVarianteDAO prodVarianteDAO;
-    private ProductoDAO productoDAO;
-    private ColorDAO colorDAO;
-    private TallaDAO tallaDAO;
-    private TipoBeneficioDAO tipoBeneficioDAO;
+    private ProductosVariantesDAO prodVarianteDAO;
+    private ProductosDAO productoDAO;
+    private ColoresDAO colorDAO;
+    private TallasDAO tallaDAO;
+    private TiposBeneficioDAO tipoBeneficioDAO;
     private Integer productoBaseId;
 
     public ProductoVarianteDAOTest() {
         this.prodVarianteDAO = new ProductoVarianteDAOImpl();
         this.productoDAO = new ProductoDAOImpl();
-        this.colorDAO = new ColorDAOImpl();
-        this.tallaDAO = new TallaDAOImpl();
-        this.tipoBeneficioDAO = new TipoBeneficioDAOImpl();
+        this.colorDAO = new ColoresDAOImpl();
+        this.tallaDAO = new TallasDAOImpl();
+        this.tipoBeneficioDAO = new TiposBeneficioDAOImpl();
     }
 
     @BeforeEach

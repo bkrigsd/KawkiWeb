@@ -5,26 +5,26 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import pe.edu.pucp.kawkiweb.dao.PromocionDAO;
-import pe.edu.pucp.kawkiweb.dao.TipoBeneficioDAO;
-import pe.edu.pucp.kawkiweb.dao.TipoCondicionDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
+import pe.edu.pucp.kawkiweb.dao.DescuentosDAO;
+import pe.edu.pucp.kawkiweb.dao.TiposBeneficioDAO;
+import pe.edu.pucp.kawkiweb.dao.TiposCondicionDAO;
 
-public class PromocionDAOImpl extends BaseDAOImpl implements PromocionDAO {
+public class PromocionDAOImpl extends BaseDAOImpl implements DescuentosDAO {
 
     private DescuentosDTO promocion;
-    private TipoBeneficioDAO tipoBeneficioDAO;
-    private TipoCondicionDAO tipoCondicionDAO;
+    private TiposBeneficioDAO tipoBeneficioDAO;
+    private TiposCondicionDAO tipoCondicionDAO;
 
     public PromocionDAOImpl() {
         super("PROMOCIONES");
         this.promocion = null;
         this.retornarLlavePrimaria = true;
-        this.tipoBeneficioDAO = new TipoBeneficioDAOImpl();
-        this.tipoCondicionDAO = new TipoCondicionDAOImpl();
+        this.tipoBeneficioDAO = new TiposBeneficioDAOImpl();
+        this.tipoCondicionDAO = new TiposCondicionDAOImpl();
     }
 
     @Override

@@ -3,25 +3,25 @@ package pe.edu.pucp.kawkiweb.daoImp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import pe.edu.pucp.kawkiweb.dao.MovimientoInventarioDAO;
-import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
-import pe.edu.pucp.kawkiweb.dao.TipoMovimientoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.MovimientosInventarioDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
+import pe.edu.pucp.kawkiweb.dao.MovimientosInventarioDAO;
+import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
+import pe.edu.pucp.kawkiweb.dao.TiposMovimientoDAO;
 
-public class MovimientoInventarioDAOImpl extends BaseDAOImpl implements MovimientoInventarioDAO {
+public class MovimientoInventarioDAOImpl extends BaseDAOImpl implements MovimientosInventarioDAO {
 
     private MovimientosInventarioDTO movInventario;
-    private TipoMovimientoDAO tipoMovimientoDAO;
-    private ProductoVarianteDAO productoVarianteDAO;
+    private TiposMovimientoDAO tipoMovimientoDAO;
+    private ProductosVariantesDAO productoVarianteDAO;
 
     public MovimientoInventarioDAOImpl() {
         super("MOVIMIENTOS_INVENTARIO");
         this.movInventario = null;
         this.retornarLlavePrimaria = true;
-        this.tipoMovimientoDAO = new TipoMovimientoDAOImpl();
+        this.tipoMovimientoDAO = new TiposMovimientoDAOImpl();
         this.productoVarianteDAO = new ProductoVarianteDAOImpl();
     }
 
@@ -104,7 +104,7 @@ public class MovimientoInventarioDAOImpl extends BaseDAOImpl implements Movimien
         this.movInventario.setFecha_hora_mov(this.resultSet.getTimestamp("FECHA_HORA_MOV").toLocalDateTime());
         this.movInventario.setObservacion(this.resultSet.getString("OBSERVACION"));
 
-        // Usar TipoMovimientoDAO para obtener el objeto completo
+        // Usar TiposMovimientoDAO para obtener el objeto completo
         Integer tipoMovimientoId = this.resultSet.getInt("TIPO_MOVIMIENTO_ID");
         TiposMovimientoDTO tipoMovimiento = this.tipoMovimientoDAO.obtenerPorId(tipoMovimientoId);
         this.movInventario.setTipo_movimiento(tipoMovimiento);

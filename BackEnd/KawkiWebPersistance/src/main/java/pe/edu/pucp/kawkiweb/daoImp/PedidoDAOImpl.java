@@ -3,25 +3,25 @@ package pe.edu.pucp.kawkiweb.daoImp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import pe.edu.pucp.kawkiweb.dao.DetallePedidoDAO;
 import pe.edu.pucp.kawkiweb.dao.EstadoPedidoDAO;
-import pe.edu.pucp.kawkiweb.dao.PedidoDAO;
-import pe.edu.pucp.kawkiweb.dao.PromocionDAO;
-import pe.edu.pucp.kawkiweb.dao.UsuarioDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 import pe.edu.pucp.kawkiweb.model.utilPedido.EstadoPedidoDTO;
 import pe.edu.pucp.kawkiweb.model.VentasDTO;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+import pe.edu.pucp.kawkiweb.dao.VentaDAO;
+import pe.edu.pucp.kawkiweb.dao.DescuentosDAO;
+import pe.edu.pucp.kawkiweb.dao.DetalleVentasDAO;
+import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
 
-public class PedidoDAOImpl extends BaseDAOImpl implements PedidoDAO {
+public class PedidoDAOImpl extends BaseDAOImpl implements VentaDAO {
 
     private VentasDTO pedido;
-    private UsuarioDAO usuarioDAO;
-    private PromocionDAO promocionDAO;
+    private UsuariosDAO usuarioDAO;
+    private DescuentosDAO promocionDAO;
     private EstadoPedidoDAO estadoPedidoDAO;
-    private DetallePedidoDAO detallePedidoDAO;
+    private DetalleVentasDAO detallePedidoDAO;
 
     public PedidoDAOImpl() {
         super("PEDIDOS");
@@ -126,7 +126,7 @@ public class PedidoDAOImpl extends BaseDAOImpl implements PedidoDAO {
         }
 
         // Cargar automáticamente los detalles del pedido
-        ArrayList<DetalleVentasDTO> detalles = this.detallePedidoDAO.listarPorPedidoId(
+        ArrayList<DetalleVentasDTO> detalles = this.detallePedidoDAO.listarPorVentaId(
                 this.pedido.getPedido_id()
         );
         this.pedido.setDetalles(detalles);

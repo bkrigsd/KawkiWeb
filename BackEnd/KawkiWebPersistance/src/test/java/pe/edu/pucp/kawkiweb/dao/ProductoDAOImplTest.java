@@ -13,7 +13,7 @@ import pe.edu.pucp.kawkiweb.daoImp.ProductoDAOImpl;
 
 public class ProductoDAOImplTest {
 
-    private ProductoDAO productoDAO;
+    private ProductosDAO productoDAO;
 
     public ProductoDAOImplTest() {
         this.productoDAO = new ProductoDAOImpl();

@@ -6,13 +6,13 @@ import java.util.List;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
-import pe.edu.pucp.kawkiweb.dao.DetallePedidoDAO;
-import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
+import pe.edu.pucp.kawkiweb.dao.DetalleVentasDAO;
+import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
 
-public class Detalle_PedidoDAOImpl extends BaseDAOImpl implements DetallePedidoDAO {
+public class Detalle_PedidoDAOImpl extends BaseDAOImpl implements DetalleVentasDAO {
 
     private DetalleVentasDTO detallepedido;
-    private ProductoVarianteDAO productoVarianteDAO;
+    private ProductosVariantesDAO productoVarianteDAO;
 
     public Detalle_PedidoDAOImpl() {
         super("DETALLE_PEDIDOS");
@@ -122,7 +122,7 @@ public class Detalle_PedidoDAOImpl extends BaseDAOImpl implements DetallePedidoD
     }
 
     @Override
-    public ArrayList<DetalleVentasDTO> listarPorPedidoId(Integer pedidoId) {
+    public ArrayList<DetalleVentasDTO> listarPorVentaId(Integer pedidoId) {
         String sql = "SELECT DETALLE_PEDIDO_ID, CANTIDAD, PRECIO_UNITARIO, "
                 + "SUBTOTAL, PEDIDO_ID, PROD_VARIANTE_ID "
                 + "FROM DETALLE_PEDIDOS "

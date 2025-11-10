@@ -3,22 +3,22 @@ package pe.edu.pucp.kawkiweb.daoImp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import pe.edu.pucp.kawkiweb.dao.TipoUsuarioDAO;
-import pe.edu.pucp.kawkiweb.dao.UsuarioDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+import pe.edu.pucp.kawkiweb.dao.TiposUsuarioDAO;
+import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
 
-public class UsuarioDAOImpl extends BaseDAOImpl implements UsuarioDAO {
+public class UsuarioDAOImpl extends BaseDAOImpl implements UsuariosDAO {
 
     private UsuariosDTO usuario;
-    private TipoUsuarioDAO tipoUsuarioDAO;
+    private TiposUsuarioDAO tipoUsuarioDAO;
 
     public UsuarioDAOImpl() {
         super("USUARIOS");
         this.usuario = null;
         this.retornarLlavePrimaria = true;
-        this.tipoUsuarioDAO = new TipoUsuarioDAOImpl();
+        this.tipoUsuarioDAO = new TiposUsuarioDAOImpl();
     }
 
     @Override
@@ -127,7 +127,7 @@ public class UsuarioDAOImpl extends BaseDAOImpl implements UsuarioDAO {
         this.usuario.setContrasenha(this.resultSet.getString("CONTRASENHA"));
         this.usuario.setFechaHoraCreacion(this.resultSet.getTimestamp("FECHA_HORA_CREACION").toLocalDateTime());
 
-        // Usar TipoUsuarioDAO para obtener el objeto completo
+        // Usar TiposUsuarioDAO para obtener el objeto completo
         Integer tipoUsuarioId = this.resultSet.getInt("TIPO_USUARIO_ID");
         TiposUsuarioDTO tipoUsuario = this.tipoUsuarioDAO.obtenerPorId(tipoUsuarioId);
         this.usuario.setTipoUsuario(tipoUsuario);

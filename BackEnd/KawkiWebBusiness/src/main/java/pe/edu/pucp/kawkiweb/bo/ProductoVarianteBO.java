@@ -2,8 +2,6 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.dao.ProductoDAO;
-import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
 import pe.edu.pucp.kawkiweb.daoImp.ProductoDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.ProductoVarianteDAOImpl;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
@@ -11,11 +9,13 @@ import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
+import pe.edu.pucp.kawkiweb.dao.ProductosDAO;
+import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
 
 public class ProductoVarianteBO {
 
-    private ProductoVarianteDAO prodVarianteDAO;
-    private ProductoDAO productoDAO;
+    private ProductosVariantesDAO prodVarianteDAO;
+    private ProductosDAO productoDAO;
 
     public ProductoVarianteBO() {
         this.prodVarianteDAO = new ProductoVarianteDAOImpl();

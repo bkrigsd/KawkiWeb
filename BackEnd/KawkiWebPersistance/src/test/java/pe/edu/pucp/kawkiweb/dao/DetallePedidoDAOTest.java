@@ -32,15 +32,15 @@ import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 
 public class DetallePedidoDAOTest {
 
-    private DetallePedidoDAO detalle_pedidoDAO;
-    private ProductoVarianteDAO prodVarDAO;
-    private ProductoDAO productoDAO;
-    private PedidoDAO pedidoDAO;
+    private DetalleVentasDAO detalle_pedidoDAO;
+    private ProductosVariantesDAO prodVarDAO;
+    private ProductosDAO productoDAO;
+    private VentaDAO pedidoDAO;
     private Integer prodVarBaseId;
     private Integer pedidoBaseId;
     private Integer productoBaseId;
-    private UsuarioDAO usuarioDAO;
-    private PromocionDAO promocionDAO;
+    private UsuariosDAO usuarioDAO;
+    private DescuentosDAO promocionDAO;
     private Integer usuarioBaseId;
     private Integer promocionBaseId;
 

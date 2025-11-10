@@ -7,19 +7,19 @@ import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
 import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
-import pe.edu.pucp.kawkiweb.dao.ComprobantePagoDAO;
-import pe.edu.pucp.kawkiweb.dao.TipoComprobanteDAO;
+import pe.edu.pucp.kawkiweb.dao.ComprobantesPagoDAO;
+import pe.edu.pucp.kawkiweb.dao.TiposComprobanteDAO;
 
-public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantePagoDAO {
+public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesPagoDAO {
 
     private ComprobantesPagoDTO comprobante;
-    private TipoComprobanteDAO tipoComprobanteDAO;
+    private TiposComprobanteDAO tipoComprobanteDAO;
 
     public ComprobantePagoDAOImpl() {
         super("COMPROBANTE_PAGOS");
         this.comprobante = null;
         this.retornarLlavePrimaria = true;
-        this.tipoComprobanteDAO = new TipoComprobanteDAOImpl();
+        this.tipoComprobanteDAO = new TiposComprobanteDAOImpl();
     }
 
     @Override
@@ -130,7 +130,7 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantePa
     }
 
     @Override
-    public ComprobantesPagoDTO obtenerPorPagoId(Integer pagoId) {
+    public ComprobantesPagoDTO obtenerPorVentaId(Integer pagoId) {
         String sql = "SELECT " + generarListaColumnas() + " FROM COMPROBANTE_PAGOS WHERE PAGO_ID = ?";
 
         Consumer<Integer> incluirParametros = (id) -> {

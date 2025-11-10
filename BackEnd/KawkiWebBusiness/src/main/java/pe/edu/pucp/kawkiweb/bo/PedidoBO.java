@@ -2,16 +2,16 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.dao.PedidoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.PedidoDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilPedido.EstadoPedidoDTO;
 import pe.edu.pucp.kawkiweb.model.VentasDTO;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+import pe.edu.pucp.kawkiweb.dao.VentaDAO;
 
 public class PedidoBO {
 
-    private PedidoDAO pedidoDAO;
+    private VentaDAO pedidoDAO;
 
     public PedidoBO() {
         this.pedidoDAO = new PedidoDAOImpl();

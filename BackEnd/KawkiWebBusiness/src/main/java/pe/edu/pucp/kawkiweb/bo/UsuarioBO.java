@@ -6,13 +6,13 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import pe.edu.pucp.kawkiweb.daoImp.UsuarioDAOImpl;
-import pe.edu.pucp.kawkiweb.dao.UsuarioDAO;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
 
 public class UsuarioBO {
 
-    private UsuarioDAO usuarioDAO;
+    private UsuariosDAO usuarioDAO;
 
     // Patrones de validación
     private static final Pattern EMAIL_PATTERN = Pattern.compile(

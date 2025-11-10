@@ -3,30 +3,30 @@ package pe.edu.pucp.kawkiweb.daoImp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import pe.edu.pucp.kawkiweb.dao.ColorDAO;
-import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
-import pe.edu.pucp.kawkiweb.dao.TallaDAO;
-import pe.edu.pucp.kawkiweb.dao.TipoBeneficioDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
+import pe.edu.pucp.kawkiweb.dao.ColoresDAO;
+import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
+import pe.edu.pucp.kawkiweb.dao.TallasDAO;
+import pe.edu.pucp.kawkiweb.dao.TiposBeneficioDAO;
 
-public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductoVarianteDAO {
+public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductosVariantesDAO {
 
     private ProductosVariantesDTO prodVariante;
-    private ColorDAO colorDAO;
-    private TallaDAO tallaDAO;
-    private TipoBeneficioDAO tipoBeneficioDAO;
+    private ColoresDAO colorDAO;
+    private TallasDAO tallaDAO;
+    private TiposBeneficioDAO tipoBeneficioDAO;
 
     public ProductoVarianteDAOImpl() {
         super("PRODUCTOS_VARIANTES");
         this.prodVariante = null;
         this.retornarLlavePrimaria = true;
-        this.colorDAO = new ColorDAOImpl();
-        this.tallaDAO = new TallaDAOImpl();
-        this.tipoBeneficioDAO = new TipoBeneficioDAOImpl();
+        this.colorDAO = new ColoresDAOImpl();
+        this.tallaDAO = new TallasDAOImpl();
+        this.tipoBeneficioDAO = new TiposBeneficioDAOImpl();
     }
 
     @Override

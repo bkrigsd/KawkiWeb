@@ -1,14 +1,14 @@
 package pe.edu.pucp.kawkiweb.bo;
 
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.dao.DetallePedidoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.Detalle_PedidoDAOImpl;
 import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
+import pe.edu.pucp.kawkiweb.dao.DetalleVentasDAO;
 
 public class DetallePedidoBO {
 
-    private DetallePedidoDAO detallePedidoDAO;
+    private DetalleVentasDAO detallePedidoDAO;
 
     public DetallePedidoBO() {
         this.detallePedidoDAO = new Detalle_PedidoDAOImpl();
@@ -83,7 +83,7 @@ public class DetallePedidoBO {
             System.err.println("Error: ID de pedido inválido");
             return new ArrayList<>();
         }
-        return this.detallePedidoDAO.listarPorPedidoId(pedidoId);
+        return this.detallePedidoDAO.listarPorVentaId(pedidoId);
     }
 
     /**

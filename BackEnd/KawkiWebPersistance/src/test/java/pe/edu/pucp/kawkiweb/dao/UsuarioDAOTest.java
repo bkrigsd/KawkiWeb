@@ -13,8 +13,8 @@ import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 
 public class UsuarioDAOTest {
 
-    private UsuarioDAO usuarioDAO;
-    private PedidoDAO pedidoDAO;
+    private UsuariosDAO usuarioDAO;
+    private VentaDAO pedidoDAO;
 
     public UsuarioDAOTest() {
         this.usuarioDAO = new UsuarioDAOImpl();

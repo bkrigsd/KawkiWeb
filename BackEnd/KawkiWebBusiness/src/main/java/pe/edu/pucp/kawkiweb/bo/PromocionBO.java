@@ -2,15 +2,15 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.dao.PromocionDAO;
 import pe.edu.pucp.kawkiweb.daoImp.PromocionDAOImpl;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
+import pe.edu.pucp.kawkiweb.dao.DescuentosDAO;
 
 public class PromocionBO {
 
-    private PromocionDAO promoDAO;
+    private DescuentosDAO promoDAO;
 
     public PromocionBO() {
         this.promoDAO = new PromocionDAOImpl();

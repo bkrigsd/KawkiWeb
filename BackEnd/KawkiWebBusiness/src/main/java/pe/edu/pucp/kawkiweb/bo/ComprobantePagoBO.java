@@ -2,14 +2,14 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.dao.ComprobantePagoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.ComprobantePagoDAOImpl;
 import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
 import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
+import pe.edu.pucp.kawkiweb.dao.ComprobantesPagoDAO;
 
 public class ComprobantePagoBO {
 
-    private ComprobantePagoDAO comprobanteDAO;
+    private ComprobantesPagoDAO comprobanteDAO;
 
     public ComprobantePagoBO() {
         this.comprobanteDAO = new ComprobantePagoDAOImpl();
