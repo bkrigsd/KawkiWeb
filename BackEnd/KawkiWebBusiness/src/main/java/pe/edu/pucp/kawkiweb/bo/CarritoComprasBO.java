@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.dao.CarritoComprasDAO;
 import pe.edu.pucp.kawkiweb.daoImp.CarritoComprasDAOImpl;
 import pe.edu.pucp.kawkiweb.model.CarritoComprasDTO;
-import pe.edu.pucp.kawkiweb.model.PromocionDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class CarritoComprasBO {
 
@@ -23,8 +23,8 @@ public class CarritoComprasBO {
      * @param promocion Promoción aplicada (puede ser null)
      * @return ID del carrito insertado o 0 si falla
      */
-    public Integer insertar(UsuarioDTO usuario, Double total, 
-            PromocionDTO promocion) {
+    public Integer insertar(UsuariosDTO usuario, Double total, 
+            DescuentosDTO promocion) {
 
         CarritoComprasDTO carritoDTO = new CarritoComprasDTO();
         carritoDTO.setUsuario(usuario);
@@ -65,8 +65,8 @@ public class CarritoComprasBO {
      * @param promocion Promoción aplicada (puede ser null)
      * @return Número de filas afectadas (1 si tuvo éxito, 0 si falló)
      */
-    public Integer modificar(Integer carritoId, UsuarioDTO usuario,
-            Double total, PromocionDTO promocion) {
+    public Integer modificar(Integer carritoId, UsuariosDTO usuario,
+            Double total, DescuentosDTO promocion) {
         if (carritoId == null || carritoId <= 0) {
             System.err.println("Error: ID de carrito inválido");
             return 0;

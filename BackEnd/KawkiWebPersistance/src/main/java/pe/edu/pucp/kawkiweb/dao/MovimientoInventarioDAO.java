@@ -2,19 +2,19 @@
 package pe.edu.pucp.kawkiweb.dao;
 
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.model.MovimientoInventarioDTO;
+import pe.edu.pucp.kawkiweb.model.MovimientosInventarioDTO;
 
 
 public interface MovimientoInventarioDAO {
     
-    public Integer insertar(MovimientoInventarioDTO movInventario);
+    public Integer insertar(MovimientosInventarioDTO movInventario);
     
-    public MovimientoInventarioDTO obtenerPorId(Integer movInventarioId);
+    public MovimientosInventarioDTO obtenerPorId(Integer movInventarioId);
     
-    public ArrayList<MovimientoInventarioDTO> listarTodos();
+    public ArrayList<MovimientosInventarioDTO> listarTodos();
     
-    public Integer modificar(MovimientoInventarioDTO movInventario);
+    public Integer modificar(MovimientosInventarioDTO movInventario);
     
-    public Integer eliminar(MovimientoInventarioDTO movInventario);
+    public Integer eliminar(MovimientosInventarioDTO movInventario);
     
 }

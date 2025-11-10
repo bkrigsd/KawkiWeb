@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.dao.PedidoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.PedidoDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilPedido.EstadoPedidoDTO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
-import pe.edu.pucp.kawkiweb.model.PromocionDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
+import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class PedidoBO {
 
@@ -28,12 +28,12 @@ public class PedidoBO {
      * @param promocion Promoción aplicada (puede ser null)
      * @return ID del pedido insertado o 0 si falla
      */
-    public Integer insertar(UsuarioDTO usuario,
+    public Integer insertar(UsuariosDTO usuario,
             LocalDateTime fechaHoraCreacion,
             LocalDateTime fechaHoraUltimoEstado,
             Double total,
             EstadoPedidoDTO estadoPedido,
-            PromocionDTO promocion) {
+            DescuentosDTO promocion) {
         if (usuario == null || usuario.getUsuarioId() == null) {
             System.err.println("Error: Usuario no puede ser nulo");
             return 0;
@@ -47,7 +47,7 @@ public class PedidoBO {
             return 0;
         }
 
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        VentasDTO pedidoDTO = new VentasDTO();
         pedidoDTO.setUsuario(usuario);
         pedidoDTO.setTotal(total);
         pedidoDTO.setFecha_hora_creacion(fechaHoraCreacion != null ? fechaHoraCreacion : LocalDateTime.now());
@@ -63,9 +63,9 @@ public class PedidoBO {
      * promoción)
      *
      * @param pedidoId ID del pedido
-     * @return PedidoDTO con toda la información o null si no existe
+     * @return VentasDTO con toda la información o null si no existe
      */
-    public PedidoDTO obtenerPorId(Integer pedidoId) {
+    public VentasDTO obtenerPorId(Integer pedidoId) {
         if (pedidoId == null || pedidoId <= 0) {
             System.err.println("Error: ID de pedido inválido");
             return null;
@@ -79,7 +79,7 @@ public class PedidoBO {
      *
      * @return Lista de todos los pedidos
      */
-    public ArrayList<PedidoDTO> listarTodos() {
+    public ArrayList<VentasDTO> listarTodos() {
         return this.pedidoDAO.listarTodos();
     }
 
@@ -95,12 +95,12 @@ public class PedidoBO {
      * @param promocion Promoción aplicada (puede ser null)
      * @return Número de filas afectadas (1 si tuvo éxito, 0 si falló)
      */
-    public Integer modificar(Integer pedidoId, UsuarioDTO usuario,
+    public Integer modificar(Integer pedidoId, UsuariosDTO usuario,
             LocalDateTime fechaHoraCreacion,
             LocalDateTime fechaHoraUltimoEstado,
             Double total,
             EstadoPedidoDTO estadoPedido,
-            PromocionDTO promocion) {
+            DescuentosDTO promocion) {
         if (pedidoId == null || pedidoId <= 0) {
             System.err.println("Error: ID de pedido inválido");
             return 0;
@@ -118,7 +118,7 @@ public class PedidoBO {
             return 0;
         }
 
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        VentasDTO pedidoDTO = new VentasDTO();
         pedidoDTO.setPedido_id(pedidoId);
         pedidoDTO.setUsuario(usuario);
         pedidoDTO.setTotal(total);
@@ -143,7 +143,7 @@ public class PedidoBO {
             return 0;
         }
 
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        VentasDTO pedidoDTO = new VentasDTO();
         pedidoDTO.setPedido_id(pedidoId);
         return this.pedidoDAO.eliminar(pedidoDTO);
     }

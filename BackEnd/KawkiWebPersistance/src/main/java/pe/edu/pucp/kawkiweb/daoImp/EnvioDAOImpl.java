@@ -12,7 +12,7 @@ import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.utilEnvio.CourierDTO;
 import pe.edu.pucp.kawkiweb.model.EnvioDTO;
 import pe.edu.pucp.kawkiweb.model.utilEnvio.EstadoEnvioDTO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
 
 public class EnvioDAOImpl extends BaseDAOImpl implements EnvioDAO {
 
@@ -71,7 +71,7 @@ public class EnvioDAOImpl extends BaseDAOImpl implements EnvioDAO {
             this.statement.setNull(5, java.sql.Types.DECIMAL);
         }
 
-        PedidoDTO pedido = this.envio.getPedido();
+        VentasDTO pedido = this.envio.getPedido();
         if (pedido != null) {
             this.statement.setInt(6, pedido.getPedido_id());
         } else {
@@ -120,7 +120,7 @@ public class EnvioDAOImpl extends BaseDAOImpl implements EnvioDAO {
             this.statement.setNull(5, java.sql.Types.DECIMAL);
         }
 
-        PedidoDTO pedido = this.envio.getPedido();
+        VentasDTO pedido = this.envio.getPedido();
         if (pedido != null) {
             this.statement.setInt(6, pedido.getPedido_id());
         } else {
@@ -179,7 +179,7 @@ public class EnvioDAOImpl extends BaseDAOImpl implements EnvioDAO {
         }
 
         Integer pedido_id = this.resultSet.getInt("PEDIDO_ID");
-        PedidoDTO pedido = this.pedidoDAO.obtenerPorId(pedido_id);
+        VentasDTO pedido = this.pedidoDAO.obtenerPorId(pedido_id);
         this.envio.setPedido(pedido);
 
         // Usar EstadoEnvioDAO para obtener el objeto completo

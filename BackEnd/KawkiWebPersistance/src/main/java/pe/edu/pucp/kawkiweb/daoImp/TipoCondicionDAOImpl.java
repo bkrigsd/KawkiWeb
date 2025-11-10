@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.TipoCondicionDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoCondicionDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 
 public class TipoCondicionDAOImpl extends BaseDAOImpl implements TipoCondicionDAO {
 
-    private TipoCondicionDTO tipoCondicion;
+    private TiposCondicionDTO tipoCondicion;
 
     public TipoCondicionDAOImpl() {
         super("TIPO_CONDICION");
@@ -29,7 +29,7 @@ public class TipoCondicionDAOImpl extends BaseDAOImpl implements TipoCondicionDA
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.tipoCondicion = new TipoCondicionDTO();
+        this.tipoCondicion = new TiposCondicionDTO();
         this.tipoCondicion.setTipo_condicion_id(this.resultSet.getInt("TIPO_CONDICION_ID"));
         this.tipoCondicion.setNombre(this.resultSet.getString("NOMBRE"));
     }
@@ -46,15 +46,15 @@ public class TipoCondicionDAOImpl extends BaseDAOImpl implements TipoCondicionDA
     }
 
     @Override
-    public TipoCondicionDTO obtenerPorId(Integer tipoCondicionId) {
-        this.tipoCondicion = new TipoCondicionDTO();
+    public TiposCondicionDTO obtenerPorId(Integer tipoCondicionId) {
+        this.tipoCondicion = new TiposCondicionDTO();
         this.tipoCondicion.setTipo_condicion_id(tipoCondicionId);
         super.obtenerPorId();
         return this.tipoCondicion;
     }
 
     @Override
-    public ArrayList<TipoCondicionDTO> listarTodos() {
-        return (ArrayList<TipoCondicionDTO>) super.listarTodos();
+    public ArrayList<TiposCondicionDTO> listarTodos() {
+        return (ArrayList<TiposCondicionDTO>) super.listarTodos();
     }
 }

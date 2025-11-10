@@ -1,6 +1,6 @@
 package pe.edu.pucp.kawkiweb.model.utilProducto;
 
-public class EstiloDTO {
+public class EstilosDTO {
 
     private Integer estilo_id;
     private String nombre;
@@ -16,17 +16,17 @@ public class EstiloDTO {
     public static final String NOMBRE_COMBINADOS = "Combinados";
     public static final String NOMBRE_METALIZADOS = "Metalizados";
 
-    public EstiloDTO() {
+    public EstilosDTO() {
         this.estilo_id = null;
         this.nombre = null;
     }
 
-    public EstiloDTO(Integer estilo_id, String nombre) {
+    public EstilosDTO(Integer estilo_id, String nombre) {
         this.estilo_id = estilo_id;
         this.nombre = nombre;
     }
 
-    public EstiloDTO(EstiloDTO estilo) {
+    public EstilosDTO(EstilosDTO estilo) {
         this.estilo_id = estilo.estilo_id;
         this.nombre = estilo.nombre;
     }

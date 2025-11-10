@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.PagoBO;
 import pe.edu.pucp.kawkiweb.model.PagoDTO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
-import pe.edu.pucp.kawkiweb.model.utilPago.MetodoPagoDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
+import pe.edu.pucp.kawkiweb.model.utilPago.MetodosPagoDTO;
 
 @WebService(serviceName = "Pago")
 public class Pago {
@@ -23,8 +23,8 @@ public class Pago {
     public Integer insertar(
             @WebParam(name = "montoTotal") Double montoTotal,
             @WebParam(name = "fechaHoraPago") LocalDateTime fechaHoraPago,
-            @WebParam(name = "metodoPago") MetodoPagoDTO metodoPago,
-            @WebParam(name = "pedido") PedidoDTO pedido) {
+            @WebParam(name = "metodoPago") MetodosPagoDTO metodoPago,
+            @WebParam(name = "pedido") VentasDTO pedido) {
 
         return this.pagoBO.insertar(montoTotal, fechaHoraPago, metodoPago, pedido);
     }
@@ -44,8 +44,8 @@ public class Pago {
             @WebParam(name = "pagoId") Integer pagoId,
             @WebParam(name = "montoTotal") Double montoTotal,
             @WebParam(name = "fechaHoraPago") LocalDateTime fechaHoraPago,
-            @WebParam(name = "metodoPago") MetodoPagoDTO metodoPago,
-            @WebParam(name = "pedido") PedidoDTO pedido) {
+            @WebParam(name = "metodoPago") MetodosPagoDTO metodoPago,
+            @WebParam(name = "pedido") VentasDTO pedido) {
 
         return this.pagoBO.modificar(pagoId, montoTotal, fechaHoraPago, metodoPago, pedido);
     }

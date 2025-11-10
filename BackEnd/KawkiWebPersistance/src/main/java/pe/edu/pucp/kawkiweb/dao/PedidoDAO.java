@@ -1,18 +1,18 @@
 package pe.edu.pucp.kawkiweb.dao;
 
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
 
 public interface PedidoDAO {
     
-    public Integer insertar(PedidoDTO pedido);
+    public Integer insertar(VentasDTO pedido);
     
-    public PedidoDTO obtenerPorId(Integer pedidoId);
+    public VentasDTO obtenerPorId(Integer pedidoId);
 
-    public ArrayList<PedidoDTO> listarTodos();
+    public ArrayList<VentasDTO> listarTodos();
 
-    public Integer modificar(PedidoDTO pedido);
+    public Integer modificar(VentasDTO pedido);
 
-    public Integer eliminar(PedidoDTO pedido); /* Como existe el estado_pedido no es necesario eliminar de la base de datos */
+    public Integer eliminar(VentasDTO pedido); /* Como existe el estado_pedido no es necesario eliminar de la base de datos */
     
 }

@@ -1,12 +1,12 @@
 package pe.edu.pucp.kawkiweb.dao;
 
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriaDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 
 public interface CategoriaDAO {
 
-    public CategoriaDTO obtenerPorId(Integer categoriaId);
+    public CategoriasDTO obtenerPorId(Integer categoriaId);
 
-    public ArrayList<CategoriaDTO> listarTodos();
+    public ArrayList<CategoriasDTO> listarTodos();
 
 }

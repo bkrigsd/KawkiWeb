@@ -7,8 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.UsuarioBO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
-import pe.edu.pucp.kawkiweb.model.utilUsuario.TipoUsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 
 @WebService(serviceName = "Usuario")
 public class Usuario {
@@ -32,7 +32,7 @@ public class Usuario {
             @WebParam(name = "nombreUsuario") String nombreUsuario,
             @WebParam(name = "contrasenha") String contrasenha,
             @WebParam(name = "fechaHoraCreacion") LocalDateTime fechaHoraCreacion,
-            @WebParam(name = "tipoUsuario") TipoUsuarioDTO tipoUsuario) {
+            @WebParam(name = "tipoUsuario") TiposUsuarioDTO tipoUsuario) {
 
         return this.usuarioBO.insertar(nombre, apePaterno, apeMaterno, dni,
                 fechaNacimiento, telefono, direccion, correo, nombreUsuario,
@@ -40,12 +40,12 @@ public class Usuario {
     }
 
     @WebMethod(operationName = "obtenerPorId")
-    public UsuarioDTO obtenerPorId(@WebParam(name = "Id") Integer usuarioId) {
+    public UsuariosDTO obtenerPorId(@WebParam(name = "Id") Integer usuarioId) {
         return this.usuarioBO.obtenerPorId(usuarioId);
     }
 
     @WebMethod(operationName = "listarTodos")
-    public ArrayList<UsuarioDTO> listarTodos() {
+    public ArrayList<UsuariosDTO> listarTodos() {
         return this.usuarioBO.listarTodos();
     }
 
@@ -63,7 +63,7 @@ public class Usuario {
             @WebParam(name = "nombreUsuario") String nombreUsuario,
             @WebParam(name = "contrasenha") String contrasenha,
             @WebParam(name = "fechaHoraCreacion") LocalDateTime fechaHoraCreacion,
-            @WebParam(name = "tipoUsuario") TipoUsuarioDTO tipoUsuario) {
+            @WebParam(name = "tipoUsuario") TiposUsuarioDTO tipoUsuario) {
 
         return this.usuarioBO.modificar(usuarioId, nombre, apePaterno, apeMaterno,
                 dni, fechaNacimiento, telefono, direccion, correo, nombreUsuario,
@@ -76,7 +76,7 @@ public class Usuario {
     }
 
     @WebMethod(operationName = "listarPorTipo")
-    public ArrayList<UsuarioDTO> listarPorTipo(
+    public ArrayList<UsuariosDTO> listarPorTipo(
             @WebParam(name = "tipoUsuarioId") Integer tipoUsuarioId) {
 
         return this.usuarioBO.listarPorTipo(tipoUsuarioId);
@@ -93,7 +93,7 @@ public class Usuario {
     }
 
     @WebMethod(operationName = "autenticar")
-    public UsuarioDTO autenticar(
+    public UsuariosDTO autenticar(
             @WebParam(name = "nombreUsuario") String nombreUsuario,
             @WebParam(name = "contrasenha") String contrasenha) {
 

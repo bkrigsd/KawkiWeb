@@ -6,9 +6,9 @@ import jakarta.jws.WebParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.PedidoBO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
-import pe.edu.pucp.kawkiweb.model.PromocionDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
+import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.model.utilPedido.EstadoPedidoDTO;
 
 @WebService(serviceName = "Pedido")
@@ -22,36 +22,36 @@ public class Pedido {
 
     @WebMethod(operationName = "insertar")
     public Integer insertar(
-            @WebParam(name = "usuario") UsuarioDTO usuario,
+            @WebParam(name = "usuario") UsuariosDTO usuario,
             @WebParam(name = "fechaHoraCreacion") LocalDateTime fechaHoraCreacion,
             @WebParam(name = "fechaHoraUltimoEstado") LocalDateTime fechaHoraUltimoEstado,
             @WebParam(name = "total") Double total,
             @WebParam(name = "estadoPedido") EstadoPedidoDTO estadoPedido,
-            @WebParam(name = "promocion") PromocionDTO promocion) {
+            @WebParam(name = "promocion") DescuentosDTO promocion) {
 
         return this.pedidoBO.insertar(usuario, fechaHoraCreacion, fechaHoraUltimoEstado,
                 total, estadoPedido, promocion);
     }
 
     @WebMethod(operationName = "obtenerPorId")
-    public PedidoDTO obtenerPorId(@WebParam(name = "pedidoId") Integer pedidoId) {
+    public VentasDTO obtenerPorId(@WebParam(name = "pedidoId") Integer pedidoId) {
         return this.pedidoBO.obtenerPorId(pedidoId);
     }
 
     @WebMethod(operationName = "listarTodos")
-    public ArrayList<PedidoDTO> listarTodos() {
+    public ArrayList<VentasDTO> listarTodos() {
         return this.pedidoBO.listarTodos();
     }
 
     @WebMethod(operationName = "modificar")
     public Integer modificar(
             @WebParam(name = "pedidoId") Integer pedidoId,
-            @WebParam(name = "usuario") UsuarioDTO usuario,
+            @WebParam(name = "usuario") UsuariosDTO usuario,
             @WebParam(name = "fechaHoraCreacion") LocalDateTime fechaHoraCreacion,
             @WebParam(name = "fechaHoraUltimoEstado") LocalDateTime fechaHoraUltimoEstado,
             @WebParam(name = "total") Double total,
             @WebParam(name = "estadoPedido") EstadoPedidoDTO estadoPedido,
-            @WebParam(name = "promocion") PromocionDTO promocion) {
+            @WebParam(name = "promocion") DescuentosDTO promocion) {
 
         return this.pedidoBO.modificar(pedidoId, usuario, fechaHoraCreacion,
                 fechaHoraUltimoEstado, total, estadoPedido, promocion);

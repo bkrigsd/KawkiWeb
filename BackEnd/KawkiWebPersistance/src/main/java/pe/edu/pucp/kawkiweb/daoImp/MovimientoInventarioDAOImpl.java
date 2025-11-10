@@ -7,13 +7,13 @@ import pe.edu.pucp.kawkiweb.dao.MovimientoInventarioDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
 import pe.edu.pucp.kawkiweb.dao.TipoMovimientoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.MovimientoInventarioDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
-import pe.edu.pucp.kawkiweb.model.utilMovInventario.TipoMovimientoDTO;
+import pe.edu.pucp.kawkiweb.model.MovimientosInventarioDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
+import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
 
 public class MovimientoInventarioDAOImpl extends BaseDAOImpl implements MovimientoInventarioDAO {
 
-    private MovimientoInventarioDTO movInventario;
+    private MovimientosInventarioDTO movInventario;
     private TipoMovimientoDAO tipoMovimientoDAO;
     private ProductoVarianteDAO productoVarianteDAO;
 
@@ -41,7 +41,7 @@ public class MovimientoInventarioDAOImpl extends BaseDAOImpl implements Movimien
         this.statement.setTimestamp(2, java.sql.Timestamp.valueOf(this.movInventario.getFecha_hora_mov()));
         this.statement.setString(3, this.movInventario.getObservacion());
 
-        // Obtener ID del TipoMovimientoDTO
+        // Obtener ID del TiposMovimientoDTO
         Integer tipoMovimientoId = (this.movInventario.getTipo_movimiento() != null)
                 ? this.movInventario.getTipo_movimiento().getTipoMovimientoId()
                 : null;
@@ -52,7 +52,7 @@ public class MovimientoInventarioDAOImpl extends BaseDAOImpl implements Movimien
             this.statement.setNull(4, java.sql.Types.INTEGER);
         }
 
-        ProductoVarianteDTO prodVarianteDTO = this.movInventario.getProd_variante();
+        ProductosVariantesDTO prodVarianteDTO = this.movInventario.getProd_variante();
         if (prodVarianteDTO != null) {
             this.statement.setInt(5, prodVarianteDTO.getProd_variante_id());
         } else {
@@ -76,7 +76,7 @@ public class MovimientoInventarioDAOImpl extends BaseDAOImpl implements Movimien
             this.statement.setNull(4, java.sql.Types.INTEGER);
         }
 
-        ProductoVarianteDTO prodVarianteDTO = this.movInventario.getProd_variante();
+        ProductosVariantesDTO prodVarianteDTO = this.movInventario.getProd_variante();
         if (prodVarianteDTO != null) {
             this.statement.setInt(5, prodVarianteDTO.getProd_variante_id());
         } else {
@@ -98,7 +98,7 @@ public class MovimientoInventarioDAOImpl extends BaseDAOImpl implements Movimien
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.movInventario = new MovimientoInventarioDTO();
+        this.movInventario = new MovimientosInventarioDTO();
         this.movInventario.setMov_inventario_id(this.resultSet.getInt("MOV_INVENTARIO_ID"));
         this.movInventario.setCantidad(this.resultSet.getInt("CANTIDAD"));
         this.movInventario.setFecha_hora_mov(this.resultSet.getTimestamp("FECHA_HORA_MOV").toLocalDateTime());
@@ -106,11 +106,11 @@ public class MovimientoInventarioDAOImpl extends BaseDAOImpl implements Movimien
 
         // Usar TipoMovimientoDAO para obtener el objeto completo
         Integer tipoMovimientoId = this.resultSet.getInt("TIPO_MOVIMIENTO_ID");
-        TipoMovimientoDTO tipoMovimiento = this.tipoMovimientoDAO.obtenerPorId(tipoMovimientoId);
+        TiposMovimientoDTO tipoMovimiento = this.tipoMovimientoDAO.obtenerPorId(tipoMovimientoId);
         this.movInventario.setTipo_movimiento(tipoMovimiento);
 
         Integer prod_variante_id = this.resultSet.getInt("PROD_VARIANTE_ID");
-        ProductoVarianteDTO prodVariante = this.productoVarianteDAO.obtenerPorId(prod_variante_id);
+        ProductosVariantesDTO prodVariante = this.productoVarianteDAO.obtenerPorId(prod_variante_id);
         this.movInventario.setProd_variante(prodVariante);
     }
 
@@ -126,32 +126,32 @@ public class MovimientoInventarioDAOImpl extends BaseDAOImpl implements Movimien
     }
 
     @Override
-    public Integer insertar(MovimientoInventarioDTO movInventario) {
+    public Integer insertar(MovimientosInventarioDTO movInventario) {
         this.movInventario = movInventario;
         return super.insertar();
     }
 
     @Override
-    public MovimientoInventarioDTO obtenerPorId(Integer movInventarioId) {
-        this.movInventario = new MovimientoInventarioDTO();
+    public MovimientosInventarioDTO obtenerPorId(Integer movInventarioId) {
+        this.movInventario = new MovimientosInventarioDTO();
         this.movInventario.setMov_inventario_id(movInventarioId);
         super.obtenerPorId();
         return this.movInventario;
     }
 
     @Override
-    public ArrayList<MovimientoInventarioDTO> listarTodos() {
-        return (ArrayList<MovimientoInventarioDTO>) super.listarTodos();
+    public ArrayList<MovimientosInventarioDTO> listarTodos() {
+        return (ArrayList<MovimientosInventarioDTO>) super.listarTodos();
     }
 
     @Override
-    public Integer modificar(MovimientoInventarioDTO movInventario) {
+    public Integer modificar(MovimientosInventarioDTO movInventario) {
         this.movInventario = movInventario;
         return super.modificar();
     }
 
     @Override
-    public Integer eliminar(MovimientoInventarioDTO movInventario) {
+    public Integer eliminar(MovimientosInventarioDTO movInventario) {
         this.movInventario = movInventario;
         return super.eliminar();
     }

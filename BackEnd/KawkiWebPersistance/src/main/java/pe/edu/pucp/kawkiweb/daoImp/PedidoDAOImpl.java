@@ -9,15 +9,15 @@ import pe.edu.pucp.kawkiweb.dao.PedidoDAO;
 import pe.edu.pucp.kawkiweb.dao.PromocionDAO;
 import pe.edu.pucp.kawkiweb.dao.UsuarioDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.DetallePedidoDTO;
+import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 import pe.edu.pucp.kawkiweb.model.utilPedido.EstadoPedidoDTO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
-import pe.edu.pucp.kawkiweb.model.PromocionDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
+import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class PedidoDAOImpl extends BaseDAOImpl implements PedidoDAO {
 
-    private PedidoDTO pedido;
+    private VentasDTO pedido;
     private UsuarioDAO usuarioDAO;
     private PromocionDAO promocionDAO;
     private EstadoPedidoDAO estadoPedidoDAO;
@@ -46,7 +46,7 @@ public class PedidoDAOImpl extends BaseDAOImpl implements PedidoDAO {
 
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
-        UsuarioDTO usuario = this.pedido.getUsuario();
+        UsuariosDTO usuario = this.pedido.getUsuario();
         if (usuario != null) {
             this.statement.setInt(1, usuario.getUsuarioId());
         } else {
@@ -57,7 +57,7 @@ public class PedidoDAOImpl extends BaseDAOImpl implements PedidoDAO {
         this.statement.setInt(4, this.pedido.getEstado_pedido().getEstado_pedido_id());
         this.statement.setTimestamp(5, java.sql.Timestamp.valueOf(this.pedido.getFecha_hora_ultimo_estado()));
 
-        PromocionDTO promocion = this.pedido.getPromocion();
+        DescuentosDTO promocion = this.pedido.getPromocion();
         if (promocion != null && promocion.getPromocion_id() != null) {
             this.statement.setInt(6, promocion.getPromocion_id());
         } else {
@@ -73,7 +73,7 @@ public class PedidoDAOImpl extends BaseDAOImpl implements PedidoDAO {
         this.statement.setInt(4, this.pedido.getEstado_pedido().getEstado_pedido_id());
         this.statement.setTimestamp(5, java.sql.Timestamp.valueOf(this.pedido.getFecha_hora_ultimo_estado()));
 
-        PromocionDTO promocion = this.pedido.getPromocion();
+        DescuentosDTO promocion = this.pedido.getPromocion();
         if (promocion != null && promocion.getPromocion_id() != null) {
             this.statement.setInt(6, promocion.getPromocion_id());
         } else {
@@ -95,12 +95,12 @@ public class PedidoDAOImpl extends BaseDAOImpl implements PedidoDAO {
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.pedido = new PedidoDTO();
+        this.pedido = new VentasDTO();
         this.pedido.setPedido_id(this.resultSet.getInt("PEDIDO_ID"));
 
         // Obtener usuario completo usando DAO
         Integer usuario_id = this.resultSet.getInt("USUARIO_ID");
-        UsuarioDTO usuario = this.usuarioDAO.obtenerPorId(usuario_id);
+        UsuariosDTO usuario = this.usuarioDAO.obtenerPorId(usuario_id);
         this.pedido.setUsuario(usuario);
 
         this.pedido.setFecha_hora_creacion(
@@ -119,14 +119,14 @@ public class PedidoDAOImpl extends BaseDAOImpl implements PedidoDAO {
         // Obtener Promoción completa usando DAO (puede ser null)
         Integer promocion_id = (Integer) this.resultSet.getObject("PROMOCION_ID");
         if (promocion_id != null) {
-            PromocionDTO promocion = this.promocionDAO.obtenerPorId(promocion_id);
+            DescuentosDTO promocion = this.promocionDAO.obtenerPorId(promocion_id);
             this.pedido.setPromocion(promocion);
         } else {
             this.pedido.setPromocion(null);
         }
 
         // Cargar automáticamente los detalles del pedido
-        ArrayList<DetallePedidoDTO> detalles = this.detallePedidoDAO.listarPorPedidoId(
+        ArrayList<DetalleVentasDTO> detalles = this.detallePedidoDAO.listarPorPedidoId(
                 this.pedido.getPedido_id()
         );
         this.pedido.setDetalles(detalles);
@@ -144,32 +144,32 @@ public class PedidoDAOImpl extends BaseDAOImpl implements PedidoDAO {
     }
 
     @Override
-    public Integer insertar(PedidoDTO pedido) {
+    public Integer insertar(VentasDTO pedido) {
         this.pedido = pedido;
         return super.insertar();
     }
 
     @Override
-    public PedidoDTO obtenerPorId(Integer pedidoId) {
-        this.pedido = new PedidoDTO();
+    public VentasDTO obtenerPorId(Integer pedidoId) {
+        this.pedido = new VentasDTO();
         this.pedido.setPedido_id(pedidoId);
         super.obtenerPorId();
         return this.pedido;
     }
 
     @Override
-    public ArrayList<PedidoDTO> listarTodos() {
-        return (ArrayList<PedidoDTO>) super.listarTodos();
+    public ArrayList<VentasDTO> listarTodos() {
+        return (ArrayList<VentasDTO>) super.listarTodos();
     }
 
     @Override
-    public Integer modificar(PedidoDTO pedido) {
+    public Integer modificar(VentasDTO pedido) {
         this.pedido = pedido;
         return super.modificar();
     }
 
     @Override
-    public Integer eliminar(PedidoDTO pedido) {
+    public Integer eliminar(VentasDTO pedido) {
         this.pedido = pedido;
         return super.eliminar();
     }

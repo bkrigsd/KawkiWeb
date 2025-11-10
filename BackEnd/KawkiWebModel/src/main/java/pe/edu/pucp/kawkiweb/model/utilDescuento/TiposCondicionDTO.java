@@ -1,6 +1,6 @@
-package pe.edu.pucp.kawkiweb.model.utilPromocion;
+package pe.edu.pucp.kawkiweb.model.utilDescuento;
 
-public class TipoCondicionDTO {
+public class TiposCondicionDTO {
 
     private Integer tipo_condicion_id;
     private String nombre;
@@ -12,17 +12,17 @@ public class TipoCondicionDTO {
     public static final String NOMBRE_CANT_MIN_PRODUCTOS = "Cantidad mínima de productos";
     public static final String NOMBRE_MONTO_MIN_COMPRA = "Monto mínimo de compra";
 
-    public TipoCondicionDTO() {
+    public TiposCondicionDTO() {
         this.tipo_condicion_id = null;
         this.nombre = null;
     }
 
-    public TipoCondicionDTO(Integer tipo_condicion_id, String nombre) {
+    public TiposCondicionDTO(Integer tipo_condicion_id, String nombre) {
         this.tipo_condicion_id = tipo_condicion_id;
         this.nombre = nombre;
     }
 
-    public TipoCondicionDTO(TipoCondicionDTO tipoCondicion) {
+    public TiposCondicionDTO(TiposCondicionDTO tipoCondicion) {
         this.tipo_condicion_id = tipoCondicion.tipo_condicion_id;
         this.nombre = tipoCondicion.nombre;
     }

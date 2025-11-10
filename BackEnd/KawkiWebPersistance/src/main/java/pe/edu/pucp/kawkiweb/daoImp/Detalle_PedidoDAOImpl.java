@@ -4,14 +4,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.DetallePedidoDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
+import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.dao.DetallePedidoDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
 
 public class Detalle_PedidoDAOImpl extends BaseDAOImpl implements DetallePedidoDAO {
 
-    private DetallePedidoDTO detallepedido;
+    private DetalleVentasDTO detallepedido;
     private ProductoVarianteDAO productoVarianteDAO;
 
     public Detalle_PedidoDAOImpl() {
@@ -44,7 +44,7 @@ public class Detalle_PedidoDAOImpl extends BaseDAOImpl implements DetallePedidoD
             this.statement.setNull(4, java.sql.Types.INTEGER);
         }
 
-        ProductoVarianteDTO prodVar = this.detallepedido.getProductoVar();
+        ProductosVariantesDTO prodVar = this.detallepedido.getProductoVar();
         if (prodVar != null) {
             this.statement.setInt(5, prodVar.getProd_variante_id());
         } else {
@@ -75,7 +75,7 @@ public class Detalle_PedidoDAOImpl extends BaseDAOImpl implements DetallePedidoD
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.detallepedido = new DetallePedidoDTO();
+        this.detallepedido = new DetalleVentasDTO();
         this.detallepedido.setDetalle_pedido_id(this.resultSet.getInt("DETALLE_PEDIDO_ID"));
 
         this.detallepedido.setCantidad(this.resultSet.getInt("CANTIDAD"));
@@ -87,7 +87,7 @@ public class Detalle_PedidoDAOImpl extends BaseDAOImpl implements DetallePedidoD
 
         // Obtener ProductoVariante completo usando DAO
         Integer prod_variante_id = this.resultSet.getInt("PROD_VARIANTE_ID");
-        ProductoVarianteDTO productoVar = this.productoVarianteDAO.obtenerPorId(prod_variante_id);
+        ProductosVariantesDTO productoVar = this.productoVarianteDAO.obtenerPorId(prod_variante_id);
         this.detallepedido.setProductoVar(productoVar);
     }
 
@@ -103,32 +103,32 @@ public class Detalle_PedidoDAOImpl extends BaseDAOImpl implements DetallePedidoD
     }
 
     @Override
-    public Integer insertar(DetallePedidoDTO detallepedido) {
+    public Integer insertar(DetalleVentasDTO detallepedido) {
         this.detallepedido = detallepedido;
         return super.insertar();
     }
 
     @Override
-    public DetallePedidoDTO obtenerPorId(Integer detallepedidoId) {
-        this.detallepedido = new DetallePedidoDTO();
+    public DetalleVentasDTO obtenerPorId(Integer detallepedidoId) {
+        this.detallepedido = new DetalleVentasDTO();
         this.detallepedido.setDetalle_pedido_id(detallepedidoId);
         super.obtenerPorId();
         return this.detallepedido;
     }
 
     @Override
-    public ArrayList<DetallePedidoDTO> listarTodos() {
-        return (ArrayList<DetallePedidoDTO>) super.listarTodos();
+    public ArrayList<DetalleVentasDTO> listarTodos() {
+        return (ArrayList<DetalleVentasDTO>) super.listarTodos();
     }
 
     @Override
-    public ArrayList<DetallePedidoDTO> listarPorPedidoId(Integer pedidoId) {
+    public ArrayList<DetalleVentasDTO> listarPorPedidoId(Integer pedidoId) {
         String sql = "SELECT DETALLE_PEDIDO_ID, CANTIDAD, PRECIO_UNITARIO, "
                 + "SUBTOTAL, PEDIDO_ID, PROD_VARIANTE_ID "
                 + "FROM DETALLE_PEDIDOS "
                 + "WHERE PEDIDO_ID = ?";
 
-        return (ArrayList<DetallePedidoDTO>) super.listarTodos(
+        return (ArrayList<DetalleVentasDTO>) super.listarTodos(
                 sql,
                 (params) -> {
                     try {
@@ -142,13 +142,13 @@ public class Detalle_PedidoDAOImpl extends BaseDAOImpl implements DetallePedidoD
     }
 
     @Override
-    public Integer modificar(DetallePedidoDTO detallepedido) {
+    public Integer modificar(DetalleVentasDTO detallepedido) {
         this.detallepedido = detallepedido;
         return super.modificar();
     }
 
     @Override
-    public Integer eliminar(DetallePedidoDTO detallepedido) {
+    public Integer eliminar(DetalleVentasDTO detallepedido) {
         this.detallepedido = detallepedido;
         return super.eliminar();
     }

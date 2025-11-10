@@ -1,6 +1,6 @@
 package pe.edu.pucp.kawkiweb.model.utilPago;
 
-public class MetodoPagoDTO {
+public class MetodosPagoDTO {
 
     private Integer metodo_pago_id;
     private String nombre;
@@ -10,16 +10,16 @@ public class MetodoPagoDTO {
     public static final int ID_YAPE = 2;
     public static final int ID_PLIN = 3;
 
-    public static final String NOMBRE_TARJETA_BANCARIA = "Tarjeta bancaria";
+    public static final String NOMBRE_TARJETA_BANCARIA = "Transferencia";
     public static final String NOMBRE_YAPE = "Yape";
     public static final String NOMBRE_PLIN = "Plin";
 
-    public MetodoPagoDTO() {
+    public MetodosPagoDTO() {
         this.metodo_pago_id = null;
         this.nombre = null;
     }
 
-    public MetodoPagoDTO(Integer metodo_pago_id, String nombre) {
+    public MetodosPagoDTO(Integer metodo_pago_id, String nombre) {
         this.metodo_pago_id = metodo_pago_id;
         this.nombre = nombre;
     }

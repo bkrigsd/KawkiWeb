@@ -1,19 +1,19 @@
 package pe.edu.pucp.kawkiweb.dao;
 
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import java.util.ArrayList;
 
 public interface ProductoVarianteDAO {
 
-    public Integer insertar(ProductoVarianteDTO prodVariante);
+    public Integer insertar(ProductosVariantesDTO prodVariante);
 
-    public ProductoVarianteDTO obtenerPorId(Integer prodVarianteId);
+    public ProductosVariantesDTO obtenerPorId(Integer prodVarianteId);
 
-    public ArrayList<ProductoVarianteDTO> listarTodos();
+    public ArrayList<ProductosVariantesDTO> listarTodos();
 
-    ArrayList<ProductoVarianteDTO> listarPorProductoId(Integer productoId);
+    ArrayList<ProductosVariantesDTO> listarPorProductoId(Integer productoId);
 
-    public Integer modificar(ProductoVarianteDTO prodVariante);
+    public Integer modificar(ProductosVariantesDTO prodVariante);
 
-    public Integer eliminar(ProductoVarianteDTO prodVariante);
+    public Integer eliminar(ProductosVariantesDTO prodVariante);
 }

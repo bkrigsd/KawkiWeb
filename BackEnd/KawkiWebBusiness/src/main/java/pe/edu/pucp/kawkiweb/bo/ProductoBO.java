@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.dao.ProductoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.ProductoDAOImpl;
-import pe.edu.pucp.kawkiweb.model.ProductoDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriaDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.EstiloDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 
 public class ProductoBO {
 
@@ -21,8 +21,8 @@ public class ProductoBO {
      *
      * @return ID del producto insertado, o null si hubo error
      */
-    public Integer insertar(String descripcion, CategoriaDTO categoria,
-            EstiloDTO estilo, Double precio_venta, LocalDateTime fecha_hora_creacion) {
+    public Integer insertar(String descripcion, CategoriasDTO categoria,
+            EstilosDTO estilo, Double precio_venta, LocalDateTime fecha_hora_creacion) {
 
         try {
             // Validaciones
@@ -31,7 +31,7 @@ public class ProductoBO {
                 return null;
             }
 
-            ProductoDTO productoDTO = new ProductoDTO();
+            ProductosDTO productoDTO = new ProductosDTO();
             productoDTO.setDescripcion(descripcion);
             productoDTO.setCategoria(categoria);
             productoDTO.setEstilo(estilo);
@@ -53,10 +53,10 @@ public class ProductoBO {
      * Obtiene un producto por su ID (incluye sus variantes)
      *
      * @param producto_id ID del producto a buscar
-     * @return ProductoDTO encontrado con sus variantes, o null si no existe o
-     * hay error
+     * @return ProductosDTO encontrado con sus variantes, o null si no existe o
+ hay error
      */
-    public ProductoDTO obtenerPorId(Integer producto_id) {
+    public ProductosDTO obtenerPorId(Integer producto_id) {
         try {
             if (producto_id == null || producto_id <= 0) {
                 System.err.println("Error: ID de producto inválido");
@@ -76,9 +76,9 @@ public class ProductoBO {
      *
      * @return Lista de productos, o lista vacía si hay error
      */
-    public ArrayList<ProductoDTO> listarTodos() {
+    public ArrayList<ProductosDTO> listarTodos() {
         try {
-            ArrayList<ProductoDTO> lista = this.productoDAO.listarTodos();
+            ArrayList<ProductosDTO> lista = this.productoDAO.listarTodos();
             return (lista != null) ? lista : new ArrayList<>();
 
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class ProductoBO {
      * @return Número de registros afectados, o null si hubo error
      */
     public Integer modificar(Integer producto_id, String descripcion,
-            CategoriaDTO categoria, EstiloDTO estilo, Double precio_venta,
+            CategoriasDTO categoria, EstilosDTO estilo, Double precio_venta,
             LocalDateTime fecha_hora_creacion) {
 
         try {
@@ -110,7 +110,7 @@ public class ProductoBO {
                 return null;
             }
 
-            ProductoDTO productoDTO = new ProductoDTO();
+            ProductosDTO productoDTO = new ProductosDTO();
             productoDTO.setProducto_id(producto_id);
             productoDTO.setDescripcion(descripcion);
             productoDTO.setCategoria(categoria);
@@ -142,14 +142,14 @@ public class ProductoBO {
             }
 
             // Verificar si el producto tiene variantes
-            ProductoDTO producto = this.obtenerPorId(producto_id);
+            ProductosDTO producto = this.obtenerPorId(producto_id);
             if (producto != null && producto.getVariantes() != null
                     && !producto.getVariantes().isEmpty()) {
                 System.err.println("Error: No se puede eliminar un producto con variantes asociadas");
                 return null;
             }
 
-            ProductoDTO productoDTO = new ProductoDTO();
+            ProductosDTO productoDTO = new ProductosDTO();
             productoDTO.setProducto_id(producto_id);
             return this.productoDAO.eliminar(productoDTO);
 
@@ -165,8 +165,8 @@ public class ProductoBO {
      *
      * @return true si los datos son válidos, false en caso contrario
      */
-    private boolean validarDatosProducto(String descripcion, CategoriaDTO categoria,
-            EstiloDTO estilo, Double precio_venta) {
+    private boolean validarDatosProducto(String descripcion, CategoriasDTO categoria,
+            EstilosDTO estilo, Double precio_venta) {
 
         // Validar descripción
         if (descripcion == null || descripcion.trim().isEmpty()) {
@@ -208,7 +208,7 @@ public class ProductoBO {
      */
     public boolean tieneStockDisponible(Integer producto_id) {
         try {
-            ProductoDTO producto = this.obtenerPorId(producto_id);
+            ProductosDTO producto = this.obtenerPorId(producto_id);
 
             if (producto == null || producto.getVariantes() == null) {
                 return false;
@@ -231,7 +231,7 @@ public class ProductoBO {
      */
     public Integer calcularStockTotal(Integer producto_id) {
         try {
-            ProductoDTO producto = this.obtenerPorId(producto_id);
+            ProductosDTO producto = this.obtenerPorId(producto_id);
 
             if (producto == null || producto.getVariantes() == null) {
                 return 0;
@@ -253,16 +253,16 @@ public class ProductoBO {
      * @param categoria_id ID de la categoría
      * @return Lista de productos de la categoría
      */
-    public ArrayList<ProductoDTO> listarPorCategoria(Integer categoria_id) {
+    public ArrayList<ProductosDTO> listarPorCategoria(Integer categoria_id) {
         try {
             if (categoria_id == null || categoria_id <= 0) {
                 return new ArrayList<>();
             }
 
-            ArrayList<ProductoDTO> todosLosProductos = this.listarTodos();
-            ArrayList<ProductoDTO> productosFiltrados = new ArrayList<>();
+            ArrayList<ProductosDTO> todosLosProductos = this.listarTodos();
+            ArrayList<ProductosDTO> productosFiltrados = new ArrayList<>();
 
-            for (ProductoDTO producto : todosLosProductos) {
+            for (ProductosDTO producto : todosLosProductos) {
                 if (producto.getCategoria() != null
                         && categoria_id.equals(producto.getCategoria().getCategoria_id())) {
                     productosFiltrados.add(producto);
@@ -283,16 +283,16 @@ public class ProductoBO {
      * @param estilo_id ID del estilo
      * @return Lista de productos del estilo
      */
-    public ArrayList<ProductoDTO> listarPorEstilo(Integer estilo_id) {
+    public ArrayList<ProductosDTO> listarPorEstilo(Integer estilo_id) {
         try {
             if (estilo_id == null || estilo_id <= 0) {
                 return new ArrayList<>();
             }
 
-            ArrayList<ProductoDTO> todosLosProductos = this.listarTodos();
-            ArrayList<ProductoDTO> productosFiltrados = new ArrayList<>();
+            ArrayList<ProductosDTO> todosLosProductos = this.listarTodos();
+            ArrayList<ProductosDTO> productosFiltrados = new ArrayList<>();
 
-            for (ProductoDTO producto : todosLosProductos) {
+            for (ProductosDTO producto : todosLosProductos) {
                 if (producto.getEstilo() != null
                         && estilo_id.equals(producto.getEstilo().getEstilo_id())) {
                     productosFiltrados.add(producto);
@@ -313,12 +313,12 @@ public class ProductoBO {
      *
      * @return Lista de productos con stock bajo
      */
-    public ArrayList<ProductoDTO> listarConStockBajo() {
+    public ArrayList<ProductosDTO> listarConStockBajo() {
         try {
-            ArrayList<ProductoDTO> todosLosProductos = this.listarTodos();
-            ArrayList<ProductoDTO> productosConStockBajo = new ArrayList<>();
+            ArrayList<ProductosDTO> todosLosProductos = this.listarTodos();
+            ArrayList<ProductosDTO> productosConStockBajo = new ArrayList<>();
 
-            for (ProductoDTO producto : todosLosProductos) {
+            for (ProductosDTO producto : todosLosProductos) {
                 if (producto.getVariantes() != null) {
                     boolean tieneStockBajo = producto.getVariantes().stream()
                             .anyMatch(v -> v.getAlerta_stock() != null && v.getAlerta_stock());

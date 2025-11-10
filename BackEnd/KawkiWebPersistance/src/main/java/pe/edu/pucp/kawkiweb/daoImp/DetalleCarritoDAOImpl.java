@@ -7,7 +7,7 @@ import pe.edu.pucp.kawkiweb.dao.DetalleCarritoDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.DetalleCarritoDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 
 public class DetalleCarritoDAOImpl extends BaseDAOImpl implements DetalleCarritoDAO {
 
@@ -44,7 +44,7 @@ public class DetalleCarritoDAOImpl extends BaseDAOImpl implements DetalleCarrito
         this.statement.setDouble(3, this.detalle.getPrecio_unitario());
         this.statement.setDouble(4, this.detalle.getSubtotal());
 
-        ProductoVarianteDTO productVar = this.detalle.getProducto();
+        ProductosVariantesDTO productVar = this.detalle.getProducto();
         if (productVar != null) {
             this.statement.setInt(5, productVar.getProd_variante_id());
         } else {
@@ -65,7 +65,7 @@ public class DetalleCarritoDAOImpl extends BaseDAOImpl implements DetalleCarrito
         this.statement.setDouble(3, this.detalle.getPrecio_unitario());
         this.statement.setDouble(4, this.detalle.getSubtotal());
 
-        ProductoVarianteDTO productVar = this.detalle.getProducto();
+        ProductosVariantesDTO productVar = this.detalle.getProducto();
         if (productVar != null) {
             this.statement.setInt(5, productVar.getProd_variante_id());
         } else {
@@ -96,7 +96,7 @@ public class DetalleCarritoDAOImpl extends BaseDAOImpl implements DetalleCarrito
 
         // Obtener producto variante completo usando ProductoVarianteDAO
         Integer prod_variante_id = this.resultSet.getInt("PROD_VARIANTE_ID");
-        ProductoVarianteDTO productVar = this.productoVarianteDAO.obtenerPorId(prod_variante_id);
+        ProductosVariantesDTO productVar = this.productoVarianteDAO.obtenerPorId(prod_variante_id);
         this.detalle.setProducto(productVar);
     }
 

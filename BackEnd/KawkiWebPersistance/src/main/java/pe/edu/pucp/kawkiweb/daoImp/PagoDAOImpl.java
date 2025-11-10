@@ -8,10 +8,10 @@ import pe.edu.pucp.kawkiweb.dao.MetodoPagoDAO;
 import pe.edu.pucp.kawkiweb.dao.PagoDAO;
 import pe.edu.pucp.kawkiweb.dao.PedidoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.Comprobante_PagoDTO;
-import pe.edu.pucp.kawkiweb.model.utilPago.MetodoPagoDTO;
+import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
+import pe.edu.pucp.kawkiweb.model.utilPago.MetodosPagoDTO;
 import pe.edu.pucp.kawkiweb.model.PagoDTO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
 
 public class PagoDAOImpl extends BaseDAOImpl implements PagoDAO {
 
@@ -74,17 +74,17 @@ public class PagoDAOImpl extends BaseDAOImpl implements PagoDAO {
 
         // Debe usar el DAO para obtener el objeto completo:
         Integer metodoId = this.resultSet.getInt("METODO_PAGO_ID");
-        MetodoPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(metodoId);
+        MetodosPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(metodoId);
         this.pago.setMetodo_pago(metodoPago);
 
         // Debe obtener el pedido completo y usar el método correcto:
         Integer pedidoId = this.resultSet.getInt("PEDIDO_ID");
-        PedidoDTO pedido = this.pedidoDAO.obtenerPorId(pedidoId);
+        VentasDTO pedido = this.pedidoDAO.obtenerPorId(pedidoId);
         this.pago.setPedido(pedido); // Método correcto según PagoDTO
 
         // Obtener comprobante si existe
         try {
-            Comprobante_PagoDTO comprobante = this.comprobantePagoDAO.obtenerPorPagoId(this.pago.getPago_id());
+            ComprobantesPagoDTO comprobante = this.comprobantePagoDAO.obtenerPorPagoId(this.pago.getPago_id());
             this.pago.setComprobante(comprobante);
         } catch (Exception e) {
             // Si falla o no existe, dejar en null

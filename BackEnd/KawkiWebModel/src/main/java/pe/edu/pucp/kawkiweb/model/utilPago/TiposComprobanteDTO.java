@@ -1,23 +1,25 @@
 package pe.edu.pucp.kawkiweb.model.utilPago;
 
-public class TipoComprobanteDTO {
+public class TiposComprobanteDTO {
 
     private Integer tipo_comprobante_id;
     private String nombre;
 
     //Constantes para los datos existentes
-    public static final int ID_BOLETA = 1;
-    public static final int ID_FACTURA = 2;
+    public static final int ID_BOLETA_SIMPLE = 1;
+    public static final int ID_BOLETA_DNI = 2;
+    public static final int ID_FACTURA = 3;
 
-    public static final String NOMBRE_BOLETA = "Boleta";
+    public static final String NOMBRE_BOLETA_SIMPLE = "Boleta Simple";
+    public static final String NOMBRE_BOLETA_DNI = "Boleta con DNI";
     public static final String NOMBRE_FACTURA = "Factura";
 
-    public TipoComprobanteDTO() {
+    public TiposComprobanteDTO() {
         this.tipo_comprobante_id = null;
         this.nombre = null;
     }
 
-    public TipoComprobanteDTO(Integer tipo_comprobante_id, String nombre) {
+    public TiposComprobanteDTO(Integer tipo_comprobante_id, String nombre) {
         this.tipo_comprobante_id = tipo_comprobante_id;
         this.nombre = nombre;
     }
@@ -39,10 +41,14 @@ public class TipoComprobanteDTO {
     }
 
     // Métodos de utilidad para verificar el tipo
-    public boolean esBoleta() {
-        return this.tipo_comprobante_id != null && this.tipo_comprobante_id == ID_BOLETA;
+    public boolean esBoletaSimple() {
+        return this.tipo_comprobante_id != null && this.tipo_comprobante_id == ID_BOLETA_SIMPLE;
     }
 
+    public boolean esBoletaConDNI() {
+        return this.tipo_comprobante_id != null && this.tipo_comprobante_id == ID_BOLETA_DNI;
+    }
+    
     public boolean esFactura() {
         return this.tipo_comprobante_id != null && this.tipo_comprobante_id == ID_FACTURA;
     }

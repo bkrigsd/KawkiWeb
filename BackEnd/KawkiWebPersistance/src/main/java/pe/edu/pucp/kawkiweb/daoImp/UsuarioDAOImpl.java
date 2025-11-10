@@ -6,12 +6,12 @@ import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.TipoUsuarioDAO;
 import pe.edu.pucp.kawkiweb.dao.UsuarioDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilUsuario.TipoUsuarioDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class UsuarioDAOImpl extends BaseDAOImpl implements UsuarioDAO {
 
-    private UsuarioDTO usuario;
+    private UsuariosDTO usuario;
     private TipoUsuarioDAO tipoUsuarioDAO;
 
     public UsuarioDAOImpl() {
@@ -55,7 +55,7 @@ public class UsuarioDAOImpl extends BaseDAOImpl implements UsuarioDAO {
         this.statement.setString(10, this.usuario.getContrasenha());
         this.statement.setTimestamp(11, java.sql.Timestamp.valueOf(this.usuario.getFechaHoraCreacion()));
 
-        // Obtenemos el ID directamente del objeto TipoUsuarioDTO
+        // Obtenemos el ID directamente del objeto TiposUsuarioDTO
         Integer tipoUsuarioId = (this.usuario.getTipoUsuario() != null)
                 ? this.usuario.getTipoUsuario().getTipoUsuarioId()
                 : null;
@@ -113,7 +113,7 @@ public class UsuarioDAOImpl extends BaseDAOImpl implements UsuarioDAO {
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.usuario = new UsuarioDTO();
+        this.usuario = new UsuariosDTO();
         this.usuario.setUsuarioId(this.resultSet.getInt("USUARIO_ID"));
         this.usuario.setNombre(this.resultSet.getString("NOMBRE"));
         this.usuario.setApePaterno(this.resultSet.getString("APE_PATERNO"));
@@ -129,7 +129,7 @@ public class UsuarioDAOImpl extends BaseDAOImpl implements UsuarioDAO {
 
         // Usar TipoUsuarioDAO para obtener el objeto completo
         Integer tipoUsuarioId = this.resultSet.getInt("TIPO_USUARIO_ID");
-        TipoUsuarioDTO tipoUsuario = this.tipoUsuarioDAO.obtenerPorId(tipoUsuarioId);
+        TiposUsuarioDTO tipoUsuario = this.tipoUsuarioDAO.obtenerPorId(tipoUsuarioId);
         this.usuario.setTipoUsuario(tipoUsuario);
 
         this.usuario.setRuc(this.resultSet.getString("RUC"));
@@ -149,32 +149,32 @@ public class UsuarioDAOImpl extends BaseDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    public Integer insertar(UsuarioDTO usuario) {
+    public Integer insertar(UsuariosDTO usuario) {
         this.usuario = usuario;
         return super.insertar();
     }
 
     @Override
-    public UsuarioDTO obtenerPorId(Integer usuarioId) {
-        this.usuario = new UsuarioDTO();
+    public UsuariosDTO obtenerPorId(Integer usuarioId) {
+        this.usuario = new UsuariosDTO();
         this.usuario.setUsuarioId(usuarioId);
         super.obtenerPorId();
         return this.usuario;
     }
 
     @Override
-    public ArrayList<UsuarioDTO> listarTodos() {
-        return (ArrayList<UsuarioDTO>) super.listarTodos();
+    public ArrayList<UsuariosDTO> listarTodos() {
+        return (ArrayList<UsuariosDTO>) super.listarTodos();
     }
 
     @Override
-    public Integer modificar(UsuarioDTO usuario) {
+    public Integer modificar(UsuariosDTO usuario) {
         this.usuario = usuario;
         return super.modificar();
     }
 
     @Override
-    public Integer eliminar(UsuarioDTO usuario) {
+    public Integer eliminar(UsuariosDTO usuario) {
         this.usuario = usuario;
         return super.eliminar();
     }

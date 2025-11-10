@@ -15,20 +15,20 @@ import pe.edu.pucp.kawkiweb.daoImp.ProductoDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.ProductoVarianteDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.PromocionDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.UsuarioDAOImpl;
-import pe.edu.pucp.kawkiweb.model.DetallePedidoDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoDTO;
-import pe.edu.pucp.kawkiweb.model.PromocionDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosDTO;
+import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.model.utilPedido.EstadoPedidoDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriaDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.ColorDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.EstiloDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.TallaDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoBeneficioDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoCondicionDTO;
-import pe.edu.pucp.kawkiweb.model.utilUsuario.TipoUsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
+import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 
 public class DetallePedidoDAOTest {
 
@@ -65,19 +65,19 @@ public class DetallePedidoDAOTest {
 
     //producto ejemplo:
     private void prepararProductoBase() {
-        ProductoDTO producto = new ProductoDTO();
+        ProductosDTO producto = new ProductosDTO();
         producto.setDescripcion("Producto prueba");
         
-        // Crear CategoriaDTO
-        CategoriaDTO categoria = new CategoriaDTO();
-        categoria.setCategoria_id(CategoriaDTO.ID_DERBY);
-        categoria.setNombre(CategoriaDTO.NOMBRE_DERBY);
+        // Crear CategoriasDTO
+        CategoriasDTO categoria = new CategoriasDTO();
+        categoria.setCategoria_id(CategoriasDTO.ID_DERBY);
+        categoria.setNombre(CategoriasDTO.NOMBRE_DERBY);
         producto.setCategoria(categoria);
         
-        // Crear EstiloDTO
-        EstiloDTO estilo = new EstiloDTO();
-        estilo.setEstilo_id(EstiloDTO.ID_COMBINADOS);
-        estilo.setNombre(EstiloDTO.NOMBRE_COMBINADOS);
+        // Crear EstilosDTO
+        EstilosDTO estilo = new EstilosDTO();
+        estilo.setEstilo_id(EstilosDTO.ID_COMBINADOS);
+        estilo.setNombre(EstilosDTO.NOMBRE_COMBINADOS);
         producto.setEstilo(estilo);
         
         producto.setPrecio_venta(120.00);
@@ -89,29 +89,29 @@ public class DetallePedidoDAOTest {
 
     //productoVariante ejemplo:
     private void prepararProductoVarBase() {
-        ProductoVarianteDTO prodVariante = new ProductoVarianteDTO();
+        ProductosVariantesDTO prodVariante = new ProductosVariantesDTO();
         prodVariante.setSKU("DER-ROJ-37");
         prodVariante.setStock(20);
         prodVariante.setStock_minimo(5);
         prodVariante.setAlerta_stock(false);
         prodVariante.setProducto_id(this.productoBaseId);
         
-        // Crear ColorDTO
-        ColorDTO color = new ColorDTO();
-        color.setColor_id(ColorDTO.ID_ROJO);
-        color.setNombre(ColorDTO.NOMBRE_ROJO);
+        // Crear ColoresDTO
+        ColoresDTO color = new ColoresDTO();
+        color.setColor_id(ColoresDTO.ID_ROJO);
+        color.setNombre(ColoresDTO.NOMBRE_ROJO);
         prodVariante.setColor(color);
         
-        // Crear TallaDTO
-        TallaDTO talla = new TallaDTO();
-        talla.setTalla_id(TallaDTO.ID_TREINTA_SIETE);
-        talla.setNumero(TallaDTO.NUMERO_TREINTA_SIETE);
+        // Crear TallasDTO
+        TallasDTO talla = new TallasDTO();
+        talla.setTalla_id(TallasDTO.ID_TREINTA_SIETE);
+        talla.setNumero(TallasDTO.NUMERO_TREINTA_SIETE);
         prodVariante.setTalla(talla);
         
-        // Crear TipoBeneficioDTO
-        TipoBeneficioDTO tipoBeneficio = new TipoBeneficioDTO();
-        tipoBeneficio.setTipo_beneficio_id(TipoBeneficioDTO.ID_DESCUENTO_PORCENTAJE);
-        tipoBeneficio.setNombre(TipoBeneficioDTO.NOMBRE_DESCUENTO_PORCENTAJE);
+        // Crear TiposBeneficioDTO
+        TiposBeneficioDTO tipoBeneficio = new TiposBeneficioDTO();
+        tipoBeneficio.setTipo_beneficio_id(TiposBeneficioDTO.ID_DESCUENTO_PORCENTAJE);
+        tipoBeneficio.setNombre(TiposBeneficioDTO.NOMBRE_DESCUENTO_PORCENTAJE);
         prodVariante.setTipo_beneficio(tipoBeneficio);
         
         prodVariante.setValor_beneficio(10);
@@ -123,7 +123,7 @@ public class DetallePedidoDAOTest {
 
     //usuario ejemplo:
     private void prepararUsuarioBase() {
-        UsuarioDTO usuario = new UsuarioDTO();
+        UsuariosDTO usuario = new UsuariosDTO();
         usuario.setNombre("Nestor");
         usuario.setApePaterno("Espinoza");
         usuario.setApeMaterno("Urco");
@@ -136,10 +136,10 @@ public class DetallePedidoDAOTest {
         usuario.setContrasenha("perro");
         usuario.setFechaHoraCreacion(LocalDateTime.now());
         
-        // Crear TipoUsuarioDTO
-        TipoUsuarioDTO tipoCliente = new TipoUsuarioDTO();
-        tipoCliente.setTipoUsuarioId(TipoUsuarioDTO.ID_CLIENTE);
-        tipoCliente.setNombre(TipoUsuarioDTO.NOMBRE_CLIENTE);
+        // Crear TiposUsuarioDTO
+        TiposUsuarioDTO tipoCliente = new TiposUsuarioDTO();
+        tipoCliente.setTipoUsuarioId(TiposUsuarioDTO.ID_CLIENTE);
+        tipoCliente.setNombre(TiposUsuarioDTO.NOMBRE_CLIENTE);
         usuario.setTipoUsuario(tipoCliente);
         
         this.usuarioBaseId = this.usuarioDAO.insertar(usuario);
@@ -148,21 +148,21 @@ public class DetallePedidoDAOTest {
 
     //promocion ejemplo:
     private void prepararPromocionBase() {
-        PromocionDTO promocion = new PromocionDTO();
+        DescuentosDTO promocion = new DescuentosDTO();
         promocion.setDescripcion("Promoción Prueba de detalle pedido");
         promocion.setFecha_inicio(LocalDateTime.now());
         promocion.setFecha_fin(LocalDateTime.now().plusMonths(1));
         
-        // Crear TipoBeneficioDTO
-        TipoBeneficioDTO tipoBeneficio = new TipoBeneficioDTO();
-        tipoBeneficio.setTipo_beneficio_id(TipoBeneficioDTO.ID_DESCUENTO_PORCENTAJE);
-        tipoBeneficio.setNombre(TipoBeneficioDTO.NOMBRE_DESCUENTO_PORCENTAJE);
+        // Crear TiposBeneficioDTO
+        TiposBeneficioDTO tipoBeneficio = new TiposBeneficioDTO();
+        tipoBeneficio.setTipo_beneficio_id(TiposBeneficioDTO.ID_DESCUENTO_PORCENTAJE);
+        tipoBeneficio.setNombre(TiposBeneficioDTO.NOMBRE_DESCUENTO_PORCENTAJE);
         promocion.setTipo_beneficio(tipoBeneficio);
         
-        // Crear TipoCondicionDTO
-        TipoCondicionDTO tipoCondicion = new TipoCondicionDTO();
-        tipoCondicion.setTipo_condicion_id(TipoCondicionDTO.ID_CANT_MIN_PRODUCTOS);
-        tipoCondicion.setNombre(TipoCondicionDTO.NOMBRE_CANT_MIN_PRODUCTOS);
+        // Crear TiposCondicionDTO
+        TiposCondicionDTO tipoCondicion = new TiposCondicionDTO();
+        tipoCondicion.setTipo_condicion_id(TiposCondicionDTO.ID_CANT_MIN_PRODUCTOS);
+        tipoCondicion.setNombre(TiposCondicionDTO.NOMBRE_CANT_MIN_PRODUCTOS);
         promocion.setTipo_condicion(tipoCondicion);
         
         promocion.setValor_beneficio(15);
@@ -175,16 +175,16 @@ public class DetallePedidoDAOTest {
 
     //pedido ejemplo:
     private void prepararPedidoBase() {
-        PedidoDTO pedido = new PedidoDTO();
+        VentasDTO pedido = new VentasDTO();
         pedido.setTotal(120.00);
         pedido.setFecha_hora_creacion(LocalDateTime.now());
         pedido.setFecha_hora_ultimo_estado(LocalDateTime.now());
         
-        UsuarioDTO usuario = new UsuarioDTO();
+        UsuariosDTO usuario = new UsuariosDTO();
         usuario.setUsuarioId(this.usuarioBaseId);
         pedido.setUsuario(usuario);
         
-        PromocionDTO promo = new PromocionDTO();
+        DescuentosDTO promo = new DescuentosDTO();
         promo.setPromocion_id(this.promocionBaseId);
         pedido.setPromocion(promo);
         
@@ -208,12 +208,12 @@ public class DetallePedidoDAOTest {
 
 
     private void insertarDetallePedidos(ArrayList<Integer> listaDetalle_PedidoId) {
-        DetallePedidoDTO detallepedido = new DetallePedidoDTO();
+        DetalleVentasDTO detallepedido = new DetalleVentasDTO();
         detallepedido.setCantidad(1);
         detallepedido.setPedido_id(this.pedidoBaseId);
         detallepedido.setPrecio_unitario(109.98);
         
-        ProductoVarianteDTO productoVar = new ProductoVarianteDTO();
+        ProductosVariantesDTO productoVar = new ProductosVariantesDTO();
         productoVar.setProd_variante_id(this.prodVarBaseId);
         detallepedido.setProductoVar(productoVar);
         
@@ -230,7 +230,7 @@ public class DetallePedidoDAOTest {
         ArrayList<Integer> listaDetalle_PedidoId = new ArrayList<>();
         insertarDetallePedidos(listaDetalle_PedidoId);
         
-        DetallePedidoDTO detallepedido = this.detalle_pedidoDAO.obtenerPorId(listaDetalle_PedidoId.get(0));
+        DetalleVentasDTO detallepedido = this.detalle_pedidoDAO.obtenerPorId(listaDetalle_PedidoId.get(0));
         assertEquals(detallepedido.getDetalle_pedido_id(), listaDetalle_PedidoId.get(0));
 
         eliminarTodo();
@@ -243,7 +243,7 @@ public class DetallePedidoDAOTest {
         ArrayList<Integer> listaDetalle_PedidoId = new ArrayList<>();
         insertarDetallePedidos(listaDetalle_PedidoId);
 
-        ArrayList<DetallePedidoDTO> listaDetalle_Pedidos = this.detalle_pedidoDAO.listarTodos();
+        ArrayList<DetalleVentasDTO> listaDetalle_Pedidos = this.detalle_pedidoDAO.listarTodos();
         assertEquals(listaDetalle_PedidoId.size(), listaDetalle_Pedidos.size());
         for (Integer i = 0; i < listaDetalle_PedidoId.size(); i++) {
             assertEquals(listaDetalle_PedidoId.get(i), listaDetalle_Pedidos.get(i).getDetalle_pedido_id());
@@ -257,7 +257,7 @@ public class DetallePedidoDAOTest {
         ArrayList<Integer> listaDetalle_PedidoId = new ArrayList<>();
         insertarDetallePedidos(listaDetalle_PedidoId);
 
-        ArrayList<DetallePedidoDTO> listaDetalle_Pedidos = this.detalle_pedidoDAO.listarTodos();
+        ArrayList<DetalleVentasDTO> listaDetalle_Pedidos = this.detalle_pedidoDAO.listarTodos();
         assertEquals(listaDetalle_PedidoId.size(), listaDetalle_Pedidos.size());
         for (Integer i = 0; i < listaDetalle_PedidoId.size(); i++) {
             listaDetalle_Pedidos.get(i).setCantidad(listaDetalle_Pedidos.get(i).getCantidad() + 2);
@@ -265,7 +265,7 @@ public class DetallePedidoDAOTest {
             this.detalle_pedidoDAO.modificar(listaDetalle_Pedidos.get(i));
         }
 
-        ArrayList<DetallePedidoDTO> listaDetalle_PedidoModificados = this.detalle_pedidoDAO.listarTodos();
+        ArrayList<DetalleVentasDTO> listaDetalle_PedidoModificados = this.detalle_pedidoDAO.listarTodos();
         assertEquals(listaDetalle_Pedidos.size(), listaDetalle_PedidoModificados.size());
         for (Integer i = 0; i < listaDetalle_Pedidos.size(); i++) {
             assertEquals(listaDetalle_Pedidos.get(i).getCantidad(), listaDetalle_PedidoModificados.get(i).getCantidad());
@@ -285,36 +285,36 @@ public class DetallePedidoDAOTest {
 
     private void eliminarTodo() {
 
-        ArrayList<DetallePedidoDTO> listaDetalle_Pedido = this.detalle_pedidoDAO.listarTodos();
+        ArrayList<DetalleVentasDTO> listaDetalle_Pedido = this.detalle_pedidoDAO.listarTodos();
         for (Integer i = 0; i < listaDetalle_Pedido.size(); i++) {
             Integer resultado = this.detalle_pedidoDAO.eliminar(listaDetalle_Pedido.get(i));
             assertNotEquals(0, resultado);
-            DetallePedidoDTO detalle_pedido = this.detalle_pedidoDAO.obtenerPorId(listaDetalle_Pedido.get(i).getDetalle_pedido_id());
+            DetalleVentasDTO detalle_pedido = this.detalle_pedidoDAO.obtenerPorId(listaDetalle_Pedido.get(i).getDetalle_pedido_id());
             assertNull(detalle_pedido);
         }
 
-        ArrayList<PedidoDTO> listarPedidos = this.pedidoDAO.listarTodos();
-        for (PedidoDTO pedido : listarPedidos) {
+        ArrayList<VentasDTO> listarPedidos = this.pedidoDAO.listarTodos();
+        for (VentasDTO pedido : listarPedidos) {
             this.pedidoDAO.eliminar(pedido);
         }
 
-        ArrayList<UsuarioDTO> listarUsuarios = this.usuarioDAO.listarTodos();
-        for (UsuarioDTO usuario : listarUsuarios) {
+        ArrayList<UsuariosDTO> listarUsuarios = this.usuarioDAO.listarTodos();
+        for (UsuariosDTO usuario : listarUsuarios) {
             this.usuarioDAO.eliminar(usuario);
         }
 
-        ArrayList<PromocionDTO> listarPromocion = this.promocionDAO.listarTodos();
-        for (PromocionDTO promocion : listarPromocion) {
+        ArrayList<DescuentosDTO> listarPromocion = this.promocionDAO.listarTodos();
+        for (DescuentosDTO promocion : listarPromocion) {
             this.promocionDAO.eliminar(promocion);
         }
 
-        ArrayList<ProductoVarianteDTO> listarProductoVar = this.prodVarDAO.listarTodos();
-        for (ProductoVarianteDTO productoVar : listarProductoVar) {
+        ArrayList<ProductosVariantesDTO> listarProductoVar = this.prodVarDAO.listarTodos();
+        for (ProductosVariantesDTO productoVar : listarProductoVar) {
             this.prodVarDAO.eliminar(productoVar);
         }
 
-        ArrayList<ProductoDTO> listarProducto = this.productoDAO.listarTodos();
-        for (ProductoDTO producto : listarProducto) {
+        ArrayList<ProductosDTO> listarProducto = this.productoDAO.listarTodos();
+        for (ProductosDTO producto : listarProducto) {
             this.productoDAO.eliminar(producto);
         }
     }

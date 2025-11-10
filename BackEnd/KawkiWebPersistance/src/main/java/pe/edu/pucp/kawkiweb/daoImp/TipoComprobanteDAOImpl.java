@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.TipoComprobanteDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilPago.TipoComprobanteDTO;
+import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
 
 public class TipoComprobanteDAOImpl extends BaseDAOImpl implements TipoComprobanteDAO {
 
-    private TipoComprobanteDTO tipoComprobante;
+    private TiposComprobanteDTO tipoComprobante;
 
     public TipoComprobanteDAOImpl() {
         super("TIPO_COMPROBANTES");
@@ -29,7 +29,7 @@ public class TipoComprobanteDAOImpl extends BaseDAOImpl implements TipoComproban
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.tipoComprobante = new TipoComprobanteDTO();
+        this.tipoComprobante = new TiposComprobanteDTO();
         this.tipoComprobante.setTipo_comprobante_id(this.resultSet.getInt("TIPO_COMPROBANTE_ID"));
         this.tipoComprobante.setNombre(this.resultSet.getString("NOMBRE"));
     }
@@ -47,15 +47,15 @@ public class TipoComprobanteDAOImpl extends BaseDAOImpl implements TipoComproban
     }
 
     @Override
-    public TipoComprobanteDTO obtenerPorId(Integer tipoComprobanteId) {
-        this.tipoComprobante = new TipoComprobanteDTO();
+    public TiposComprobanteDTO obtenerPorId(Integer tipoComprobanteId) {
+        this.tipoComprobante = new TiposComprobanteDTO();
         this.tipoComprobante.setTipo_comprobante_id(tipoComprobanteId);
         super.obtenerPorId();
         return this.tipoComprobante;
     }
 
     @Override
-    public ArrayList<TipoComprobanteDTO> listarTodos() {
-        return (ArrayList<TipoComprobanteDTO>) super.listarTodos();
+    public ArrayList<TiposComprobanteDTO> listarTodos() {
+        return (ArrayList<TiposComprobanteDTO>) super.listarTodos();
     }
 }

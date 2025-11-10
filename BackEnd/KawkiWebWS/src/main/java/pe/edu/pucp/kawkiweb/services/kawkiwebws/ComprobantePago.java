@@ -6,8 +6,8 @@ import jakarta.jws.WebParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.ComprobantePagoBO;
-import pe.edu.pucp.kawkiweb.model.Comprobante_PagoDTO;
-import pe.edu.pucp.kawkiweb.model.utilPago.TipoComprobanteDTO;
+import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
+import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
 
 @WebService(serviceName = "ComprobantePago")
 public class ComprobantePago {
@@ -22,7 +22,7 @@ public class ComprobantePago {
     public Integer insertar(
             @WebParam(name = "pago_id") Integer pago_id,
             @WebParam(name = "fecha_hora_creacion") LocalDateTime fecha_hora_creacion,
-            @WebParam(name = "tipo_comprobante") TipoComprobanteDTO tipo_comprobante,
+            @WebParam(name = "tipo_comprobante") TiposComprobanteDTO tipo_comprobante,
             @WebParam(name = "numero_serie") String numero_serie,
             @WebParam(name = "dni_cliente") String dni_cliente,
             @WebParam(name = "nombre_cliente") String nombre_cliente,
@@ -40,13 +40,13 @@ public class ComprobantePago {
     }
 
     @WebMethod(operationName = "obtenerPorId")
-    public Comprobante_PagoDTO obtenerPorId(
+    public ComprobantesPagoDTO obtenerPorId(
             @WebParam(name = "comprobante_pago_id") Integer comprobante_pago_id) {
         return this.comprobantePagoBO.obtenerPorId(comprobante_pago_id);
     }
 
     @WebMethod(operationName = "listarTodos")
-    public ArrayList<Comprobante_PagoDTO> listarTodos() {
+    public ArrayList<ComprobantesPagoDTO> listarTodos() {
         return this.comprobantePagoBO.listarTodos();
     }
 
@@ -55,7 +55,7 @@ public class ComprobantePago {
             @WebParam(name = "comprobante_pago_id") Integer comprobante_pago_id,
             @WebParam(name = "pago_id") Integer pago_id,
             @WebParam(name = "fecha_hora_creacion") LocalDateTime fecha_hora_creacion,
-            @WebParam(name = "tipo_comprobante") TipoComprobanteDTO tipo_comprobante,
+            @WebParam(name = "tipo_comprobante") TiposComprobanteDTO tipo_comprobante,
             @WebParam(name = "numero_serie") String numero_serie,
             @WebParam(name = "dni_cliente") String dni_cliente,
             @WebParam(name = "nombre_cliente") String nombre_cliente,

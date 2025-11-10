@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.EnvioBO;
 import pe.edu.pucp.kawkiweb.model.EnvioDTO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
 import pe.edu.pucp.kawkiweb.model.utilEnvio.CourierDTO;
 import pe.edu.pucp.kawkiweb.model.utilEnvio.EstadoEnvioDTO;
 
@@ -27,7 +27,7 @@ public class Envio {
             @WebParam(name = "courier") CourierDTO courier,
             @WebParam(name = "fecha_envio") LocalDateTime fecha_envio,
             @WebParam(name = "costo_envio") Double costo_envio,
-            @WebParam(name = "pedido") PedidoDTO pedido,
+            @WebParam(name = "pedido") VentasDTO pedido,
             @WebParam(name = "estado") EstadoEnvioDTO estado,
             @WebParam(name = "fecha_ultimo_estado") LocalDateTime fecha_ultimo_estado) {
 
@@ -53,7 +53,7 @@ public class Envio {
             @WebParam(name = "courier") CourierDTO courier,
             @WebParam(name = "fecha_envio") LocalDateTime fecha_envio,
             @WebParam(name = "costo_envio") Double costo_envio,
-            @WebParam(name = "pedido") PedidoDTO pedido,
+            @WebParam(name = "pedido") VentasDTO pedido,
             @WebParam(name = "estado") EstadoEnvioDTO estado,
             @WebParam(name = "fecha_ultimo_estado") LocalDateTime fecha_ultimo_estado) {
 

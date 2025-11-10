@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.TipoUsuarioDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilUsuario.TipoUsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 
 public class TipoUsuarioDAOImpl extends BaseDAOImpl implements TipoUsuarioDAO {
 
-    private TipoUsuarioDTO tipoUsuario;
+    private TiposUsuarioDTO tipoUsuario;
 
     public TipoUsuarioDAOImpl() {
         super("TIPO_USUARIO");
@@ -32,7 +32,7 @@ public class TipoUsuarioDAOImpl extends BaseDAOImpl implements TipoUsuarioDAO {
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.tipoUsuario = new TipoUsuarioDTO();
+        this.tipoUsuario = new TiposUsuarioDTO();
         this.tipoUsuario.setTipoUsuarioId(this.resultSet.getInt("TIPO_USUARIO_ID"));
         this.tipoUsuario.setNombre(this.resultSet.getString("NOMBRE"));
     }
@@ -49,16 +49,16 @@ public class TipoUsuarioDAOImpl extends BaseDAOImpl implements TipoUsuarioDAO {
     }
 
     @Override
-    public TipoUsuarioDTO obtenerPorId(Integer tipoUsuarioId) {
-        this.tipoUsuario = new TipoUsuarioDTO();
+    public TiposUsuarioDTO obtenerPorId(Integer tipoUsuarioId) {
+        this.tipoUsuario = new TiposUsuarioDTO();
         this.tipoUsuario.setTipoUsuarioId(tipoUsuarioId);
         super.obtenerPorId();
         return this.tipoUsuario;
     }
 
     @Override
-    public TipoUsuarioDTO obtenerPorNombre(String nombre) {
-        TipoUsuarioDTO resultado = null;
+    public TiposUsuarioDTO obtenerPorNombre(String nombre) {
+        TiposUsuarioDTO resultado = null;
         CallableStatement st = null;
         ResultSet rs = null;
         try {
@@ -69,7 +69,7 @@ public class TipoUsuarioDAOImpl extends BaseDAOImpl implements TipoUsuarioDAO {
             rs = st.executeQuery();
 
             if (rs.next()) {
-                resultado = new TipoUsuarioDTO();
+                resultado = new TiposUsuarioDTO();
                 resultado.setTipoUsuarioId(rs.getInt("TIPO_USUARIO_ID"));
                 resultado.setNombre(rs.getString("NOMBRE"));
             }
@@ -92,8 +92,8 @@ public class TipoUsuarioDAOImpl extends BaseDAOImpl implements TipoUsuarioDAO {
     }
 
     @Override
-    public ArrayList<TipoUsuarioDTO> listarTodos() {
-        return (ArrayList<TipoUsuarioDTO>) super.listarTodos();
+    public ArrayList<TiposUsuarioDTO> listarTodos() {
+        return (ArrayList<TiposUsuarioDTO>) super.listarTodos();
     }
 
 }

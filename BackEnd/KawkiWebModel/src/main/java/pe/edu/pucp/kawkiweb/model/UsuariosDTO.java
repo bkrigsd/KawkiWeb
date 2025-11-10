@@ -1,88 +1,87 @@
 package pe.edu.pucp.kawkiweb.model;
 
-import pe.edu.pucp.kawkiweb.model.utilUsuario.TipoUsuarioDTO;
-import java.time.LocalDate;
+import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 import java.time.LocalDateTime;
 
-public class UsuarioDTO {
+public class UsuariosDTO {
+
+    private static Integer cantidadUsuarios = 0;
 
     private Integer usuarioId;
     private String nombre;
     private String apePaterno;
-    private String apeMaterno;
     private String dni;
-    private LocalDate fechaNacimiento;
     private String telefono;
-    private String direccion;
     private String correo;
+    private String codigo;
     private String nombreUsuario;
     private String contrasenha;
     private LocalDateTime fechaHoraCreacion;
-    private TipoUsuarioDTO tipoUsuario;
-    private String ruc;
-    private String razon_social;
-    private String direccion_fiscal;
+    private TiposUsuarioDTO tipoUsuario;
 
-    public UsuarioDTO() {
+    public UsuariosDTO() {
+        UsuariosDTO.cantidadUsuarios++;
         this.usuarioId = null;
         this.nombre = null;
         this.apePaterno = null;
-        this.apeMaterno = null;
         this.dni = null;
-        this.fechaNacimiento = null;
         this.telefono = null;
-        this.direccion = null;
         this.correo = null;
+        this.codigo = "U-" + this.tipoUsuario + String.format("%04d", UsuariosDTO.cantidadUsuarios);
         this.nombreUsuario = null;
         this.contrasenha = null;
-        this.fechaHoraCreacion = null;
+        this.fechaHoraCreacion = LocalDateTime.now();
         this.tipoUsuario = null;
-        this.ruc = null;
-        this.razon_social = null;
-        this.direccion_fiscal = null;
     }
 
-    public UsuarioDTO(Integer usuarioId, String nombre, String apePaterno, String apeMaterno,
-            String dni, LocalDate fechaNacimiento, String telefono, String direccion,
-            String correo, String nombreUsuario, String contrasenha,
-            LocalDateTime fechaHoraCreacion, TipoUsuarioDTO tipoUsuario, String ruc,
-            String razon_social, String direccion_fiscal) {
+    public UsuariosDTO(Integer usuarioId, String nombre, String apePaterno,
+            String dni, String telefono, String correo, String nombreUsuario,
+            String contrasenha, TiposUsuarioDTO tipoUsuario) {
 
+        UsuariosDTO.cantidadUsuarios++;
         this.usuarioId = usuarioId;
         this.nombre = nombre;
         this.apePaterno = apePaterno;
-        this.apeMaterno = apeMaterno;
         this.dni = dni;
-        this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
-        this.direccion = direccion;
         this.correo = correo;
+        this.codigo = "U-" + this.tipoUsuario + String.format("%04d", UsuariosDTO.cantidadUsuarios);
         this.nombreUsuario = nombreUsuario;
         this.contrasenha = contrasenha;
-        this.fechaHoraCreacion = fechaHoraCreacion;
+        this.fechaHoraCreacion = LocalDateTime.now();
         this.tipoUsuario = tipoUsuario;
-        this.ruc = ruc;
-        this.razon_social = razon_social;
-        this.direccion_fiscal = direccion_fiscal;
     }
 
-    public UsuarioDTO(UsuarioDTO usuario) {
+    public UsuariosDTO(UsuariosDTO usuario) {
         this.usuarioId = usuario.usuarioId;
         this.nombre = usuario.nombre;
         this.apePaterno = usuario.apePaterno;
-        this.apeMaterno = usuario.apeMaterno;
         this.dni = usuario.dni;
-        this.fechaNacimiento = usuario.fechaNacimiento;
         this.telefono = usuario.telefono;
-        this.direccion = usuario.direccion;
         this.correo = usuario.correo;
+        this.codigo = usuario.codigo;
         this.nombreUsuario = usuario.nombreUsuario;
         this.contrasenha = usuario.contrasenha;
         this.fechaHoraCreacion = usuario.fechaHoraCreacion;
         this.tipoUsuario = usuario.tipoUsuario;
-        this.ruc = usuario.ruc;
-        this.razon_social = usuario.razon_social;
-        this.direccion_fiscal = usuario.direccion_fiscal;
+    }
+
+    public void MostrarDetalleUsuario() {
+        System.out.println(this);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder referencia = new StringBuilder();
+
+        referencia.append("Identificador del usuario: ").append(this.usuarioId).append('\n');
+        referencia.append("Nombre del usuario: ").append(this.nombre).append(" ").append(this.apePaterno).append('\n');
+        referencia.append("Teléfono del usuario: ").append(this.telefono).append('\n');
+        referencia.append("Correo del usuario: ").append(this.correo).append('\n');
+        referencia.append("Código del usuario: ").append(this.getCodigo()).append('\n');
+        referencia.append("Tipo usuario: ").append(this.tipoUsuario).append('\n');
+
+        return referencia.toString();
     }
 
     // Getters y Setters
@@ -91,7 +90,7 @@ public class UsuarioDTO {
     }
 
     public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
+        this.setUsuarioId((Integer) usuarioId);
     }
 
     public String getNombre() {
@@ -110,14 +109,6 @@ public class UsuarioDTO {
         this.apePaterno = apePaterno;
     }
 
-    public String getApeMaterno() {
-        return apeMaterno;
-    }
-
-    public void setApeMaterno(String apeMaterno) {
-        this.apeMaterno = apeMaterno;
-    }
-
     public String getDni() {
         return dni;
     }
@@ -126,28 +117,12 @@ public class UsuarioDTO {
         this.dni = dni;
     }
 
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
     public String getTelefono() {
         return telefono;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public String getCorreo() {
@@ -182,35 +157,32 @@ public class UsuarioDTO {
         this.fechaHoraCreacion = fechaHoraCreacion;
     }
 
-    public TipoUsuarioDTO getTipoUsuario() {
+    public TiposUsuarioDTO getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(TipoUsuarioDTO tipoUsuario) {
+    public void setTipoUsuario(TiposUsuarioDTO tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public String getRuc() {
-        return ruc;
+    public static Integer getCantidadUsuarios() {
+        return cantidadUsuarios;
     }
 
-    public void setRuc(String ruc) {
-        this.ruc = ruc;
+    public static void setCantidadUsuarios(Integer aCantidadUsuarios) {
+        cantidadUsuarios = aCantidadUsuarios;
     }
 
-    public String getRazon_social() {
-        return razon_social;
+    public void setUsuarioId(Integer usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
-    public void setRazon_social(String razon_social) {
-        this.razon_social = razon_social;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public String getDireccion_fiscal() {
-        return direccion_fiscal;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public void setDireccion_fiscal(String direccion_fiscal) {
-        this.direccion_fiscal = direccion_fiscal;
-    }
 }

@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.ColorDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilProducto.ColorDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
 
 public class ColorDAOImpl extends BaseDAOImpl implements ColorDAO {
 
-    private ColorDTO color;
+    private ColoresDTO color;
 
     public ColorDAOImpl() {
         super("COLORES");
@@ -29,7 +29,7 @@ public class ColorDAOImpl extends BaseDAOImpl implements ColorDAO {
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.color = new ColorDTO();
+        this.color = new ColoresDTO();
         this.color.setColor_id(this.resultSet.getInt("COLOR_ID"));
         this.color.setNombre(this.resultSet.getString("NOMBRE"));
     }
@@ -46,15 +46,15 @@ public class ColorDAOImpl extends BaseDAOImpl implements ColorDAO {
     }
 
     @Override
-    public ColorDTO obtenerPorId(Integer colorId) {
-        this.color = new ColorDTO();
+    public ColoresDTO obtenerPorId(Integer colorId) {
+        this.color = new ColoresDTO();
         this.color.setColor_id(colorId);
         super.obtenerPorId();
         return this.color;
     }
 
     @Override
-    public ArrayList<ColorDTO> listarTodos() {
-        return (ArrayList<ColorDTO>) super.listarTodos();
+    public ArrayList<ColoresDTO> listarTodos() {
+        return (ArrayList<ColoresDTO>) super.listarTodos();
     }
 }

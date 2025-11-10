@@ -14,11 +14,11 @@ import pe.edu.pucp.kawkiweb.daoImp.PedidoDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.TipoUsuarioDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.UsuarioDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilPedido.EstadoPedidoDTO;
-import pe.edu.pucp.kawkiweb.model.utilPago.MetodoPagoDTO;
+import pe.edu.pucp.kawkiweb.model.utilPago.MetodosPagoDTO;
 import pe.edu.pucp.kawkiweb.model.PagoDTO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
-import pe.edu.pucp.kawkiweb.model.utilUsuario.TipoUsuarioDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
+import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class PagoDAOTest {
 
@@ -50,7 +50,7 @@ public class PagoDAOTest {
     }
 
     private void prepararUsuarioBase() {
-        UsuarioDTO usuario = new UsuarioDTO();
+        UsuariosDTO usuario = new UsuariosDTO();
         usuario.setNombre("David");
         usuario.setApePaterno("Espinoza");
         usuario.setApeMaterno("Urco");
@@ -63,7 +63,7 @@ public class PagoDAOTest {
         usuario.setContrasenha("gato");
         usuario.setFechaHoraCreacion(LocalDateTime.now());
 
-        TipoUsuarioDTO tipoUsuario = this.tipoUsuarioDAO.obtenerPorId(TipoUsuarioDTO.ID_CLIENTE);
+        TiposUsuarioDTO tipoUsuario = this.tipoUsuarioDAO.obtenerPorId(TiposUsuarioDTO.ID_CLIENTE);
         usuario.setTipoUsuario(tipoUsuario);
 
         this.usuarioBaseId = this.usuarioDAO.insertar(usuario);
@@ -72,12 +72,12 @@ public class PagoDAOTest {
     }
 
     private void prepararPedidoBase() {
-        PedidoDTO pedido = new PedidoDTO();
+        VentasDTO pedido = new VentasDTO();
         pedido.setTotal(120.50);
         pedido.setFecha_hora_creacion(LocalDateTime.now());
         pedido.setFecha_hora_ultimo_estado(LocalDateTime.now());
 
-        UsuarioDTO usuario = new UsuarioDTO();
+        UsuariosDTO usuario = new UsuariosDTO();
         usuario.setUsuarioId(this.usuarioBaseId);
         pedido.setUsuario(usuario);
 
@@ -99,10 +99,10 @@ public class PagoDAOTest {
         pago.setMonto_total(150.0);
         pago.setFecha_hora_pago(LocalDateTime.now());
 
-        MetodoPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(MetodoPagoDTO.ID_YAPE);
+        MetodosPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(MetodosPagoDTO.ID_YAPE);
         pago.setMetodo_pago(metodoPago);
 
-        PedidoDTO pedido = new PedidoDTO();
+        VentasDTO pedido = new VentasDTO();
         pedido.setPedido_id(this.pedidoBaseId);
         pago.setPedido(pedido);
 
@@ -123,10 +123,10 @@ public class PagoDAOTest {
         pago.setMonto_total(100.0);
         pago.setFecha_hora_pago(LocalDateTime.now());
 
-        MetodoPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(MetodoPagoDTO.ID_TARJETA_BANCARIA);
+        MetodosPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(MetodosPagoDTO.ID_TARJETA_BANCARIA);
         pago.setMetodo_pago(metodoPago);
 
-        PedidoDTO pedido = new PedidoDTO();
+        VentasDTO pedido = new VentasDTO();
         pedido.setPedido_id(this.pedidoBaseId);
         pago.setPedido(pedido);
 
@@ -138,7 +138,7 @@ public class PagoDAOTest {
         assertEquals(pagoId, pagoBD.getPago_id());
         assertEquals(100.0, pagoBD.getMonto_total(), 0.001);
         assertNotNull(pagoBD.getMetodo_pago(), "El método de pago no debería ser null");
-        assertEquals(MetodoPagoDTO.ID_TARJETA_BANCARIA, pagoBD.getMetodo_pago().getMetodo_pago_id());
+        assertEquals(MetodosPagoDTO.ID_TARJETA_BANCARIA, pagoBD.getMetodo_pago().getMetodo_pago_id());
         assertNotNull(pagoBD.getPedido(), "El pedido no debería ser null");
         assertEquals(this.pedidoBaseId, pagoBD.getPedido().getPedido_id());
     }
@@ -152,7 +152,7 @@ public class PagoDAOTest {
         ArrayList<PagoDTO> pagosAntes = this.pagoDAO.listarTodos();
         int cantidadInicial = pagosAntes.size();
 
-        MetodoPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(MetodoPagoDTO.ID_PLIN);
+        MetodosPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(MetodosPagoDTO.ID_PLIN);
 
         for (int i = 0; i < 3; i++) {
             PagoDTO pago = new PagoDTO();
@@ -160,7 +160,7 @@ public class PagoDAOTest {
             pago.setFecha_hora_pago(LocalDateTime.now());
             pago.setMetodo_pago(metodoPago);
 
-            PedidoDTO pedido = new PedidoDTO();
+            VentasDTO pedido = new VentasDTO();
             pedido.setPedido_id(this.pedidoBaseId);
             pago.setPedido(pedido);
 
@@ -188,10 +188,10 @@ public class PagoDAOTest {
         pago.setMonto_total(80.0);
         pago.setFecha_hora_pago(LocalDateTime.now());
 
-        MetodoPagoDTO metodoPagoYape = this.metodoPagoDAO.obtenerPorId(MetodoPagoDTO.ID_YAPE);
+        MetodosPagoDTO metodoPagoYape = this.metodoPagoDAO.obtenerPorId(MetodosPagoDTO.ID_YAPE);
         pago.setMetodo_pago(metodoPagoYape);
 
-        PedidoDTO pedido = new PedidoDTO();
+        VentasDTO pedido = new VentasDTO();
         pedido.setPedido_id(this.pedidoBaseId);
         pago.setPedido(pedido);
 
@@ -202,7 +202,7 @@ public class PagoDAOTest {
         assertNotNull(pagoBD, "El pago debe existir antes de modificar");
 
         pagoBD.setMonto_total(200.0);
-        MetodoPagoDTO metodoPagoPlin = this.metodoPagoDAO.obtenerPorId(MetodoPagoDTO.ID_PLIN);
+        MetodosPagoDTO metodoPagoPlin = this.metodoPagoDAO.obtenerPorId(MetodosPagoDTO.ID_PLIN);
         pagoBD.setMetodo_pago(metodoPagoPlin);
 
         Integer filas = this.pagoDAO.modificar(pagoBD);
@@ -211,7 +211,7 @@ public class PagoDAOTest {
         PagoDTO pagoModificado = this.pagoDAO.obtenerPorId(pagoId);
         assertEquals(200.0, pagoModificado.getMonto_total(), 0.001);
         assertNotNull(pagoModificado.getMetodo_pago());
-        assertEquals(MetodoPagoDTO.ID_PLIN, pagoModificado.getMetodo_pago().getMetodo_pago_id());
+        assertEquals(MetodosPagoDTO.ID_PLIN, pagoModificado.getMetodo_pago().getMetodo_pago_id());
     }
 
     @Test
@@ -224,10 +224,10 @@ public class PagoDAOTest {
         pago.setMonto_total(120.0);
         pago.setFecha_hora_pago(LocalDateTime.now());
 
-        MetodoPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(MetodoPagoDTO.ID_TARJETA_BANCARIA);
+        MetodosPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(MetodosPagoDTO.ID_TARJETA_BANCARIA);
         pago.setMetodo_pago(metodoPago);
 
-        PedidoDTO pedido = new PedidoDTO();
+        VentasDTO pedido = new VentasDTO();
         pedido.setPedido_id(this.pedidoBaseId);
         pago.setPedido(pedido);
 
@@ -258,7 +258,7 @@ public class PagoDAOTest {
 
             if (this.pedidoBaseId != null) {
                 try {
-                    PedidoDTO pedido = this.pedidoDAO.obtenerPorId(this.pedidoBaseId);
+                    VentasDTO pedido = this.pedidoDAO.obtenerPorId(this.pedidoBaseId);
                     if (pedido != null) {
                         this.pedidoDAO.eliminar(pedido);
                     }
@@ -269,7 +269,7 @@ public class PagoDAOTest {
 
             if (this.usuarioBaseId != null) {
                 try {
-                    UsuarioDTO usuario = this.usuarioDAO.obtenerPorId(this.usuarioBaseId);
+                    UsuariosDTO usuario = this.usuarioDAO.obtenerPorId(this.usuarioBaseId);
                     if (usuario != null) {
                         this.usuarioDAO.eliminar(usuario);
                     }

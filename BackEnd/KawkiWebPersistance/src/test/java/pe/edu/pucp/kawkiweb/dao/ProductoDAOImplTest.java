@@ -1,8 +1,8 @@
 package pe.edu.pucp.kawkiweb.dao;
 
-import pe.edu.pucp.kawkiweb.model.ProductoDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriaDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.EstiloDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
@@ -40,13 +40,13 @@ public class ProductoDAOImplTest {
     }
 
     private void insertarProductos(ArrayList<Integer> listaProductoId) {
-        ProductoDTO producto;
+        ProductosDTO producto;
 
         // 1er producto
-        producto = new ProductoDTO();
+        producto = new ProductosDTO();
         producto.setDescripcion("Zapato Oxford - Rojo");
-        producto.setCategoria(new CategoriaDTO(CategoriaDTO.ID_OXFORD, CategoriaDTO.NOMBRE_OXFORD));
-        producto.setEstilo(new EstiloDTO(EstiloDTO.ID_CHAROL, EstiloDTO.NOMBRE_CHAROL));
+        producto.setCategoria(new CategoriasDTO(CategoriasDTO.ID_OXFORD, CategoriasDTO.NOMBRE_OXFORD));
+        producto.setEstilo(new EstilosDTO(EstilosDTO.ID_CHAROL, EstilosDTO.NOMBRE_CHAROL));
         producto.setPrecio_venta(180.89);
         producto.setFecha_hora_creacion(LocalDateTime.now());
         Integer resultado = this.productoDAO.insertar(producto);
@@ -54,10 +54,10 @@ public class ProductoDAOImplTest {
         listaProductoId.add(resultado);
 
         // 2do producto
-        producto = new ProductoDTO();
+        producto = new ProductosDTO();
         producto.setDescripcion("Zapato Oxford - Crema");
-        producto.setCategoria(new CategoriaDTO(CategoriaDTO.ID_OXFORD, CategoriaDTO.NOMBRE_OXFORD));
-        producto.setEstilo(new EstiloDTO(EstiloDTO.ID_COMBINADOS, EstiloDTO.NOMBRE_COMBINADOS));
+        producto.setCategoria(new CategoriasDTO(CategoriasDTO.ID_OXFORD, CategoriasDTO.NOMBRE_OXFORD));
+        producto.setEstilo(new EstilosDTO(EstilosDTO.ID_COMBINADOS, EstilosDTO.NOMBRE_COMBINADOS));
         producto.setPrecio_venta(149.99);
         producto.setFecha_hora_creacion(LocalDateTime.now());
         resultado = this.productoDAO.insertar(producto);
@@ -65,10 +65,10 @@ public class ProductoDAOImplTest {
         listaProductoId.add(resultado);
 
         // 3er producto
-        producto = new ProductoDTO();
+        producto = new ProductosDTO();
         producto.setDescripcion("Zapato Derby - Blanco");
-        producto.setCategoria(new CategoriaDTO(CategoriaDTO.ID_DERBY, CategoriaDTO.NOMBRE_DERBY));
-        producto.setEstilo(new EstiloDTO(EstiloDTO.ID_METALIZADOS, EstiloDTO.NOMBRE_METALIZADOS));
+        producto.setCategoria(new CategoriasDTO(CategoriasDTO.ID_DERBY, CategoriasDTO.NOMBRE_DERBY));
+        producto.setEstilo(new EstilosDTO(EstilosDTO.ID_METALIZADOS, EstilosDTO.NOMBRE_METALIZADOS));
         producto.setPrecio_venta(200.48);
         producto.setFecha_hora_creacion(LocalDateTime.now());
         resultado = this.productoDAO.insertar(producto);
@@ -82,7 +82,7 @@ public class ProductoDAOImplTest {
         ArrayList<Integer> listaProductoId = new ArrayList<>();
         insertarProductos(listaProductoId);
 
-        ProductoDTO producto = this.productoDAO.obtenerPorId(listaProductoId.get(0));
+        ProductosDTO producto = this.productoDAO.obtenerPorId(listaProductoId.get(0));
         assertEquals(producto.getProducto_id(), listaProductoId.get(0));
 
         producto = this.productoDAO.obtenerPorId(listaProductoId.get(1));
@@ -100,7 +100,7 @@ public class ProductoDAOImplTest {
         ArrayList<Integer> listaProductoId = new ArrayList<>();
         insertarProductos(listaProductoId);
 
-        ArrayList<ProductoDTO> listaProductos = this.productoDAO.listarTodos();
+        ArrayList<ProductosDTO> listaProductos = this.productoDAO.listarTodos();
         assertEquals(listaProductoId.size(), listaProductos.size());
         for (Integer i = 0; i < listaProductoId.size(); i++) {
             assertEquals(listaProductoId.get(i), listaProductos.get(i).getProducto_id());
@@ -114,18 +114,18 @@ public class ProductoDAOImplTest {
         ArrayList<Integer> listaProductoId = new ArrayList<>();
         insertarProductos(listaProductoId);
 
-        ArrayList<ProductoDTO> listaProductos = this.productoDAO.listarTodos();
+        ArrayList<ProductosDTO> listaProductos = this.productoDAO.listarTodos();
         assertEquals(listaProductoId.size(), listaProductos.size());
         for (Integer i = 0; i < listaProductoId.size(); i++) {
             listaProductos.get(i).setDescripcion("NuevaDescripcion" + i.toString());
-            listaProductos.get(i).setCategoria(new CategoriaDTO(CategoriaDTO.ID_DERBY, CategoriaDTO.NOMBRE_DERBY));
-            listaProductos.get(i).setEstilo(new EstiloDTO(EstiloDTO.ID_CLASICOS, EstiloDTO.NOMBRE_CLASICOS));
+            listaProductos.get(i).setCategoria(new CategoriasDTO(CategoriasDTO.ID_DERBY, CategoriasDTO.NOMBRE_DERBY));
+            listaProductos.get(i).setEstilo(new EstilosDTO(EstilosDTO.ID_CLASICOS, EstilosDTO.NOMBRE_CLASICOS));
             listaProductos.get(i).setPrecio_venta(450.00);
             listaProductos.get(i).setFecha_hora_creacion(LocalDateTime.now());
             this.productoDAO.modificar(listaProductos.get(i));
         }
 
-        ArrayList<ProductoDTO> listaProductosModificados = this.productoDAO.listarTodos();
+        ArrayList<ProductosDTO> listaProductosModificados = this.productoDAO.listarTodos();
         assertEquals(listaProductos.size(), listaProductosModificados.size());
         for (Integer i = 0; i < listaProductos.size(); i++) {
             assertEquals(listaProductos.get(i).getDescripcion(), listaProductosModificados.get(i).getDescripcion());
@@ -149,11 +149,11 @@ public class ProductoDAOImplTest {
     }
 
     private void eliminarTodo() {
-        ArrayList<ProductoDTO> listaProductos = this.productoDAO.listarTodos();
+        ArrayList<ProductosDTO> listaProductos = this.productoDAO.listarTodos();
         for (Integer i = 0; i < listaProductos.size(); i++) {
             Integer resultado = this.productoDAO.eliminar(listaProductos.get(i));
             assertNotEquals(0, resultado);
-            ProductoDTO producto = this.productoDAO.obtenerPorId(listaProductos.get(i).getProducto_id());
+            ProductosDTO producto = this.productoDAO.obtenerPorId(listaProductos.get(i).getProducto_id());
             assertNull(producto);
         }
     }

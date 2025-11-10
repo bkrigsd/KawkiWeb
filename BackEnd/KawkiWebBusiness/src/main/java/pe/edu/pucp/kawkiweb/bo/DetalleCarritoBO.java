@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.dao.DetalleCarritoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.DetalleCarritoDAOImpl;
 import pe.edu.pucp.kawkiweb.model.DetalleCarritoDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 
 public class DetalleCarritoBO {
 
@@ -26,7 +26,7 @@ public class DetalleCarritoBO {
      */
     public Integer insertar(Integer carritoId, Integer cantidad,
             Double precioUnitario, Double subtotal,
-            ProductoVarianteDTO producto) {
+            ProductosVariantesDTO producto) {
         if (carritoId == null || carritoId <= 0) {
             System.err.println("Error: ID de carrito inválido");
             return 0;
@@ -99,7 +99,7 @@ public class DetalleCarritoBO {
      */
     public Integer modificar(Integer detalleCarritoId, Integer carritoId,
             Integer cantidad, Double precioUnitario,
-            Double subtotal, ProductoVarianteDTO producto) {
+            Double subtotal, ProductosVariantesDTO producto) {
         if (detalleCarritoId == null || detalleCarritoId <= 0) {
             System.err.println("Error: ID de detalle inválido");
             return 0;

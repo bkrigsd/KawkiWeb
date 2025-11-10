@@ -1,19 +1,19 @@
 package pe.edu.pucp.kawkiweb.dao;
 
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.model.utilMovInventario.TipoMovimientoDTO;
+import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
 
 public interface TipoMovimientoDAO {
 
-    Integer insertar(TipoMovimientoDTO tipoMovimiento);
+    Integer insertar(TiposMovimientoDTO tipoMovimiento);
 
-    TipoMovimientoDTO obtenerPorId(Integer tipoMovimientoId);
+    TiposMovimientoDTO obtenerPorId(Integer tipoMovimientoId);
 
-    TipoMovimientoDTO obtenerPorNombre(String nombre);
+    TiposMovimientoDTO obtenerPorNombre(String nombre);
 
-    ArrayList<TipoMovimientoDTO> listarTodos();
+    ArrayList<TiposMovimientoDTO> listarTodos();
 
-    Integer modificar(TipoMovimientoDTO tipoMovimiento);
+    Integer modificar(TiposMovimientoDTO tipoMovimiento);
 
-    Integer eliminar(TipoMovimientoDTO tipoMovimiento);
+    Integer eliminar(TiposMovimientoDTO tipoMovimiento);
 }

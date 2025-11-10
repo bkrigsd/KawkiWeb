@@ -1,6 +1,6 @@
 package pe.edu.pucp.kawkiweb.model.utilProducto;
 
-public class CategoriaDTO {
+public class CategoriasDTO {
 
     private Integer categoria_id;
     private String nombre;
@@ -12,17 +12,17 @@ public class CategoriaDTO {
     public static final String NOMBRE_DERBY = "Derby";
     public static final String NOMBRE_OXFORD = "Oxford";
 
-    public CategoriaDTO() {
+    public CategoriasDTO() {
         this.categoria_id = null;
         this.nombre = null;
     }
 
-    public CategoriaDTO(Integer categoria_id, String nombre) {
+    public CategoriasDTO(Integer categoria_id, String nombre) {
         this.categoria_id = categoria_id;
         this.nombre = nombre;
     }
 
-    public CategoriaDTO(CategoriaDTO categoria) {
+    public CategoriasDTO(CategoriasDTO categoria) {
         this.categoria_id = categoria.categoria_id;
         this.nombre = categoria.nombre;
     }

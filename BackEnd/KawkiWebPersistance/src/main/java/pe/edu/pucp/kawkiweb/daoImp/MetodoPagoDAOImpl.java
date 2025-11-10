@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.MetodoPagoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilPago.MetodoPagoDTO;
+import pe.edu.pucp.kawkiweb.model.utilPago.MetodosPagoDTO;
 
 public class MetodoPagoDAOImpl extends BaseDAOImpl implements MetodoPagoDAO {
 
-    private MetodoPagoDTO metodoPago;
+    private MetodosPagoDTO metodoPago;
 
     public MetodoPagoDAOImpl() {
         super("METODO_PAGO");
@@ -29,7 +29,7 @@ public class MetodoPagoDAOImpl extends BaseDAOImpl implements MetodoPagoDAO {
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.metodoPago = new MetodoPagoDTO();
+        this.metodoPago = new MetodosPagoDTO();
         this.metodoPago.setMetodo_pago_id(this.resultSet.getInt("METODO_PAGO_ID"));
         this.metodoPago.setNombre(this.resultSet.getString("NOMBRE"));
     }
@@ -46,15 +46,15 @@ public class MetodoPagoDAOImpl extends BaseDAOImpl implements MetodoPagoDAO {
     }
 
     @Override
-    public MetodoPagoDTO obtenerPorId(Integer metodoPagoId) {
-        this.metodoPago = new MetodoPagoDTO();
+    public MetodosPagoDTO obtenerPorId(Integer metodoPagoId) {
+        this.metodoPago = new MetodosPagoDTO();
         this.metodoPago.setMetodo_pago_id(metodoPagoId);
         super.obtenerPorId();
         return this.metodoPago;
     }
 
     @Override
-    public ArrayList<MetodoPagoDTO> listarTodos() {
-        return (ArrayList<MetodoPagoDTO>) super.listarTodos();
+    public ArrayList<MetodosPagoDTO> listarTodos() {
+        return (ArrayList<MetodosPagoDTO>) super.listarTodos();
     }
 }

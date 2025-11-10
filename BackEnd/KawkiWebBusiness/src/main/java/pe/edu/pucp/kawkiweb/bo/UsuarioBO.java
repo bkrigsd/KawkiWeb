@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 import pe.edu.pucp.kawkiweb.daoImp.UsuarioDAOImpl;
 import pe.edu.pucp.kawkiweb.dao.UsuarioDAO;
-import pe.edu.pucp.kawkiweb.model.utilUsuario.TipoUsuarioDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class UsuarioBO {
 
@@ -34,7 +34,7 @@ public class UsuarioBO {
     public Integer insertar(String nombre, String apePaterno, String apeMaterno,
             String dni, LocalDate fechaNacimiento, String telefono, String direccion,
             String correo, String nombreUsuario, String contrasenha,
-            LocalDateTime fechaHoraCreacion, TipoUsuarioDTO tipoUsuario) {
+            LocalDateTime fechaHoraCreacion, TiposUsuarioDTO tipoUsuario) {
 
         try {
             // Validaciones básicas
@@ -62,7 +62,7 @@ public class UsuarioBO {
                 return null;
             }
 
-            UsuarioDTO usuarioDTO = new UsuarioDTO();
+            UsuariosDTO usuarioDTO = new UsuariosDTO();
             usuarioDTO.setNombre(nombre.trim());
             usuarioDTO.setApePaterno(apePaterno.trim());
             usuarioDTO.setApeMaterno(apeMaterno.trim());
@@ -91,9 +91,9 @@ public class UsuarioBO {
      * Obtiene un usuario por su ID
      *
      * @param usuarioId ID del usuario a buscar
-     * @return UsuarioDTO encontrado, o null si no existe o hay error
+     * @return UsuariosDTO encontrado, o null si no existe o hay error
      */
-    public UsuarioDTO obtenerPorId(Integer usuarioId) {
+    public UsuariosDTO obtenerPorId(Integer usuarioId) {
         try {
             if (usuarioId == null || usuarioId <= 0) {
                 System.err.println("Error: ID de usuario inválido");
@@ -113,9 +113,9 @@ public class UsuarioBO {
      *
      * @return Lista de usuarios, o lista vacía si hay error
      */
-    public ArrayList<UsuarioDTO> listarTodos() {
+    public ArrayList<UsuariosDTO> listarTodos() {
         try {
-            ArrayList<UsuarioDTO> lista = this.usuarioDAO.listarTodos();
+            ArrayList<UsuariosDTO> lista = this.usuarioDAO.listarTodos();
             return (lista != null) ? lista : new ArrayList<>();
 
         } catch (Exception e) {
@@ -133,7 +133,7 @@ public class UsuarioBO {
     public Integer modificar(Integer usuarioId, String nombre, String apePaterno,
             String apeMaterno, String dni, LocalDate fechaNacimiento, String telefono,
             String direccion, String correo, String nombreUsuario, String contrasenha,
-            LocalDateTime fechaHoraCreacion, TipoUsuarioDTO tipoUsuario) {
+            LocalDateTime fechaHoraCreacion, TiposUsuarioDTO tipoUsuario) {
 
         try {
             // Validar ID
@@ -143,7 +143,7 @@ public class UsuarioBO {
             }
 
             // Validar que el usuario existe
-            UsuarioDTO usuarioExistente = this.obtenerPorId(usuarioId);
+            UsuariosDTO usuarioExistente = this.obtenerPorId(usuarioId);
             if (usuarioExistente == null) {
                 System.err.println("Error: Usuario no encontrado");
                 return null;
@@ -175,7 +175,7 @@ public class UsuarioBO {
                 return null;
             }
 
-            UsuarioDTO usuarioDTO = new UsuarioDTO();
+            UsuariosDTO usuarioDTO = new UsuariosDTO();
             usuarioDTO.setUsuarioId(usuarioId);
             usuarioDTO.setNombre(nombre.trim());
             usuarioDTO.setApePaterno(apePaterno.trim());
@@ -212,7 +212,7 @@ public class UsuarioBO {
                 return null;
             }
 
-            UsuarioDTO usuarioDTO = new UsuarioDTO();
+            UsuariosDTO usuarioDTO = new UsuariosDTO();
             usuarioDTO.setUsuarioId(usuarioId);
             return this.usuarioDAO.eliminar(usuarioDTO);
 
@@ -230,7 +230,7 @@ public class UsuarioBO {
      */
     private boolean validarDatosUsuario(String nombre, String apePaterno, String apeMaterno,
             String dni, LocalDate fechaNacimiento, String telefono, String correo,
-            String nombreUsuario, String contrasenha, TipoUsuarioDTO tipoUsuario) {
+            String nombreUsuario, String contrasenha, TiposUsuarioDTO tipoUsuario) {
 
         // Validar nombre
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -336,7 +336,7 @@ public class UsuarioBO {
      */
     private boolean existeCorreo(String correo) {
         try {
-            ArrayList<UsuarioDTO> usuarios = this.listarTodos();
+            ArrayList<UsuariosDTO> usuarios = this.listarTodos();
             return usuarios.stream()
                     .anyMatch(u -> u.getCorreo() != null
                     && u.getCorreo().equalsIgnoreCase(correo.trim()));
@@ -354,7 +354,7 @@ public class UsuarioBO {
      */
     private boolean existeNombreUsuario(String nombreUsuario) {
         try {
-            ArrayList<UsuarioDTO> usuarios = this.listarTodos();
+            ArrayList<UsuariosDTO> usuarios = this.listarTodos();
             return usuarios.stream()
                     .anyMatch(u -> u.getNombreUsuario() != null
                     && u.getNombreUsuario().equalsIgnoreCase(nombreUsuario.trim()));
@@ -372,7 +372,7 @@ public class UsuarioBO {
      */
     private boolean existeDni(String dni) {
         try {
-            ArrayList<UsuarioDTO> usuarios = this.listarTodos();
+            ArrayList<UsuariosDTO> usuarios = this.listarTodos();
             return usuarios.stream()
                     .anyMatch(u -> u.getDni() != null && u.getDni().equals(dni));
         } catch (Exception e) {
@@ -387,16 +387,16 @@ public class UsuarioBO {
      * @param tipoUsuarioId ID del tipo de usuario
      * @return Lista de usuarios del tipo especificado
      */
-    public ArrayList<UsuarioDTO> listarPorTipo(Integer tipoUsuarioId) {
+    public ArrayList<UsuariosDTO> listarPorTipo(Integer tipoUsuarioId) {
         try {
             if (tipoUsuarioId == null || tipoUsuarioId <= 0) {
                 return new ArrayList<>();
             }
 
-            ArrayList<UsuarioDTO> todosLosUsuarios = this.listarTodos();
-            ArrayList<UsuarioDTO> usuariosFiltrados = new ArrayList<>();
+            ArrayList<UsuariosDTO> todosLosUsuarios = this.listarTodos();
+            ArrayList<UsuariosDTO> usuariosFiltrados = new ArrayList<>();
 
-            for (UsuarioDTO usuario : todosLosUsuarios) {
+            for (UsuariosDTO usuario : todosLosUsuarios) {
                 if (usuario.getTipoUsuario() != null
                         && tipoUsuarioId.equals(usuario.getTipoUsuario().getTipoUsuarioId())) {
                     usuariosFiltrados.add(usuario);
@@ -433,7 +433,7 @@ public class UsuarioBO {
                 return false;
             }
 
-            UsuarioDTO usuario = this.obtenerPorId(usuarioId);
+            UsuariosDTO usuario = this.obtenerPorId(usuarioId);
             if (usuario == null) {
                 System.err.println("Error: Usuario no encontrado");
                 return false;
@@ -477,18 +477,18 @@ public class UsuarioBO {
      *
      * @param nombreUsuario Nombre de usuario o correo
      * @param contrasenha Contraseña
-     * @return UsuarioDTO si las credenciales son válidas, null en caso
-     * contrario
+     * @return UsuariosDTO si las credenciales son válidas, null en caso
+ contrario
      */
-    public UsuarioDTO autenticar(String nombreUsuario, String contrasenha) {
+    public UsuariosDTO autenticar(String nombreUsuario, String contrasenha) {
         try {
             if (nombreUsuario == null || contrasenha == null) {
                 return null;
             }
 
-            ArrayList<UsuarioDTO> usuarios = this.listarTodos();
+            ArrayList<UsuariosDTO> usuarios = this.listarTodos();
 
-            for (UsuarioDTO usuario : usuarios) {
+            for (UsuariosDTO usuario : usuarios) {
                 boolean coincideUsuario = usuario.getNombreUsuario() != null
                         && usuario.getNombreUsuario().equalsIgnoreCase(nombreUsuario.trim());
                 boolean coincideCorreo = usuario.getCorreo() != null

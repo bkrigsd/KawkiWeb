@@ -6,9 +6,9 @@ import jakarta.jws.WebParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.MovimientoInventarioBO;
-import pe.edu.pucp.kawkiweb.model.MovimientoInventarioDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
-import pe.edu.pucp.kawkiweb.model.utilMovInventario.TipoMovimientoDTO;
+import pe.edu.pucp.kawkiweb.model.MovimientosInventarioDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
+import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
 
 @WebService(serviceName = "MovimientoInventario")
 public class MovimientoInventario {
@@ -24,21 +24,21 @@ public class MovimientoInventario {
             @WebParam(name = "cantidad") Integer cantidad,
             @WebParam(name = "fecha_hora_mov") LocalDateTime fecha_hora_mov,
             @WebParam(name = "observacion") String observacion,
-            @WebParam(name = "tipo_movimiento") TipoMovimientoDTO tipo_movimiento,
-            @WebParam(name = "prod_variante") ProductoVarianteDTO prod_variante) {
+            @WebParam(name = "tipo_movimiento") TiposMovimientoDTO tipo_movimiento,
+            @WebParam(name = "prod_variante") ProductosVariantesDTO prod_variante) {
 
         return this.movimientoInventarioBO.insertar(cantidad, fecha_hora_mov,
                 observacion, tipo_movimiento, prod_variante);
     }
 
     @WebMethod(operationName = "obtenerPorId")
-    public MovimientoInventarioDTO obtenerPorId(
+    public MovimientosInventarioDTO obtenerPorId(
             @WebParam(name = "movInventarioId") Integer movInventarioId) {
         return this.movimientoInventarioBO.obtenerPorId(movInventarioId);
     }
 
     @WebMethod(operationName = "listarTodos")
-    public ArrayList<MovimientoInventarioDTO> listarTodos() {
+    public ArrayList<MovimientosInventarioDTO> listarTodos() {
         return this.movimientoInventarioBO.listarTodos();
     }
 
@@ -48,8 +48,8 @@ public class MovimientoInventario {
             @WebParam(name = "cantidad") Integer cantidad,
             @WebParam(name = "fecha_hora_mov") LocalDateTime fecha_hora_mov,
             @WebParam(name = "observacion") String observacion,
-            @WebParam(name = "tipo_movimiento") TipoMovimientoDTO tipo_movimiento,
-            @WebParam(name = "prod_variante") ProductoVarianteDTO prod_variante) {
+            @WebParam(name = "tipo_movimiento") TiposMovimientoDTO tipo_movimiento,
+            @WebParam(name = "prod_variante") ProductosVariantesDTO prod_variante) {
 
         return this.movimientoInventarioBO.modificar(mov_inventario_id, cantidad,
                 fecha_hora_mov, observacion, tipo_movimiento, prod_variante);
@@ -63,7 +63,7 @@ public class MovimientoInventario {
 
     @WebMethod(operationName = "crearAjusteInventario")
     public Integer crearAjusteInventario(
-            @WebParam(name = "prod_variante") ProductoVarianteDTO prod_variante,
+            @WebParam(name = "prod_variante") ProductosVariantesDTO prod_variante,
             @WebParam(name = "stockReal") Integer stockReal,
             @WebParam(name = "observacion") String observacion) {
 
@@ -73,7 +73,7 @@ public class MovimientoInventario {
 
     @WebMethod(operationName = "registrarIngreso")
     public Integer registrarIngreso(
-            @WebParam(name = "prod_variante") ProductoVarianteDTO prod_variante,
+            @WebParam(name = "prod_variante") ProductosVariantesDTO prod_variante,
             @WebParam(name = "cantidad") Integer cantidad,
             @WebParam(name = "observacion") String observacion) {
 
@@ -83,7 +83,7 @@ public class MovimientoInventario {
 
     @WebMethod(operationName = "registrarSalida")
     public Integer registrarSalida(
-            @WebParam(name = "prod_variante") ProductoVarianteDTO prod_variante,
+            @WebParam(name = "prod_variante") ProductosVariantesDTO prod_variante,
             @WebParam(name = "cantidad") Integer cantidad,
             @WebParam(name = "observacion") String observacion) {
 

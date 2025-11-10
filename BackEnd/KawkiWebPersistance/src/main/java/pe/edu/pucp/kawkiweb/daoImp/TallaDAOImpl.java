@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.TallaDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilProducto.TallaDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
 
 public class TallaDAOImpl extends BaseDAOImpl implements TallaDAO {
 
-    private TallaDTO talla;
+    private TallasDTO talla;
 
     public TallaDAOImpl() {
         super("TALLAS");
@@ -29,7 +29,7 @@ public class TallaDAOImpl extends BaseDAOImpl implements TallaDAO {
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.talla = new TallaDTO();
+        this.talla = new TallasDTO();
         this.talla.setTalla_id(this.resultSet.getInt("TALLA_ID"));
         this.talla.setNumero(this.resultSet.getInt("NUMERO"));
     }
@@ -46,15 +46,15 @@ public class TallaDAOImpl extends BaseDAOImpl implements TallaDAO {
     }
 
     @Override
-    public TallaDTO obtenerPorId(Integer tallaId) {
-        this.talla = new TallaDTO();
+    public TallasDTO obtenerPorId(Integer tallaId) {
+        this.talla = new TallasDTO();
         this.talla.setTalla_id(tallaId);
         super.obtenerPorId();
         return this.talla;
     }
 
     @Override
-    public ArrayList<TallaDTO> listarTodos() {
-        return (ArrayList<TallaDTO>) super.listarTodos();
+    public ArrayList<TallasDTO> listarTodos() {
+        return (ArrayList<TallasDTO>) super.listarTodos();
     }
 }

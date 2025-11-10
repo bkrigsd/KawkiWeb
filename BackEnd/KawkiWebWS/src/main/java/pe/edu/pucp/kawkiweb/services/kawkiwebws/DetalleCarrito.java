@@ -6,7 +6,7 @@ import jakarta.jws.WebParam;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.DetalleCarritoBO;
 import pe.edu.pucp.kawkiweb.model.DetalleCarritoDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 
 @WebService(serviceName="DetalleCarrito")
 public class DetalleCarrito {
@@ -23,7 +23,7 @@ public class DetalleCarrito {
             @WebParam(name = "cantidad") Integer cantidad,
             @WebParam(name = "precioUnitario") Double precioUnitario,
             @WebParam(name = "subtotal") Double subtotal,
-            @WebParam(name = "producto") ProductoVarianteDTO producto) {
+            @WebParam(name = "producto") ProductosVariantesDTO producto) {
 
         return this.detalleCarritoBO.insertar(carritoId, cantidad,
                 precioUnitario, subtotal, producto);
@@ -54,7 +54,7 @@ public class DetalleCarrito {
             @WebParam(name = "cantidad") Integer cantidad,
             @WebParam(name = "precioUnitario") Double precioUnitario,
             @WebParam(name = "subtotal") Double subtotal,
-            @WebParam(name = "producto") ProductoVarianteDTO producto) {
+            @WebParam(name = "producto") ProductosVariantesDTO producto) {
 
         return this.detalleCarritoBO.modificar(detalleCarritoId, carritoId,
                 cantidad, precioUnitario, subtotal, producto);

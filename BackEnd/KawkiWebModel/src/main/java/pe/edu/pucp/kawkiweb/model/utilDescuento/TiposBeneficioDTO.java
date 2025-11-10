@@ -1,8 +1,8 @@
 
-package pe.edu.pucp.kawkiweb.model.utilPromocion;
+package pe.edu.pucp.kawkiweb.model.utilDescuento;
 
 
-public class TipoBeneficioDTO {
+public class TiposBeneficioDTO {
     private Integer tipo_beneficio_id;
     private String nombre;
     
@@ -15,17 +15,17 @@ public class TipoBeneficioDTO {
     public static final String NOMBRE_DESCUENTO_FIJO = "Descuento fijo";
     public static final String NOMBRE_ENVIO_GRATIS = "Envío gratis";
     
-    public TipoBeneficioDTO() {
+    public TiposBeneficioDTO() {
         this.tipo_beneficio_id = null;
         this.nombre = null;
     }
     
-    public TipoBeneficioDTO(Integer tipo_beneficio_id, String nombre) {
+    public TiposBeneficioDTO(Integer tipo_beneficio_id, String nombre) {
         this.tipo_beneficio_id = tipo_beneficio_id;
         this.nombre = nombre;
     }
     
-    public TipoBeneficioDTO(TipoBeneficioDTO tipoBeneficio) {
+    public TiposBeneficioDTO(TiposBeneficioDTO tipoBeneficio) {
         this.tipo_beneficio_id = tipoBeneficio.tipo_beneficio_id;
         this.nombre = tipoBeneficio.nombre;
     }

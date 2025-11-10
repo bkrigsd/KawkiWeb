@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.dao.EnvioDAO;
 import pe.edu.pucp.kawkiweb.daoImp.EnvioDAOImpl;
 import pe.edu.pucp.kawkiweb.model.EnvioDTO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
 import pe.edu.pucp.kawkiweb.model.utilEnvio.CourierDTO;
 import pe.edu.pucp.kawkiweb.model.utilEnvio.EstadoEnvioDTO;
 
@@ -24,7 +24,7 @@ public class EnvioBO {
      */
     public Integer insertar(Boolean es_delivery, String direccion_entrega,
             CourierDTO courier, LocalDateTime fecha_envio, Double costo_envio,
-            PedidoDTO pedido, EstadoEnvioDTO estado, LocalDateTime fecha_ultimo_estado) {
+            VentasDTO pedido, EstadoEnvioDTO estado, LocalDateTime fecha_ultimo_estado) {
 
         try {
             // Validaciones
@@ -81,7 +81,7 @@ public class EnvioBO {
      */
     public Integer modificar(Integer envio_id, Boolean es_delivery,
             String direccion_entrega, CourierDTO courier, LocalDateTime fecha_envio,
-            Double costo_envio, PedidoDTO pedido, EstadoEnvioDTO estado,
+            Double costo_envio, VentasDTO pedido, EstadoEnvioDTO estado,
             LocalDateTime fecha_ultimo_estado) {
 
         try {
@@ -165,7 +165,7 @@ public class EnvioBO {
      * @return true si los datos son válidos, false en caso contrario
      */
     private boolean validarDatosEnvio(Boolean es_delivery, String direccion_entrega,
-            CourierDTO courier, Double costo_envio, PedidoDTO pedido,
+            CourierDTO courier, Double costo_envio, VentasDTO pedido,
             EstadoEnvioDTO estado, LocalDateTime fecha_ultimo_estado) {
 
         // Validar campos obligatorios

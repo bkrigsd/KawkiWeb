@@ -6,11 +6,11 @@ import pe.edu.pucp.kawkiweb.dao.ProductoDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
 import pe.edu.pucp.kawkiweb.daoImp.ProductoDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.ProductoVarianteDAOImpl;
-import pe.edu.pucp.kawkiweb.model.ProductoDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.ColorDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.TallaDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoBeneficioDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 
 public class ProductoVarianteBO {
 
@@ -28,8 +28,8 @@ public class ProductoVarianteBO {
      * @return ID de la variante insertada, o null si hubo error
      */
     public Integer insertar(String SKU, Integer stock, Integer stock_minimo,
-            Boolean alerta_stock, Integer producto_id, ColorDTO color, TallaDTO talla,
-            TipoBeneficioDTO tipo_beneficio, Integer valor_beneficio,
+            Boolean alerta_stock, Integer producto_id, ColoresDTO color, TallasDTO talla,
+            TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio,
             LocalDateTime fecha_hora_creacion) {
 
         try {
@@ -40,7 +40,7 @@ public class ProductoVarianteBO {
             }
 
             // Validar que el producto existe
-            ProductoDTO producto = this.productoDAO.obtenerPorId(producto_id);
+            ProductosDTO producto = this.productoDAO.obtenerPorId(producto_id);
             if (producto == null) {
                 System.err.println("Error: El producto con ID " + producto_id + " no existe");
                 return null;
@@ -57,7 +57,7 @@ public class ProductoVarianteBO {
                 return null;
             }
 
-            ProductoVarianteDTO prodVarianteDTO = new ProductoVarianteDTO();
+            ProductosVariantesDTO prodVarianteDTO = new ProductosVariantesDTO();
             prodVarianteDTO.setSKU(SKU);
             prodVarianteDTO.setStock(stock);
             prodVarianteDTO.setStock_minimo(stock_minimo);
@@ -87,9 +87,9 @@ public class ProductoVarianteBO {
      * Obtiene una variante de producto por su ID
      *
      * @param prod_variante_id ID de la variante a buscar
-     * @return ProductoVarianteDTO encontrado, o null si no existe o hay error
+     * @return ProductosVariantesDTO encontrado, o null si no existe o hay error
      */
-    public ProductoVarianteDTO obtenerPorId(Integer prod_variante_id) {
+    public ProductosVariantesDTO obtenerPorId(Integer prod_variante_id) {
         try {
             if (prod_variante_id == null || prod_variante_id <= 0) {
                 System.err.println("Error: ID de variante inválido");
@@ -109,9 +109,9 @@ public class ProductoVarianteBO {
      *
      * @return Lista de variantes, o lista vacía si hay error
      */
-    public ArrayList<ProductoVarianteDTO> listarTodos() {
+    public ArrayList<ProductosVariantesDTO> listarTodos() {
         try {
-            ArrayList<ProductoVarianteDTO> lista = this.prodVarianteDAO.listarTodos();
+            ArrayList<ProductosVariantesDTO> lista = this.prodVarianteDAO.listarTodos();
             return (lista != null) ? lista : new ArrayList<>();
 
         } catch (Exception e) {
@@ -128,7 +128,7 @@ public class ProductoVarianteBO {
      */
     public Integer modificar(Integer prod_variante_id, String SKU, Integer stock,
             Integer stock_minimo, Boolean alerta_stock, Integer producto_id,
-            ColorDTO color, TallaDTO talla, TipoBeneficioDTO tipo_beneficio,
+            ColoresDTO color, TallasDTO talla, TiposBeneficioDTO tipo_beneficio,
             Integer valor_beneficio, LocalDateTime fecha_hora_creacion) {
 
         try {
@@ -149,7 +149,7 @@ public class ProductoVarianteBO {
                 return null;
             }
 
-            ProductoVarianteDTO prodVarianteDTO = new ProductoVarianteDTO();
+            ProductosVariantesDTO prodVarianteDTO = new ProductosVariantesDTO();
             prodVarianteDTO.setProd_variante_id(prod_variante_id);
             prodVarianteDTO.setSKU(SKU);
             prodVarianteDTO.setStock(stock);
@@ -187,7 +187,7 @@ public class ProductoVarianteBO {
                 return null;
             }
 
-            ProductoVarianteDTO prodVarianteDTO = new ProductoVarianteDTO();
+            ProductosVariantesDTO prodVarianteDTO = new ProductosVariantesDTO();
             prodVarianteDTO.setProd_variante_id(prod_variante_id);
             return this.prodVarianteDAO.eliminar(prodVarianteDTO);
 
@@ -204,7 +204,7 @@ public class ProductoVarianteBO {
      * @return true si los datos son válidos, false en caso contrario
      */
     private boolean validarDatosVariante(String SKU, Integer stock, Integer stock_minimo,
-            Integer producto_id, ColorDTO color, TallaDTO talla) {
+            Integer producto_id, ColoresDTO color, TallasDTO talla) {
 
         // Validar SKU
         if (SKU == null || SKU.trim().isEmpty()) {
@@ -255,7 +255,7 @@ public class ProductoVarianteBO {
      *
      * @return true si es válido, false en caso contrario
      */
-    private boolean validarBeneficio(TipoBeneficioDTO tipo_beneficio, Integer valor_beneficio) {
+    private boolean validarBeneficio(TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio) {
         // Si hay tipo de beneficio, debe haber valor
         if (tipo_beneficio != null && tipo_beneficio.getTipo_beneficio_id() != null) {
             if (valor_beneficio == null || valor_beneficio <= 0) {
@@ -283,7 +283,7 @@ public class ProductoVarianteBO {
      */
     private boolean existeVariante(Integer producto_id, Integer color_id, Integer talla_id) {
         try {
-            ArrayList<ProductoVarianteDTO> todasLasVariantes = this.listarTodos();
+            ArrayList<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
 
             return todasLasVariantes.stream().anyMatch(v
                     -> v.getProducto_id().equals(producto_id)
@@ -311,7 +311,7 @@ public class ProductoVarianteBO {
                 return false;
             }
 
-            ProductoVarianteDTO variante = this.obtenerPorId(prod_variante_id);
+            ProductosVariantesDTO variante = this.obtenerPorId(prod_variante_id);
             if (variante == null) {
                 System.err.println("Error: Variante no encontrada");
                 return false;
@@ -349,12 +349,12 @@ public class ProductoVarianteBO {
      *
      * @return Lista de variantes con stock bajo
      */
-    public ArrayList<ProductoVarianteDTO> listarConStockBajo() {
+    public ArrayList<ProductosVariantesDTO> listarConStockBajo() {
         try {
-            ArrayList<ProductoVarianteDTO> todasLasVariantes = this.listarTodos();
-            ArrayList<ProductoVarianteDTO> variantesConStockBajo = new ArrayList<>();
+            ArrayList<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
+            ArrayList<ProductosVariantesDTO> variantesConStockBajo = new ArrayList<>();
 
-            for (ProductoVarianteDTO variante : todasLasVariantes) {
+            for (ProductosVariantesDTO variante : todasLasVariantes) {
                 if (variante.getAlerta_stock() != null && variante.getAlerta_stock()) {
                     variantesConStockBajo.add(variante);
                 }
@@ -374,7 +374,7 @@ public class ProductoVarianteBO {
      * @param producto_id ID del producto
      * @return Lista de variantes del producto
      */
-    public ArrayList<ProductoVarianteDTO> listarPorProducto(Integer producto_id) {
+    public ArrayList<ProductosVariantesDTO> listarPorProducto(Integer producto_id) {
         try {
             if (producto_id == null || producto_id <= 0) {
                 return new ArrayList<>();
@@ -394,16 +394,16 @@ public class ProductoVarianteBO {
      * @param color_id ID del color
      * @return Lista de variantes del color especificado
      */
-    public ArrayList<ProductoVarianteDTO> listarPorColor(Integer color_id) {
+    public ArrayList<ProductosVariantesDTO> listarPorColor(Integer color_id) {
         try {
             if (color_id == null || color_id <= 0) {
                 return new ArrayList<>();
             }
 
-            ArrayList<ProductoVarianteDTO> todasLasVariantes = this.listarTodos();
-            ArrayList<ProductoVarianteDTO> variantesFiltradas = new ArrayList<>();
+            ArrayList<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
+            ArrayList<ProductosVariantesDTO> variantesFiltradas = new ArrayList<>();
 
-            for (ProductoVarianteDTO variante : todasLasVariantes) {
+            for (ProductosVariantesDTO variante : todasLasVariantes) {
                 if (variante.getColor() != null
                         && color_id.equals(variante.getColor().getColor_id())) {
                     variantesFiltradas.add(variante);
@@ -424,16 +424,16 @@ public class ProductoVarianteBO {
      * @param talla_id ID de la talla
      * @return Lista de variantes de la talla especificada
      */
-    public ArrayList<ProductoVarianteDTO> listarPorTalla(Integer talla_id) {
+    public ArrayList<ProductosVariantesDTO> listarPorTalla(Integer talla_id) {
         try {
             if (talla_id == null || talla_id <= 0) {
                 return new ArrayList<>();
             }
 
-            ArrayList<ProductoVarianteDTO> todasLasVariantes = this.listarTodos();
-            ArrayList<ProductoVarianteDTO> variantesFiltradas = new ArrayList<>();
+            ArrayList<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
+            ArrayList<ProductosVariantesDTO> variantesFiltradas = new ArrayList<>();
 
-            for (ProductoVarianteDTO variante : todasLasVariantes) {
+            for (ProductosVariantesDTO variante : todasLasVariantes) {
                 if (variante.getTalla() != null
                         && talla_id.equals(variante.getTalla().getTalla_id())) {
                     variantesFiltradas.add(variante);
@@ -456,7 +456,7 @@ public class ProductoVarianteBO {
      */
     public boolean tieneStockDisponible(Integer prod_variante_id) {
         try {
-            ProductoVarianteDTO variante = this.obtenerPorId(prod_variante_id);
+            ProductosVariantesDTO variante = this.obtenerPorId(prod_variante_id);
             return variante != null && variante.getStock() != null && variante.getStock() > 0;
 
         } catch (Exception e) {

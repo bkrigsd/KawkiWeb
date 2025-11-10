@@ -3,8 +3,8 @@ package pe.edu.pucp.kawkiweb.bo;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.dao.DetallePedidoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.Detalle_PedidoDAOImpl;
-import pe.edu.pucp.kawkiweb.model.DetallePedidoDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
+import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 
 public class DetallePedidoBO {
 
@@ -24,7 +24,7 @@ public class DetallePedidoBO {
      * @param subtotal Subtotal (cantidad * precio)
      * @return ID del detalle insertado o 0 si falla
      */
-    public Integer insertar(ProductoVarianteDTO productoVar, Integer pedidoId,
+    public Integer insertar(ProductosVariantesDTO productoVar, Integer pedidoId,
             Integer cantidad, Double precioUnitario, Double subtotal) {
         if (productoVar == null || productoVar.getProd_variante_id() == null) {
             System.err.println("Error: Producto variante no puede ser nulo");
@@ -39,7 +39,7 @@ public class DetallePedidoBO {
             return 0;
         }
 
-        DetallePedidoDTO detallePedidoDTO = new DetallePedidoDTO();
+        DetalleVentasDTO detallePedidoDTO = new DetalleVentasDTO();
         detallePedidoDTO.setProductoVar(productoVar);
         detallePedidoDTO.setPedido_id(pedidoId);
         detallePedidoDTO.setCantidad(cantidad);
@@ -53,9 +53,9 @@ public class DetallePedidoBO {
      * Obtiene un detalle de pedido por su ID
      *
      * @param detalleId ID del detalle
-     * @return DetallePedidoDTO con la información completa o null si no existe
+     * @return DetalleVentasDTO con la información completa o null si no existe
      */
-    public DetallePedidoDTO obtenerPorId(Integer detalleId) {
+    public DetalleVentasDTO obtenerPorId(Integer detalleId) {
         if (detalleId == null || detalleId <= 0) {
             System.err.println("Error: ID de detalle inválido");
             return null;
@@ -68,7 +68,7 @@ public class DetallePedidoBO {
      *
      * @return Lista de todos los detalles
      */
-    public ArrayList<DetallePedidoDTO> listarTodos() {
+    public ArrayList<DetalleVentasDTO> listarTodos() {
         return this.detallePedidoDAO.listarTodos();
     }
 
@@ -78,7 +78,7 @@ public class DetallePedidoBO {
      * @param pedidoId ID del pedido
      * @return Lista de detalles del pedido especificado
      */
-    public ArrayList<DetallePedidoDTO> listarPorPedidoId(Integer pedidoId) {
+    public ArrayList<DetalleVentasDTO> listarPorPedidoId(Integer pedidoId) {
         if (pedidoId == null || pedidoId <= 0) {
             System.err.println("Error: ID de pedido inválido");
             return new ArrayList<>();
@@ -97,7 +97,7 @@ public class DetallePedidoBO {
      * @param subtotal Subtotal actualizado
      * @return Número de filas afectadas (1 si tuvo éxito, 0 si falló)
      */
-    public Integer modificar(Integer detallePedidoId, ProductoVarianteDTO productoVar,
+    public Integer modificar(Integer detallePedidoId, ProductosVariantesDTO productoVar,
             Integer pedidoId, Integer cantidad, Double precioUnitario,
             Double subtotal) {
         if (detallePedidoId == null || detallePedidoId <= 0) {
@@ -117,7 +117,7 @@ public class DetallePedidoBO {
             return 0;
         }
 
-        DetallePedidoDTO detallePedidoDTO = new DetallePedidoDTO();
+        DetalleVentasDTO detallePedidoDTO = new DetalleVentasDTO();
         detallePedidoDTO.setDetalle_pedido_id(detallePedidoId);
         detallePedidoDTO.setProductoVar(productoVar);
         detallePedidoDTO.setPedido_id(pedidoId);
@@ -140,7 +140,7 @@ public class DetallePedidoBO {
             return 0;
         }
 
-        DetallePedidoDTO detallePedidoDTO = new DetallePedidoDTO();
+        DetalleVentasDTO detallePedidoDTO = new DetalleVentasDTO();
         detallePedidoDTO.setDetalle_pedido_id(detallePedidoId);
         return this.detallePedidoDAO.eliminar(detallePedidoDTO);
     }

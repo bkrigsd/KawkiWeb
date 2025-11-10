@@ -9,13 +9,13 @@ import pe.edu.pucp.kawkiweb.dao.PromocionDAO;
 import pe.edu.pucp.kawkiweb.dao.TipoBeneficioDAO;
 import pe.edu.pucp.kawkiweb.dao.TipoCondicionDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.PromocionDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoBeneficioDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoCondicionDTO;
+import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 
 public class PromocionDAOImpl extends BaseDAOImpl implements PromocionDAO {
 
-    private PromocionDTO promocion;
+    private DescuentosDTO promocion;
     private TipoBeneficioDAO tipoBeneficioDAO;
     private TipoCondicionDAO tipoCondicionDAO;
 
@@ -93,18 +93,18 @@ public class PromocionDAOImpl extends BaseDAOImpl implements PromocionDAO {
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.promocion = new PromocionDTO();
+        this.promocion = new DescuentosDTO();
         this.promocion.setPromocion_id(this.resultSet.getInt("PROMOCION_ID"));
         this.promocion.setDescripcion(this.resultSet.getString("DESCRIPCION"));
 
         Integer tipo_condicion_id = this.resultSet.getInt("TIPO_CONDICION_ID");
-        TipoCondicionDTO tipoCondicion = this.tipoCondicionDAO.obtenerPorId(tipo_condicion_id);
+        TiposCondicionDTO tipoCondicion = this.tipoCondicionDAO.obtenerPorId(tipo_condicion_id);
         this.promocion.setTipo_condicion(tipoCondicion);
 
         this.promocion.setValor_condicion(this.resultSet.getInt("VALOR_CONDICION"));
 
         Integer tipo_beneficio_id = this.resultSet.getInt("TIPO_BENEFICIO_ID");
-        TipoBeneficioDTO tipoBeneficio = this.tipoBeneficioDAO.obtenerPorId(tipo_beneficio_id);
+        TiposBeneficioDTO tipoBeneficio = this.tipoBeneficioDAO.obtenerPorId(tipo_beneficio_id);
         this.promocion.setTipo_beneficio(tipoBeneficio);
 
         int valBeneficio = this.resultSet.getInt("VALOR_BENEFICIO");
@@ -127,32 +127,32 @@ public class PromocionDAOImpl extends BaseDAOImpl implements PromocionDAO {
     }
 
     @Override
-    public Integer insertar(PromocionDTO promocion) {
+    public Integer insertar(DescuentosDTO promocion) {
         this.promocion = promocion;
         return super.insertar();
     }
 
     @Override
-    public PromocionDTO obtenerPorId(Integer promocionId) {
-        this.promocion = new PromocionDTO();
+    public DescuentosDTO obtenerPorId(Integer promocionId) {
+        this.promocion = new DescuentosDTO();
         this.promocion.setPromocion_id(promocionId);
         super.obtenerPorId();
         return this.promocion;
     }
 
     @Override
-    public ArrayList<PromocionDTO> listarTodos() {
-        return (ArrayList<PromocionDTO>) super.listarTodos();
+    public ArrayList<DescuentosDTO> listarTodos() {
+        return (ArrayList<DescuentosDTO>) super.listarTodos();
     }
 
     @Override
-    public Integer modificar(PromocionDTO promocion) {
+    public Integer modificar(DescuentosDTO promocion) {
         this.promocion = promocion;
         return super.modificar();
     }
 
     @Override
-    public Integer eliminar(PromocionDTO promocion) {
+    public Integer eliminar(DescuentosDTO promocion) {
         this.promocion = promocion;
         return super.eliminar();
     }

@@ -6,9 +6,9 @@ import jakarta.jws.WebParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.PromocionBO;
-import pe.edu.pucp.kawkiweb.model.PromocionDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoBeneficioDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoCondicionDTO;
+import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 
 @WebService(serviceName = "Promocion")
 public class Promocion {
@@ -22,9 +22,9 @@ public class Promocion {
     @WebMethod(operationName = "insertar")
     public Integer insertar(
             @WebParam(name = "descripcion") String descripcion,
-            @WebParam(name = "tipo_condicion") TipoCondicionDTO tipo_condicion,
+            @WebParam(name = "tipo_condicion") TiposCondicionDTO tipo_condicion,
             @WebParam(name = "valor_condicion") Integer valor_condicion,
-            @WebParam(name = "tipo_beneficio") TipoBeneficioDTO tipo_beneficio,
+            @WebParam(name = "tipo_beneficio") TiposBeneficioDTO tipo_beneficio,
             @WebParam(name = "valor_beneficio") Integer valor_beneficio,
             @WebParam(name = "fecha_inicio") LocalDateTime fecha_inicio,
             @WebParam(name = "fecha_fin") LocalDateTime fecha_fin,
@@ -35,12 +35,12 @@ public class Promocion {
     }
 
     @WebMethod(operationName = "obtenerPorId")
-    public PromocionDTO obtenerPorId(@WebParam(name = "promocionId") Integer promocionId) {
+    public DescuentosDTO obtenerPorId(@WebParam(name = "promocionId") Integer promocionId) {
         return this.promocionBO.obtenerPorId(promocionId);
     }
 
     @WebMethod(operationName = "listarTodos")
-    public ArrayList<PromocionDTO> listarTodos() {
+    public ArrayList<DescuentosDTO> listarTodos() {
         return this.promocionBO.listarTodos();
     }
 
@@ -48,9 +48,9 @@ public class Promocion {
     public Integer modificar(
             @WebParam(name = "promoId") Integer promoId,
             @WebParam(name = "descripcion") String descripcion,
-            @WebParam(name = "tipo_condicion") TipoCondicionDTO tipo_condicion,
+            @WebParam(name = "tipo_condicion") TiposCondicionDTO tipo_condicion,
             @WebParam(name = "valor_condicion") Integer valor_condicion,
-            @WebParam(name = "tipo_beneficio") TipoBeneficioDTO tipo_beneficio,
+            @WebParam(name = "tipo_beneficio") TiposBeneficioDTO tipo_beneficio,
             @WebParam(name = "valor_beneficio") Integer valor_beneficio,
             @WebParam(name = "fecha_inicio") LocalDateTime fecha_inicio,
             @WebParam(name = "fecha_fin") LocalDateTime fecha_fin,
@@ -77,12 +77,12 @@ public class Promocion {
     }
 
     @WebMethod(operationName = "listarActivas")
-    public ArrayList<PromocionDTO> listarActivas() {
+    public ArrayList<DescuentosDTO> listarActivas() {
         return this.promocionBO.listarActivas();
     }
 
     @WebMethod(operationName = "listarVigentes")
-    public ArrayList<PromocionDTO> listarVigentes() {
+    public ArrayList<DescuentosDTO> listarVigentes() {
         return this.promocionBO.listarVigentes();
     }
 

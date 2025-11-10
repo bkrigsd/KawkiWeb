@@ -1,7 +1,7 @@
 
 package pe.edu.pucp.kawkiweb.model.utilProducto;
 
-public class ColorDTO {
+public class ColoresDTO {
     private Integer color_id;
     private String nombre;
     
@@ -42,17 +42,17 @@ public class ColorDTO {
     public static final String NOMBRE_ACERO = "Acero";
     public static final String NOMBRE_VERDE = "Verde";
     
-    public ColorDTO() {
+    public ColoresDTO() {
         this.color_id = null;
         this.nombre = null;
     }
     
-    public ColorDTO(Integer color_id, String nombre) {
+    public ColoresDTO(Integer color_id, String nombre) {
         this.color_id = color_id;
         this.nombre = nombre;
     }
     
-    public ColorDTO(ColorDTO color) {
+    public ColoresDTO(ColoresDTO color) {
         this.color_id = color.color_id;
         this.nombre = color.nombre;
     }

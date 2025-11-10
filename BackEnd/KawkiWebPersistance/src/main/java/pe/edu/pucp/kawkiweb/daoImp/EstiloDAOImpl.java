@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.EstiloDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilProducto.EstiloDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 
 public class EstiloDAOImpl extends BaseDAOImpl implements EstiloDAO {
 
-    private EstiloDTO estilo;
+    private EstilosDTO estilo;
 
     public EstiloDAOImpl() {
         super("ESTILOS");
@@ -29,7 +29,7 @@ public class EstiloDAOImpl extends BaseDAOImpl implements EstiloDAO {
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.estilo = new EstiloDTO();
+        this.estilo = new EstilosDTO();
         this.estilo.setEstilo_id(this.resultSet.getInt("ESTILO_ID"));
         this.estilo.setNombre(this.resultSet.getString("NOMBRE"));
     }
@@ -46,15 +46,15 @@ public class EstiloDAOImpl extends BaseDAOImpl implements EstiloDAO {
     }
 
     @Override
-    public EstiloDTO obtenerPorId(Integer estiloId) {
-        this.estilo = new EstiloDTO();
+    public EstilosDTO obtenerPorId(Integer estiloId) {
+        this.estilo = new EstilosDTO();
         this.estilo.setEstilo_id(estiloId);
         super.obtenerPorId();
         return this.estilo;
     }
 
     @Override
-    public ArrayList<EstiloDTO> listarTodos() {
-        return (ArrayList<EstiloDTO>) super.listarTodos();
+    public ArrayList<EstilosDTO> listarTodos() {
+        return (ArrayList<EstilosDTO>) super.listarTodos();
     }
 }

@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.dao.PromocionDAO;
 import pe.edu.pucp.kawkiweb.daoImp.PromocionDAOImpl;
-import pe.edu.pucp.kawkiweb.model.PromocionDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoBeneficioDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoCondicionDTO;
+import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 
 public class PromocionBO {
 
@@ -21,8 +21,8 @@ public class PromocionBO {
      *
      * @return ID de la promoción insertada, o null si hubo error
      */
-    public Integer insertar(String descripcion, TipoCondicionDTO tipo_condicion,
-            Integer valor_condicion, TipoBeneficioDTO tipo_beneficio,
+    public Integer insertar(String descripcion, TiposCondicionDTO tipo_condicion,
+            Integer valor_condicion, TiposBeneficioDTO tipo_beneficio,
             Integer valor_beneficio, LocalDateTime fecha_inicio,
             LocalDateTime fecha_fin, Boolean activo) {
 
@@ -34,7 +34,7 @@ public class PromocionBO {
                 return null;
             }
 
-            PromocionDTO promoDTO = new PromocionDTO();
+            DescuentosDTO promoDTO = new DescuentosDTO();
             promoDTO.setDescripcion(descripcion);
             promoDTO.setTipo_condicion(tipo_condicion);
             promoDTO.setValor_condicion(valor_condicion);
@@ -57,9 +57,9 @@ public class PromocionBO {
      * Obtiene una promoción por su ID
      *
      * @param promocionId ID de la promoción a buscar
-     * @return PromocionDTO encontrado, o null si no existe o hay error
+     * @return DescuentosDTO encontrado, o null si no existe o hay error
      */
-    public PromocionDTO obtenerPorId(Integer promocionId) {
+    public DescuentosDTO obtenerPorId(Integer promocionId) {
         try {
             if (promocionId == null || promocionId <= 0) {
                 System.err.println("Error: ID de promoción inválido");
@@ -79,9 +79,9 @@ public class PromocionBO {
      *
      * @return Lista de promociones, o lista vacía si hay error
      */
-    public ArrayList<PromocionDTO> listarTodos() {
+    public ArrayList<DescuentosDTO> listarTodos() {
         try {
-            ArrayList<PromocionDTO> lista = this.promoDAO.listarTodos();
+            ArrayList<DescuentosDTO> lista = this.promoDAO.listarTodos();
             return (lista != null) ? lista : new ArrayList<>();
 
         } catch (Exception e) {
@@ -97,8 +97,8 @@ public class PromocionBO {
      * @return Número de registros afectados, o null si hubo error
      */
     public Integer modificar(Integer promoId, String descripcion,
-            TipoCondicionDTO tipo_condicion, Integer valor_condicion,
-            TipoBeneficioDTO tipo_beneficio, Integer valor_beneficio,
+            TiposCondicionDTO tipo_condicion, Integer valor_condicion,
+            TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio,
             LocalDateTime fecha_inicio, LocalDateTime fecha_fin, Boolean activo) {
 
         try {
@@ -115,7 +115,7 @@ public class PromocionBO {
                 return null;
             }
 
-            PromocionDTO promoDTO = new PromocionDTO();
+            DescuentosDTO promoDTO = new DescuentosDTO();
             promoDTO.setPromocion_id(promoId);
             promoDTO.setDescripcion(descripcion);
             promoDTO.setTipo_condicion(tipo_condicion);
@@ -148,7 +148,7 @@ public class PromocionBO {
                 return null;
             }
 
-            PromocionDTO promoDTO = new PromocionDTO();
+            DescuentosDTO promoDTO = new DescuentosDTO();
             promoDTO.setPromocion_id(promoId);
             return this.promoDAO.eliminar(promoDTO);
 
@@ -164,8 +164,8 @@ public class PromocionBO {
      *
      * @return true si los datos son válidos, false en caso contrario
      */
-    private boolean validarDatosPromocion(String descripcion, TipoCondicionDTO tipo_condicion,
-            Integer valor_condicion, TipoBeneficioDTO tipo_beneficio, Integer valor_beneficio,
+    private boolean validarDatosPromocion(String descripcion, TiposCondicionDTO tipo_condicion,
+            Integer valor_condicion, TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio,
             LocalDateTime fecha_inicio, LocalDateTime fecha_fin) {
 
         // Validar descripción
@@ -236,7 +236,7 @@ public class PromocionBO {
      */
     public boolean activar(Integer promoId) {
         try {
-            PromocionDTO promo = this.obtenerPorId(promoId);
+            DescuentosDTO promo = this.obtenerPorId(promoId);
             if (promo == null) {
                 System.err.println("Error: Promoción no encontrada");
                 return false;
@@ -279,7 +279,7 @@ public class PromocionBO {
      */
     public boolean desactivar(Integer promoId) {
         try {
-            PromocionDTO promo = this.obtenerPorId(promoId);
+            DescuentosDTO promo = this.obtenerPorId(promoId);
             if (promo == null) {
                 System.err.println("Error: Promoción no encontrada");
                 return false;
@@ -312,12 +312,12 @@ public class PromocionBO {
      *
      * @return Lista de promociones activas
      */
-    public ArrayList<PromocionDTO> listarActivas() {
+    public ArrayList<DescuentosDTO> listarActivas() {
         try {
-            ArrayList<PromocionDTO> todasLasPromociones = this.listarTodos();
-            ArrayList<PromocionDTO> promocionesActivas = new ArrayList<>();
+            ArrayList<DescuentosDTO> todasLasPromociones = this.listarTodos();
+            ArrayList<DescuentosDTO> promocionesActivas = new ArrayList<>();
 
-            for (PromocionDTO promo : todasLasPromociones) {
+            for (DescuentosDTO promo : todasLasPromociones) {
                 if (promo.getActivo() != null && promo.getActivo()) {
                     promocionesActivas.add(promo);
                 }
@@ -336,13 +336,13 @@ public class PromocionBO {
      *
      * @return Lista de promociones vigentes
      */
-    public ArrayList<PromocionDTO> listarVigentes() {
+    public ArrayList<DescuentosDTO> listarVigentes() {
         try {
-            ArrayList<PromocionDTO> todasLasPromociones = this.listarTodos();
-            ArrayList<PromocionDTO> promocionesVigentes = new ArrayList<>();
+            ArrayList<DescuentosDTO> todasLasPromociones = this.listarTodos();
+            ArrayList<DescuentosDTO> promocionesVigentes = new ArrayList<>();
             LocalDateTime ahora = LocalDateTime.now();
 
-            for (PromocionDTO promo : todasLasPromociones) {
+            for (DescuentosDTO promo : todasLasPromociones) {
                 if (esVigente(promo, ahora)) {
                     promocionesVigentes.add(promo);
                 }
@@ -363,7 +363,7 @@ public class PromocionBO {
      * @param fecha Fecha a verificar
      * @return true si está vigente, false en caso contrario
      */
-    private boolean esVigente(PromocionDTO promo, LocalDateTime fecha) {
+    private boolean esVigente(DescuentosDTO promo, LocalDateTime fecha) {
         return promo.getActivo() != null && promo.getActivo()
                 && promo.getFecha_inicio() != null && !fecha.isBefore(promo.getFecha_inicio())
                 && promo.getFecha_fin() != null && !fecha.isAfter(promo.getFecha_fin());
@@ -379,7 +379,7 @@ public class PromocionBO {
      */
     public boolean esAplicable(Integer promoId, Integer cantidadProductos, Double montoTotal) {
         try {
-            PromocionDTO promo = this.obtenerPorId(promoId);
+            DescuentosDTO promo = this.obtenerPorId(promoId);
 
             if (promo == null || !esVigente(promo, LocalDateTime.now())) {
                 return false;
@@ -415,7 +415,7 @@ public class PromocionBO {
                 return 0.0;
             }
 
-            PromocionDTO promo = this.obtenerPorId(promoId);
+            DescuentosDTO promo = this.obtenerPorId(promoId);
 
             if (promo == null || !esVigente(promo, LocalDateTime.now())) {
                 return 0.0;

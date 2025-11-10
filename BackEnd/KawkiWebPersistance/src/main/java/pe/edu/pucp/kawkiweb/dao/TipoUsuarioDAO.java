@@ -1,14 +1,14 @@
 package pe.edu.pucp.kawkiweb.dao;
 
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.model.utilUsuario.TipoUsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 
 public interface TipoUsuarioDAO {
 
-    TipoUsuarioDTO obtenerPorId(Integer tipoUsuarioId);
+    TiposUsuarioDTO obtenerPorId(Integer tipoUsuarioId);
 
-    TipoUsuarioDTO obtenerPorNombre(String nombre);
+    TiposUsuarioDTO obtenerPorNombre(String nombre);
 
-    ArrayList<TipoUsuarioDTO> listarTodos();
+    ArrayList<TiposUsuarioDTO> listarTodos();
 
 }

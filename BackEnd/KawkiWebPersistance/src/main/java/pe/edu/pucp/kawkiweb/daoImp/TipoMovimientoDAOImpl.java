@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.TipoMovimientoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilMovInventario.TipoMovimientoDTO;
+import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
 
 public class TipoMovimientoDAOImpl extends BaseDAOImpl implements TipoMovimientoDAO {
 
-    private TipoMovimientoDTO tipoMovimiento;
+    private TiposMovimientoDTO tipoMovimiento;
 
     public TipoMovimientoDAOImpl() {
         super("TIPO_MOVIMIENTO");
@@ -48,7 +48,7 @@ public class TipoMovimientoDAOImpl extends BaseDAOImpl implements TipoMovimiento
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.tipoMovimiento = new TipoMovimientoDTO();
+        this.tipoMovimiento = new TiposMovimientoDTO();
         this.tipoMovimiento.setTipoMovimientoId(this.resultSet.getInt("TIPO_MOVIMIENTO_ID"));
         this.tipoMovimiento.setNombre(this.resultSet.getString("NOMBRE"));
     }
@@ -65,22 +65,22 @@ public class TipoMovimientoDAOImpl extends BaseDAOImpl implements TipoMovimiento
     }
 
     @Override
-    public Integer insertar(TipoMovimientoDTO tipoMovimiento) {
+    public Integer insertar(TiposMovimientoDTO tipoMovimiento) {
         this.tipoMovimiento = tipoMovimiento;
         return super.insertar();
     }
 
     @Override
-    public TipoMovimientoDTO obtenerPorId(Integer tipoMovimientoId) {
-        this.tipoMovimiento = new TipoMovimientoDTO();
+    public TiposMovimientoDTO obtenerPorId(Integer tipoMovimientoId) {
+        this.tipoMovimiento = new TiposMovimientoDTO();
         this.tipoMovimiento.setTipoMovimientoId(tipoMovimientoId);
         super.obtenerPorId();
         return this.tipoMovimiento;
     }
 
     @Override
-    public TipoMovimientoDTO obtenerPorNombre(String nombre) {
-        TipoMovimientoDTO resultado = null;
+    public TiposMovimientoDTO obtenerPorNombre(String nombre) {
+        TiposMovimientoDTO resultado = null;
         CallableStatement st = null;
         ResultSet rs = null;
         try {
@@ -91,7 +91,7 @@ public class TipoMovimientoDAOImpl extends BaseDAOImpl implements TipoMovimiento
             rs = st.executeQuery();
 
             if (rs.next()) {
-                resultado = new TipoMovimientoDTO();
+                resultado = new TiposMovimientoDTO();
                 resultado.setTipoMovimientoId(rs.getInt("TIPO_MOVIMIENTO_ID"));
                 resultado.setNombre(rs.getString("NOMBRE"));
             }
@@ -114,18 +114,18 @@ public class TipoMovimientoDAOImpl extends BaseDAOImpl implements TipoMovimiento
     }
 
     @Override
-    public ArrayList<TipoMovimientoDTO> listarTodos() {
-        return (ArrayList<TipoMovimientoDTO>) super.listarTodos();
+    public ArrayList<TiposMovimientoDTO> listarTodos() {
+        return (ArrayList<TiposMovimientoDTO>) super.listarTodos();
     }
 
     @Override
-    public Integer modificar(TipoMovimientoDTO tipoMovimiento) {
+    public Integer modificar(TiposMovimientoDTO tipoMovimiento) {
         this.tipoMovimiento = tipoMovimiento;
         return super.modificar();
     }
 
     @Override
-    public Integer eliminar(TipoMovimientoDTO tipoMovimiento) {
+    public Integer eliminar(TiposMovimientoDTO tipoMovimiento) {
         this.tipoMovimiento = tipoMovimiento;
         return super.eliminar();
     }

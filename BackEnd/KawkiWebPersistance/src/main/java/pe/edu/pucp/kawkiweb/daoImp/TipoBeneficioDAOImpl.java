@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.TipoBeneficioDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoBeneficioDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 
 public class TipoBeneficioDAOImpl extends BaseDAOImpl implements TipoBeneficioDAO {
 
-    private TipoBeneficioDTO tipoBeneficio;
+    private TiposBeneficioDTO tipoBeneficio;
 
     public TipoBeneficioDAOImpl() {
         super("TIPO_BENEFICIO");
@@ -29,7 +29,7 @@ public class TipoBeneficioDAOImpl extends BaseDAOImpl implements TipoBeneficioDA
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.tipoBeneficio = new TipoBeneficioDTO();
+        this.tipoBeneficio = new TiposBeneficioDTO();
         this.tipoBeneficio.setTipo_beneficio_id(this.resultSet.getInt("TIPO_BENEFICIO_ID"));
         this.tipoBeneficio.setNombre(this.resultSet.getString("NOMBRE"));
     }
@@ -46,15 +46,15 @@ public class TipoBeneficioDAOImpl extends BaseDAOImpl implements TipoBeneficioDA
     }
 
     @Override
-    public TipoBeneficioDTO obtenerPorId(Integer tipoBeneficioId) {
-        this.tipoBeneficio = new TipoBeneficioDTO();
+    public TiposBeneficioDTO obtenerPorId(Integer tipoBeneficioId) {
+        this.tipoBeneficio = new TiposBeneficioDTO();
         this.tipoBeneficio.setTipo_beneficio_id(tipoBeneficioId);
         super.obtenerPorId();
         return this.tipoBeneficio;
     }
 
     @Override
-    public ArrayList<TipoBeneficioDTO> listarTodos() {
-        return (ArrayList<TipoBeneficioDTO>) super.listarTodos();
+    public ArrayList<TiposBeneficioDTO> listarTodos() {
+        return (ArrayList<TiposBeneficioDTO>) super.listarTodos();
     }
 }

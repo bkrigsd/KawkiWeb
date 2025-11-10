@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 
 public class Cifrado {
-    
+
     private static final String llave = "kawkiweb2025";
 
     public static String cifrarMD5(String texto) {

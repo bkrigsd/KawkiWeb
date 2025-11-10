@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.CategoriaDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriaDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 
 public class CategoriaDAOImpl extends BaseDAOImpl implements CategoriaDAO {
 
-    private CategoriaDTO categoria;
+    private CategoriasDTO categoria;
 
     public CategoriaDAOImpl() {
         super("CATEGORIAS");
@@ -29,7 +29,7 @@ public class CategoriaDAOImpl extends BaseDAOImpl implements CategoriaDAO {
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.categoria = new CategoriaDTO();
+        this.categoria = new CategoriasDTO();
         this.categoria.setCategoria_id(this.resultSet.getInt("CATEGORIA_ID"));
         this.categoria.setNombre(this.resultSet.getString("NOMBRE"));
     }
@@ -46,15 +46,15 @@ public class CategoriaDAOImpl extends BaseDAOImpl implements CategoriaDAO {
     }
 
     @Override
-    public CategoriaDTO obtenerPorId(Integer categoriaId) {
-        this.categoria = new CategoriaDTO();
+    public CategoriasDTO obtenerPorId(Integer categoriaId) {
+        this.categoria = new CategoriasDTO();
         this.categoria.setCategoria_id(categoriaId);
         super.obtenerPorId();
         return this.categoria;
     }
 
     @Override
-    public ArrayList<CategoriaDTO> listarTodos() {
-        return (ArrayList<CategoriaDTO>) super.listarTodos();
+    public ArrayList<CategoriasDTO> listarTodos() {
+        return (ArrayList<CategoriasDTO>) super.listarTodos();
     }
 }

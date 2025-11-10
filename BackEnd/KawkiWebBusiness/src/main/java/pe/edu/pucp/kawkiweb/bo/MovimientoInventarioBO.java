@@ -6,9 +6,9 @@ import pe.edu.pucp.kawkiweb.dao.MovimientoInventarioDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
 import pe.edu.pucp.kawkiweb.daoImp.MovimientoInventarioDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.ProductoVarianteDAOImpl;
-import pe.edu.pucp.kawkiweb.model.MovimientoInventarioDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
-import pe.edu.pucp.kawkiweb.model.utilMovInventario.TipoMovimientoDTO;
+import pe.edu.pucp.kawkiweb.model.MovimientosInventarioDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
+import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
 
 public class MovimientoInventarioBO {
 
@@ -26,8 +26,8 @@ public class MovimientoInventarioBO {
      * @return ID del movimiento insertado, o null si hubo error
      */
     public Integer insertar(Integer cantidad, LocalDateTime fecha_hora_mov,
-            String observacion, TipoMovimientoDTO tipo_movimiento,
-            ProductoVarianteDTO prod_variante) {
+            String observacion, TiposMovimientoDTO tipo_movimiento,
+            ProductosVariantesDTO prod_variante) {
 
         try {
             // Validaciones
@@ -42,7 +42,7 @@ public class MovimientoInventarioBO {
                 return null;
             }
 
-            MovimientoInventarioDTO movInventarioDTO = new MovimientoInventarioDTO();
+            MovimientosInventarioDTO movInventarioDTO = new MovimientosInventarioDTO();
             movInventarioDTO.setCantidad(cantidad);
             movInventarioDTO.setFecha_hora_mov(fecha_hora_mov);
             movInventarioDTO.setObservacion(observacion);
@@ -70,10 +70,10 @@ public class MovimientoInventarioBO {
      * Obtiene un movimiento de inventario por su ID
      *
      * @param movInventarioId ID del movimiento a buscar
-     * @return MovimientoInventarioDTO encontrado, o null si no existe o hay
-     * error
+     * @return MovimientosInventarioDTO encontrado, o null si no existe o hay
+ error
      */
-    public MovimientoInventarioDTO obtenerPorId(Integer movInventarioId) {
+    public MovimientosInventarioDTO obtenerPorId(Integer movInventarioId) {
         try {
             if (movInventarioId == null || movInventarioId <= 0) {
                 System.err.println("Error: ID de movimiento inválido");
@@ -93,9 +93,9 @@ public class MovimientoInventarioBO {
      *
      * @return Lista de movimientos, o lista vacía si hay error
      */
-    public ArrayList<MovimientoInventarioDTO> listarTodos() {
+    public ArrayList<MovimientosInventarioDTO> listarTodos() {
         try {
-            ArrayList<MovimientoInventarioDTO> lista = this.movInventarioDAO.listarTodos();
+            ArrayList<MovimientosInventarioDTO> lista = this.movInventarioDAO.listarTodos();
             return (lista != null) ? lista : new ArrayList<>();
 
         } catch (Exception e) {
@@ -114,8 +114,8 @@ public class MovimientoInventarioBO {
      * @return Número de registros afectados, o null si hubo error
      */
     public Integer modificar(Integer mov_inventario_id, Integer cantidad,
-            LocalDateTime fecha_hora_mov, String observacion, TipoMovimientoDTO tipo_movimiento,
-            ProductoVarianteDTO prod_variante) {
+            LocalDateTime fecha_hora_mov, String observacion, TiposMovimientoDTO tipo_movimiento,
+            ProductosVariantesDTO prod_variante) {
 
         try {
             // Validar ID
@@ -130,7 +130,7 @@ public class MovimientoInventarioBO {
                 return null;
             }
 
-            MovimientoInventarioDTO movInventarioDTO = new MovimientoInventarioDTO();
+            MovimientosInventarioDTO movInventarioDTO = new MovimientosInventarioDTO();
             movInventarioDTO.setMov_inventario_id(mov_inventario_id);
             movInventarioDTO.setCantidad(cantidad);
             movInventarioDTO.setFecha_hora_mov(fecha_hora_mov);
@@ -162,7 +162,7 @@ public class MovimientoInventarioBO {
                 return null;
             }
 
-            MovimientoInventarioDTO movInventarioDTO = new MovimientoInventarioDTO();
+            MovimientosInventarioDTO movInventarioDTO = new MovimientosInventarioDTO();
             movInventarioDTO.setMov_inventario_id(movInventarioId);
             return this.movInventarioDAO.eliminar(movInventarioDTO);
 
@@ -179,7 +179,7 @@ public class MovimientoInventarioBO {
      * @return true si los datos son válidos, false en caso contrario
      */
     private boolean validarDatosMovimiento(Integer cantidad, LocalDateTime fecha_hora_mov,
-            TipoMovimientoDTO tipo_movimiento, ProductoVarianteDTO prod_variante) {
+            TiposMovimientoDTO tipo_movimiento, ProductosVariantesDTO prod_variante) {
 
         // Validar cantidad
         if (cantidad == null || cantidad <= 0) {
@@ -213,10 +213,10 @@ public class MovimientoInventarioBO {
      *
      * @return true si hay stock suficiente, false en caso contrario
      */
-    private boolean validarStockSuficiente(ProductoVarianteDTO prod_variante, Integer cantidad) {
+    private boolean validarStockSuficiente(ProductosVariantesDTO prod_variante, Integer cantidad) {
         try {
             // Obtener el producto variante actualizado de la base de datos
-            ProductoVarianteDTO prodVarianteActual = this.productoVarianteDAO.obtenerPorId(
+            ProductosVariantesDTO prodVarianteActual = this.productoVarianteDAO.obtenerPorId(
                     prod_variante.getProd_variante_id()
             );
 
@@ -243,11 +243,11 @@ public class MovimientoInventarioBO {
     /**
      * Actualiza el stock del producto variante según el tipo de movimiento
      */
-    private void actualizarStockProductoVariante(ProductoVarianteDTO prod_variante,
-            Integer cantidad, TipoMovimientoDTO tipo_movimiento) {
+    private void actualizarStockProductoVariante(ProductosVariantesDTO prod_variante,
+            Integer cantidad, TiposMovimientoDTO tipo_movimiento) {
         try {
             // Obtener el producto variante actualizado
-            ProductoVarianteDTO prodVarianteActual = this.productoVarianteDAO.obtenerPorId(
+            ProductosVariantesDTO prodVarianteActual = this.productoVarianteDAO.obtenerPorId(
                     prod_variante.getProd_variante_id()
             );
 
@@ -298,7 +298,7 @@ public class MovimientoInventarioBO {
      * @param observacion Motivo del ajuste
      * @return ID del movimiento creado, o null si hubo error
      */
-    public Integer crearAjusteInventario(ProductoVarianteDTO prod_variante,
+    public Integer crearAjusteInventario(ProductosVariantesDTO prod_variante,
             Integer stockReal, String observacion) {
         try {
             if (prod_variante == null || stockReal == null || stockReal < 0) {
@@ -307,7 +307,7 @@ public class MovimientoInventarioBO {
             }
 
             // Obtener el producto variante actual
-            ProductoVarianteDTO prodVarianteActual = this.productoVarianteDAO.obtenerPorId(
+            ProductosVariantesDTO prodVarianteActual = this.productoVarianteDAO.obtenerPorId(
                     prod_variante.getProd_variante_id()
             );
 
@@ -317,9 +317,9 @@ public class MovimientoInventarioBO {
             }
 
             // Crear tipo de movimiento AJUSTE
-            TipoMovimientoDTO tipoAjuste = new TipoMovimientoDTO(
-                    TipoMovimientoDTO.ID_AJUSTE,
-                    TipoMovimientoDTO.NOMBRE_AJUSTE
+            TiposMovimientoDTO tipoAjuste = new TiposMovimientoDTO(
+                    TiposMovimientoDTO.ID_AJUSTE,
+                    TiposMovimientoDTO.NOMBRE_AJUSTE
             );
 
             // Crear movimiento de ajuste
@@ -347,12 +347,12 @@ public class MovimientoInventarioBO {
      *
      * @return ID del movimiento creado, o null si hubo error
      */
-    public Integer registrarIngreso(ProductoVarianteDTO prod_variante, Integer cantidad,
+    public Integer registrarIngreso(ProductosVariantesDTO prod_variante, Integer cantidad,
             String observacion) {
         try {
-            TipoMovimientoDTO tipoIngreso = new TipoMovimientoDTO(
-                    TipoMovimientoDTO.ID_INGRESO,
-                    TipoMovimientoDTO.NOMBRE_INGRESO
+            TiposMovimientoDTO tipoIngreso = new TiposMovimientoDTO(
+                    TiposMovimientoDTO.ID_INGRESO,
+                    TiposMovimientoDTO.NOMBRE_INGRESO
             );
 
             return insertar(cantidad, LocalDateTime.now(), observacion, tipoIngreso, prod_variante);
@@ -369,12 +369,12 @@ public class MovimientoInventarioBO {
      *
      * @return ID del movimiento creado, o null si hubo error
      */
-    public Integer registrarSalida(ProductoVarianteDTO prod_variante, Integer cantidad,
+    public Integer registrarSalida(ProductosVariantesDTO prod_variante, Integer cantidad,
             String observacion) {
         try {
-            TipoMovimientoDTO tipoSalida = new TipoMovimientoDTO(
-                    TipoMovimientoDTO.ID_SALIDA,
-                    TipoMovimientoDTO.NOMBRE_SALIDA
+            TiposMovimientoDTO tipoSalida = new TiposMovimientoDTO(
+                    TiposMovimientoDTO.ID_SALIDA,
+                    TiposMovimientoDTO.NOMBRE_SALIDA
             );
 
             return insertar(cantidad, LocalDateTime.now(), observacion, tipoSalida, prod_variante);

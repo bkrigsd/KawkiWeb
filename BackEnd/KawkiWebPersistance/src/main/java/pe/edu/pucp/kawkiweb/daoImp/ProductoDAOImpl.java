@@ -10,14 +10,14 @@ import pe.edu.pucp.kawkiweb.dao.EstiloDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductoDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.ProductoDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriaDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.EstiloDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 
 public class ProductoDAOImpl extends BaseDAOImpl implements ProductoDAO {
 
-    private ProductoDTO producto;
+    private ProductosDTO producto;
     private CategoriaDAO categoriaDAO;
     private EstiloDAO estiloDAO;
     private ProductoVarianteDAO productoVarianteDAO;
@@ -76,16 +76,16 @@ public class ProductoDAOImpl extends BaseDAOImpl implements ProductoDAO {
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.producto = new ProductoDTO();
+        this.producto = new ProductosDTO();
         this.producto.setProducto_id(this.resultSet.getInt("PRODUCTO_ID"));
         this.producto.setDescripcion(this.resultSet.getString("DESCRIPCION"));
 
         Integer categoria_id = this.resultSet.getInt("CATEGORIA_ID");
-        CategoriaDTO categoria = this.categoriaDAO.obtenerPorId(categoria_id);
+        CategoriasDTO categoria = this.categoriaDAO.obtenerPorId(categoria_id);
         this.producto.setCategoria(categoria);
 
         Integer estilo_id = this.resultSet.getInt("ESTILO_ID");
-        EstiloDTO estilo = this.estiloDAO.obtenerPorId(estilo_id);
+        EstilosDTO estilo = this.estiloDAO.obtenerPorId(estilo_id);
         this.producto.setEstilo(estilo);
 
         this.producto.setPrecio_venta(this.resultSet.getDouble("PRECIO_VENTA"));
@@ -94,7 +94,7 @@ public class ProductoDAOImpl extends BaseDAOImpl implements ProductoDAO {
         );
 
         // Cargar variantes
-        ArrayList<ProductoVarianteDTO> variantes
+        ArrayList<ProductosVariantesDTO> variantes
                 = this.productoVarianteDAO.listarPorProductoId(this.producto.getProducto_id());
         this.producto.setVariantes(variantes);
     }
@@ -111,32 +111,32 @@ public class ProductoDAOImpl extends BaseDAOImpl implements ProductoDAO {
     }
 
     @Override
-    public Integer insertar(ProductoDTO producto) {
+    public Integer insertar(ProductosDTO producto) {
         this.producto = producto;
         return super.insertar();
     }
 
     @Override
-    public ProductoDTO obtenerPorId(Integer productoId) {
-        this.producto = new ProductoDTO();
+    public ProductosDTO obtenerPorId(Integer productoId) {
+        this.producto = new ProductosDTO();
         this.producto.setProducto_id(productoId);
         super.obtenerPorId();
         return this.producto;
     }
 
     @Override
-    public ArrayList<ProductoDTO> listarTodos() {
-        return (ArrayList<ProductoDTO>) super.listarTodos();
+    public ArrayList<ProductosDTO> listarTodos() {
+        return (ArrayList<ProductosDTO>) super.listarTodos();
     }
 
     @Override
-    public Integer modificar(ProductoDTO producto) {
+    public Integer modificar(ProductosDTO producto) {
         this.producto = producto;
         return super.modificar();
     }
 
     @Override
-    public Integer eliminar(ProductoDTO producto) {
+    public Integer eliminar(ProductosDTO producto) {
         this.producto = producto;
         return super.eliminar();
     }

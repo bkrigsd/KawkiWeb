@@ -1,6 +1,6 @@
 package pe.edu.pucp.kawkiweb.model.utilMovInventario;
 
-public class TipoMovimientoDTO {
+public class TiposMovimientoDTO {
 
     private Integer tipoMovimientoId;
     private String nombre;
@@ -14,12 +14,12 @@ public class TipoMovimientoDTO {
     public static final String NOMBRE_SALIDA = "Salida";
     public static final String NOMBRE_AJUSTE = "Ajuste";
 
-    public TipoMovimientoDTO() {
+    public TiposMovimientoDTO() {
         this.tipoMovimientoId = null;
         this.nombre = null;
     }
 
-    public TipoMovimientoDTO(Integer tipoMovimientoId, String nombre) {
+    public TiposMovimientoDTO(Integer tipoMovimientoId, String nombre) {
         this.tipoMovimientoId = tipoMovimientoId;
         this.nombre = nombre;
     }

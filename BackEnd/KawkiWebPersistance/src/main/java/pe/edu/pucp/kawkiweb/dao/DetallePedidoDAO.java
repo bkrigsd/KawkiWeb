@@ -1,20 +1,20 @@
 package pe.edu.pucp.kawkiweb.dao;
 
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.model.DetallePedidoDTO;
+import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 
 public interface DetallePedidoDAO {
 
-    public Integer insertar(DetallePedidoDTO pedido);
+    public Integer insertar(DetalleVentasDTO pedido);
 
-    public DetallePedidoDTO obtenerPorId(Integer pedidoId);
+    public DetalleVentasDTO obtenerPorId(Integer pedidoId);
 
-    public ArrayList<DetallePedidoDTO> listarTodos();
+    public ArrayList<DetalleVentasDTO> listarTodos();
 
-    ArrayList<DetallePedidoDTO> listarPorPedidoId(Integer pedidoId);
+    ArrayList<DetalleVentasDTO> listarPorPedidoId(Integer pedidoId);
 
-    public Integer modificar(DetallePedidoDTO pedido);
+    public Integer modificar(DetalleVentasDTO pedido);
 
-    public Integer eliminar(DetallePedidoDTO pedido);
+    public Integer eliminar(DetalleVentasDTO pedido);
 
 }

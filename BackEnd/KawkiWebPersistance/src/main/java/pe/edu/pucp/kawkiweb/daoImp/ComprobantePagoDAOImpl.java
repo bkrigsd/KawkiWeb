@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.Comprobante_PagoDTO;
-import pe.edu.pucp.kawkiweb.model.utilPago.TipoComprobanteDTO;
+import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
+import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
 import pe.edu.pucp.kawkiweb.dao.ComprobantePagoDAO;
 import pe.edu.pucp.kawkiweb.dao.TipoComprobanteDAO;
 
 public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantePagoDAO {
 
-    private Comprobante_PagoDTO comprobante;
+    private ComprobantesPagoDTO comprobante;
     private TipoComprobanteDAO tipoComprobanteDAO;
 
     public ComprobantePagoDAOImpl() {
@@ -84,13 +84,13 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantePa
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.comprobante = new Comprobante_PagoDTO();
+        this.comprobante = new ComprobantesPagoDTO();
         this.comprobante.setComprobante_pago_id(this.resultSet.getInt("COMPROBANTE_PAGO_ID"));
         this.comprobante.setPago_id(this.resultSet.getInt("PAGO_ID"));
         this.comprobante.setFecha_hora_creacion(this.resultSet.getTimestamp("FECHA_HORA_CREACION").toLocalDateTime());
 
         Integer tipoId = this.resultSet.getInt("TIPO_COMPROBANTE_ID");
-        TipoComprobanteDTO tipoComprobante = this.tipoComprobanteDAO.obtenerPorId(tipoId);
+        TiposComprobanteDTO tipoComprobante = this.tipoComprobanteDAO.obtenerPorId(tipoId);
         this.comprobante.setTipo_comprobante(tipoComprobante);
 
         this.comprobante.setNumero_serie(this.resultSet.getString("NUMERO_SERIE"));
@@ -116,21 +116,21 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantePa
     }
 
     @Override
-    public Integer insertar(Comprobante_PagoDTO comprobante) {
+    public Integer insertar(ComprobantesPagoDTO comprobante) {
         this.comprobante = comprobante;
         return super.insertar();
     }
 
     @Override
-    public Comprobante_PagoDTO obtenerPorId(Integer comprobante_pago_id) {
-        this.comprobante = new Comprobante_PagoDTO();
+    public ComprobantesPagoDTO obtenerPorId(Integer comprobante_pago_id) {
+        this.comprobante = new ComprobantesPagoDTO();
         this.comprobante.setComprobante_pago_id(comprobante_pago_id);
         super.obtenerPorId();
         return this.comprobante;
     }
 
     @Override
-    public Comprobante_PagoDTO obtenerPorPagoId(Integer pagoId) {
+    public ComprobantesPagoDTO obtenerPorPagoId(Integer pagoId) {
         String sql = "SELECT " + generarListaColumnas() + " FROM COMPROBANTE_PAGOS WHERE PAGO_ID = ?";
 
         Consumer<Integer> incluirParametros = (id) -> {
@@ -141,7 +141,7 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantePa
             }
         };
 
-        List<Comprobante_PagoDTO> lista = super.listarTodos(sql, incluirParametros, pagoId);
+        List<ComprobantesPagoDTO> lista = super.listarTodos(sql, incluirParametros, pagoId);
         return lista.isEmpty() ? null : lista.get(0);
     }
 
@@ -157,18 +157,18 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantePa
     }
 
     @Override
-    public ArrayList<Comprobante_PagoDTO> listarTodos() {
-        return (ArrayList<Comprobante_PagoDTO>) super.listarTodos();
+    public ArrayList<ComprobantesPagoDTO> listarTodos() {
+        return (ArrayList<ComprobantesPagoDTO>) super.listarTodos();
     }
 
     @Override
-    public Integer modificar(Comprobante_PagoDTO comprobante) {
+    public Integer modificar(ComprobantesPagoDTO comprobante) {
         this.comprobante = comprobante;
         return super.modificar();
     }
 
     @Override
-    public Integer eliminar(Comprobante_PagoDTO comprobante) {
+    public Integer eliminar(ComprobantesPagoDTO comprobante) {
         this.comprobante = comprobante;
         return super.eliminar();
     }

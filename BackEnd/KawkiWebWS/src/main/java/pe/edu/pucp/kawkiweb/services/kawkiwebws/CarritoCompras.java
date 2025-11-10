@@ -6,8 +6,8 @@ import jakarta.jws.WebParam;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.CarritoComprasBO;
 import pe.edu.pucp.kawkiweb.model.CarritoComprasDTO;
-import pe.edu.pucp.kawkiweb.model.PromocionDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 @WebService(serviceName = "CarritoCompras")
 public class CarritoCompras {
@@ -20,9 +20,9 @@ public class CarritoCompras {
 
     @WebMethod(operationName = "insertar")
     public Integer insertar(
-            @WebParam(name = "usuario") UsuarioDTO usuario,
+            @WebParam(name = "usuario") UsuariosDTO usuario,
             @WebParam(name = "total") Double total,
-            @WebParam(name = "promocion") PromocionDTO promocion) {
+            @WebParam(name = "promocion") DescuentosDTO promocion) {
 
         return this.carritoComprasBO.insertar(usuario, total, promocion);
     }
@@ -41,9 +41,9 @@ public class CarritoCompras {
     @WebMethod(operationName = "modificar")
     public Integer modificar(
             @WebParam(name = "carritoId") Integer carritoId,
-            @WebParam(name = "usuario") UsuarioDTO usuario,
+            @WebParam(name = "usuario") UsuariosDTO usuario,
             @WebParam(name = "total") Double total,
-            @WebParam(name = "promocion") PromocionDTO promocion) {
+            @WebParam(name = "promocion") DescuentosDTO promocion) {
 
         return this.carritoComprasBO.modificar(carritoId, usuario, total, promocion);
     }

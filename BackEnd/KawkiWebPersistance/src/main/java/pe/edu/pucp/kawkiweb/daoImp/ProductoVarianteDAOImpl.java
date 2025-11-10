@@ -8,14 +8,14 @@ import pe.edu.pucp.kawkiweb.dao.ProductoVarianteDAO;
 import pe.edu.pucp.kawkiweb.dao.TallaDAO;
 import pe.edu.pucp.kawkiweb.dao.TipoBeneficioDAO;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.utilProducto.ColorDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.TallaDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoBeneficioDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 
 public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductoVarianteDAO {
 
-    private ProductoVarianteDTO prodVariante;
+    private ProductosVariantesDTO prodVariante;
     private ColorDAO colorDAO;
     private TallaDAO tallaDAO;
     private TipoBeneficioDAO tipoBeneficioDAO;
@@ -54,7 +54,7 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductoVari
         this.statement.setInt(6, this.prodVariante.getColor().getColor_id());
         this.statement.setInt(7, this.prodVariante.getTalla().getTalla_id());
 
-        TipoBeneficioDTO tipo_beneficio = this.prodVariante.getTipo_beneficio();
+        TiposBeneficioDTO tipo_beneficio = this.prodVariante.getTipo_beneficio();
         if (tipo_beneficio != null) {
             this.statement.setInt(8, tipo_beneficio.getTipo_beneficio_id());
         } else {
@@ -91,7 +91,7 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductoVari
         this.statement.setInt(6, this.prodVariante.getColor().getColor_id());
         this.statement.setInt(7, this.prodVariante.getTalla().getTalla_id());
 
-        TipoBeneficioDTO tipo_beneficio = this.prodVariante.getTipo_beneficio();
+        TiposBeneficioDTO tipo_beneficio = this.prodVariante.getTipo_beneficio();
         if (tipo_beneficio != null) {
             this.statement.setInt(8, tipo_beneficio.getTipo_beneficio_id());
         } else {
@@ -111,7 +111,7 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductoVari
 
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
-        this.prodVariante = new ProductoVarianteDTO();
+        this.prodVariante = new ProductosVariantesDTO();
         this.prodVariante.setProd_variante_id(this.resultSet.getInt("PROD_VARIANTE_ID"));
         this.prodVariante.setSKU(this.resultSet.getString("SKU"));
         this.prodVariante.setStock(this.resultSet.getInt("STOCK"));
@@ -123,16 +123,16 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductoVari
         this.prodVariante.setProducto_id(this.resultSet.getInt("PRODUCTO_ID"));
 
         Integer color_id = this.resultSet.getInt("COLOR_ID");
-        ColorDTO color = this.colorDAO.obtenerPorId(color_id);
+        ColoresDTO color = this.colorDAO.obtenerPorId(color_id);
         this.prodVariante.setColor(color);
 
         Integer talla_id = this.resultSet.getInt("TALLA_ID");
-        TallaDTO talla = this.tallaDAO.obtenerPorId(talla_id);
+        TallasDTO talla = this.tallaDAO.obtenerPorId(talla_id);
         this.prodVariante.setTalla(talla);
 
         Integer tipo_beneficio_id = (Integer) this.resultSet.getObject("TIPO_BENEFICIO_ID");
         if (tipo_beneficio_id != null) {
-            TipoBeneficioDTO tipoBeneficio = this.tipoBeneficioDAO.obtenerPorId(tipo_beneficio_id);
+            TiposBeneficioDTO tipoBeneficio = this.tipoBeneficioDAO.obtenerPorId(tipo_beneficio_id);
             this.prodVariante.setTipo_beneficio(tipoBeneficio);
         } else {
             this.prodVariante.setTipo_beneficio(null);
@@ -160,33 +160,33 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductoVari
     }
 
     @Override
-    public Integer insertar(ProductoVarianteDTO prodVariante) {
+    public Integer insertar(ProductosVariantesDTO prodVariante) {
         this.prodVariante = prodVariante;
         return super.insertar();
     }
 
     @Override
-    public ProductoVarianteDTO obtenerPorId(Integer prodVarianteId) {
-        this.prodVariante = new ProductoVarianteDTO();
+    public ProductosVariantesDTO obtenerPorId(Integer prodVarianteId) {
+        this.prodVariante = new ProductosVariantesDTO();
         this.prodVariante.setProd_variante_id(prodVarianteId);
         super.obtenerPorId();
         return this.prodVariante;
     }
 
     @Override
-    public ArrayList<ProductoVarianteDTO> listarTodos() {
-        return (ArrayList<ProductoVarianteDTO>) super.listarTodos();
+    public ArrayList<ProductosVariantesDTO> listarTodos() {
+        return (ArrayList<ProductosVariantesDTO>) super.listarTodos();
     }
 
     @Override
-    public ArrayList<ProductoVarianteDTO> listarPorProductoId(Integer productoId) {
+    public ArrayList<ProductosVariantesDTO> listarPorProductoId(Integer productoId) {
         String sql = "SELECT PROD_VARIANTE_ID, SKU, STOCK, STOCK_MINIMO, "
                 + "ALERTA_STOCK, PRODUCTO_ID, COLOR_ID, TALLA_ID, "
                 + "TIPO_BENEFICIO_ID, VALOR_BENEFICIO, FECHA_HORA_CREACION "
                 + "FROM PRODUCTOS_VARIANTES "
                 + "WHERE PRODUCTO_ID = ?";
 
-        return (ArrayList<ProductoVarianteDTO>) super.listarTodos(
+        return (ArrayList<ProductosVariantesDTO>) super.listarTodos(
                 sql,
                 (params) -> {
                     try {
@@ -200,13 +200,13 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductoVari
     }
 
     @Override
-    public Integer modificar(ProductoVarianteDTO prodVariante) {
+    public Integer modificar(ProductosVariantesDTO prodVariante) {
         this.prodVariante = prodVariante;
         return super.modificar();
     }
 
     @Override
-    public Integer eliminar(ProductoVarianteDTO prodVariante) {
+    public Integer eliminar(ProductosVariantesDTO prodVariante) {
         this.prodVariante = prodVariante;
         return super.eliminar();
     }

@@ -6,10 +6,10 @@ import jakarta.jws.WebParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.ProductoVarianteBO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.ColorDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.TallaDTO;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoBeneficioDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 
 @WebService(serviceName = "ProductoVariante")
 public class ProductoVariante {
@@ -27,9 +27,9 @@ public class ProductoVariante {
             @WebParam(name = "stock_minimo") Integer stock_minimo,
             @WebParam(name = "alerta_stock") Boolean alerta_stock,
             @WebParam(name = "producto_id") Integer producto_id,
-            @WebParam(name = "color") ColorDTO color,
-            @WebParam(name = "talla") TallaDTO talla,
-            @WebParam(name = "tipo_beneficio") TipoBeneficioDTO tipo_beneficio,
+            @WebParam(name = "color") ColoresDTO color,
+            @WebParam(name = "talla") TallasDTO talla,
+            @WebParam(name = "tipo_beneficio") TiposBeneficioDTO tipo_beneficio,
             @WebParam(name = "valor_beneficio") Integer valor_beneficio,
             @WebParam(name = "fecha_hora_creacion") LocalDateTime fecha_hora_creacion) {
 
@@ -39,13 +39,13 @@ public class ProductoVariante {
     }
 
     @WebMethod(operationName = "obtenerPorId")
-    public ProductoVarianteDTO obtenerPorId(
+    public ProductosVariantesDTO obtenerPorId(
             @WebParam(name = "prod_variante_id") Integer prod_variante_id) {
         return this.productoVarianteBO.obtenerPorId(prod_variante_id);
     }
 
     @WebMethod(operationName = "listarTodos")
-    public ArrayList<ProductoVarianteDTO> listarTodos() {
+    public ArrayList<ProductosVariantesDTO> listarTodos() {
         return this.productoVarianteBO.listarTodos();
     }
 
@@ -57,9 +57,9 @@ public class ProductoVariante {
             @WebParam(name = "stock_minimo") Integer stock_minimo,
             @WebParam(name = "alerta_stock") Boolean alerta_stock,
             @WebParam(name = "producto_id") Integer producto_id,
-            @WebParam(name = "color") ColorDTO color,
-            @WebParam(name = "talla") TallaDTO talla,
-            @WebParam(name = "tipo_beneficio") TipoBeneficioDTO tipo_beneficio,
+            @WebParam(name = "color") ColoresDTO color,
+            @WebParam(name = "talla") TallasDTO talla,
+            @WebParam(name = "tipo_beneficio") TiposBeneficioDTO tipo_beneficio,
             @WebParam(name = "valor_beneficio") Integer valor_beneficio,
             @WebParam(name = "fecha_hora_creacion") LocalDateTime fecha_hora_creacion) {
 
@@ -83,26 +83,26 @@ public class ProductoVariante {
     }
 
     @WebMethod(operationName = "listarConStockBajo")
-    public ArrayList<ProductoVarianteDTO> listarConStockBajo() {
+    public ArrayList<ProductosVariantesDTO> listarConStockBajo() {
         return this.productoVarianteBO.listarConStockBajo();
     }
 
     @WebMethod(operationName = "listarPorProducto")
-    public ArrayList<ProductoVarianteDTO> listarPorProducto(
+    public ArrayList<ProductosVariantesDTO> listarPorProducto(
             @WebParam(name = "producto_id") Integer producto_id) {
 
         return this.productoVarianteBO.listarPorProducto(producto_id);
     }
 
     @WebMethod(operationName = "listarPorColor")
-    public ArrayList<ProductoVarianteDTO> listarPorColor(
+    public ArrayList<ProductosVariantesDTO> listarPorColor(
             @WebParam(name = "color_id") Integer color_id) {
 
         return this.productoVarianteBO.listarPorColor(color_id);
     }
 
     @WebMethod(operationName = "listarPorTalla")
-    public ArrayList<ProductoVarianteDTO> listarPorTalla(
+    public ArrayList<ProductosVariantesDTO> listarPorTalla(
             @WebParam(name = "talla_id") Integer talla_id) {
 
         return this.productoVarianteBO.listarPorTalla(talla_id);

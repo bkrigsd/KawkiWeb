@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.dao.PagoDAO;
 import pe.edu.pucp.kawkiweb.daoImp.PagoDAOImpl;
-import pe.edu.pucp.kawkiweb.model.utilPago.MetodoPagoDTO;
+import pe.edu.pucp.kawkiweb.model.utilPago.MetodosPagoDTO;
 import pe.edu.pucp.kawkiweb.model.PagoDTO;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
 
 public class PagoBO {
 
@@ -26,7 +26,7 @@ public class PagoBO {
      * @return ID del pago insertado o 0 si falla
      */
     public Integer insertar(Double montoTotal, LocalDateTime fechaHoraPago,
-            MetodoPagoDTO metodoPago, PedidoDTO pedido) {
+            MetodosPagoDTO metodoPago, VentasDTO pedido) {
         if (metodoPago == null || metodoPago.getMetodo_pago_id() == null) {
             System.err.println("Error: Método de pago no puede ser nulo");
             return 0;
@@ -82,7 +82,7 @@ public class PagoBO {
      * @return Número de filas afectadas (1 si tuvo éxito, 0 si falló)
      */
     public Integer modificar(Integer pagoId, Double montoTotal,
-            LocalDateTime fechaHoraPago, MetodoPagoDTO metodoPago, PedidoDTO pedido) {
+            LocalDateTime fechaHoraPago, MetodosPagoDTO metodoPago, VentasDTO pedido) {
         if (pagoId == null || pagoId <= 0) {
             System.err.println("Error: ID de pago inválido");
             return 0;

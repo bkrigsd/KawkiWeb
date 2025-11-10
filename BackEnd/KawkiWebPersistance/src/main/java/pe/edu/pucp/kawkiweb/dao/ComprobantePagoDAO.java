@@ -5,20 +5,20 @@
 package pe.edu.pucp.kawkiweb.dao;
 
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.model.Comprobante_PagoDTO;
+import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
 
 public interface ComprobantePagoDAO {
 
-    public Integer insertar(Comprobante_PagoDTO comprobante_pago);
+    public Integer insertar(ComprobantesPagoDTO comprobante_pago);
 
-    public Comprobante_PagoDTO obtenerPorId(Integer comprobante_pago_id);
+    public ComprobantesPagoDTO obtenerPorId(Integer comprobante_pago_id);
 
-    public Comprobante_PagoDTO obtenerPorPagoId(Integer pago_id);
+    public ComprobantesPagoDTO obtenerPorPagoId(Integer pago_id);
 
-    public ArrayList<Comprobante_PagoDTO> listarTodos();
+    public ArrayList<ComprobantesPagoDTO> listarTodos();
 
-    public Integer modificar(Comprobante_PagoDTO comprobante_pago);
+    public Integer modificar(ComprobantesPagoDTO comprobante_pago);
 
-    public Integer eliminar(Comprobante_PagoDTO comprobante_pago);
+    public Integer eliminar(ComprobantesPagoDTO comprobante_pago);
 
 }

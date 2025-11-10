@@ -5,8 +5,8 @@ import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.DetallePedidoBO;
-import pe.edu.pucp.kawkiweb.model.DetallePedidoDTO;
-import pe.edu.pucp.kawkiweb.model.ProductoVarianteDTO;
+import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 
 @WebService(serviceName="DetallePedido")
 public class DetallePedido {
@@ -19,7 +19,7 @@ public class DetallePedido {
 
     @WebMethod(operationName = "insertar")
     public Integer insertar(
-            @WebParam(name = "productoVar") ProductoVarianteDTO productoVar,
+            @WebParam(name = "productoVar") ProductosVariantesDTO productoVar,
             @WebParam(name = "pedidoId") Integer pedidoId,
             @WebParam(name = "cantidad") Integer cantidad,
             @WebParam(name = "precioUnitario") Double precioUnitario,
@@ -30,18 +30,18 @@ public class DetallePedido {
     }
 
     @WebMethod(operationName = "obtenerPorId")
-    public DetallePedidoDTO obtenerPorId(
+    public DetalleVentasDTO obtenerPorId(
             @WebParam(name = "detalleId") Integer detalleId) {
         return this.detallePedidoBO.obtenerPorId(detalleId);
     }
 
     @WebMethod(operationName = "listarTodos")
-    public ArrayList<DetallePedidoDTO> listarTodos() {
+    public ArrayList<DetalleVentasDTO> listarTodos() {
         return this.detallePedidoBO.listarTodos();
     }
 
     @WebMethod(operationName = "listarPorPedidoId")
-    public ArrayList<DetallePedidoDTO> listarPorPedidoId(
+    public ArrayList<DetalleVentasDTO> listarPorPedidoId(
             @WebParam(name = "pedidoId") Integer pedidoId) {
 
         return this.detallePedidoBO.listarPorPedidoId(pedidoId);
@@ -50,7 +50,7 @@ public class DetallePedido {
     @WebMethod(operationName = "modificar")
     public Integer modificar(
             @WebParam(name = "detallePedidoId") Integer detallePedidoId,
-            @WebParam(name = "productoVar") ProductoVarianteDTO productoVar,
+            @WebParam(name = "productoVar") ProductosVariantesDTO productoVar,
             @WebParam(name = "pedidoId") Integer pedidoId,
             @WebParam(name = "cantidad") Integer cantidad,
             @WebParam(name = "precioUnitario") Double precioUnitario,

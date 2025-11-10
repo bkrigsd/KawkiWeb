@@ -1,17 +1,17 @@
 package pe.edu.pucp.kawkiweb.dao;
 
-import pe.edu.pucp.kawkiweb.model.ProductoDTO;
+import pe.edu.pucp.kawkiweb.model.ProductosDTO;
 import java.util.ArrayList;
 
 public interface ProductoDAO {
 
-    public Integer insertar(ProductoDTO producto);
+    public Integer insertar(ProductosDTO producto);
     
-    public ProductoDTO obtenerPorId(Integer productoId);
+    public ProductosDTO obtenerPorId(Integer productoId);
 
-    public ArrayList<ProductoDTO> listarTodos();
+    public ArrayList<ProductosDTO> listarTodos();
 
-    public Integer modificar(ProductoDTO producto);
+    public Integer modificar(ProductosDTO producto);
 
-    public Integer eliminar(ProductoDTO producto);
+    public Integer eliminar(ProductosDTO producto);
 }

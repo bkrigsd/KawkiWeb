@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import pe.edu.pucp.kawkiweb.daoImp.PedidoDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.UsuarioDAOImpl;
-import pe.edu.pucp.kawkiweb.model.PedidoDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
-import pe.edu.pucp.kawkiweb.model.utilUsuario.TipoUsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 
 public class UsuarioDAOTest {
 
@@ -30,12 +30,12 @@ public class UsuarioDAOTest {
     }
 
     private void insertarAlmacenes(ArrayList<Integer> listaUsuariosId) {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        UsuariosDTO usuarioDTO = new UsuariosDTO();
 
         // Crear TipoUsuario para CLIENTE
-        TipoUsuarioDTO tipoCliente = new TipoUsuarioDTO();
-        tipoCliente.setTipoUsuarioId(TipoUsuarioDTO.ID_CLIENTE);
-        tipoCliente.setNombre(TipoUsuarioDTO.NOMBRE_CLIENTE);
+        TiposUsuarioDTO tipoCliente = new TiposUsuarioDTO();
+        tipoCliente.setTipoUsuarioId(TiposUsuarioDTO.ID_CLIENTE);
+        tipoCliente.setNombre(TiposUsuarioDTO.NOMBRE_CLIENTE);
 
         usuarioDTO.setNombre("Eros");
         usuarioDTO.setApePaterno("Sotelo");
@@ -55,7 +55,7 @@ public class UsuarioDAOTest {
         listaUsuariosId.add(resultado);
 
         // Prueba 2
-        usuarioDTO = new UsuarioDTO();
+        usuarioDTO = new UsuariosDTO();
 
         usuarioDTO.setNombre("Rafael");
         usuarioDTO.setApePaterno("Lopez");
@@ -81,10 +81,10 @@ public class UsuarioDAOTest {
         ArrayList<Integer> listaUsuarioId = new ArrayList<>();
         this.insertarAlmacenes(listaUsuarioId);
 
-        UsuarioDTO usuario = this.usuarioDAO.obtenerPorId(listaUsuarioId.get(0));
+        UsuariosDTO usuario = this.usuarioDAO.obtenerPorId(listaUsuarioId.get(0));
         assertEquals(usuario.getUsuarioId(), listaUsuarioId.get(0));
         assertNotNull(usuario.getTipoUsuario());
-        assertEquals(TipoUsuarioDTO.ID_CLIENTE, usuario.getTipoUsuario().getTipoUsuarioId());
+        assertEquals(TiposUsuarioDTO.ID_CLIENTE, usuario.getTipoUsuario().getTipoUsuarioId());
 
         usuario = this.usuarioDAO.obtenerPorId(listaUsuarioId.get(1));
         assertEquals(usuario.getUsuarioId(), listaUsuarioId.get(1));
@@ -97,7 +97,7 @@ public class UsuarioDAOTest {
         ArrayList<Integer> listaUsuariosId = new ArrayList<>();
         this.insertarAlmacenes(listaUsuariosId);
 
-        ArrayList<UsuarioDTO> listaUsuarios = this.usuarioDAO.listarTodos();
+        ArrayList<UsuariosDTO> listaUsuarios = this.usuarioDAO.listarTodos();
         assertEquals(listaUsuariosId.size(), listaUsuarios.size());
         for (int i = 0; i < listaUsuariosId.size(); i++) {
             assertEquals(listaUsuariosId.get(i), listaUsuarios.get(i).getUsuarioId());
@@ -112,7 +112,7 @@ public class UsuarioDAOTest {
         ArrayList<Integer> listaUsuariosId = new ArrayList<>();
         this.insertarAlmacenes(listaUsuariosId);
 
-        ArrayList<UsuarioDTO> listaUsuarios = this.usuarioDAO.listarTodos();
+        ArrayList<UsuariosDTO> listaUsuarios = this.usuarioDAO.listarTodos();
         assertEquals(listaUsuariosId.size(), listaUsuarios.size());
         for (Integer i = 0; i < listaUsuariosId.size(); i++) {
             listaUsuarios.get(i).setNombre("NombreCambiado" + i.toString());
@@ -120,7 +120,7 @@ public class UsuarioDAOTest {
             this.usuarioDAO.modificar(listaUsuarios.get(i));
         }
 
-        ArrayList<UsuarioDTO> listaUsuariosModificados = this.usuarioDAO.listarTodos();
+        ArrayList<UsuariosDTO> listaUsuariosModificados = this.usuarioDAO.listarTodos();
         assertEquals(listaUsuarios.size(), listaUsuariosModificados.size());
         for (Integer i = 0; i < listaUsuarios.size(); i++) {
             assertEquals(listaUsuarios.get(i).getNombre(), listaUsuariosModificados.get(i).getNombre());
@@ -138,19 +138,19 @@ public class UsuarioDAOTest {
     }
 
     private void eliminarTodo() {
-        ArrayList<UsuarioDTO> listaUsuario = this.usuarioDAO.listarTodos();
-        for (UsuarioDTO usuario : listaUsuario) {
+        ArrayList<UsuariosDTO> listaUsuario = this.usuarioDAO.listarTodos();
+        for (UsuariosDTO usuario : listaUsuario) {
             this.eliminarPedidoPorUsuarioId(usuario.getUsuarioId());
             Integer resultado = this.usuarioDAO.eliminar(usuario);
             assertNotEquals(0, resultado);
-            UsuarioDTO usuarioDTO = this.usuarioDAO.obtenerPorId(usuario.getUsuarioId());
+            UsuariosDTO usuarioDTO = this.usuarioDAO.obtenerPorId(usuario.getUsuarioId());
             assertNull(usuarioDTO);
         }
     }
 
     private void eliminarPedidoPorUsuarioId(Integer usuarioId) {
-        ArrayList<PedidoDTO> listaPedido = this.pedidoDAO.listarTodos();
-        for (PedidoDTO pedido : listaPedido) {
+        ArrayList<VentasDTO> listaPedido = this.pedidoDAO.listarTodos();
+        for (VentasDTO pedido : listaPedido) {
             if (pedido.getUsuario().getUsuarioId() == usuarioId) {
                 this.pedidoDAO.eliminar(pedido);
             }

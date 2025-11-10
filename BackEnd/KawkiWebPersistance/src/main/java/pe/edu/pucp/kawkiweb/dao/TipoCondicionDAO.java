@@ -1,12 +1,12 @@
 package pe.edu.pucp.kawkiweb.dao;
 
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.model.utilPromocion.TipoCondicionDTO;
+import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 
 public interface TipoCondicionDAO {
 
-    public TipoCondicionDTO obtenerPorId(Integer tipoCondicionId);
+    public TiposCondicionDTO obtenerPorId(Integer tipoCondicionId);
 
-    public ArrayList<TipoCondicionDTO> listarTodos();
+    public ArrayList<TiposCondicionDTO> listarTodos();
 
 }

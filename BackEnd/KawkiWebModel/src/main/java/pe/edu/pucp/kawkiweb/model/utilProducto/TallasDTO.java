@@ -1,6 +1,6 @@
 package pe.edu.pucp.kawkiweb.model.utilProducto;
 
-public class TallaDTO {
+public class TallasDTO {
 
     private Integer talla_id;
     private Integer numero;
@@ -18,17 +18,17 @@ public class TallaDTO {
     public static final int NUMERO_TREINTA_OCHO = 38;
     public static final int NUMERO_TREINTA_NUEVE = 39;
 
-    public TallaDTO() {
+    public TallasDTO() {
         this.talla_id = null;
         this.numero = null;
     }
 
-    public TallaDTO(Integer talla_id, Integer numero) {
+    public TallasDTO(Integer talla_id, Integer numero) {
         this.talla_id = talla_id;
         this.numero = numero;
     }
 
-    public TallaDTO(TallaDTO talla) {
+    public TallasDTO(TallasDTO talla) {
         this.talla_id = talla.talla_id;
         this.numero = talla.numero;
     }

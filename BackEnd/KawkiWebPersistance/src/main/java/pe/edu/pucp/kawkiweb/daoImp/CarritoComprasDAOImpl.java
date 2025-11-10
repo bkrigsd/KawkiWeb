@@ -10,8 +10,8 @@ import pe.edu.pucp.kawkiweb.dao.DetalleCarritoDAO;
 import pe.edu.pucp.kawkiweb.dao.PromocionDAO;
 import pe.edu.pucp.kawkiweb.dao.UsuarioDAO;
 import pe.edu.pucp.kawkiweb.model.DetalleCarritoDTO;
-import pe.edu.pucp.kawkiweb.model.PromocionDTO;
-import pe.edu.pucp.kawkiweb.model.UsuarioDTO;
+import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class CarritoComprasDAOImpl extends BaseDAOImpl implements CarritoComprasDAO {
 
@@ -39,7 +39,7 @@ public class CarritoComprasDAOImpl extends BaseDAOImpl implements CarritoCompras
 
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
-        UsuarioDTO usuario = this.carrito.getUsuario();
+        UsuariosDTO usuario = this.carrito.getUsuario();
         if (usuario != null) {
             this.statement.setInt(1, usuario.getUsuarioId());
         } else {
@@ -53,7 +53,7 @@ public class CarritoComprasDAOImpl extends BaseDAOImpl implements CarritoCompras
             this.statement.setNull(2, java.sql.Types.DOUBLE);
         }
 
-        PromocionDTO promocion = this.carrito.getPromocion();
+        DescuentosDTO promocion = this.carrito.getPromocion();
         if (promocion != null && promocion.getPromocion_id() != null) {
             this.statement.setInt(3, promocion.getPromocion_id());
         } else {
@@ -63,7 +63,7 @@ public class CarritoComprasDAOImpl extends BaseDAOImpl implements CarritoCompras
 
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException {
-        UsuarioDTO usuario = this.carrito.getUsuario();
+        UsuariosDTO usuario = this.carrito.getUsuario();
         if (usuario != null) {
             this.statement.setInt(1, usuario.getUsuarioId());
         } else {
@@ -77,7 +77,7 @@ public class CarritoComprasDAOImpl extends BaseDAOImpl implements CarritoCompras
             this.statement.setNull(2, java.sql.Types.DOUBLE);
         }
 
-        PromocionDTO promocion = this.carrito.getPromocion();
+        DescuentosDTO promocion = this.carrito.getPromocion();
         if (promocion != null && promocion.getPromocion_id() != null) {
             this.statement.setInt(3, promocion.getPromocion_id());
         } else {
@@ -111,13 +111,13 @@ public class CarritoComprasDAOImpl extends BaseDAOImpl implements CarritoCompras
         
         // Obtener usuario completo usando UsuarioDAO
         Integer usuario_id = this.resultSet.getInt("USUARIO_ID");
-        UsuarioDTO usuario = this.usuarioDAO.obtenerPorId(usuario_id);
+        UsuariosDTO usuario = this.usuarioDAO.obtenerPorId(usuario_id);
         this.carrito.setUsuario(usuario);
 
         // Obtener promoción completa usando PromocionDAO (si existe)
         Integer promocion_id = (Integer) this.resultSet.getObject("PROMOCION_ID");
         if (promocion_id != null) {
-            PromocionDTO promocion = this.promocionDAO.obtenerPorId(promocion_id);
+            DescuentosDTO promocion = this.promocionDAO.obtenerPorId(promocion_id);
             this.carrito.setPromocion(promocion);
         } else {
             this.carrito.setPromocion(null);
