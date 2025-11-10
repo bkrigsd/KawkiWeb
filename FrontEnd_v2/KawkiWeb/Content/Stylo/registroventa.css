@@ -1,0 +1,198 @@
+﻿:root {
+    --primary-color: #ED6B7F;
+}
+
+.ventas-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 60px);
+    margin-left: 0;
+    margin-top: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ventas-header {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+    .ventas-header h1 {
+        color: #333;
+        font-size: 24px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .ventas-header p {
+        color: #666;
+        margin: 0;
+        font-size: 14px;
+    }
+
+/* Tarjetas */
+.card-kawki {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    border: 1px solid #f0f0f0;
+}
+
+    .card-kawki .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid #f3f4f6;
+        padding: 15px 20px;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .card-kawki .card-title {
+        font-size: 16px;
+        color: #333;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .card-kawki .card-title i {
+            color: var(--primary-color);
+        }
+
+/* Formularios */
+.form-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-control,
+.form-select {
+    padding: 8px 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.15rem rgba(237, 107, 127, 0.25);
+    }
+
+/* Tabla de productos */
+.table-detalle {
+    width: 100%;
+    margin-top: 10px;
+}
+
+    .table-detalle th {
+        font-size: 13px;
+        color: #666;
+        background-color: #f8f9fa;
+        font-weight: 500;
+        border-bottom: 1px solid #eaeaea;
+        padding: 10px;
+    }
+
+    .table-detalle td {
+        font-size: 13px;
+        padding: 10px;
+        vertical-align: middle;
+    }
+
+/* Botones */
+.btn-kawki-primary {
+    background-color: var(--primary-color);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    transition: all 0.3s;
+}
+
+    .btn-kawki-primary:hover {
+        background-color: #d85769;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(237, 107, 127, 0.3);
+    }
+
+.btn-kawki-outline {
+    border: 1px solid #ced4da;
+    color: #555;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: white;
+    transition: all 0.3s;
+}
+
+    .btn-kawki-outline:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(237, 107, 127, 0.15);
+    }
+
+/* Totales */
+.totales-label {
+    font-size: 13px;
+    color: #666;
+}
+
+.totales-valor {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+}
+
+.text-muted-small {
+    font-size: 12px;
+    color: #999;
+}
+
+/* Badge redes sociales */
+.badge-redes {
+    font-size: 11px;
+    background: #fdf2f8;
+    color: var(--primary-color);
+    border-radius: 999px;
+    padding: 3px 9px;
+}
+
+/* Validadores */
+.text-danger {
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .ventas-container {
+        padding: 15px;
+    }
+
+    .ventas-header {
+        padding: 15px;
+    }
+
+        .ventas-header h1 {
+            font-size: 20px;
+        }
+
+    .card-kawki {
+        padding: 0;
+    }
+
+    .btn-kawki-primary,
+    .btn-kawki-outline {
+        width: 100%;
+    }
+}
