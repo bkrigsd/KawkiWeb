@@ -18,11 +18,11 @@ namespace KawkiWeb
 
                 if (rol.Equals("admin", StringComparison.OrdinalIgnoreCase))
                 {
-                    Response.Redirect("InicioAdmin.aspx");
+                    Response.Redirect("Productos.aspx");
                 }
                 else if (rol.Equals("vendedor", StringComparison.OrdinalIgnoreCase))
                 {
-                    Response.Redirect("InicioVendedor.aspx");
+                    Response.Redirect("Productos.aspx");
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace KawkiWeb
             {
                 Session["Rol"] = "admin";
                 Session["Usuario"] = "admin";
-                Response.Redirect("InicioAdmin.aspx");
+                Response.Redirect("Productos.aspx");
                 return;
             }
 
@@ -55,7 +55,7 @@ namespace KawkiWeb
             {
                 Session["Rol"] = "vendedor";
                 Session["Usuario"] = "vendedor";
-                Response.Redirect("InicioVendedor.aspx");
+                Response.Redirect("Productos.aspx");
                 return;
             }
 

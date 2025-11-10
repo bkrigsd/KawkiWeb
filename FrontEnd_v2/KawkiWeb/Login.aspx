@@ -22,6 +22,21 @@
     <script src="Content/LoginModern/animation.js"></script>
 
 </head>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const txt = document.getElementById("<%= txtClave.ClientID %>");
+        const toggle = document.getElementById("toggleClave");
+
+        if (!txt || !toggle) return;
+
+        toggle.addEventListener("click", function () {
+            const mostrando = txt.type === "text";
+            txt.type = mostrando ? "password" : "text";
+            toggle.classList.toggle("fa-eye");
+            toggle.classList.toggle("fa-eye-slash");
+        });
+    });
+    </script>
 <body>
 <form id="form1" runat="server">
     <div class="login-wrapper">

@@ -12,16 +12,21 @@ namespace KawkiWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Limpiar sesión
             Session.Clear();
             Session.Abandon();
-            try { FormsAuthentication.SignOut(); } catch { }
 
+            // (Opcional) si usas FormsAuthentication
+            FormsAuthentication.SignOut();
+
+            // Evitar caché de esta página también
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
-            Response.Cache.SetExpires(DateTime.UtcNow.AddDays(-1));
+            Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            Response.Cache.SetAllowResponseInBrowserHistory(false);
 
-            var next = Request.QueryString["next"] ?? "Login.aspx";
-            Response.Redirect(next, true);
+            Response.Redirect("Login.aspx");
         }
     }
 }

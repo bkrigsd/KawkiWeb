@@ -41,19 +41,18 @@
 
                 <li>
                     <a id="lnkInicio" runat="server">
-                        <i class="fas fa-home"></i><span>Inicio</span>
+                        <i class="fas fa-box"></i><span>Productos</span>
                     </a>
                 </li>
 
-                <li><a href="Productos.aspx" runat="server"><i class="fas fa-box"></i><span>Productos</span></a></li>
-
                 <!-- Ítems privados para el vendedor -->
                 <asp:PlaceHolder ID="phMenuVendedor" runat="server" Visible="false">
+                    <li><a href="RegistrarVentas.aspx" runat="server"><i class="fas fa-file-alt"></i><span>Registrar Ventas</span></a></li>
                     <li><a href="GestionProductos.aspx" runat="server"><i class="fas fa-gear"></i><span>Gestión de Productos</span></a></li>
                     <li><a href="Promociones.aspx" runat="server"><i class="fas fa-tags"></i><span>Promociones</span></a></li>
                     <li><a href="ReporteVentas.aspx" runat="server"><i class="fas fa-chart-line"></i><span>Reporte de Ventas</span></a></li>
                     <li><a href="ReporteStock.aspx" runat="server"><i class="fas fa-boxes-stacked"></i><span>Reporte de Stock</span></a></li>
-                    <li><a href="HistorialVentas.aspx" runat="server"><i class="fas fa-file-alt"></i><span>Historial de Pedidos</span></a></li>
+                    <li><a href="HistorialVentasVendedor.aspx" runat="server"><i class="fas fa-file-alt"></i><span>Historial de Ventas</span></a></li>
                 </asp:PlaceHolder>
 
                 <!-- Ítems privados para el admin -->
@@ -66,6 +65,7 @@
                     <li><a href="Envios.aspx" runat="server"><i class="fas fa-truck"></i><span>Envíos</span></a></li>
                     <li><a href="Inventario.aspx" runat="server"><i class="fas fa-warehouse"></i><span>Inventario</span></a></li>
                     <li><a href="Reportes.aspx" runat="server"><i class="fas fa-chart-column"></i><span>Reportes</span></a></li>
+                    <li><a href="HistorialVentasAdmin.aspx" runat="server"><i class="fas fa-file-alt"></i><span>Historial de Ventas</span></a></li>
                     <li><a href="Configuracion.aspx" runat="server"><i class="fas fa-sliders"></i><span>Configuración</span></a></li>
                 </asp:PlaceHolder>
 
@@ -109,34 +109,11 @@
                     </div>
                 </asp:PlaceHolder>
 
-                <a href="Carrito.aspx" runat="server" id="lnkCarrito">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Carrito</span>
-                </a>
             </div>
 
             <!-- Aquí va el contenido de cada página -->
             <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
         </div>
-    
-        <!-- Botón flotante de WhatsApp -->
-        <asp:PlaceHolder ID="phWhatsApp" runat="server" Visible="false">
-            <style>
-                .whatsapp-float { position:fixed; right:22px; bottom:22px; z-index:9999; }
-                .whatsapp-float a{
-                    display:flex; align-items:center; justify-content:center;
-                    width:56px; height:56px; border-radius:50%;
-                    background:#25D366; color:#fff; font-size:26px;
-                    box-shadow:0 8px 22px rgba(0,0,0,.25); text-decoration:none;
-                }
-                .whatsapp-float a:hover{ filter:brightness(.95); }
-            </style>
-            <div class="whatsapp-float">
-                <a id="waLink" runat="server" href="#" target="_blank" rel="noopener" title="Chatea por WhatsApp">
-                    <i class="bi bi-whatsapp"></i>
-                </a>
-            </div>
-        </asp:PlaceHolder>
     
     </form>
 

@@ -2187,19 +2187,22 @@
     <Content Include="Content\LoginModern\login-modern.css" />
     <Content Include="Content\LoginModern\login-modern.js" />
     <Content Include="Content\site.css" />
+    <Content Include="Content\Stylo\producto.css" />
+    <Content Include="Content\Stylo\registroventa.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="DetalleProducto.aspx" />
     <Content Include="Envios.aspx" />
     <Content Include="GestionProductos.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="HistorialVentasAdmin.aspx" />
+    <Content Include="HistorialVentasVendedor.aspx" />
     <Content Include="Images\kawki.png" />
     <Content Include="Images\material.png" />
     <Content Include="Images\Productos\derbyCasualCrema.jpeg" />
     <Content Include="Images\Productos\derbyEleganteMarron.jpeg" />
     <Content Include="Images\Productos\OxfordClasicoBeige.jpeg" />
     <Content Include="Images\taller.png" />
-    <Content Include="InicioAdmin.aspx" />
-    <Content Include="InicioVendedor.aspx" />
+    <Content Include="RegistrarVentas.aspx" />
     <Content Include="Inventario.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
@@ -2278,19 +2281,26 @@
     <Compile Include="GestionProductos.aspx.designer.cs">
       <DependentUpon>GestionProductos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="InicioAdmin.aspx.cs">
-      <DependentUpon>InicioAdmin.aspx</DependentUpon>
+    <Compile Include="HistorialVentasAdmin.aspx.cs">
+      <DependentUpon>HistorialVentasAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="InicioAdmin.aspx.designer.cs">
-      <DependentUpon>InicioAdmin.aspx</DependentUpon>
+    <Compile Include="HistorialVentasAdmin.aspx.designer.cs">
+      <DependentUpon>HistorialVentasAdmin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="InicioVendedor.aspx.cs">
-      <DependentUpon>InicioVendedor.aspx</DependentUpon>
+    <Compile Include="HistorialVentasVendedor.aspx.cs">
+      <DependentUpon>HistorialVentasVendedor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="InicioVendedor.aspx.designer.cs">
-      <DependentUpon>InicioVendedor.aspx</DependentUpon>
+    <Compile Include="HistorialVentasVendedor.aspx.designer.cs">
+      <DependentUpon>HistorialVentasVendedor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrarVentas.aspx.cs">
+      <DependentUpon>RegistrarVentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistrarVentas.aspx.designer.cs">
+      <DependentUpon>RegistrarVentas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventario.aspx.cs">
       <DependentUpon>Inventario.aspx</DependentUpon>

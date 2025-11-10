@@ -12,11 +12,17 @@ namespace KawkiWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Evitar que las páginas se guarden en caché
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            Response.Cache.SetAllowResponseInBrowserHistory(false);
+
             var rol = (Session["Rol"] as string) ?? string.Empty;
             var usuario = (Session["Usuario"] as string) ?? string.Empty;
 
             bool logueado = !string.IsNullOrEmpty(usuario);
-            bool esCliente = rol.Equals("cliente", StringComparison.OrdinalIgnoreCase);
             bool esVendedor = rol.Equals("vendedor", StringComparison.OrdinalIgnoreCase);
             bool esAdmin = rol.Equals("admin", StringComparison.OrdinalIgnoreCase);
 
@@ -24,14 +30,8 @@ namespace KawkiWeb
             phMenuVendedor.Visible = esVendedor;
             phMenuAdmin.Visible = esAdmin;
 
-            // Nosotros/Contacto: visible solo si no hay sesión o si es cliente
-            phNosYContacto.Visible = !logueado || esCliente;
-
             // Botón Cerrar sesión al final del sidebar: visible solo si hay sesión
             phCerrarSesion.Visible = logueado;
-
-            // Carrito: visible SOLO para público (no logueado) o cliente
-            lnkCarrito.Visible = (!logueado) || esCliente;
 
             // Top-bar: muestra nombre usuario o "Iniciar Sesión" 
             phSesionPublico.Visible = !logueado;
@@ -39,23 +39,20 @@ namespace KawkiWeb
 
             if (!IsPostBack)
             {
-                ConfigurarWhatsApp();
 
                 string rolUser = Convert.ToString(Session["Rol"])?.ToLowerInvariant();
-                string inicioUrl = "~/Inicio.aspx"; // Público o cliente
+                string inicioUrl = "~/Login.aspx"; // Público o cliente
 
                 if (rolUser == "vendedor")
-                    inicioUrl = "~/InicioVendedor.aspx";
+                    inicioUrl = "~/Productos.aspx";
                 else if (rolUser == "admin")
-                    inicioUrl = "~/InicioAdmin.aspx";
+                    inicioUrl = "~/Productos.aspx";
 
                 lnkInicio.HRef = ResolveUrl(inicioUrl);
 
                 // Control de visibilidad
                 phMenuVendedor.Visible = (rolUser == "vendedor");
                 phMenuAdmin.Visible = (rolUser == "admin");
-                phNosYContacto.Visible = string.IsNullOrEmpty(rolUser) || rolUser == "cliente";
-                lnkCarrito.Visible = string.IsNullOrEmpty(rolUser) || rolUser == "cliente";
             }
         }
 
@@ -65,26 +62,6 @@ namespace KawkiWeb
             MarcarMenuActivo();
         }
 
-        private void ConfigurarWhatsApp()
-        {
-            var phone = "51910755121";
-            var defaultText = "Hola, tengo una consulta sobre los productos de Kawki.";
-            var url = $"https://wa.me/{phone}?text={HttpUtility.UrlEncode(defaultText)}";
-
-            var page = System.IO.Path.GetFileName(Request.Path).ToLowerInvariant();
-            bool esInicio = page == "inicio.aspx" || page == "default.aspx";
-            bool esProductos = page == "productos.aspx";
-            bool esNosotros = page == "nosotros.aspx";
-            bool esContacto = page == "contacto.aspx";
-
-            // Mostrar WhatsApp si:
-            // NO es la página de Contacto y (Inicio, Productos, Nosotros o Cliente logueado)
-            // phWhatsApp.Visible = !esContacto && (esInicio || esProductos || esNosotros || esCliente);
-
-            if (phWhatsApp.Visible)
-                ((HtmlAnchor)waLink).HRef = url;
-        }
-
         private void MarcarMenuActivo()
         {
             // Ej: "~/Nosotros.aspx"
@@ -92,7 +69,7 @@ namespace KawkiWeb
 
             // Trata raíz como Inicio
             if (current == "~/" || current == "~/default.aspx")
-                current = "~/inicio.aspx";
+                current = "~/Productos.aspx";
 
             foreach (var a in EnumerarAnchors(sidebarMenu))
             {
