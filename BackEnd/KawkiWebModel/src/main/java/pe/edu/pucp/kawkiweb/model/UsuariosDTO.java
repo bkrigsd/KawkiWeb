@@ -5,29 +5,24 @@ import java.time.LocalDateTime;
 
 public class UsuariosDTO {
 
-    private static Integer cantidadUsuarios = 0;
-
     private Integer usuarioId;
     private String nombre;
     private String apePaterno;
     private String dni;
     private String telefono;
     private String correo;
-    private String codigo;
     private String nombreUsuario;
     private String contrasenha;
     private LocalDateTime fechaHoraCreacion;
     private TiposUsuarioDTO tipoUsuario;
 
     public UsuariosDTO() {
-        UsuariosDTO.cantidadUsuarios++;
         this.usuarioId = null;
         this.nombre = null;
         this.apePaterno = null;
         this.dni = null;
         this.telefono = null;
         this.correo = null;
-        this.codigo = "U-" + this.tipoUsuario + String.format("%04d", UsuariosDTO.cantidadUsuarios);
         this.nombreUsuario = null;
         this.contrasenha = null;
         this.fechaHoraCreacion = LocalDateTime.now();
@@ -38,14 +33,12 @@ public class UsuariosDTO {
             String dni, String telefono, String correo, String nombreUsuario,
             String contrasenha, TiposUsuarioDTO tipoUsuario) {
 
-        UsuariosDTO.cantidadUsuarios++;
         this.usuarioId = usuarioId;
         this.nombre = nombre;
         this.apePaterno = apePaterno;
         this.dni = dni;
         this.telefono = telefono;
         this.correo = correo;
-        this.codigo = "U-" + this.tipoUsuario + String.format("%04d", UsuariosDTO.cantidadUsuarios);
         this.nombreUsuario = nombreUsuario;
         this.contrasenha = contrasenha;
         this.fechaHoraCreacion = LocalDateTime.now();
@@ -59,7 +52,6 @@ public class UsuariosDTO {
         this.dni = usuario.dni;
         this.telefono = usuario.telefono;
         this.correo = usuario.correo;
-        this.codigo = usuario.codigo;
         this.nombreUsuario = usuario.nombreUsuario;
         this.contrasenha = usuario.contrasenha;
         this.fechaHoraCreacion = usuario.fechaHoraCreacion;
@@ -78,7 +70,6 @@ public class UsuariosDTO {
         referencia.append("Nombre del usuario: ").append(this.nombre).append(" ").append(this.apePaterno).append('\n');
         referencia.append("Teléfono del usuario: ").append(this.telefono).append('\n');
         referencia.append("Correo del usuario: ").append(this.correo).append('\n');
-        referencia.append("Código del usuario: ").append(this.getCodigo()).append('\n');
         referencia.append("Tipo usuario: ").append(this.tipoUsuario).append('\n');
 
         return referencia.toString();
@@ -165,24 +156,8 @@ public class UsuariosDTO {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public static Integer getCantidadUsuarios() {
-        return cantidadUsuarios;
-    }
-
-    public static void setCantidadUsuarios(Integer aCantidadUsuarios) {
-        cantidadUsuarios = aCantidadUsuarios;
-    }
-
     public void setUsuarioId(Integer usuarioId) {
         this.usuarioId = usuarioId;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
     }
 
 }
