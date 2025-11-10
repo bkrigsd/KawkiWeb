@@ -56,7 +56,7 @@ namespace KawkiWeb
         {
             Session.Clear();
             Session.Abandon();
-            Response.Redirect("Inicio.aspx");
+            Response.Redirect("Login.aspx");
         }
 
         protected void btnEliminarCuenta_Click(object sender, EventArgs e)

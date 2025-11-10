@@ -6,7 +6,7 @@
 <head runat="server">
 
     <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Inicio - Kawki</title>
     
     <!-- Bootstrap CSS -->
@@ -39,41 +39,29 @@
             </div>
             <ul class="sidebar-menu" id="sidebarMenu" runat="server">
 
-                <li>
-                    <a id="lnkInicio" runat="server">
-                        <i class="fas fa-box"></i><span>Productos</span>
-                    </a>
-                </li>
-
                 <!-- Ítems privados para el vendedor -->
                 <asp:PlaceHolder ID="phMenuVendedor" runat="server" Visible="false">
+                    <li><a href="Productos.aspx" runat="server"><i class="fas fa-box"></i><span>Productos</span></a></li>
                     <li><a href="RegistrarVentas.aspx" runat="server"><i class="fas fa-file-alt"></i><span>Registrar Ventas</span></a></li>
-                    <li><a href="GestionProductos.aspx" runat="server"><i class="fas fa-gear"></i><span>Gestión de Productos</span></a></li>
-                    <li><a href="Promociones.aspx" runat="server"><i class="fas fa-tags"></i><span>Promociones</span></a></li>
-                    <li><a href="ReporteVentas.aspx" runat="server"><i class="fas fa-chart-line"></i><span>Reporte de Ventas</span></a></li>
-                    <li><a href="ReporteStock.aspx" runat="server"><i class="fas fa-boxes-stacked"></i><span>Reporte de Stock</span></a></li>
                     <li><a href="HistorialVentasVendedor.aspx" runat="server"><i class="fas fa-file-alt"></i><span>Historial de Ventas</span></a></li>
                 </asp:PlaceHolder>
 
                 <!-- Ítems privados para el admin -->
                 <asp:PlaceHolder ID="phMenuAdmin" runat="server" Visible="false">
-                    <li><a href="Dashboard.aspx" runat="server"><i class="fas fa-gauge"></i><span>Dashboard</span></a></li>
-                    <li><a href="GestionProductos.aspx" runat="server"><i class="fas fa-gear"></i><span>Gestión de Productos</span></a></li>
-                    <li><a href="Pedidos.aspx" runat="server"><i class="fas fa-cart-shopping"></i><span>Pedidos</span></a></li>
-                    <li><a href="Vendedores.aspx" runat="server"><i class="fas fa-user-group"></i><span>Vendedores</span></a></li>
-                    <li><a href="Promociones.aspx" runat="server"><i class="fas fa-tags"></i><span>Promociones</span></a></li>
-                    <li><a href="Envios.aspx" runat="server"><i class="fas fa-truck"></i><span>Envíos</span></a></li>
-                    <li><a href="Inventario.aspx" runat="server"><i class="fas fa-warehouse"></i><span>Inventario</span></a></li>
-                    <li><a href="Reportes.aspx" runat="server"><i class="fas fa-chart-column"></i><span>Reportes</span></a></li>
+                    <li><a href="Productos.aspx" runat="server"><i class="fas fa-box"></i><span>Productos</span></a></li>
+                    <li><a href="GestionProductos.aspx" runat="server"><i class="fas fa-boxes-stacked"></i><span>Gestión de Productos</span></a></li>
+                    <li><a href="Descuentos.aspx" runat="server"><i class="fas fa-warehouse"></i><span>Descuentos</span></a></li>
+                    <li><a href="ReporteVentas.aspx" runat="server"><i class="fas fa-chart-line"></i><span>Reporte de Ventas</span></a></li>
+                    <li><a href="ReporteStock.aspx" runat="server"><i class="fas fa-warehouse"></i><span>Reporte de Stock</span></a></li>
+                    <li><a href="RegistroUsuario.aspx" runat="server"><i class="fas fa-users"></i><span>Usuarios</span></a></li>
                     <li><a href="HistorialVentasAdmin.aspx" runat="server"><i class="fas fa-file-alt"></i><span>Historial de Ventas</span></a></li>
-                    <li><a href="Configuracion.aspx" runat="server"><i class="fas fa-sliders"></i><span>Configuración</span></a></li>
                 </asp:PlaceHolder>
 
                 <!-- Nosotros y Contacto: solo para el público o cliente -->
-                <asp:PlaceHolder ID="phNosYContacto" runat="server" Visible="true">
+                <%--<asp:PlaceHolder ID="phNosYContacto" runat="server" Visible="true">
                     <li><a href="Nosotros.aspx" runat="server"><i class="fas fa-info-circle"></i><span>Nosotros</span></a></li>
                     <li><a href="Contacto.aspx" runat="server"><i class="fas fa-envelope"></i><span>Contacto</span></a></li>
-                </asp:PlaceHolder>
+                </asp:PlaceHolder>--%>
 
                 <!-- Botón Cerrar Sesión -->
                 <asp:PlaceHolder ID="phCerrarSesion" runat="server" Visible="false">

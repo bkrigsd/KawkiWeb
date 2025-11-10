@@ -43,12 +43,22 @@ namespace KawkiWeb
                 string rolUser = Convert.ToString(Session["Rol"])?.ToLowerInvariant();
                 string inicioUrl = "~/Login.aspx"; // Público o cliente
 
+                // Si no hay usuario logueado, ocultamos el enlace de Productos
+                //if (Session["Usuario"] == null)
+                //{
+                //    lnkInicio.Visible = false;
+                //}
+                //else
+                //{
+                //    lnkInicio.Visible = true;
+                //}
+
                 if (rolUser == "vendedor")
                     inicioUrl = "~/Productos.aspx";
                 else if (rolUser == "admin")
                     inicioUrl = "~/Productos.aspx";
 
-                lnkInicio.HRef = ResolveUrl(inicioUrl);
+                //lnkInicio.HRef = ResolveUrl(inicioUrl);
 
                 // Control de visibilidad
                 phMenuVendedor.Visible = (rolUser == "vendedor");

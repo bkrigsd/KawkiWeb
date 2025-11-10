@@ -2187,13 +2187,14 @@
     <Content Include="Content\LoginModern\login-modern.css" />
     <Content Include="Content\LoginModern\login-modern.js" />
     <Content Include="Content\site.css" />
+    <Content Include="Content\Stylo\gestionproductos.css" />
     <Content Include="Content\Stylo\historialventaadmin.css" />
     <Content Include="Content\Stylo\historialventavendedor.css" />
     <Content Include="Content\Stylo\producto.css" />
+    <Content Include="Content\Stylo\registrouser.css" />
     <Content Include="Content\Stylo\registroventa.css" />
-    <Content Include="Dashboard.aspx" />
     <Content Include="DetalleProducto.aspx" />
-    <Content Include="Envios.aspx" />
+    <Content Include="RegistroUsuario.aspx" />
     <Content Include="GestionProductos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HistorialVentasAdmin.aspx" />
@@ -2205,17 +2206,13 @@
     <Content Include="Images\Productos\OxfordClasicoBeige.jpeg" />
     <Content Include="Images\taller.png" />
     <Content Include="RegistrarVentas.aspx" />
-    <Content Include="Inventario.aspx" />
+    <Content Include="Descuentos.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Nosotros.aspx" />
-    <Content Include="Pedidos.aspx" />
     <Content Include="Perfil.aspx" />
     <Content Include="Productos.aspx" />
-    <Content Include="Promociones.aspx" />
     <Content Include="RecuperarClave.aspx" />
-    <Content Include="Registro.aspx" />
-    <Content Include="Reportes.aspx" />
     <Content Include="ReporteStock.aspx" />
     <Content Include="ReporteVentas.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -2237,7 +2234,6 @@
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
-    <Content Include="Vendedores.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -2255,13 +2251,6 @@
     <Compile Include="Contacto.aspx.designer.cs">
       <DependentUpon>Contacto.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Dashboard.aspx.cs">
-      <DependentUpon>Dashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Dashboard.aspx.designer.cs">
-      <DependentUpon>Dashboard.aspx</DependentUpon>
-    </Compile>
     <Compile Include="DetalleProducto.aspx.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2269,12 +2258,12 @@
     <Compile Include="DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Envios.aspx.cs">
-      <DependentUpon>Envios.aspx</DependentUpon>
+    <Compile Include="RegistroUsuario.aspx.cs">
+      <DependentUpon>RegistroUsuario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Envios.aspx.designer.cs">
-      <DependentUpon>Envios.aspx</DependentUpon>
+    <Compile Include="RegistroUsuario.aspx.designer.cs">
+      <DependentUpon>RegistroUsuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestionProductos.aspx.cs">
       <DependentUpon>GestionProductos.aspx</DependentUpon>
@@ -2304,12 +2293,12 @@
     <Compile Include="RegistrarVentas.aspx.designer.cs">
       <DependentUpon>RegistrarVentas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Inventario.aspx.cs">
-      <DependentUpon>Inventario.aspx</DependentUpon>
+    <Compile Include="Descuentos.aspx.cs">
+      <DependentUpon>Descuentos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Inventario.aspx.designer.cs">
-      <DependentUpon>Inventario.aspx</DependentUpon>
+    <Compile Include="Descuentos.aspx.designer.cs">
+      <DependentUpon>Descuentos.aspx</DependentUpon>
     </Compile>
     <Compile Include="KawkiWeb.Master.cs">
       <DependentUpon>KawkiWeb.Master</DependentUpon>
@@ -2339,13 +2328,6 @@
     <Compile Include="Nosotros.aspx.designer.cs">
       <DependentUpon>Nosotros.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pedidos.aspx.cs">
-      <DependentUpon>Pedidos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pedidos.aspx.designer.cs">
-      <DependentUpon>Pedidos.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Perfil.aspx.cs">
       <DependentUpon>Perfil.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2360,13 +2342,6 @@
     <Compile Include="Productos.aspx.designer.cs">
       <DependentUpon>Productos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Promociones.aspx.cs">
-      <DependentUpon>Promociones.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Promociones.aspx.designer.cs">
-      <DependentUpon>Promociones.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecuperarClave.aspx.cs">
       <DependentUpon>RecuperarClave.aspx</DependentUpon>
@@ -2374,20 +2349,6 @@
     </Compile>
     <Compile Include="RecuperarClave.aspx.designer.cs">
       <DependentUpon>RecuperarClave.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Registro.aspx.cs">
-      <DependentUpon>Registro.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Registro.aspx.designer.cs">
-      <DependentUpon>Registro.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reportes.aspx.cs">
-      <DependentUpon>Reportes.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reportes.aspx.designer.cs">
-      <DependentUpon>Reportes.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReporteStock.aspx.cs">
       <DependentUpon>ReporteStock.aspx</DependentUpon>
@@ -2402,13 +2363,6 @@
     </Compile>
     <Compile Include="ReporteVentas.aspx.designer.cs">
       <DependentUpon>ReporteVentas.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Vendedores.aspx.cs">
-      <DependentUpon>Vendedores.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Vendedores.aspx.designer.cs">
-      <DependentUpon>Vendedores.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
