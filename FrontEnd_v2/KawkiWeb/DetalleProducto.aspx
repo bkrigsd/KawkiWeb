@@ -91,6 +91,25 @@
             margin-bottom: 10px;
         }
 
+        /* SKU del producto */
+        .producto-sku-detalle {
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            display: inline-block;
+            border: 2px solid #e0e0e0;
+        }
+
+        .producto-sku-detalle i {
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+
         .producto-titulo {
             font-size: 32px;
             font-weight: 600;
@@ -113,6 +132,62 @@
             margin-bottom: 30px;
             padding-bottom: 25px;
             border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* Selector de colores */
+        .selector-colores {
+            margin-bottom: 25px;
+        }
+
+        .selector-colores-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .colores-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .colores-grid label {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .colores-grid input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .colores-grid input[type="radio"]:checked + label,
+        .colores-grid label:has(input[type="radio"]:checked) {
+            border-color: var(--primary-color);
+            background: #fff5f7;
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .colores-grid label:hover {
+            border-color: var(--primary-color);
+            background: #fff5f7;
         }
 
         /* Selector de tallas */
@@ -151,6 +226,21 @@
             background: white;
         }
 
+        /* Tallas agotadas - en gris y deshabilitadas */
+        .tallas-grid label.agotado {
+            background: #f5f5f5;
+            color: #999;
+            border-color: #ddd;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .tallas-grid label.agotado:hover {
+            background: #f5f5f5;
+            border-color: #ddd;
+            transform: none;
+        }
+
         .tallas-grid input[type="radio"] {
             position: absolute;
             opacity: 0;
@@ -158,138 +248,91 @@
             height: 0;
         }
 
-        .tallas-grid input[type="radio"]:checked + label,
-        .tallas-grid label:has(input[type="radio"]:checked) {
+        .tallas-grid input[type="radio"]:disabled + label {
+            background: #f5f5f5;
+            color: #999;
+            border-color: #ddd;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .tallas-grid input[type="radio"]:checked:not(:disabled) + label,
+        .tallas-grid label:has(input[type="radio"]:checked:not(:disabled)) {
             border-color: var(--primary-color);
             background: #fff5f7;
             color: var(--primary-color);
             transform: scale(1.05);
         }
 
-        .tallas-grid label:hover {
+        .tallas-grid label:not(.agotado):hover {
             border-color: var(--primary-color);
             background: #fff5f7;
         }
 
-        /* Selector de cantidad */
-        .selector-cantidad {
-            margin-bottom: 30px;
-        }
-
-        .selector-cantidad-label {
-            font-size: 15px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .cantidad-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .cantidad-input-group {
-            display: flex;
-            align-items: center;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .btn-cantidad {
+        /* Info de stock */
+        .info-stock-container {
+            padding: 20px;
             background: #f8f9fa;
-            border: none;
-            padding: 10px 18px;
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-cantidad:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .btn-cantidad:active {
-            transform: scale(0.95);
-        }
-
-        .cantidad-display {
-            padding: 10px 25px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            min-width: 60px;
-            text-align: center;
-            border-left: 1px solid #e0e0e0;
-            border-right: 1px solid #e0e0e0;
-        }
-
-        .stock-disponible {
-            font-size: 13px;
-            color: #28a745;
-            font-weight: 500;
-        }
-
-        .stock-bajo {
-            color: #ffc107;
-        }
-
-        /* Botones de acción */
-        .acciones-producto {
-            display: flex;
-            gap: 15px;
+            border-radius: 8px;
             margin-bottom: 25px;
         }
 
-        .btn-agregar-carrito {
-            flex: 1;
-            padding: 16px 30px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
+        .info-stock-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-stock-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-stock-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .info-stock-value {
             font-size: 16px;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            color: #333;
         }
 
-        .btn-agregar-carrito:hover {
-            background: #d85769;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(237, 107, 127, 0.4);
-        }
-
-        .btn-comprar-ahora {
-            flex: 1;
-            padding: 16px 30px;
-            background: #333;
-            color: white;
-            border: none;
+        /* Alerta de stock */
+        .stock-alert-detalle {
+            padding: 15px 20px;
             border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 600;
         }
 
-        .btn-comprar-ahora:hover {
-            background: #000;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        .stock-alert-detalle i {
+            font-size: 20px;
+        }
+
+        .stock-disponible-detalle {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+
+        .stock-bajo-detalle {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            color: #856404;
+        }
+
+        .stock-agotado-detalle {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
         }
 
         /* Mensaje de validación */
@@ -301,17 +344,10 @@
             display: none;
         }
 
-        .mensaje-validacion.error {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            color: #856404;
-            display: block;
-        }
-
-        .mensaje-validacion.exito {
-            background: #d4edda;
-            border: 1px solid #28a745;
-            color: #155724;
+        .mensaje-validacion.info {
+            background: #d1ecf1;
+            border: 1px solid #17a2b8;
+            color: #0c5460;
             display: block;
         }
 
@@ -334,10 +370,6 @@
             .producto-precio-grande {
                 font-size: 30px;
             }
-
-            .acciones-producto {
-                flex-direction: column;
-            }
         }
 
         @media (max-width: 576px) {
@@ -356,8 +388,6 @@
     <div class="detalle-container">
         <!-- Breadcrumb -->
         <div class="breadcrumb">
-            <a href="Inicio.aspx">Inicio</a>
-            <i class="fas fa-chevron-right"></i>
             <a href="Productos.aspx">Productos</a>
             <i class="fas fa-chevron-right"></i>
             <span class="active">
@@ -365,8 +395,9 @@
             </span>
         </div>
 
-        <!-- Mensaje de validación -->
-        <asp:Panel ID="pnlMensaje" runat="server" CssClass="mensaje-validacion" Visible="false">
+        <!-- Mensaje informativo -->
+        <asp:Panel ID="pnlMensaje" runat="server" CssClass="mensaje-validacion info" Visible="false">
+            <i class="fas fa-info-circle"></i>
             <asp:Label ID="lblMensaje" runat="server"></asp:Label>
         </asp:Panel>
 
@@ -396,79 +427,70 @@
                     S/ <asp:Label ID="lblPrecio" runat="server"></asp:Label>
                 </div>
 
+                <!-- SKU de la variante seleccionada -->
+                <div class="producto-sku-detalle">
+                    <i class="fas fa-barcode"></i>
+                    SKU: <asp:Label ID="lblSKU" runat="server" Text="Selecciona color y talla"></asp:Label>
+                </div>
+
                 <p class="producto-descripcion-completa">
                     <asp:Label ID="lblDescripcion" runat="server"></asp:Label>
                 </p>
 
-                <!-- Selector de tallas -->
-                <div class="selector-tallas">
-                    <label class="selector-tallas-label">
-                        Selecciona tu talla <span style="color: #dc3545;">*</span>
-                    </label>
-                    <asp:RadioButtonList ID="rblTallas" runat="server" 
-                        RepeatDirection="Horizontal" 
-                        RepeatLayout="Flow"
-                        CssClass="tallas-grid">
-                    </asp:RadioButtonList>
-                </div>
+                <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
-                <!-- Selector de cantidad -->
-                <div class="selector-cantidad">
-                    <label class="selector-cantidad-label">
-                        Cantidad <span style="color: #dc3545;">*</span>
-                    </label>
-    
-                    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    
-                    <asp:UpdatePanel ID="upCantidad" runat="server" UpdateMode="Conditional">
-                        <ContentTemplate>
-                            <div class="cantidad-controls">
-                                <div class="cantidad-input-group">
-                                    <asp:Button ID="btnDisminuir" runat="server" Text="−" 
-                                        CssClass="btn-cantidad" OnClick="btnDisminuir_Click" />
-                                    <asp:Label ID="lblCantidad" runat="server" Text="1" CssClass="cantidad-display"></asp:Label>
-                                    <asp:Button ID="btnAumentar" runat="server" Text="+" 
-                                        CssClass="btn-cantidad" OnClick="btnAumentar_Click" />
-                                </div>
-                                <span class="stock-disponible">
-                                    <i class="fas fa-check-circle"></i>
-                                    <asp:Label ID="lblStock" runat="server"></asp:Label>
-                                </span>
-                            </div>
-            
-                            <!-- Mensaje de validación dentro del UpdatePanel -->
-                            <asp:Panel ID="pnlMensajeCantidad" runat="server" CssClass="mensaje-validacion" Visible="false" style="margin-top: 10px;">
-                                <asp:Label ID="lblMensajeCantidad" runat="server"></asp:Label>
+                <asp:UpdatePanel ID="upVariantes" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <!-- Selector de tallas -->
+                        <div class="selector-tallas">
+                            <label class="selector-tallas-label">
+                                Talla <span style="color: #dc3545;">*</span>
+                            </label>
+                            <asp:RadioButtonList ID="rblTallas" runat="server" 
+                                RepeatDirection="Horizontal" 
+                                RepeatLayout="Flow"
+                                CssClass="tallas-grid"
+                                AutoPostBack="true"
+                                OnSelectedIndexChanged="rblTallas_SelectedIndexChanged">
+                            </asp:RadioButtonList>
+                        </div>
+
+                        <!-- Información de stock de la variante seleccionada -->
+                        <asp:Panel ID="pnlInfoStock" runat="server" Visible="false">
+                            <!-- Alerta de stock -->
+                            <asp:Panel ID="pnlStockAlert" runat="server" CssClass="stock-alert-detalle">
+                                <i class="fas fa-box"></i>
+                                <asp:Label ID="lblStockAlert" runat="server"></asp:Label>
                             </asp:Panel>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                </div>
 
-                <!-- Botones de acción -->
-                <div class="acciones-producto">
-                    <asp:Button ID="btnAgregarCarrito" runat="server" 
-                        CssClass="btn-agregar-carrito" 
-                        Text="Agregar al Carrito"
-                        OnClick="btnAgregarCarrito_Click">
-                    </asp:Button>
-                    
-                    <asp:Button ID="btnComprarAhora" runat="server" 
-                        CssClass="btn-comprar-ahora" 
-                        Text="Comprar Ahora"
-                        OnClick="btnComprarAhora_Click">
-                    </asp:Button>
-                </div>
+                            <!-- Detalles de stock -->
+                            <div class="info-stock-container">
+                                <div class="info-stock-item">
+                                    <span class="info-stock-label">SKU:</span>
+                                    <span class="info-stock-value">
+                                        <asp:Label ID="lblSKUVariante" runat="server"></asp:Label>
+                                    </span>
+                                </div>
+                                <div class="info-stock-item">
+                                    <span class="info-stock-label">Talla:</span>
+                                    <span class="info-stock-value">
+                                        <asp:Label ID="lblTallaSeleccionada" runat="server"></asp:Label>
+                                    </span>
+                                </div>
+                                <div class="info-stock-item">
+                                    <span class="info-stock-label">Stock disponible:</span>
+                                    <span class="info-stock-value">
+                                        <asp:Label ID="lblStockDisponible" runat="server"></asp:Label> unidades
+                                    </span>
+                                </div>
+                            </div>
+                        </asp:Panel>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
         </div>
     </div>
 
-    <script>
-        // Almacenar la cantidad en ViewState cuando cambia
-        function actualizarCantidad(cantidad) {
-            document.getElementById('<%= hdnCantidad.ClientID %>').value = cantidad;
-        }
-    </script>
-
-    <!-- Campo oculto para mantener la cantidad -->
-    <asp:HiddenField ID="hdnCantidad" runat="server" Value="1" />
+    <!-- Campo oculto para mantener el ID de la variante seleccionada -->
+    <asp:HiddenField ID="hdnVarianteId" runat="server" />
 </asp:Content>

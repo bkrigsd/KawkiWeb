@@ -87,6 +87,15 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.Label lblPrecio;
 
         /// <summary>
+        /// Control lblSKU.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSKU;
+
+        /// <summary>
         /// Control lblDescripcion.
         /// </summary>
         /// <remarks>
@@ -94,15 +103,6 @@ namespace KawkiWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDescripcion;
-
-        /// <summary>
-        /// Control rblTallas.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblTallas;
 
         /// <summary>
         /// Control ScriptManager1.
@@ -114,93 +114,84 @@ namespace KawkiWeb
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// Control upCantidad.
+        /// Control upVariantes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upCantidad;
+        protected global::System.Web.UI.UpdatePanel upVariantes;
 
         /// <summary>
-        /// Control btnDisminuir.
+        /// Control rblTallas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDisminuir;
+        protected global::System.Web.UI.WebControls.RadioButtonList rblTallas;
 
         /// <summary>
-        /// Control lblCantidad.
+        /// Control pnlInfoStock.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCantidad;
+        protected global::System.Web.UI.WebControls.Panel pnlInfoStock;
 
         /// <summary>
-        /// Control btnAumentar.
+        /// Control pnlStockAlert.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAumentar;
+        protected global::System.Web.UI.WebControls.Panel pnlStockAlert;
 
         /// <summary>
-        /// Control lblStock.
+        /// Control lblStockAlert.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStock;
+        protected global::System.Web.UI.WebControls.Label lblStockAlert;
 
         /// <summary>
-        /// Control pnlMensajeCantidad.
+        /// Control lblSKUVariante.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlMensajeCantidad;
+        protected global::System.Web.UI.WebControls.Label lblSKUVariante;
 
         /// <summary>
-        /// Control lblMensajeCantidad.
+        /// Control lblTallaSeleccionada.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensajeCantidad;
+        protected global::System.Web.UI.WebControls.Label lblTallaSeleccionada;
 
         /// <summary>
-        /// Control btnAgregarCarrito.
+        /// Control lblStockDisponible.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarCarrito;
+        protected global::System.Web.UI.WebControls.Label lblStockDisponible;
 
         /// <summary>
-        /// Control btnComprarAhora.
+        /// Control hdnVarianteId.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnComprarAhora;
-
-        /// <summary>
-        /// Control hdnCantidad.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnCantidad;
+        protected global::System.Web.UI.WebControls.HiddenField hdnVarianteId;
     }
 }
