@@ -13,6 +13,19 @@ public class TallasBO {
         this.tallaDAO = new TallasDAOImpl();
     }
 
+    public Integer insertar(Integer numeroTalla) {
+        TallasDTO tallasDTO = new TallasDTO();
+        tallasDTO.setNumero(numeroTalla);
+        return this.tallaDAO.insertar(tallasDTO);
+    }
+
+    public Integer modificar(Integer tallaId, Integer numeroTalla) {
+        TallasDTO tallasDTO = new TallasDTO();
+        tallasDTO.setTalla_id(tallaId);
+        tallasDTO.setNumero(numeroTalla);
+        return this.tallaDAO.modificar(tallasDTO);
+    }
+
     public TallasDTO obtenerPorId(Integer tallaId) {
         return this.tallaDAO.obtenerPorId(tallaId);
     }

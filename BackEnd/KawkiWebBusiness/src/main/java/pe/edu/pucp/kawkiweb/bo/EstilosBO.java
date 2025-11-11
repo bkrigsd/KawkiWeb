@@ -13,6 +13,19 @@ public class EstilosBO {
         this.estiloDAO = new EstilosDAOImpl();
     }
 
+    public Integer insertar(String nombreEstilo) {
+        EstilosDTO estilosDTO = new EstilosDTO();
+        estilosDTO.setNombre(nombreEstilo);
+        return this.estiloDAO.insertar(estilosDTO);
+    }
+
+    public Integer modificar(Integer estiloId, String nombreEstilo) {
+        EstilosDTO estilosDTO = new EstilosDTO();
+        estilosDTO.setEstilo_id(estiloId);
+        estilosDTO.setNombre(nombreEstilo);
+        return this.estiloDAO.modificar(estilosDTO);
+    }
+
     public EstilosDTO obtenerPorId(Integer estiloId) {
         return this.estiloDAO.obtenerPorId(estiloId);
     }

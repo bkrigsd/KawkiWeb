@@ -13,6 +13,19 @@ public class ColoresBO {
         this.colorDAO = new ColoresDAOImpl();
     }
 
+    public Integer insertar(String nombreColor) {
+        ColoresDTO coloresDTO = new ColoresDTO();
+        coloresDTO.setNombre(nombreColor);
+        return this.colorDAO.insertar(coloresDTO);
+    }
+
+    public Integer modificar(Integer colorId, String nombreColor) {
+        ColoresDTO coloresDTO = new ColoresDTO();
+        coloresDTO.setColor_id(colorId);
+        coloresDTO.setNombre(nombreColor);
+        return this.colorDAO.modificar(coloresDTO);
+    }
+
     public ColoresDTO obtenerPorId(Integer colorId) {
         return this.colorDAO.obtenerPorId(colorId);
     }
