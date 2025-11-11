@@ -1,6 +1,5 @@
 //package pe.edu.pucp.kawkiweb.dao;
 //
-//import java.time.LocalDate;
 //import java.time.LocalDateTime;
 //import java.util.ArrayList;
 //import org.junit.jupiter.api.AfterEach;
@@ -25,20 +24,20 @@
 //public class MovimientosInventarioDAOTest {
 //
 //    private MovimientosInventarioDAO movInventarioDAO;
-//    private ProductosVariantesDAO prodVarianteDAO;
+//    private ProductosVariantesDAO prodVarDAO;
 //    private ProductosDAO productoDAO;
 //    private UsuariosDAO usuarioDAO;
-//    private Integer prodVarianteId;
-//    private Integer productoId;
-//    private Integer usuarioId;
+//
 //    private ProductosDTO productoDTO;
 //    private ProductosVariantesDTO prodVarianteDTO;
 //    private UsuariosDTO usuarioDTO;
 //
+//    private Integer prodBaseId;
+//
 //    public MovimientosInventarioDAOTest() {
 //        this.movInventarioDAO = new MovimientosInventarioDAOImpl();
-//        this.prodVarianteDAO = new ProductosVariantesDAOImpl();
 //        this.productoDAO = new ProductosDAOImpl();
+//        this.prodVarDAO = new ProductosVariantesDAOImpl();
 //        this.usuarioDAO = new UsuariosDAOImpl();
 //    }
 //
@@ -46,307 +45,209 @@
 //    void prepararContexto() {
 //        eliminarTodo();
 //        prepararProductoBase();
-//        prepararProductoVarianteBase();
+//        prepararProductoVarBase();
 //        prepararUsuarioBase();
 //    }
 //
 //    @AfterEach
-//    void limpiarContexto() {
-//        System.out.println("\n>>> Limpiando datos del test...");
+//    public void tearDown() {
+//        System.out.println("Limpiando datos después del test...");
 //        eliminarTodo();
-//        System.out.println(">>> Datos eliminados correctamente\n");
-//    }
-//    
-//    private void prepararProductoBase() {
-//        ProductosDTO producto = new ProductosDTO();
-//        producto.setCategoria(new CategoriasDTO(CategoriasDTO.ID_DERBY,
-//                CategoriasDTO.NOMBRE_DERBY));
-//        producto.setDescripcion("Zapato Derby de cuero genuino");
-//        producto.setEstilo(new EstilosDTO(EstilosDTO.ID_CHAROL,
-//                EstilosDTO.NOMBRE_CHAROL));
-//        producto.setFecha_hora_creacion(LocalDateTime.now());
-//        producto.setPrecio_venta(120.00);
-//        
-//        this.productoId = this.productoDAO.insertar(producto);
-//        this.productoDTO = this.productoDAO.obtenerPorId(this.productoId);
-//        
-//        assertNotNull(this.productoId, "El producto debe insertarse correctamente");
-//        assertNotNull(this.productoDTO, "El producto debe recuperarse correctamente");
 //    }
 //
-//    private void prepararProductoVarianteBase() {
-//        ProductosVariantesDTO variante = new ProductosVariantesDTO();
-//        String sku = "SKU" + System.currentTimeMillis();
-//        variante.setSKU(sku);
-//        variante.setStock(50);
-//        variante.setStock_minimo(10);
-//        variante.setAlerta_stock(false);
-//        variante.setProducto_id(this.productoId);
-//        variante.setColor(new ColoresDTO(ColoresDTO.ID_ACERO,
-//                ColoresDTO.NOMBRE_ACERO));
-//        variante.setTalla(new TallasDTO(TallasDTO.ID_TREINTA_CINCO,
-//                TallasDTO.NUMERO_TREINTA_CINCO));
-//        variante.setFecha_hora_creacion(LocalDateTime.now());
-//        variante.setDisponible(true);
-//        
-//        this.prodVarianteId = this.prodVarianteDAO.insertar(variante);
-//        this.prodVarianteDTO = this.prodVarianteDAO.obtenerPorId(this.prodVarianteId);
-//        
-//        assertNotNull(this.prodVarianteId, "La variante debe insertarse correctamente");
-//        assertNotNull(this.prodVarianteDTO, "La variante debe recuperarse correctamente");
+//    private void prepararProductoBase() {
+//        this.productoDTO = new ProductosDTO();
+//        this.productoDTO.setDescripcion("Zapato Derby de cuero genuino");
+//        CategoriasDTO categoria = new CategoriasDTO();
+//        categoria.setCategoria_id(CategoriasDTO.ID_DERBY);
+//        categoria.setNombre(CategoriasDTO.NOMBRE_DERBY);
+//        this.productoDTO.setCategoria(categoria);
+//        EstilosDTO estilo = new EstilosDTO();
+//        estilo.setEstilo_id(EstilosDTO.ID_CHAROL);
+//        estilo.setNombre(EstilosDTO.NOMBRE_CHAROL);
+//        this.productoDTO.setEstilo(estilo);
+//        this.productoDTO.setPrecio_venta(120.00);
+//        this.productoDTO.setFecha_hora_creacion(LocalDateTime.now());
+//
+//        this.prodBaseId = this.productoDAO.insertar(this.productoDTO);
+//        this.productoDTO.setProducto_id(this.prodBaseId);
+//        assertTrue(this.prodBaseId != 0);
+//    }
+//
+//    private void prepararProductoVarBase() {
+//        this.prodVarianteDTO = new ProductosVariantesDTO();
+//        this.prodVarianteDTO.setSKU("SKU" + System.currentTimeMillis());
+//        this.prodVarianteDTO.setStock(50);
+//        this.prodVarianteDTO.setStock_minimo(10);
+//        this.prodVarianteDTO.setAlerta_stock(false);
+//        this.prodVarianteDTO.setProducto_id(this.prodBaseId);
+//        ColoresDTO color = new ColoresDTO();
+//        color.setColor_id(ColoresDTO.ID_ACERO);
+//        color.setNombre(ColoresDTO.NOMBRE_ACERO);
+//        this.prodVarianteDTO.setColor(color);
+//        TallasDTO talla = new TallasDTO();
+//        talla.setTalla_id(TallasDTO.ID_TREINTA_CINCO);
+//        talla.setNumero(TallasDTO.NUMERO_TREINTA_CINCO);
+//        this.prodVarianteDTO.setTalla(talla);
+//        this.prodVarianteDTO.setFecha_hora_creacion(LocalDateTime.now());
+//        this.prodVarianteDTO.setDisponible(Boolean.TRUE);
+//
+//        Integer resultado = this.prodVarDAO.insertar(this.prodVarianteDTO);
+//        this.prodVarianteDTO.setProd_variante_id(resultado);
+//        assertTrue(resultado != 0);
 //    }
 //
 //    private void prepararUsuarioBase() {
-//        UsuariosDTO usuario = new UsuariosDTO();
-//        usuario.setNombre("Eros");
-//        usuario.setApePaterno("Sotelo");
-//        usuario.setDni("77722211");
-//        usuario.setTelefono("999111555");
-//        usuario.setCorreo("eros.sotelo@gmail.com");
-//        usuario.setNombreUsuario("erosotelo");
-//        usuario.setContrasenha("password123");
-//        usuario.setFechaHoraCreacion(LocalDateTime.now());
-//        usuario.setTipoUsuario(new TiposUsuarioDTO(TiposUsuarioDTO.ID_VENDEDOR,
-//                TiposUsuarioDTO.NOMBRE_VENDEDOR));
-//        
-//        this.usuarioId = this.usuarioDAO.insertar(usuario);
-//        this.usuarioDTO = this.usuarioDAO.obtenerPorId(this.usuarioId);
-//        
-//        assertNotNull(this.usuarioId, "El usuario debe insertarse correctamente");
-//        assertNotNull(this.usuarioDTO, "El usuario debe recuperarse correctamente");
+//        this.usuarioDTO = new UsuariosDTO();
+//        this.usuarioDTO.setNombre("Eros");
+//        this.usuarioDTO.setApePaterno("Sotelo");
+//        this.usuarioDTO.setDni("77722211");
+//        this.usuarioDTO.setTelefono("999111555");
+//        this.usuarioDTO.setCorreo("eros.sotelo@gmail.com");
+//        this.usuarioDTO.setNombreUsuario("erosotelo");
+//        this.usuarioDTO.setContrasenha("password123");
+//        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
+//        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
+//                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
+//
+//        Integer resultado = this.usuarioDAO.insertar(this.usuarioDTO);
+//        this.usuarioDTO.setUsuarioId(resultado);
+//        assertTrue(resultado != 0);
 //    }
 //
 //    @Test
 //    public void testInsertar() {
-//        System.out.println("========== TEST: Insertar ==========");
-//        ArrayList<Integer> listaMovInventariosID = new ArrayList<>();
-//        this.insertarMovimientosInventario(listaMovInventariosID);
-//        
-//        // Verificar que se insertaron correctamente
-//        assertFalse(listaMovInventariosID.isEmpty(), "Debe haber movimientos insertados");
-//        for (Integer id : listaMovInventariosID) {
-//            assertNotNull(id, "El ID no debe ser null");
-//            assertTrue(id > 0, "El ID debe ser mayor a 0");
-//            System.out.println("Movimiento insertado con ID: " + id);
-//        }
-//        System.out.println("Total de movimientos insertados: " + listaMovInventariosID.size());
+//        System.out.println("insertar");
+//        ArrayList<Integer> listaMovInventarioId = new ArrayList<>();
+//        insertarMovimientosInventario(listaMovInventarioId);
 //    }
 //
-//    private void insertarMovimientosInventario(ArrayList<Integer> listaMovInventariosID) {
+//    private void insertarMovimientosInventario(ArrayList<Integer> listaMovInventarioId) {
 //        MovimientosInventarioDTO movInventario;
 //
-//        // 1er movimiento - INGRESO
 //        movInventario = new MovimientosInventarioDTO();
 //        movInventario.setCantidad(10);
 //        movInventario.setFecha_hora_mov(LocalDateTime.now());
 //        movInventario.setObservacion("Abastecimiento de inventario inicial");
 //        movInventario.setTipo_movimiento(new TiposMovimientoDTO(
-//                TiposMovimientoDTO.ID_INGRESO, 
+//                TiposMovimientoDTO.ID_INGRESO,
 //                TiposMovimientoDTO.NOMBRE_INGRESO));
 //        movInventario.setProd_variante(this.prodVarianteDTO);
 //        movInventario.setUsuario(this.usuarioDTO);
-//        
 //        Integer resultado = this.movInventarioDAO.insertar(movInventario);
-//        assertTrue(resultado != null && resultado != 0, 
-//                "El ID del movimiento debe ser válido");
-//        listaMovInventariosID.add(resultado);
+//        assertTrue(resultado != 0);
+//        listaMovInventarioId.add(resultado);
 //
-//        // 2do movimiento - SALIDA
 //        movInventario = new MovimientosInventarioDTO();
 //        movInventario.setCantidad(5);
 //        movInventario.setFecha_hora_mov(LocalDateTime.now());
 //        movInventario.setObservacion("Salida por venta al cliente");
 //        movInventario.setTipo_movimiento(new TiposMovimientoDTO(
-//                TiposMovimientoDTO.ID_SALIDA, 
+//                TiposMovimientoDTO.ID_SALIDA,
 //                TiposMovimientoDTO.NOMBRE_SALIDA));
 //        movInventario.setProd_variante(this.prodVarianteDTO);
 //        movInventario.setUsuario(this.usuarioDTO);
-//        
 //        resultado = this.movInventarioDAO.insertar(movInventario);
-//        assertTrue(resultado != null && resultado != 0, 
-//                "El ID del movimiento debe ser válido");
-//        listaMovInventariosID.add(resultado);
+//        assertTrue(resultado != 0);
+//        listaMovInventarioId.add(resultado);
 //
-//        // 3er movimiento - AJUSTE
 //        movInventario = new MovimientosInventarioDTO();
 //        movInventario.setCantidad(3);
 //        movInventario.setFecha_hora_mov(LocalDateTime.now());
 //        movInventario.setObservacion("Ajuste por inventario físico");
 //        movInventario.setTipo_movimiento(new TiposMovimientoDTO(
-//                TiposMovimientoDTO.ID_AJUSTE, 
+//                TiposMovimientoDTO.ID_AJUSTE,
 //                TiposMovimientoDTO.NOMBRE_AJUSTE));
 //        movInventario.setProd_variante(this.prodVarianteDTO);
 //        movInventario.setUsuario(this.usuarioDTO);
-//        
 //        resultado = this.movInventarioDAO.insertar(movInventario);
-//        assertTrue(resultado != null && resultado != 0, 
-//                "El ID del movimiento debe ser válido");
-//        listaMovInventariosID.add(resultado);
+//        assertTrue(resultado != 0);
+//        listaMovInventarioId.add(resultado);
 //    }
 //
 //    @Test
 //    public void testObtenerPorId() {
-//        System.out.println("========== TEST: ObtenerPorId ==========");
-//        ArrayList<Integer> listaMovInventariosId = new ArrayList<>();
-//        this.insertarMovimientosInventario(listaMovInventariosId);
+//        System.out.println("obtenerPorId");
+//        ArrayList<Integer> listaMovInventarioId = new ArrayList<>();
+//        insertarMovimientosInventario(listaMovInventarioId);
 //
-//        // Obtener el primer movimiento
-//        MovimientosInventarioDTO movInventario = this.movInventarioDAO
-//                .obtenerPorId(listaMovInventariosId.get(0));
-//        
-//        assertNotNull(movInventario, "El movimiento obtenido no debe ser null");
-//        assertEquals(listaMovInventariosId.get(0), movInventario.getMov_inventario_id(), 
-//                "Los IDs deben coincidir");
-//        assertNotNull(movInventario.getTipo_movimiento(), 
-//                "El tipo de movimiento no debe ser null");
-//        assertNotNull(movInventario.getProd_variante(), 
-//                "La variante del producto no debe ser null");
-//        assertNotNull(movInventario.getUsuario(), 
-//                "El usuario no debe ser null");
+//        MovimientosInventarioDTO movInventario = this.movInventarioDAO.obtenerPorId(listaMovInventarioId.get(0));
+//        assertEquals(movInventario.getMov_inventario_id(), listaMovInventarioId.get(0));
+//
+//        movInventario = this.movInventarioDAO.obtenerPorId(listaMovInventarioId.get(1));
+//        assertEquals(movInventario.getMov_inventario_id(), listaMovInventarioId.get(1));
+//
+//        movInventario = this.movInventarioDAO.obtenerPorId(listaMovInventarioId.get(2));
+//        assertEquals(movInventario.getMov_inventario_id(), listaMovInventarioId.get(2));
 //    }
 //
 //    @Test
 //    public void testListarTodos() {
-//        System.out.println("========== TEST: ListarTodos ==========");
-//        ArrayList<Integer> listaMovInventariosId = new ArrayList<>();
-//        this.insertarMovimientosInventario(listaMovInventariosId);
+//        System.out.println("listarTodos");
+//        ArrayList<Integer> listaMovInventarioId = new ArrayList<>();
+//        insertarMovimientosInventario(listaMovInventarioId);
 //
-//        ArrayList<MovimientosInventarioDTO> listaMovInventarios = 
-//                this.movInventarioDAO.listarTodos();
-//        
-//        assertNotNull(listaMovInventarios, "La lista no debe ser null");
-//        assertTrue(listaMovInventarios.size() >= listaMovInventariosId.size(), 
-//                "Debe haber al menos los movimientos insertados");
-//        
-//        System.out.println("Total de movimientos en BD: " + listaMovInventarios.size());
-//        
-//        // Verificar que los IDs insertados están en la lista
-//        for (Integer idInsertado : listaMovInventariosId) {
-//            boolean encontrado = listaMovInventarios.stream()
-//                    .anyMatch(mov -> mov.getMov_inventario_id().equals(idInsertado));
-//            assertTrue(encontrado, "El ID " + idInsertado + " debe estar en la lista");
+//        ArrayList<MovimientosInventarioDTO> listaMovInventarios = this.movInventarioDAO.listarTodos();
+//        assertEquals(listaMovInventarioId.size(), listaMovInventarios.size());
+//        for (Integer i = 0; i < listaMovInventarioId.size(); i++) {
+//            assertEquals(listaMovInventarioId.get(i), listaMovInventarios.get(i).getMov_inventario_id());
 //        }
 //    }
 //
 //    @Test
 //    public void testModificar() {
-//        System.out.println("========== TEST: Modificar ==========");
-//        ArrayList<Integer> listaMovInventariosId = new ArrayList<>();
-//        this.insertarMovimientosInventario(listaMovInventariosId);
+//        System.out.println("modificar");
+//        ArrayList<Integer> listaMovInventarioId = new ArrayList<>();
+//        insertarMovimientosInventario(listaMovInventarioId);
 //
-//        // Obtener el primer movimiento y modificarlo
-//        MovimientosInventarioDTO movInventario = this.movInventarioDAO
-//                .obtenerPorId(listaMovInventariosId.get(0));
-//        assertNotNull(movInventario, "El movimiento debe existir");
-//        
-//        System.out.println("Datos originales:");
-//        System.out.println("  Cantidad: " + movInventario.getCantidad());
-//        System.out.println("  Observación: " + movInventario.getObservacion());
-//        
-//        // Modificar datos
-//        Integer nuevaCantidad = 150;
-//        String nuevaObservacion = "Observación modificada en test";
-//        movInventario.setCantidad(nuevaCantidad);
-//        movInventario.setObservacion(nuevaObservacion);
-//        
-//        Integer resultado = this.movInventarioDAO.modificar(movInventario);
-//        assertTrue(resultado > 0, "La modificación debe ser exitosa");
-//        
-//        // Verificar que se modificó correctamente
-//        MovimientosInventarioDTO movModificado = this.movInventarioDAO
-//                .obtenerPorId(listaMovInventariosId.get(0));
-//        
-//        assertEquals(nuevaCantidad, movModificado.getCantidad(), 
-//                "La cantidad debe haberse actualizado");
-//        assertEquals(nuevaObservacion, movModificado.getObservacion(), 
-//                "La observación debe haberse actualizado");
+//        ArrayList<MovimientosInventarioDTO> listaMovInventarios = this.movInventarioDAO.listarTodos();
+//        assertEquals(listaMovInventarioId.size(), listaMovInventarios.size());
+//        for (Integer i = 0; i < listaMovInventarioId.size(); i++) {
+//            listaMovInventarios.get(i).setCantidad(listaMovInventarios.get(i).getCantidad() + 10);
+//            listaMovInventarios.get(i).setObservacion("Observación modificada en test");
+//            this.movInventarioDAO.modificar(listaMovInventarios.get(i));
+//        }
+//
+//        ArrayList<MovimientosInventarioDTO> listaMovInventariosModificados = this.movInventarioDAO.listarTodos();
+//        assertEquals(listaMovInventarios.size(), listaMovInventariosModificados.size());
+//        for (Integer i = 0; i < listaMovInventarios.size(); i++) {
+//            assertEquals(listaMovInventarios.get(i).getCantidad(), listaMovInventariosModificados.get(i).getCantidad());
+//            assertEquals(listaMovInventarios.get(i).getObservacion(), listaMovInventariosModificados.get(i).getObservacion());
+//        }
 //    }
 //
 //    @Test
 //    public void testEliminar() {
-//        System.out.println("========== TEST: Eliminar ==========");
-//        ArrayList<Integer> listaMovInventariosId = new ArrayList<>();
-//        insertarMovimientosInventario(listaMovInventariosId);
-//        
-//        System.out.println("Movimientos insertados: " + listaMovInventariosId.size());
-//        
-//        // Eliminar los movimientos insertados
-//        int eliminados = 0;
-//        for (Integer id : listaMovInventariosId) {
-//            MovimientosInventarioDTO mov = this.movInventarioDAO.obtenerPorId(id);
-//            assertNotNull(mov, "El movimiento debe existir antes de eliminarlo");
-//            
-//            Integer resultado = this.movInventarioDAO.eliminar(mov);
-//            assertNotEquals(0, resultado, "La eliminación debe ser exitosa");
-//            
-//            // Verificar que ya no existe
-//            MovimientosInventarioDTO movEliminado = this.movInventarioDAO.obtenerPorId(id);
-//            assertNull(movEliminado, "El movimiento eliminado no debe existir");
-//            
-//            eliminados++;
-//        }
-//        
-//        System.out.println("Total eliminados: " + eliminados);
+//        System.out.println("eliminar");
+//        ArrayList<Integer> listaMovInventarioId = new ArrayList<>();
+//        insertarMovimientosInventario(listaMovInventarioId);
+//
+//        eliminarTodo();
 //    }
 //
 //    private void eliminarTodo() {
-//        try {
-//            // 1. Eliminar todos los movimientos de inventario (primero porque depende de variantes y usuarios)
-//            ArrayList<MovimientosInventarioDTO> listaMovInventarios = 
-//                    this.movInventarioDAO.listarTodos();
-//            if (listaMovInventarios != null && !listaMovInventarios.isEmpty()) {
-//                System.out.println("  - Eliminando " + listaMovInventarios.size() + " movimientos de inventario...");
-//                for (MovimientosInventarioDTO movInventario : listaMovInventarios) {
-//                    try {
-//                        this.movInventarioDAO.eliminar(movInventario);
-//                    } catch (Exception e) {
-//                        System.err.println("    Error al eliminar movimiento ID " + movInventario.getMov_inventario_id() + ": " + e.getMessage());
-//                    }
-//                }
-//            }
-//            
-//            // 2. Eliminar todos los productos variantes (depende de productos)
-//            ArrayList<ProductosVariantesDTO> listaVariantes = 
-//                    this.prodVarianteDAO.listarTodos();
-//            if (listaVariantes != null && !listaVariantes.isEmpty()) {
-//                System.out.println("  - Eliminando " + listaVariantes.size() + " variantes de productos...");
-//                for (ProductosVariantesDTO variante : listaVariantes) {
-//                    try {
-//                        this.prodVarianteDAO.eliminar(variante);
-//                    } catch (Exception e) {
-//                        System.err.println("    Error al eliminar variante ID " + variante.getProd_variante_id() + ": " + e.getMessage());
-//                    }
-//                }
-//            }
-//            
-//            // 3. Eliminar todos los productos (independiente)
-//            ArrayList<ProductosDTO> listaProductos = this.productoDAO.listarTodos();
-//            if (listaProductos != null && !listaProductos.isEmpty()) {
-//                System.out.println("  - Eliminando " + listaProductos.size() + " productos...");
-//                for (ProductosDTO producto : listaProductos) {
-//                    try {
-//                        this.productoDAO.eliminar(producto);
-//                    } catch (Exception e) {
-//                        System.err.println("    Error al eliminar producto ID " + producto.getProducto_id() + ": " + e.getMessage());
-//                    }
-//                }
-//            }
-//            
-//            // 4. Eliminar todos los usuarios (independiente)
-//            ArrayList<UsuariosDTO> listaUsuarios = this.usuarioDAO.listarTodos();
-//            if (listaUsuarios != null && !listaUsuarios.isEmpty()) {
-//                System.out.println("  - Eliminando " + listaUsuarios.size() + " usuarios...");
-//                for (UsuariosDTO usuario : listaUsuarios) {
-//                    try {
-//                        this.usuarioDAO.eliminar(usuario);
-//                    } catch (Exception e) {
-//                        System.err.println("    Error al eliminar usuario ID " + usuario.getUsuarioId() + ": " + e.getMessage());
-//                    }
-//                }
-//            }
-//        } catch (Exception e) {
-//            System.err.println("Error general en eliminarTodo(): " + e.getMessage());
-//            e.printStackTrace();
+//
+//        ArrayList<MovimientosInventarioDTO> listaMovInventarios = this.movInventarioDAO.listarTodos();
+//        for (Integer i = 0; i < listaMovInventarios.size(); i++) {
+//            Integer resultado = this.movInventarioDAO.eliminar(listaMovInventarios.get(i));
+//            assertNotEquals(0, resultado);
+//            MovimientosInventarioDTO movInventario = this.movInventarioDAO.obtenerPorId(listaMovInventarios.get(i).getMov_inventario_id());
+//            assertNull(movInventario);
+//        }
+//
+//        ArrayList<ProductosVariantesDTO> listarProductoVar = this.prodVarDAO.listarTodos();
+//        for (ProductosVariantesDTO productoVar : listarProductoVar) {
+//            this.prodVarDAO.eliminar(productoVar);
+//        }
+//
+//        ArrayList<ProductosDTO> listarProducto = this.productoDAO.listarTodos();
+//        for (ProductosDTO producto : listarProducto) {
+//            this.productoDAO.eliminar(producto);
+//        }
+//
+//        ArrayList<UsuariosDTO> listarUsuarios = this.usuarioDAO.listarTodos();
+//        for (UsuariosDTO usuario : listarUsuarios) {
+//            this.usuarioDAO.eliminar(usuario);
 //        }
 //    }
 //
