@@ -12,12 +12,12 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 import pe.edu.pucp.kawkiweb.dao.ProductosDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
 
-public class ProductoVarianteBO {
+public class ProductosVariantesBO {
 
     private ProductosVariantesDAO prodVarianteDAO;
     private ProductosDAO productoDAO;
 
-    public ProductoVarianteBO() {
+    public ProductosVariantesBO() {
         this.prodVarianteDAO = new ProductosVariantesDAOImpl();
         this.productoDAO = new ProductosDAOImpl();
     }
@@ -28,9 +28,9 @@ public class ProductoVarianteBO {
      * @return ID de la variante insertada, o null si hubo error
      */
     public Integer insertar(String SKU, Integer stock, Integer stock_minimo,
-            Boolean alerta_stock, Integer producto_id, ColoresDTO color, TallasDTO talla,
-            TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio,
-            LocalDateTime fecha_hora_creacion) {
+            Boolean alerta_stock, Integer producto_id, ColoresDTO color,
+            TallasDTO talla, String url_imagen, LocalDateTime fecha_hora_creacion,
+            Boolean disponible) {
 
         try {
             // Validaciones
@@ -52,11 +52,6 @@ public class ProductoVarianteBO {
                 return null;
             }
 
-            // Validar beneficio si está presente
-            if (!validarBeneficio(tipo_beneficio, valor_beneficio)) {
-                return null;
-            }
-
             ProductosVariantesDTO prodVarianteDTO = new ProductosVariantesDTO();
             prodVarianteDTO.setSKU(SKU);
             prodVarianteDTO.setStock(stock);
@@ -68,11 +63,11 @@ public class ProductoVarianteBO {
             prodVarianteDTO.setProducto_id(producto_id);
             prodVarianteDTO.setColor(color);
             prodVarianteDTO.setTalla(talla);
-            prodVarianteDTO.setTipo_beneficio(tipo_beneficio);
-            prodVarianteDTO.setValor_beneficio(valor_beneficio);
+            prodVarianteDTO.setUrl_imagen(url_imagen);
             prodVarianteDTO.setFecha_hora_creacion(
                     fecha_hora_creacion != null ? fecha_hora_creacion : LocalDateTime.now()
             );
+            prodVarianteDTO.setDisponible(disponible);
 
             return this.prodVarianteDAO.insertar(prodVarianteDTO);
 
@@ -128,8 +123,8 @@ public class ProductoVarianteBO {
      */
     public Integer modificar(Integer prod_variante_id, String SKU, Integer stock,
             Integer stock_minimo, Boolean alerta_stock, Integer producto_id,
-            ColoresDTO color, TallasDTO talla, TiposBeneficioDTO tipo_beneficio,
-            Integer valor_beneficio, LocalDateTime fecha_hora_creacion) {
+            ColoresDTO color, TallasDTO talla, String url_imagen,
+            LocalDateTime fecha_hora_creacion, Boolean disponible) {
 
         try {
             // Validar ID
@@ -141,11 +136,6 @@ public class ProductoVarianteBO {
             // Validar datos
             if (!validarDatosVariante(SKU, stock, stock_minimo, producto_id, color, talla)) {
                 System.err.println("Error: Datos de variante inválidos");
-                return null;
-            }
-
-            // Validar beneficio si está presente
-            if (!validarBeneficio(tipo_beneficio, valor_beneficio)) {
                 return null;
             }
 
@@ -161,9 +151,11 @@ public class ProductoVarianteBO {
             prodVarianteDTO.setProducto_id(producto_id);
             prodVarianteDTO.setColor(color);
             prodVarianteDTO.setTalla(talla);
-            prodVarianteDTO.setTipo_beneficio(tipo_beneficio);
-            prodVarianteDTO.setValor_beneficio(valor_beneficio);
-            prodVarianteDTO.setFecha_hora_creacion(fecha_hora_creacion);
+            prodVarianteDTO.setUrl_imagen(url_imagen);
+            prodVarianteDTO.setFecha_hora_creacion(
+                    fecha_hora_creacion != null ? fecha_hora_creacion : LocalDateTime.now()
+            );
+            prodVarianteDTO.setDisponible(disponible);
 
             return this.prodVarianteDAO.modificar(prodVarianteDTO);
 
@@ -203,8 +195,9 @@ public class ProductoVarianteBO {
      *
      * @return true si los datos son válidos, false en caso contrario
      */
-    private boolean validarDatosVariante(String SKU, Integer stock, Integer stock_minimo,
-            Integer producto_id, ColoresDTO color, TallasDTO talla) {
+    private boolean validarDatosVariante(String SKU, Integer stock,
+            Integer stock_minimo, Integer producto_id, ColoresDTO color,
+            TallasDTO talla) {
 
         // Validar SKU
         if (SKU == null || SKU.trim().isEmpty()) {
@@ -245,31 +238,6 @@ public class ProductoVarianteBO {
         if (talla == null || talla.getTalla_id() == null) {
             System.err.println("Validación: La talla no puede ser null");
             return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Valida que el beneficio tenga datos consistentes
-     *
-     * @return true si es válido, false en caso contrario
-     */
-    private boolean validarBeneficio(TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio) {
-        // Si hay tipo de beneficio, debe haber valor
-        if (tipo_beneficio != null && tipo_beneficio.getTipo_beneficio_id() != null) {
-            if (valor_beneficio == null || valor_beneficio <= 0) {
-                System.err.println("Validación: Si hay tipo de beneficio, debe haber un valor válido");
-                return false;
-            }
-        }
-
-        // Si hay valor de beneficio, debe haber tipo
-        if (valor_beneficio != null && valor_beneficio > 0) {
-            if (tipo_beneficio == null || tipo_beneficio.getTipo_beneficio_id() == null) {
-                System.err.println("Validación: Si hay valor de beneficio, debe haber un tipo de beneficio");
-                return false;
-            }
         }
 
         return true;
@@ -330,9 +298,9 @@ public class ProductoVarianteBO {
                     variante.getProducto_id(),
                     variante.getColor(),
                     variante.getTalla(),
-                    variante.getTipo_beneficio(),
-                    variante.getValor_beneficio(),
-                    variante.getFecha_hora_creacion()
+                    variante.getUrl_imagen(),
+                    variante.getFecha_hora_creacion(),
+                    variante.getDisponible()
             );
 
             return resultado != null && resultado > 0;

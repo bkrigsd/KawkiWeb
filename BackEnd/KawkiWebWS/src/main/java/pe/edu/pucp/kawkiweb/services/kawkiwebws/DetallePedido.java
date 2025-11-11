@@ -4,17 +4,17 @@ import jakarta.jws.WebService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.bo.DetallePedidoBO;
+import pe.edu.pucp.kawkiweb.bo.DetalleVentasBO;
 import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 
 @WebService(serviceName="DetallePedido")
 public class DetallePedido {
     
-    private DetallePedidoBO detallePedidoBO;
+    private DetalleVentasBO detallePedidoBO;
 
     public DetallePedido() {
-        this.detallePedidoBO = new DetallePedidoBO();
+        this.detallePedidoBO = new DetalleVentasBO();
     }
 
     @WebMethod(operationName = "insertar")

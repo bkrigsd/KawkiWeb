@@ -1,8 +1,6 @@
 package pe.edu.pucp.kawkiweb.bo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
@@ -10,7 +8,7 @@ import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
 
-public class UsuarioBO {
+public class UsuariosBO {
 
     private UsuariosDAO usuarioDAO;
 
@@ -22,7 +20,7 @@ public class UsuarioBO {
     private static final Pattern RUC_PATTERN = Pattern.compile("^[0-9]{11}$");
     private static final Pattern TELEFONO_PATTERN = Pattern.compile("^[0-9]{9}$");
 
-    public UsuarioBO() {
+    public UsuariosBO() {
         this.usuarioDAO = new UsuariosDAOImpl();
     }
 
@@ -31,15 +29,15 @@ public class UsuarioBO {
      *
      * @return ID del usuario insertado, o null si hubo error
      */
-    public Integer insertar(String nombre, String apePaterno, String apeMaterno,
-            String dni, LocalDate fechaNacimiento, String telefono, String direccion,
-            String correo, String nombreUsuario, String contrasenha,
-            LocalDateTime fechaHoraCreacion, TiposUsuarioDTO tipoUsuario) {
+    public Integer insertar(String nombre, String apePaterno, String dni,
+            String telefono, String correo, String nombreUsuario,
+            String contrasenha, LocalDateTime fechaHoraCreacion,
+            TiposUsuarioDTO tipoUsuario) {
 
         try {
             // Validaciones básicas
-            if (!validarDatosUsuario(nombre, apePaterno, apeMaterno, dni, fechaNacimiento,
-                    telefono, correo, nombreUsuario, contrasenha, tipoUsuario)) {
+            if (!validarDatosUsuario(nombre, apePaterno, dni, telefono, correo, 
+                    nombreUsuario, contrasenha, tipoUsuario)) {
                 System.err.println("Error: Datos de usuario inválidos");
                 return null;
             }
@@ -65,14 +63,11 @@ public class UsuarioBO {
             UsuariosDTO usuarioDTO = new UsuariosDTO();
             usuarioDTO.setNombre(nombre.trim());
             usuarioDTO.setApePaterno(apePaterno.trim());
-            usuarioDTO.setApeMaterno(apeMaterno.trim());
             usuarioDTO.setDni(dni);
-            usuarioDTO.setFechaNacimiento(fechaNacimiento);
             usuarioDTO.setTelefono(telefono);
-            usuarioDTO.setDireccion(direccion != null ? direccion.trim() : null);
             usuarioDTO.setCorreo(correo.trim().toLowerCase());
             usuarioDTO.setNombreUsuario(nombreUsuario.trim().toLowerCase());
-            usuarioDTO.setContrasenha(contrasenha); 
+            usuarioDTO.setContrasenha(contrasenha);
             usuarioDTO.setFechaHoraCreacion(
                     fechaHoraCreacion != null ? fechaHoraCreacion : LocalDateTime.now()
             );
@@ -131,9 +126,9 @@ public class UsuarioBO {
      * @return Número de registros afectados, o null si hubo error
      */
     public Integer modificar(Integer usuarioId, String nombre, String apePaterno,
-            String apeMaterno, String dni, LocalDate fechaNacimiento, String telefono,
-            String direccion, String correo, String nombreUsuario, String contrasenha,
-            LocalDateTime fechaHoraCreacion, TiposUsuarioDTO tipoUsuario) {
+            String dni, String telefono, String correo, String nombreUsuario,
+            String contrasenha, LocalDateTime fechaHoraCreacion,
+            TiposUsuarioDTO tipoUsuario) {
 
         try {
             // Validar ID
@@ -150,8 +145,8 @@ public class UsuarioBO {
             }
 
             // Validaciones básicas
-            if (!validarDatosUsuario(nombre, apePaterno, apeMaterno, dni, fechaNacimiento,
-                    telefono, correo, nombreUsuario, contrasenha, tipoUsuario)) {
+            if (!validarDatosUsuario(nombre, apePaterno, dni, telefono, correo,
+                    nombreUsuario, contrasenha, tipoUsuario)) {
                 System.err.println("Error: Datos de usuario inválidos");
                 return null;
             }
@@ -179,11 +174,8 @@ public class UsuarioBO {
             usuarioDTO.setUsuarioId(usuarioId);
             usuarioDTO.setNombre(nombre.trim());
             usuarioDTO.setApePaterno(apePaterno.trim());
-            usuarioDTO.setApeMaterno(apeMaterno.trim());
             usuarioDTO.setDni(dni);
-            usuarioDTO.setFechaNacimiento(fechaNacimiento);
             usuarioDTO.setTelefono(telefono);
-            usuarioDTO.setDireccion(direccion != null ? direccion.trim() : null);
             usuarioDTO.setCorreo(correo.trim().toLowerCase());
             usuarioDTO.setNombreUsuario(nombreUsuario.trim().toLowerCase());
             usuarioDTO.setContrasenha(contrasenha);
@@ -228,9 +220,9 @@ public class UsuarioBO {
      *
      * @return true si los datos son válidos, false en caso contrario
      */
-    private boolean validarDatosUsuario(String nombre, String apePaterno, String apeMaterno,
-            String dni, LocalDate fechaNacimiento, String telefono, String correo,
-            String nombreUsuario, String contrasenha, TiposUsuarioDTO tipoUsuario) {
+    private boolean validarDatosUsuario(String nombre, String apePaterno,
+            String dni, String telefono, String correo, String nombreUsuario,
+            String contrasenha, TiposUsuarioDTO tipoUsuario) {
 
         // Validar nombre
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -254,39 +246,9 @@ public class UsuarioBO {
             return false;
         }
 
-        // Validar apellido materno
-        if (apeMaterno == null || apeMaterno.trim().isEmpty()) {
-            System.err.println("Validación: El apellido materno no puede estar vacío");
-            return false;
-        }
-
-        if (apeMaterno.trim().length() > 100) {
-            System.err.println("Validación: El apellido materno es demasiado largo (máx. 100 caracteres)");
-            return false;
-        }
-
         // Validar DNI
         if (dni == null || !DNI_PATTERN.matcher(dni).matches()) {
             System.err.println("Validación: El DNI debe tener 8 dígitos");
-            return false;
-        }
-
-        // Validar fecha de nacimiento
-        if (fechaNacimiento == null) {
-            System.err.println("Validación: La fecha de nacimiento no puede ser null");
-            return false;
-        }
-
-        // Validar edad mínima (18 años)
-        LocalDate hoy = LocalDate.now();
-        int edad = Period.between(fechaNacimiento, hoy).getYears();
-        if (edad < 18) {
-            System.err.println("Validación: El usuario debe ser mayor de 18 años");
-            return false;
-        }
-
-        if (fechaNacimiento.isAfter(hoy)) {
-            System.err.println("Validación: La fecha de nacimiento no puede ser futura");
             return false;
         }
 
@@ -451,11 +413,8 @@ public class UsuarioBO {
                     usuario.getUsuarioId(),
                     usuario.getNombre(),
                     usuario.getApePaterno(),
-                    usuario.getApeMaterno(),
                     usuario.getDni(),
-                    usuario.getFechaNacimiento(),
                     usuario.getTelefono(),
-                    usuario.getDireccion(),
                     usuario.getCorreo(),
                     usuario.getNombreUsuario(),
                     contrasenhaNueva, // En producción, hashear
@@ -478,7 +437,7 @@ public class UsuarioBO {
      * @param nombreUsuario Nombre de usuario o correo
      * @param contrasenha Contraseña
      * @return UsuariosDTO si las credenciales son válidas, null en caso
- contrario
+     * contrario
      */
     public UsuariosDTO autenticar(String nombreUsuario, String contrasenha) {
         try {

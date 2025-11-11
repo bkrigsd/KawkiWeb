@@ -3,18 +3,17 @@ package pe.edu.pucp.kawkiweb.bo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.daoImp.VentasDAOImpl;
-import pe.edu.pucp.kawkiweb.model.utilPedido.EstadoPedidoDTO;
 import pe.edu.pucp.kawkiweb.model.VentasDTO;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.dao.VentasDAO;
 
-public class PedidoBO {
+public class VentasBO {
 
-    private VentasDAO pedidoDAO;
+    private VentasDAO ventaDAO;
 
-    public PedidoBO() {
-        this.pedidoDAO = new VentasDAOImpl();
+    public VentasBO() {
+        this.ventaDAO = new VentasDAOImpl();
     }
 
     /**
@@ -25,52 +24,45 @@ public class PedidoBO {
      * @param fechaHoraUltimoEstado Fecha y hora del último cambio de estado
      * @param total Total del pedido
      * @param estadoPedido Estado actual del pedido
-     * @param promocion Promoción aplicada (puede ser null)
+     * @param descuento Promoción aplicada (puede ser null)
      * @return ID del pedido insertado o 0 si falla
      */
     public Integer insertar(UsuariosDTO usuario,
             LocalDateTime fechaHoraCreacion,
-            LocalDateTime fechaHoraUltimoEstado,
             Double total,
-            EstadoPedidoDTO estadoPedido,
-            DescuentosDTO promocion) {
+            DescuentosDTO descuento) {
         if (usuario == null || usuario.getUsuarioId() == null) {
             System.err.println("Error: Usuario no puede ser nulo");
             return 0;
         }
-        if (estadoPedido == null || estadoPedido.getEstado_pedido_id() == null) {
-            System.err.println("Error: Estado de pedido no puede ser nulo");
-            return 0;
-        }
+
         if (total == null || total < 0) {
             System.err.println("Error: Total debe ser mayor o igual a 0");
             return 0;
         }
 
-        VentasDTO pedidoDTO = new VentasDTO();
-        pedidoDTO.setUsuario(usuario);
-        pedidoDTO.setTotal(total);
-        pedidoDTO.setFecha_hora_creacion(fechaHoraCreacion != null ? fechaHoraCreacion : LocalDateTime.now());
-        pedidoDTO.setFecha_hora_ultimo_estado(fechaHoraUltimoEstado != null ? fechaHoraUltimoEstado : LocalDateTime.now());
-        pedidoDTO.setEstado_pedido(estadoPedido);
-        pedidoDTO.setPromocion(promocion);
+        VentasDTO ventaDTO = new VentasDTO();
+        ventaDTO.setUsuario(usuario);
+        ventaDTO.setTotal(total);
+        ventaDTO.setFecha_hora_creacion(fechaHoraCreacion != null ? fechaHoraCreacion : LocalDateTime.now());
+        ventaDTO.setDescuento(descuento);
 
-        return this.pedidoDAO.insertar(pedidoDTO);
+        return this.ventaDAO.insertar(ventaDTO);
     }
 
     /**
      * Obtiene un pedido por su ID (incluye detalles, usuario, estado y
      * promoción)
      *
-     * @param pedidoId ID del pedido
+     * @param ventaId ID del pedido
      * @return VentasDTO con toda la información o null si no existe
      */
-    public VentasDTO obtenerPorId(Integer pedidoId) {
-        if (pedidoId == null || pedidoId <= 0) {
+    public VentasDTO obtenerPorId(Integer ventaId) {
+        if (ventaId == null || ventaId <= 0) {
             System.err.println("Error: ID de pedido inválido");
             return null;
         }
-        return this.pedidoDAO.obtenerPorId(pedidoId);
+        return this.ventaDAO.obtenerPorId(ventaId);
     }
 
     /**
@@ -80,13 +72,13 @@ public class PedidoBO {
      * @return Lista de todos los pedidos
      */
     public ArrayList<VentasDTO> listarTodos() {
-        return this.pedidoDAO.listarTodos();
+        return this.ventaDAO.listarTodos();
     }
 
     /**
      * Modifica un pedido existente
      *
-     * @param pedidoId ID del pedido a modificar
+     * @param ventaId ID del pedido a modificar
      * @param usuario Usuario que realizó el pedido
      * @param fechaHoraCreacion Fecha y hora de creación
      * @param fechaHoraUltimoEstado Fecha y hora del último cambio de estado
@@ -95,13 +87,11 @@ public class PedidoBO {
      * @param promocion Promoción aplicada (puede ser null)
      * @return Número de filas afectadas (1 si tuvo éxito, 0 si falló)
      */
-    public Integer modificar(Integer pedidoId, UsuariosDTO usuario,
+    public Integer modificar(Integer ventaId, UsuariosDTO usuario,
             LocalDateTime fechaHoraCreacion,
-            LocalDateTime fechaHoraUltimoEstado,
             Double total,
-            EstadoPedidoDTO estadoPedido,
-            DescuentosDTO promocion) {
-        if (pedidoId == null || pedidoId <= 0) {
+            DescuentosDTO descuento) {
+        if (ventaId == null || ventaId <= 0) {
             System.err.println("Error: ID de pedido inválido");
             return 0;
         }
@@ -109,42 +99,37 @@ public class PedidoBO {
             System.err.println("Error: Usuario no puede ser nulo");
             return 0;
         }
-        if (estadoPedido == null || estadoPedido.getEstado_pedido_id() == null) {
-            System.err.println("Error: Estado de pedido no puede ser nulo");
-            return 0;
-        }
+
         if (total == null || total < 0) {
             System.err.println("Error: Total debe ser mayor o igual a 0");
             return 0;
         }
 
-        VentasDTO pedidoDTO = new VentasDTO();
-        pedidoDTO.setPedido_id(pedidoId);
-        pedidoDTO.setUsuario(usuario);
-        pedidoDTO.setTotal(total);
-        pedidoDTO.setFecha_hora_creacion(fechaHoraCreacion != null ? fechaHoraCreacion : LocalDateTime.now());
-        pedidoDTO.setFecha_hora_ultimo_estado(fechaHoraUltimoEstado != null ? fechaHoraUltimoEstado : LocalDateTime.now());
-        pedidoDTO.setEstado_pedido(estadoPedido);
-        pedidoDTO.setPromocion(promocion);
+        VentasDTO ventaDTO = new VentasDTO();
+        ventaDTO.setVenta_id(ventaId);
+        ventaDTO.setUsuario(usuario);
+        ventaDTO.setTotal(total);
+        ventaDTO.setFecha_hora_creacion(fechaHoraCreacion != null ? fechaHoraCreacion : LocalDateTime.now());
+        ventaDTO.setDescuento(descuento);
 
-        return this.pedidoDAO.modificar(pedidoDTO);
+        return this.ventaDAO.modificar(ventaDTO);
     }
 
     /**
      * Elimina un pedido por su ID Nota: Como existe estado_pedido, normalmente
      * no es necesario eliminar de la BD
      *
-     * @param pedidoId ID del pedido a eliminar
+     * @param ventaId ID del pedido a eliminar
      * @return Número de filas afectadas (1 si tuvo éxito, 0 si falló)
      */
-    public Integer eliminar(Integer pedidoId) {
-        if (pedidoId == null || pedidoId <= 0) {
+    public Integer eliminar(Integer ventaId) {
+        if (ventaId == null || ventaId <= 0) {
             System.err.println("Error: ID de pedido inválido");
             return 0;
         }
 
         VentasDTO pedidoDTO = new VentasDTO();
-        pedidoDTO.setPedido_id(pedidoId);
-        return this.pedidoDAO.eliminar(pedidoDTO);
+        pedidoDTO.setVenta_id(ventaId);
+        return this.ventaDAO.eliminar(pedidoDTO);
     }
 }

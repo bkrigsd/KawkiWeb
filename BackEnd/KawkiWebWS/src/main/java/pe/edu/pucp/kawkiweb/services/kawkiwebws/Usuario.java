@@ -6,17 +6,17 @@ import jakarta.jws.WebParam;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.bo.UsuarioBO;
+import pe.edu.pucp.kawkiweb.bo.UsuariosBO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 
 @WebService(serviceName = "Usuario")
 public class Usuario {
 
-    private UsuarioBO usuarioBO;
+    private UsuariosBO usuarioBO;
 
     public Usuario() {
-        this.usuarioBO = new UsuarioBO();
+        this.usuarioBO = new UsuariosBO();
     }
 
     @WebMethod(operationName = "insertar")

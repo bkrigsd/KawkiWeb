@@ -5,7 +5,7 @@ import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.bo.MovimientoInventarioBO;
+import pe.edu.pucp.kawkiweb.bo.MovimientosInventariosBO;
 import pe.edu.pucp.kawkiweb.model.MovimientosInventarioDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
@@ -13,10 +13,10 @@ import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
 @WebService(serviceName = "MovimientoInventario")
 public class MovimientoInventario {
 
-    private MovimientoInventarioBO movimientoInventarioBO;
+    private MovimientosInventariosBO movimientoInventarioBO;
 
     public MovimientoInventario() {
-        this.movimientoInventarioBO = new MovimientoInventarioBO();
+        this.movimientoInventarioBO = new MovimientosInventariosBO();
     }
 
     @WebMethod(operationName = "insertar")

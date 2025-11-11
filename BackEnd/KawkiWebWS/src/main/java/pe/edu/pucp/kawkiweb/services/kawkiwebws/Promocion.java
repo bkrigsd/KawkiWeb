@@ -5,7 +5,7 @@ import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.bo.PromocionBO;
+import pe.edu.pucp.kawkiweb.bo.DescuentosBO;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
@@ -13,10 +13,10 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 @WebService(serviceName = "Promocion")
 public class Promocion {
 
-    private PromocionBO promocionBO;
+    private DescuentosBO promocionBO;
 
     public Promocion() {
-        this.promocionBO = new PromocionBO();
+        this.promocionBO = new DescuentosBO();
     }
 
     @WebMethod(operationName = "insertar")

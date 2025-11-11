@@ -8,11 +8,11 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 import pe.edu.pucp.kawkiweb.dao.DescuentosDAO;
 
-public class PromocionBO {
+public class DescuentosBO {
 
     private DescuentosDAO promoDAO;
 
-    public PromocionBO() {
+    public DescuentosBO() {
         this.promoDAO = new DescuentosDAOImpl();
     }
 
@@ -56,16 +56,16 @@ public class PromocionBO {
     /**
      * Obtiene una promoción por su ID
      *
-     * @param promocionId ID de la promoción a buscar
+     * @param descuentoId ID de la promoción a buscar
      * @return DescuentosDTO encontrado, o null si no existe o hay error
      */
-    public DescuentosDTO obtenerPorId(Integer promocionId) {
+    public DescuentosDTO obtenerPorId(Integer descuentoId) {
         try {
-            if (promocionId == null || promocionId <= 0) {
+            if (descuentoId == null || descuentoId <= 0) {
                 System.err.println("Error: ID de promoción inválido");
                 return null;
             }
-            return this.promoDAO.obtenerPorId(promocionId);
+            return this.promoDAO.obtenerPorId(descuentoId);
 
         } catch (Exception e) {
             System.err.println("Error al obtener promoción por ID: " + e.getMessage());
@@ -96,14 +96,14 @@ public class PromocionBO {
      *
      * @return Número de registros afectados, o null si hubo error
      */
-    public Integer modificar(Integer promoId, String descripcion,
+    public Integer modificar(Integer descuentoId, String descripcion,
             TiposCondicionDTO tipo_condicion, Integer valor_condicion,
             TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio,
             LocalDateTime fecha_inicio, LocalDateTime fecha_fin, Boolean activo) {
 
         try {
             // Validar ID
-            if (promoId == null || promoId <= 0) {
+            if (descuentoId == null || descuentoId <= 0) {
                 System.err.println("Error: ID de promoción inválido");
                 return null;
             }
@@ -116,7 +116,7 @@ public class PromocionBO {
             }
 
             DescuentosDTO promoDTO = new DescuentosDTO();
-            promoDTO.setPromocion_id(promoId);
+            promoDTO.setDescuento_id(descuentoId);
             promoDTO.setDescripcion(descripcion);
             promoDTO.setTipo_condicion(tipo_condicion);
             promoDTO.setValor_condicion(valor_condicion);
@@ -138,18 +138,18 @@ public class PromocionBO {
     /**
      * Elimina una promoción por su ID
      *
-     * @param promoId ID de la promoción a eliminar
+     * @param descuentoId ID de la promoción a eliminar
      * @return Número de registros afectados, o null si hubo error
      */
-    public Integer eliminar(Integer promoId) {
+    public Integer eliminar(Integer descuentoId) {
         try {
-            if (promoId == null || promoId <= 0) {
+            if (descuentoId == null || descuentoId <= 0) {
                 System.err.println("Error: ID de promoción inválido");
                 return null;
             }
 
             DescuentosDTO promoDTO = new DescuentosDTO();
-            promoDTO.setPromocion_id(promoId);
+            promoDTO.setDescuento_id(descuentoId);
             return this.promoDAO.eliminar(promoDTO);
 
         } catch (Exception e) {
@@ -231,12 +231,12 @@ public class PromocionBO {
     /**
      * Activa una promoción
      *
-     * @param promoId ID de la promoción
+     * @param descuentoId ID de la promoción
      * @return true si se activó correctamente, false en caso contrario
      */
-    public boolean activar(Integer promoId) {
+    public boolean activar(Integer descuentoId) {
         try {
-            DescuentosDTO promo = this.obtenerPorId(promoId);
+            DescuentosDTO promo = this.obtenerPorId(descuentoId);
             if (promo == null) {
                 System.err.println("Error: Promoción no encontrada");
                 return false;
@@ -251,7 +251,7 @@ public class PromocionBO {
 
             promo.setActivo(true);
             Integer resultado = this.modificar(
-                    promo.getPromocion_id(),
+                    promo.getDescuento_id(),
                     promo.getDescripcion(),
                     promo.getTipo_condicion(),
                     promo.getValor_condicion(),
@@ -274,12 +274,12 @@ public class PromocionBO {
     /**
      * Desactiva una promoción
      *
-     * @param promoId ID de la promoción
+     * @param descuentoId ID de la promoción
      * @return true si se desactivó correctamente, false en caso contrario
      */
-    public boolean desactivar(Integer promoId) {
+    public boolean desactivar(Integer descuentoId) {
         try {
-            DescuentosDTO promo = this.obtenerPorId(promoId);
+            DescuentosDTO promo = this.obtenerPorId(descuentoId);
             if (promo == null) {
                 System.err.println("Error: Promoción no encontrada");
                 return false;
@@ -287,7 +287,7 @@ public class PromocionBO {
 
             promo.setActivo(false);
             Integer resultado = this.modificar(
-                    promo.getPromocion_id(),
+                    promo.getDescuento_id(),
                     promo.getDescripcion(),
                     promo.getTipo_condicion(),
                     promo.getValor_condicion(),
@@ -359,27 +359,27 @@ public class PromocionBO {
     /**
      * Verifica si una promoción está vigente en un momento dado
      *
-     * @param promo Promoción a verificar
+     * @param descuento Promoción a verificar
      * @param fecha Fecha a verificar
      * @return true si está vigente, false en caso contrario
      */
-    private boolean esVigente(DescuentosDTO promo, LocalDateTime fecha) {
-        return promo.getActivo() != null && promo.getActivo()
-                && promo.getFecha_inicio() != null && !fecha.isBefore(promo.getFecha_inicio())
-                && promo.getFecha_fin() != null && !fecha.isAfter(promo.getFecha_fin());
+    private boolean esVigente(DescuentosDTO descuento, LocalDateTime fecha) {
+        return descuento.getActivo() != null && descuento.getActivo()
+                && descuento.getFecha_inicio() != null && !fecha.isBefore(descuento.getFecha_inicio())
+                && descuento.getFecha_fin() != null && !fecha.isAfter(descuento.getFecha_fin());
     }
 
     /**
      * Verifica si una promoción es aplicable a un pedido
      *
-     * @param promoId ID de la promoción
+     * @param descuentoId ID de la promoción
      * @param cantidadProductos Cantidad de productos en el pedido
      * @param montoTotal Monto total del pedido
      * @return true si la promoción es aplicable, false en caso contrario
      */
-    public boolean esAplicable(Integer promoId, Integer cantidadProductos, Double montoTotal) {
+    public boolean esAplicable(Integer descuentoId, Integer cantidadProductos, Double montoTotal) {
         try {
-            DescuentosDTO promo = this.obtenerPorId(promoId);
+            DescuentosDTO promo = this.obtenerPorId(descuentoId);
 
             if (promo == null || !esVigente(promo, LocalDateTime.now())) {
                 return false;
@@ -405,17 +405,17 @@ public class PromocionBO {
     /**
      * Calcula el descuento aplicable de una promoción
      *
-     * @param promoId ID de la promoción
+     * @param descuentoId ID de la promoción
      * @param montoTotal Monto total del pedido
      * @return Monto del descuento, o 0.0 si no aplica
      */
-    public Double calcularDescuento(Integer promoId, Double montoTotal) {
+    public Double calcularDescuento(Integer descuentoId, Double montoTotal) {
         try {
             if (montoTotal == null || montoTotal <= 0) {
                 return 0.0;
             }
 
-            DescuentosDTO promo = this.obtenerPorId(promoId);
+            DescuentosDTO promo = this.obtenerPorId(descuentoId);
 
             if (promo == null || !esVigente(promo, LocalDateTime.now())) {
                 return 0.0;

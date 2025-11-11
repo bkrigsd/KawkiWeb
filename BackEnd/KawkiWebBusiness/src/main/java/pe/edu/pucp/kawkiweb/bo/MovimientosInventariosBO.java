@@ -10,12 +10,12 @@ import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
 import pe.edu.pucp.kawkiweb.dao.MovimientosInventarioDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
 
-public class MovimientoInventarioBO {
+public class MovimientosInventariosBO {
 
     private MovimientosInventarioDAO movInventarioDAO;
     private ProductosVariantesDAO productoVarianteDAO;
 
-    public MovimientoInventarioBO() {
+    public MovimientosInventariosBO() {
         this.movInventarioDAO = new MovimientosInventarioDAOImpl();
         this.productoVarianteDAO = new ProductosVariantesDAOImpl();
     }

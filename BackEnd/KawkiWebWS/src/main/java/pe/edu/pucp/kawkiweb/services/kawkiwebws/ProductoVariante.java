@@ -5,7 +5,7 @@ import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.bo.ProductoVarianteBO;
+import pe.edu.pucp.kawkiweb.bo.ProductosVariantesBO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
@@ -14,10 +14,10 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 @WebService(serviceName = "ProductoVariante")
 public class ProductoVariante {
 
-    private ProductoVarianteBO productoVarianteBO;
+    private ProductosVariantesBO productoVarianteBO;
 
     public ProductoVariante() {
-        this.productoVarianteBO = new ProductoVarianteBO();
+        this.productoVarianteBO = new ProductosVariantesBO();
     }
 
     @WebMethod(operationName = "insertar")

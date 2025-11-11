@@ -5,17 +5,17 @@ import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.bo.ComprobantePagoBO;
+import pe.edu.pucp.kawkiweb.bo.ComprobantesPagoBO;
 import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
 import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
 
 @WebService(serviceName = "ComprobantePago")
 public class ComprobantePago {
 
-    private ComprobantePagoBO comprobantePagoBO;
+    private ComprobantesPagoBO comprobantePagoBO;
 
     public ComprobantePago() {
-        this.comprobantePagoBO = new ComprobantePagoBO();
+        this.comprobantePagoBO = new ComprobantesPagoBO();
     }
 
     @WebMethod(operationName = "insertar")

@@ -8,11 +8,11 @@ import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 import pe.edu.pucp.kawkiweb.dao.ProductosDAO;
 
-public class ProductoBO {
+public class ProductosBO {
 
     private ProductosDAO productoDAO;
 
-    public ProductoBO() {
+    public ProductosBO() {
         this.productoDAO = new ProductosDAOImpl();
     }
 

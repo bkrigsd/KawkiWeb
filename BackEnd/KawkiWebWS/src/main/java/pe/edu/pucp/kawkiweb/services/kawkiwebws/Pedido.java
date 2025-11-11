@@ -5,7 +5,7 @@ import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.bo.PedidoBO;
+import pe.edu.pucp.kawkiweb.bo.VentasBO;
 import pe.edu.pucp.kawkiweb.model.VentasDTO;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
@@ -14,10 +14,10 @@ import pe.edu.pucp.kawkiweb.model.utilPedido.EstadoPedidoDTO;
 @WebService(serviceName = "Pedido")
 public class Pedido {
 
-    private PedidoBO pedidoBO;
+    private VentasBO pedidoBO;
 
     public Pedido() {
-        this.pedidoBO = new PedidoBO();
+        this.pedidoBO = new VentasBO();
     }
 
     @WebMethod(operationName = "insertar")
