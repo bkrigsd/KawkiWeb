@@ -39,8 +39,9 @@
                                     placeholder="Nombre y apellidos" />
                                 <asp:RequiredFieldValidator ID="rfvNombre" runat="server"
                                     ControlToValidate="txtNombreCliente"
-                                    ErrorMessage="Campo requerido" CssClass="text-danger"
-                                    Display="Dynamic" />
+                                    ErrorMessage="Solo se permiten letras y espacios" CssClass="text-danger"
+                                    Display="Dynamic" 
+                                    ValidationExpression="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$" />
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label" for="<%= txtTelefono.ClientID %>">
@@ -50,8 +51,9 @@
                                     placeholder="Ej. 987654321" />
                                 <asp:RequiredFieldValidator ID="rfvTelefono" runat="server"
                                     ControlToValidate="txtTelefono"
-                                    ErrorMessage="Campo requerido" CssClass="text-danger"
-                                    Display="Dynamic" />
+                                    ErrorMessage="El teléfono debe contener solo números" CssClass="text-danger"
+                                    Display="Dynamic" 
+                                    ValidationExpression="^\d{9}$" />
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label" for="<%= txtEmail.ClientID %>">Email (opcional)</label>
@@ -100,11 +102,18 @@
                     <div class="card-body">
                         <!-- Fila para agregar un producto -->
                         <div class="row g-2 align-items-end mb-3">
-                            <div class="col-md-5">
+                            <%--<div class="col-md-5">
                                 <label class="form-label" for="<%= txtProducto.ClientID %>">Producto</label>
                                 <asp:TextBox ID="txtProducto" runat="server" CssClass="form-control"
                                     placeholder="Nombre del producto" />
+                            </div>--%>
+                            <div class="col-md-5">
+                                <label class="form-label" for="<%= ddlProducto.ClientID %>">Producto</label>
+                                <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-select"
+                                    AutoPostBack="true" OnSelectedIndexChanged="ddlProducto_SelectedIndexChanged">
+                                </asp:DropDownList>
                             </div>
+
                             <div class="col-md-2">
                                 <label class="form-label" for="<%= txtCantidad.ClientID %>">Cantidad</label>
                                 <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control"

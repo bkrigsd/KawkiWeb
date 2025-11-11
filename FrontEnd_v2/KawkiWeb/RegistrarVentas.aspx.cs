@@ -35,10 +35,47 @@ namespace KawkiWeb
             if (!IsPostBack)
             {
                 // Primera carga
+                CargarProductos();
                 gvDetalle.DataSource = DetalleVentas;
                 gvDetalle.DataBind();
                 ActualizarTotales();
             }
+        }
+        private DataTable ObtenerProductos()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Id", typeof(int));
+            dt.Columns.Add("Nombre", typeof(string));
+            dt.Columns.Add("Descripcion", typeof(string));
+            dt.Columns.Add("Precio", typeof(decimal));
+            dt.Columns.Add("Tallas", typeof(string));
+            dt.Columns.Add("Tipo", typeof(string));
+            dt.Columns.Add("Material", typeof(string));
+            dt.Columns.Add("Color", typeof(string));
+            dt.Columns.Add("Stock", typeof(string));
+            dt.Columns.Add("Imagen", typeof(string));
+
+            // Productos tipo Oxford
+            dt.Rows.Add(1, "Oxford Clásico Beige", "Zapato oxford de cuero genuino con acabado premium, ideal para ocasiones formales y uso diario.", 150.90m, "35, 36, 39", "oxford", "clasico", "beige", "15,5,9", "~/Images/OxfordClasicoBeige.jpg");
+            dt.Rows.Add(2, "Oxford Premium Negro", "Zapato oxford de diseño moderno y sofisticado, perfecto para eventos importantes.", 250.90m, "35, 36, 37, 38, 39", "oxford", "charol", "negro", "15,12,0,5,9", "~/Images/OxfordPremiumNegro.jpg");
+            dt.Rows.Add(3, "Oxford Bicolor Café", "Zapato oxford con elegante combinación de tonos café, estilo vintage refinado.", 160.90m, "36, 37, 38, 39", "oxford", "combinado", "marron", "15,0,5,9", "~/Images/OxfordBicolorCafe.jpg");
+
+            // Productos tipo Derby
+            dt.Rows.Add(4, "Derby Elegante Marrón", "Derby de cuero con diseño tejido elegante, versátil para cualquier ocasión.", 215.90m, "35, 36, 37, 38, 39", "derby", "clasico", "marron", "15,12,0,5,9", "~/Images/DerbyClasicoMarron.jpg");
+            dt.Rows.Add(5, "Derby Charol Crema", "Derby charol con suela gruesa y diseño moderno, máxima comodidad.", 210.90m, "35, 36, 37, 38, 39", "derby", "charol", "crema", "15,12,0,5,9", "~/Images/DerbyClasicoCrema.jpg");
+            dt.Rows.Add(6, "Derby Clasico Negro", "Derby clásico con suela de goma antideslizante, ideal para caminar.", 169.90m, "36, 37, 38, 39", "derby", "clasico", "negro", "12,0,5,9", "~/Images/DerbyClasicoNegro.jpg");
+
+            return dt;
+        }
+        private void CargarProductos()
+        {
+            var productos = ObtenerProductos();
+            ddlProducto.DataSource = productos;
+            ddlProducto.DataTextField = "Nombre";
+            ddlProducto.DataValueField = "Precio"; // autocompleta con el precio
+            ddlProducto.DataBind();
+
+            ddlProducto.Items.Insert(0, new ListItem("-- Selecciona un producto --", ""));
         }
 
         #region Métodos de Validación
@@ -313,71 +350,142 @@ namespace KawkiWeb
         }
 
         #endregion
-
         protected void btnAgregarProducto_Click(object sender, EventArgs e)
         {
-            lblMensaje.Text = string.Empty;
-            lblMensaje.CssClass = "text-danger mb-2 d-block";
-
-            string producto = txtProducto.Text.Trim();
-            string mensajeError;
-
-            // Validar producto
-            if (!ValidarProducto(producto, out mensajeError))
+            // Validar selección de producto
+            if (string.IsNullOrEmpty(ddlProducto.SelectedValue))
             {
-                lblMensaje.Text = mensajeError;
+                lblMensaje.Text = "Selecciona un producto antes de agregar.";
+                lblMensaje.CssClass = "text-danger";
                 return;
             }
 
-            // Validar cantidad
+            string producto = ddlProducto.SelectedItem.Text;
             int cantidad;
-            if (!ValidarCantidad(txtCantidad.Text, out cantidad, out mensajeError))
+            decimal precioUnitario;
+
+            // Validaciones básicas
+            if (!int.TryParse(txtCantidad.Text, out cantidad) || cantidad <= 0)
             {
-                lblMensaje.Text = mensajeError;
+                lblMensaje.Text = "La cantidad debe ser un número mayor que 0.";
+                lblMensaje.CssClass = "text-danger";
                 return;
             }
 
-            // Validar precio
-            decimal precio;
-            if (!ValidarPrecio(txtPrecioUnitario.Text, out precio, out mensajeError))
+            if (!decimal.TryParse(txtPrecioUnitario.Text, out precioUnitario) || precioUnitario <= 0)
             {
-                lblMensaje.Text = mensajeError;
+                lblMensaje.Text = "El precio unitario debe ser un número válido.";
+                lblMensaje.CssClass = "text-danger";
                 return;
             }
 
-            // Validar que el producto no esté duplicado
-            var dt = DetalleVentas;
-            foreach (DataRow row in dt.Rows)
+            decimal subtotal = cantidad * precioUnitario;
+
+            // Aquí asumes que tienes una lista o DataTable en memoria (ejemplo)
+            DataTable dt = ViewState["DetalleVentas"] as DataTable;
+            if (dt == null)
             {
-                if (row["Producto"].ToString().Equals(producto, StringComparison.OrdinalIgnoreCase))
-                {
-                    lblMensaje.Text = "Este producto ya está en la lista. Elimínalo si deseas agregarlo nuevamente.";
-                    return;
-                }
+                dt = new DataTable();
+                dt.Columns.Add("Producto");
+                dt.Columns.Add("Cantidad", typeof(int));
+                dt.Columns.Add("PrecioUnitario", typeof(decimal));
+                dt.Columns.Add("Subtotal", typeof(decimal));
             }
 
-            // Agregar producto
-            var newRow = dt.NewRow();
-            newRow["Producto"] = producto;
-            newRow["Cantidad"] = cantidad;
-            newRow["PrecioUnitario"] = precio;
-            newRow["Subtotal"] = cantidad * precio;
-            dt.Rows.Add(newRow);
-            DetalleVentas = dt;
+            dt.Rows.Add(producto, cantidad, precioUnitario, subtotal);
+            ViewState["DetalleVentas"] = dt;
 
             gvDetalle.DataSource = dt;
             gvDetalle.DataBind();
 
-            // Limpiar campos
-            txtProducto.Text = string.Empty;
-            txtCantidad.Text = "1";
-            txtPrecioUnitario.Text = string.Empty;
-
+            // Actualizar totales
             ActualizarTotales();
 
-            // Mensaje de éxito
-            lblMensaje.CssClass = "text-success mb-2 d-block";
+            // Limpiar campos
+            ddlProducto.SelectedIndex = 0;
+            txtCantidad.Text = "1";
+            txtPrecioUnitario.Text = "";
+
             lblMensaje.Text = "Producto agregado correctamente.";
+            lblMensaje.CssClass = "text-success";
+        }
+
+        //protected void btnAgregarProducto_Click(object sender, EventArgs e)
+        //{
+        //    lblMensaje.Text = string.Empty;
+        //    lblMensaje.CssClass = "text-danger mb-2 d-block";
+
+        //    string producto = txtProducto.Text.Trim();
+        //    string mensajeError;
+
+        //    // Validar producto
+        //    if (!ValidarProducto(producto, out mensajeError))
+        //    {
+        //        lblMensaje.Text = mensajeError;
+        //        return;
+        //    }
+
+        //    // Validar cantidad
+        //    int cantidad;
+        //    if (!ValidarCantidad(txtCantidad.Text, out cantidad, out mensajeError))
+        //    {
+        //        lblMensaje.Text = mensajeError;
+        //        return;
+        //    }
+
+        //    // Validar precio
+        //    decimal precio;
+        //    if (!ValidarPrecio(txtPrecioUnitario.Text, out precio, out mensajeError))
+        //    {
+        //        lblMensaje.Text = mensajeError;
+        //        return;
+        //    }
+
+        //    // Validar que el producto no esté duplicado
+        //    var dt = DetalleVentas;
+        //    foreach (DataRow row in dt.Rows)
+        //    {
+        //        if (row["Producto"].ToString().Equals(producto, StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            lblMensaje.Text = "Este producto ya está en la lista. Elimínalo si deseas agregarlo nuevamente.";
+        //            return;
+        //        }
+        //    }
+
+        //    // Agregar producto
+        //    var newRow = dt.NewRow();
+        //    newRow["Producto"] = producto;
+        //    newRow["Cantidad"] = cantidad;
+        //    newRow["PrecioUnitario"] = precio;
+        //    newRow["Subtotal"] = cantidad * precio;
+        //    dt.Rows.Add(newRow);
+        //    DetalleVentas = dt;
+
+        //    gvDetalle.DataSource = dt;
+        //    gvDetalle.DataBind();
+
+        //    // Limpiar campos
+        //    txtProducto.Text = string.Empty;
+        //    txtCantidad.Text = "1";
+        //    txtPrecioUnitario.Text = string.Empty;
+
+        //    ActualizarTotales();
+
+        //    // Mensaje de éxito
+        //    lblMensaje.CssClass = "text-success mb-2 d-block";
+        //    lblMensaje.Text = "Producto agregado correctamente.";
+        //}
+        protected void ddlProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(ddlProducto.SelectedValue))
+            {
+                // Rellenar el precio según la selección
+                txtPrecioUnitario.Text = ddlProducto.SelectedValue;
+            }
+            else
+            {
+                txtPrecioUnitario.Text = string.Empty;
+            }
         }
 
         protected void gvDetalle_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -508,7 +616,8 @@ namespace KawkiWeb
             ddlCanal.SelectedIndex = 0;
 
             // Limpiar productos
-            txtProducto.Text = string.Empty;
+            //txtProducto.Text = string.Empty;
+            ddlProducto.SelectedIndex = 0;
             txtCantidad.Text = "1";
             txtPrecioUnitario.Text = string.Empty;
 
@@ -524,6 +633,7 @@ namespace KawkiWeb
             gvDetalle.DataBind();
 
             ActualizarTotales();
+
         }
     }
 }
