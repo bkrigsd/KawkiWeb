@@ -427,12 +427,6 @@
                     S/ <asp:Label ID="lblPrecio" runat="server"></asp:Label>
                 </div>
 
-                <!-- SKU de la variante seleccionada -->
-                <div class="producto-sku-detalle">
-                    <i class="fas fa-barcode"></i>
-                    SKU: <asp:Label ID="lblSKU" runat="server" Text="Selecciona color y talla"></asp:Label>
-                </div>
-
                 <p class="producto-descripcion-completa">
                     <asp:Label ID="lblDescripcion" runat="server"></asp:Label>
                 </p>
@@ -441,6 +435,11 @@
 
                 <asp:UpdatePanel ID="upVariantes" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
+                        <!-- SKU de la variante seleccionada -->
+                        <div class="producto-sku-detalle">
+                            <i class="fas fa-barcode"></i>
+                            SKU: <asp:Label ID="lblSKU" runat="server" Text="Selecciona color y talla"></asp:Label>
+                        </div>
                         <!-- Selector de tallas -->
                         <div class="selector-tallas">
                             <label class="selector-tallas-label">

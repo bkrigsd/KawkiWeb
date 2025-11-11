@@ -87,15 +87,6 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.Label lblPrecio;
 
         /// <summary>
-        /// Control lblSKU.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSKU;
-
-        /// <summary>
         /// Control lblDescripcion.
         /// </summary>
         /// <remarks>
@@ -121,6 +112,15 @@ namespace KawkiWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upVariantes;
+
+        /// <summary>
+        /// Control lblSKU.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSKU;
 
         /// <summary>
         /// Control rblTallas.
