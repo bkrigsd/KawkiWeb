@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-import pe.edu.pucp.kawkiweb.daoImp.UsuarioDAOImpl;
+import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
@@ -23,7 +23,7 @@ public class UsuarioBO {
     private static final Pattern TELEFONO_PATTERN = Pattern.compile("^[0-9]{9}$");
 
     public UsuarioBO() {
-        this.usuarioDAO = new UsuarioDAOImpl();
+        this.usuarioDAO = new UsuariosDAOImpl();
     }
 
     /**

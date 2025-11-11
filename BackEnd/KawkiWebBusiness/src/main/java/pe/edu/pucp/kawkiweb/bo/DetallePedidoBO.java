@@ -1,7 +1,7 @@
 package pe.edu.pucp.kawkiweb.bo;
 
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.daoImp.Detalle_PedidoDAOImpl;
+import pe.edu.pucp.kawkiweb.daoImp.DetalleVentasDAOImpl;
 import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.dao.DetalleVentasDAO;
@@ -11,7 +11,7 @@ public class DetallePedidoBO {
     private DetalleVentasDAO detallePedidoDAO;
 
     public DetallePedidoBO() {
-        this.detallePedidoDAO = new Detalle_PedidoDAOImpl();
+        this.detallePedidoDAO = new DetalleVentasDAOImpl();
     }
 
     /**

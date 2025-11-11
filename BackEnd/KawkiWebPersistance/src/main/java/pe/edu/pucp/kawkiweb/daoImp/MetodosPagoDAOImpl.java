@@ -14,6 +14,7 @@ public class MetodosPagoDAOImpl extends BaseDAOImpl implements MetodosPagoDAO {
     public MetodosPagoDAOImpl() {
         super("METODOS_PAGO");
         this.metodoPago = null;
+        this.retornarLlavePrimaria = true;
     }
 
     @Override

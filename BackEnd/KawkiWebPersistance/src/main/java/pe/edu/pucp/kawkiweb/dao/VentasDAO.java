@@ -3,7 +3,7 @@ package pe.edu.pucp.kawkiweb.dao;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.model.VentasDTO;
 
-public interface VentaDAO {
+public interface VentasDAO {
     
     public Integer insertar(VentasDTO venta);
     

@@ -15,20 +15,20 @@ import pe.edu.pucp.kawkiweb.dao.EstilosDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
 
-public class ProductoDAOImpl extends BaseDAOImpl implements ProductosDAO {
+public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
 
     private ProductosDTO producto;
     private CategoriasDAO categoriaDAO;
     private EstilosDAO estiloDAO;
     private ProductosVariantesDAO productoVarianteDAO;
 
-    public ProductoDAOImpl() {
+    public ProductosDAOImpl() {
         super("PRODUCTOS");
         this.producto = null;
         this.retornarLlavePrimaria = true;
         this.categoriaDAO = new CategoriasDAOImpl();
         this.estiloDAO = new EstilosDAOImpl();
-        this.productoVarianteDAO = new ProductoVarianteDAOImpl();
+        this.productoVarianteDAO = new ProductosVariantesDAOImpl();
     }
 
     @Override

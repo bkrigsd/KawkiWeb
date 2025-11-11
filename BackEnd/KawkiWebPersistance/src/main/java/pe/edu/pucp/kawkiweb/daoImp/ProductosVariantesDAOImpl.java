@@ -7,26 +7,22 @@ import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
-import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 import pe.edu.pucp.kawkiweb.dao.ColoresDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
 import pe.edu.pucp.kawkiweb.dao.TallasDAO;
-import pe.edu.pucp.kawkiweb.dao.TiposBeneficioDAO;
 
-public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductosVariantesDAO {
+public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosVariantesDAO {
 
     private ProductosVariantesDTO prodVariante;
     private ColoresDAO colorDAO;
     private TallasDAO tallaDAO;
-    private TiposBeneficioDAO tipoBeneficioDAO;
 
-    public ProductoVarianteDAOImpl() {
+    public ProductosVariantesDAOImpl() {
         super("PRODUCTOS_VARIANTES");
         this.prodVariante = null;
         this.retornarLlavePrimaria = true;
         this.colorDAO = new ColoresDAOImpl();
         this.tallaDAO = new TallasDAOImpl();
-        this.tipoBeneficioDAO = new TiposBeneficioDAOImpl();
     }
 
     @Override
@@ -39,9 +35,9 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductosVar
         this.listaColumnas.add(new Columna("PRODUCTO_ID", false, false));
         this.listaColumnas.add(new Columna("COLOR_ID", false, false));
         this.listaColumnas.add(new Columna("TALLA_ID", false, false));
-        this.listaColumnas.add(new Columna("TIPO_BENEFICIO_ID", false, false));
-        this.listaColumnas.add(new Columna("VALOR_BENEFICIO", false, false));
+        this.listaColumnas.add(new Columna("URL_IMAGEN", false, false));
         this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false));
+        this.listaColumnas.add(new Columna("DISPONIBLE", false, false));
     }
 
     @Override
@@ -49,26 +45,21 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductosVar
         this.statement.setString(1, this.prodVariante.getSKU());
         this.statement.setInt(2, this.prodVariante.getStock());
         this.statement.setInt(3, this.prodVariante.getStock_minimo());
-        this.statement.setInt(4, this.prodVariante.getAlerta_stock() ? 1 : 0);
+        if (this.prodVariante.getAlerta_stock() != null) {
+            this.statement.setInt(4, this.prodVariante.getAlerta_stock() ? 1 : 0);
+        } else {
+            this.statement.setNull(4, java.sql.Types.TINYINT);
+        }
         this.statement.setInt(5, this.prodVariante.getProducto_id());
         this.statement.setInt(6, this.prodVariante.getColor().getColor_id());
         this.statement.setInt(7, this.prodVariante.getTalla().getTalla_id());
-
-        TiposBeneficioDTO tipo_beneficio = this.prodVariante.getTipo_beneficio();
-        if (tipo_beneficio != null) {
-            this.statement.setInt(8, tipo_beneficio.getTipo_beneficio_id());
+        if (this.prodVariante.getUrl_imagen() != null) {
+            this.statement.setString(8, this.prodVariante.getUrl_imagen());
         } else {
-            this.statement.setNull(8, java.sql.Types.INTEGER);
+            this.statement.setNull(8, java.sql.Types.VARCHAR);
         }
-
-        Integer valor_beneficio = this.prodVariante.getValor_beneficio();
-        if (valor_beneficio != null) {
-            this.statement.setInt(9, valor_beneficio);
-        } else {
-            this.statement.setNull(9, java.sql.Types.INTEGER);
-        }
-
-        this.statement.setTimestamp(10, java.sql.Timestamp.valueOf(this.prodVariante.getFecha_hora_creacion()));
+        this.statement.setTimestamp(9, java.sql.Timestamp.valueOf(this.prodVariante.getFecha_hora_creacion()));
+        this.statement.setInt(10, this.prodVariante.getDisponible() ? 1 : 0);
     }
 
     @Override
@@ -86,26 +77,21 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductosVar
         this.statement.setString(1, this.prodVariante.getSKU());
         this.statement.setInt(2, this.prodVariante.getStock());
         this.statement.setInt(3, this.prodVariante.getStock_minimo());
-        this.statement.setInt(4, this.prodVariante.getAlerta_stock() ? 1 : 0);
+        if (this.prodVariante.getAlerta_stock() != null) {
+            this.statement.setInt(4, this.prodVariante.getAlerta_stock() ? 1 : 0);
+        } else {
+            this.statement.setNull(4, java.sql.Types.TINYINT);
+        }
         this.statement.setInt(5, this.prodVariante.getProducto_id());
         this.statement.setInt(6, this.prodVariante.getColor().getColor_id());
         this.statement.setInt(7, this.prodVariante.getTalla().getTalla_id());
-
-        TiposBeneficioDTO tipo_beneficio = this.prodVariante.getTipo_beneficio();
-        if (tipo_beneficio != null) {
-            this.statement.setInt(8, tipo_beneficio.getTipo_beneficio_id());
+        if (this.prodVariante.getUrl_imagen() != null) {
+            this.statement.setString(8, this.prodVariante.getUrl_imagen());
         } else {
-            this.statement.setNull(8, java.sql.Types.INTEGER);
+            this.statement.setNull(8, java.sql.Types.VARCHAR);
         }
-
-        Integer valor_beneficio = this.prodVariante.getValor_beneficio();
-        if (valor_beneficio != null) {
-            this.statement.setInt(9, valor_beneficio);
-        } else {
-            this.statement.setNull(9, java.sql.Types.INTEGER);
-        }
-
-        this.statement.setTimestamp(10, java.sql.Timestamp.valueOf(this.prodVariante.getFecha_hora_creacion()));
+        this.statement.setTimestamp(9, java.sql.Timestamp.valueOf(this.prodVariante.getFecha_hora_creacion()));
+        this.statement.setInt(10, this.prodVariante.getDisponible() ? 1 : 0);
         this.statement.setInt(11, this.prodVariante.getProd_variante_id());
     }
 
@@ -118,7 +104,7 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductosVar
         this.prodVariante.setStock_minimo(this.resultSet.getInt("STOCK_MINIMO"));
 
         Boolean alertaStock = (Boolean) this.resultSet.getObject("ALERTA_STOCK");
-        this.prodVariante.setAlerta_stock(alertaStock != null ? alertaStock : false);
+        this.prodVariante.setAlerta_stock(alertaStock);
 
         this.prodVariante.setProducto_id(this.resultSet.getInt("PRODUCTO_ID"));
 
@@ -130,22 +116,12 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductosVar
         TallasDTO talla = this.tallaDAO.obtenerPorId(talla_id);
         this.prodVariante.setTalla(talla);
 
-        Integer tipo_beneficio_id = (Integer) this.resultSet.getObject("TIPO_BENEFICIO_ID");
-        if (tipo_beneficio_id != null) {
-            TiposBeneficioDTO tipoBeneficio = this.tipoBeneficioDAO.obtenerPorId(tipo_beneficio_id);
-            this.prodVariante.setTipo_beneficio(tipoBeneficio);
-        } else {
-            this.prodVariante.setTipo_beneficio(null);
-        }
-
-        Integer valor_beneficio = (Integer) this.resultSet.getObject("VALOR_BENEFICIO");
-        if (valor_beneficio != null) {
-            this.prodVariante.setValor_beneficio(valor_beneficio);
-        } else {
-            this.prodVariante.setValor_beneficio(null);
-        }
+        this.prodVariante.setUrl_imagen((String) this.resultSet.getObject("URL_IMAGEN"));
 
         this.prodVariante.setFecha_hora_creacion(this.resultSet.getTimestamp("FECHA_HORA_CREACION").toLocalDateTime());
+
+        Boolean disponible = (Boolean) this.resultSet.getObject("DISPONIBLE");
+        this.prodVariante.setDisponible(disponible);
     }
 
     @Override
@@ -182,7 +158,7 @@ public class ProductoVarianteDAOImpl extends BaseDAOImpl implements ProductosVar
     public ArrayList<ProductosVariantesDTO> listarPorProductoId(Integer productoId) {
         String sql = "SELECT PROD_VARIANTE_ID, SKU, STOCK, STOCK_MINIMO, "
                 + "ALERTA_STOCK, PRODUCTO_ID, COLOR_ID, TALLA_ID, "
-                + "TIPO_BENEFICIO_ID, VALOR_BENEFICIO, FECHA_HORA_CREACION "
+                + "URL_IMAGEN, FECHA_HORA_CREACION, DISPONIBLE"
                 + "FROM PRODUCTOS_VARIANTES "
                 + "WHERE PRODUCTO_ID = ?";
 

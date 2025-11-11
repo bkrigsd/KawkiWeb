@@ -14,6 +14,7 @@ public class ColoresDAOImpl extends BaseDAOImpl implements ColoresDAO {
     public ColoresDAOImpl() {
         super("COLORES");
         this.color = null;
+        this.retornarLlavePrimaria = true;
     }
 
     @Override

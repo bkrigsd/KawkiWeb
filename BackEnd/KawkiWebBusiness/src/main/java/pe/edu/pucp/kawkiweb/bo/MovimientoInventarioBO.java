@@ -2,8 +2,8 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.daoImp.MovimientoInventarioDAOImpl;
-import pe.edu.pucp.kawkiweb.daoImp.ProductoVarianteDAOImpl;
+import pe.edu.pucp.kawkiweb.daoImp.MovimientosInventarioDAOImpl;
+import pe.edu.pucp.kawkiweb.daoImp.ProductosVariantesDAOImpl;
 import pe.edu.pucp.kawkiweb.model.MovimientosInventarioDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
@@ -16,8 +16,8 @@ public class MovimientoInventarioBO {
     private ProductosVariantesDAO productoVarianteDAO;
 
     public MovimientoInventarioBO() {
-        this.movInventarioDAO = new MovimientoInventarioDAOImpl();
-        this.productoVarianteDAO = new ProductoVarianteDAOImpl();
+        this.movInventarioDAO = new MovimientosInventarioDAOImpl();
+        this.productoVarianteDAO = new ProductosVariantesDAOImpl();
     }
 
     /**

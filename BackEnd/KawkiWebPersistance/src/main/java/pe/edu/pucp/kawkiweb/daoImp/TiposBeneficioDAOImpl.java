@@ -14,6 +14,7 @@ public class TiposBeneficioDAOImpl extends BaseDAOImpl implements TiposBeneficio
     public TiposBeneficioDAOImpl() {
         super("TIPOS_BENEFICIO");
         this.tipoBeneficio = null;
+        this.retornarLlavePrimaria = true;
     }
 
     @Override

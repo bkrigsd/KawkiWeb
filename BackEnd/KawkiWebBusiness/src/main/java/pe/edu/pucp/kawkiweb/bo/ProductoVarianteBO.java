@@ -2,8 +2,8 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import pe.edu.pucp.kawkiweb.daoImp.ProductoDAOImpl;
-import pe.edu.pucp.kawkiweb.daoImp.ProductoVarianteDAOImpl;
+import pe.edu.pucp.kawkiweb.daoImp.ProductosDAOImpl;
+import pe.edu.pucp.kawkiweb.daoImp.ProductosVariantesDAOImpl;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
@@ -18,8 +18,8 @@ public class ProductoVarianteBO {
     private ProductosDAO productoDAO;
 
     public ProductoVarianteBO() {
-        this.prodVarianteDAO = new ProductoVarianteDAOImpl();
-        this.productoDAO = new ProductoDAOImpl();
+        this.prodVarianteDAO = new ProductosVariantesDAOImpl();
+        this.productoDAO = new ProductosDAOImpl();
     }
 
     /**

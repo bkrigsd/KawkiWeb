@@ -80,8 +80,8 @@ public class UsuariosDTO {
         return usuarioId;
     }
 
-    public void setUsuarioId(int usuarioId) {
-        this.setUsuarioId((Integer) usuarioId);
+    public void setUsuarioId(Integer usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public String getNombre() {
@@ -154,10 +154,6 @@ public class UsuariosDTO {
 
     public void setTipoUsuario(TiposUsuarioDTO tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
-    }
-
-    public void setUsuarioId(Integer usuarioId) {
-        this.usuarioId = usuarioId;
     }
 
 }

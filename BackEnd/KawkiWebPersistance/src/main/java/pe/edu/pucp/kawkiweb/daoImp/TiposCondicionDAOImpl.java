@@ -14,6 +14,7 @@ public class TiposCondicionDAOImpl extends BaseDAOImpl implements TiposCondicion
     public TiposCondicionDAOImpl() {
         super("TIPOS_CONDICION");
         this.tipoCondicion = null;
+        this.retornarLlavePrimaria = true;
     }
 
     @Override

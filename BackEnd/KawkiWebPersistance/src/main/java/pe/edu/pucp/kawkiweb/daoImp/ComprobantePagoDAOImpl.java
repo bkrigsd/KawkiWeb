@@ -8,24 +8,31 @@ import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
 import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
 import pe.edu.pucp.kawkiweb.dao.ComprobantesPagoDAO;
+import pe.edu.pucp.kawkiweb.dao.MetodosPagoDAO;
 import pe.edu.pucp.kawkiweb.dao.TiposComprobanteDAO;
+import pe.edu.pucp.kawkiweb.dao.VentasDAO;
+import pe.edu.pucp.kawkiweb.model.VentasDTO;
+import pe.edu.pucp.kawkiweb.model.utilPago.MetodosPagoDTO;
 
 public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesPagoDAO {
 
     private ComprobantesPagoDTO comprobante;
     private TiposComprobanteDAO tipoComprobanteDAO;
+    private VentasDAO ventaDAO;
+    private MetodosPagoDAO metodoPagoDAO;
 
     public ComprobantePagoDAOImpl() {
-        super("COMPROBANTE_PAGOS");
+        super("COMPROBANTES_PAGO");
         this.comprobante = null;
         this.retornarLlavePrimaria = true;
         this.tipoComprobanteDAO = new TiposComprobanteDAOImpl();
+        this.ventaDAO = new VentasDAOImpl();
+        this.metodoPagoDAO = new MetodosPagoDAOImpl();
     }
 
     @Override
     protected void configurarListaDeColumnas() {
         this.listaColumnas.add(new Columna("COMPROBANTE_PAGO_ID", true, true));
-        this.listaColumnas.add(new Columna("PAGO_ID", false, false));
         this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false));
         this.listaColumnas.add(new Columna("TIPO_COMPROBANTE_ID", false, false));
         this.listaColumnas.add(new Columna("NUMERO_SERIE", false, false));
@@ -34,41 +41,104 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
         this.listaColumnas.add(new Columna("RUC_CLIENTE", false, false));
         this.listaColumnas.add(new Columna("RAZON_SOCIAL_CLIENTE", false, false));
         this.listaColumnas.add(new Columna("DIRECCION_FISCAL_CLIENTE", false, false));
-        this.listaColumnas.add(new Columna("CORREO_CLIENTE", false, false));
         this.listaColumnas.add(new Columna("TELEFONO_CLIENTE", false, false));
         this.listaColumnas.add(new Columna("TOTAL", false, false));
+        this.listaColumnas.add(new Columna("VENTA_ID", false, false));
+        this.listaColumnas.add(new Columna("METODO_PAGO_ID", false, false));
     }
 
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
-        this.statement.setInt(1, this.comprobante.getPago_id());
-        this.statement.setTimestamp(2, java.sql.Timestamp.valueOf(this.comprobante.getFecha_hora_creacion()));
-        this.statement.setInt(3, this.comprobante.getTipo_comprobante().getTipo_comprobante_id());
-        this.statement.setString(4, this.comprobante.getNumero_serie());
-        this.statement.setString(5, this.comprobante.getDni_cliente());
-        this.statement.setString(6, this.comprobante.getNombre_cliente());
-        this.statement.setString(7, this.comprobante.getRuc_cliente());
-        this.statement.setString(8, this.comprobante.getRazon_social_cliente());
-        this.statement.setString(9, this.comprobante.getDireccion_fiscal_cliente());
-        this.statement.setString(10, this.comprobante.getCorreo_cliente());
-        this.statement.setString(11, this.comprobante.getTelefono_cliente());
-        this.statement.setDouble(12, this.comprobante.getTotal());
+        this.statement.setTimestamp(1, java.sql.Timestamp.valueOf(this.comprobante.getFecha_hora_creacion()));
+        this.statement.setInt(2, this.comprobante.getTipo_comprobante().getTipo_comprobante_id());
+        this.statement.setString(3, this.comprobante.getNumero_serie());
+
+        if (this.comprobante.getDni_cliente() != null) {
+            this.statement.setString(4, this.comprobante.getDni_cliente());
+        } else {
+            this.statement.setNull(4, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getNombre_cliente() != null) {
+            this.statement.setString(5, this.comprobante.getNombre_cliente());
+        } else {
+            this.statement.setNull(5, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getRuc_cliente() != null) {
+            this.statement.setString(6, this.comprobante.getRuc_cliente());
+        } else {
+            this.statement.setNull(6, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getRazon_social_cliente() != null) {
+            this.statement.setString(7, this.comprobante.getRazon_social_cliente());
+        } else {
+            this.statement.setNull(7, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getDireccion_fiscal_cliente() != null) {
+            this.statement.setString(8, this.comprobante.getDireccion_fiscal_cliente());
+        } else {
+            this.statement.setNull(8, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getTelefono_cliente() != null) {
+            this.statement.setString(9, this.comprobante.getTelefono_cliente());
+        } else {
+            this.statement.setNull(9, java.sql.Types.VARCHAR);
+        }
+
+        this.statement.setDouble(10, this.comprobante.getTotal());
+        this.statement.setInt(11, this.comprobante.getVenta().getVenta_id());
+        this.statement.setInt(12, this.comprobante.getMetodo_pago().getMetodo_pago_id());
     }
 
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException {
-        this.statement.setInt(1, this.comprobante.getPago_id());
-        this.statement.setTimestamp(2, java.sql.Timestamp.valueOf(this.comprobante.getFecha_hora_creacion()));
-        this.statement.setInt(3, this.comprobante.getTipo_comprobante().getTipo_comprobante_id());
-        this.statement.setString(4, this.comprobante.getNumero_serie());
-        this.statement.setString(5, this.comprobante.getDni_cliente());
-        this.statement.setString(6, this.comprobante.getNombre_cliente());
-        this.statement.setString(7, this.comprobante.getRuc_cliente());
-        this.statement.setString(8, this.comprobante.getRazon_social_cliente());
-        this.statement.setString(9, this.comprobante.getDireccion_fiscal_cliente());
-        this.statement.setString(10, this.comprobante.getCorreo_cliente());
-        this.statement.setString(11, this.comprobante.getTelefono_cliente());
-        this.statement.setDouble(12, this.comprobante.getTotal());
+        this.statement.setTimestamp(1, java.sql.Timestamp.valueOf(this.comprobante.getFecha_hora_creacion()));
+        this.statement.setInt(2, this.comprobante.getTipo_comprobante().getTipo_comprobante_id());
+        this.statement.setString(3, this.comprobante.getNumero_serie());
+
+        if (this.comprobante.getDni_cliente() != null) {
+            this.statement.setString(4, this.comprobante.getDni_cliente());
+        } else {
+            this.statement.setNull(4, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getNombre_cliente() != null) {
+            this.statement.setString(5, this.comprobante.getNombre_cliente());
+        } else {
+            this.statement.setNull(5, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getRuc_cliente() != null) {
+            this.statement.setString(6, this.comprobante.getRuc_cliente());
+        } else {
+            this.statement.setNull(6, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getRazon_social_cliente() != null) {
+            this.statement.setString(7, this.comprobante.getRazon_social_cliente());
+        } else {
+            this.statement.setNull(7, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getDireccion_fiscal_cliente() != null) {
+            this.statement.setString(8, this.comprobante.getDireccion_fiscal_cliente());
+        } else {
+            this.statement.setNull(8, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getTelefono_cliente() != null) {
+            this.statement.setString(9, this.comprobante.getTelefono_cliente());
+        } else {
+            this.statement.setNull(9, java.sql.Types.VARCHAR);
+        }
+
+        this.statement.setDouble(10, this.comprobante.getTotal());
+        this.statement.setInt(11, this.comprobante.getVenta().getVenta_id());
+        this.statement.setInt(12, this.comprobante.getMetodo_pago().getMetodo_pago_id());
         this.statement.setInt(13, this.comprobante.getComprobante_pago_id());
     }
 
@@ -86,11 +156,10 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
     protected void instanciarObjetoDelResultSet() throws SQLException {
         this.comprobante = new ComprobantesPagoDTO();
         this.comprobante.setComprobante_pago_id(this.resultSet.getInt("COMPROBANTE_PAGO_ID"));
-        this.comprobante.setPago_id(this.resultSet.getInt("PAGO_ID"));
         this.comprobante.setFecha_hora_creacion(this.resultSet.getTimestamp("FECHA_HORA_CREACION").toLocalDateTime());
 
-        Integer tipoId = this.resultSet.getInt("TIPO_COMPROBANTE_ID");
-        TiposComprobanteDTO tipoComprobante = this.tipoComprobanteDAO.obtenerPorId(tipoId);
+        Integer tipoComprobanteId = this.resultSet.getInt("TIPO_COMPROBANTE_ID");
+        TiposComprobanteDTO tipoComprobante = this.tipoComprobanteDAO.obtenerPorId(tipoComprobanteId);
         this.comprobante.setTipo_comprobante(tipoComprobante);
 
         this.comprobante.setNumero_serie(this.resultSet.getString("NUMERO_SERIE"));
@@ -99,9 +168,17 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
         this.comprobante.setRuc_cliente(this.resultSet.getString("RUC_CLIENTE"));
         this.comprobante.setRazon_social_cliente(this.resultSet.getString("RAZON_SOCIAL_CLIENTE"));
         this.comprobante.setDireccion_fiscal_cliente(this.resultSet.getString("DIRECCION_FISCAL_CLIENTE"));
-        this.comprobante.setCorreo_cliente(this.resultSet.getString("CORREO_CLIENTE"));
         this.comprobante.setTelefono_cliente(this.resultSet.getString("TELEFONO_CLIENTE"));
         this.comprobante.setTotal(this.resultSet.getDouble("TOTAL"));
+
+        Integer ventaId = this.resultSet.getInt("VENTA_ID");
+        VentasDTO venta = this.ventaDAO.obtenerPorId(ventaId);
+        this.comprobante.setVenta(venta);
+
+        Integer metodoPagoId = this.resultSet.getInt("METODO_PAGO_ID");
+        MetodosPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(metodoPagoId);
+        this.comprobante.setMetodo_pago(metodoPago);
+
     }
 
     @Override
@@ -130,8 +207,8 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
     }
 
     @Override
-    public ComprobantesPagoDTO obtenerPorVentaId(Integer pagoId) {
-        String sql = "SELECT " + generarListaColumnas() + " FROM COMPROBANTE_PAGOS WHERE PAGO_ID = ?";
+    public ComprobantesPagoDTO obtenerPorVentaId(Integer ventaId) {
+        String sql = "SELECT " + generarListaColumnas() + " FROM COMPROBANTES_PAGO WHERE VENTA_ID = ?";
 
         Consumer<Integer> incluirParametros = (id) -> {
             try {
@@ -141,7 +218,7 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
             }
         };
 
-        List<ComprobantesPagoDTO> lista = super.listarTodos(sql, incluirParametros, pagoId);
+        List<ComprobantesPagoDTO> lista = super.listarTodos(sql, incluirParametros, ventaId);
         return lista.isEmpty() ? null : lista.get(0);
     }
 

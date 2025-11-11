@@ -14,6 +14,7 @@ public class EstilosDAOImpl extends BaseDAOImpl implements EstilosDAO {
     public EstilosDAOImpl() {
         super("ESTILOS");
         this.estilo = null;
+        this.retornarLlavePrimaria = true;
     }
 
     @Override

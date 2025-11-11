@@ -14,6 +14,7 @@ public class TallasDAOImpl extends BaseDAOImpl implements TallasDAO {
     public TallasDAOImpl() {
         super("TALLAS");
         this.talla = null;
+        this.retornarLlavePrimaria = true;
     }
 
     @Override

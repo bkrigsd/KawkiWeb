@@ -14,6 +14,7 @@ public class TiposComprobanteDAOImpl extends BaseDAOImpl implements TiposComprob
     public TiposComprobanteDAOImpl() {
         super("TIPOS_COMPROBANTE");
         this.tipoComprobante = null;
+        this.retornarLlavePrimaria = true;
     }
 
     @Override
