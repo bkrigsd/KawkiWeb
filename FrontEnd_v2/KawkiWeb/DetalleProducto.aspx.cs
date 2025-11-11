@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 
 namespace KawkiWeb
 {
@@ -16,10 +15,17 @@ namespace KawkiWeb
             set { ViewState["ProductoId"] = value; }
         }
 
-        private int StockDisponible
+        private DataRow ProductoActual
         {
-            get { return ViewState["Stock"] != null ? (int)ViewState["Stock"] : 0; }
-            set { ViewState["Stock"] = value; }
+            get
+            {
+                if (ProductoId == 0) return null;
+
+                // Vuelves a obtener la tabla simulada y buscar el producto
+                DataTable dt = ObtenerProductosSimulados();
+                return dt.AsEnumerable()
+                         .FirstOrDefault(p => p.Field<int>("ProductoId") == ProductoId);
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,7 +36,6 @@ namespace KawkiWeb
 
                 if (string.IsNullOrEmpty(idParam) || !int.TryParse(idParam, out int productoId))
                 {
-                    // Si no hay ID válido, redirigir a productos
                     Response.Redirect("Productos.aspx");
                     return;
                 }
@@ -42,24 +47,19 @@ namespace KawkiWeb
 
         private void CargarDetalleProducto(int productoId)
         {
-            // Obtener el producto de la base de datos simulada
             DataTable dtProductos = ObtenerProductosSimulados();
             DataRow producto = dtProductos.AsEnumerable()
                 .FirstOrDefault(p => p.Field<int>("ProductoId") == productoId);
 
             if (producto == null)
             {
-                // Producto no encontrado
                 Response.Redirect("Productos.aspx");
                 return;
             }
-
             string nombreProducto = producto["Nombre"].ToString();
-
-            // Aquí se establece el título de la página para que varía de acuerdo al producto seleccionado:
             Page.Title = nombreProducto + " - Kawki";
 
-            // Llenar los controles con la información del producto
+            // Llenar controles básicos
             lblBreadcrumb.Text = producto["Nombre"].ToString();
             lblNombreProducto.Text = producto["Nombre"].ToString();
             lblDescripcion.Text = producto["Descripcion"].ToString();
@@ -72,166 +72,154 @@ namespace KawkiWeb
             imgProductoPrincipal.ImageUrl = producto["ImagenUrl"].ToString();
             imgProductoPrincipal.AlternateText = producto["Nombre"].ToString();
 
-            // Stock
-            int stock = Convert.ToInt32(producto["Stock"]);
-            StockDisponible = stock;
-            lblStock.Text = $"{stock} disponibles";
+            // Cargar tallas con stock
+            CargarTallasDisponibles(producto);
 
-            if (stock <= 5)
-            {
-                lblStock.CssClass = "stock-disponible stock-bajo";
-                lblStock.Text = $"¡Solo quedan {stock}!";
-            }
-
-            // Cargar tallas disponibles
-            string tallasDisponibles = producto["TallasDisponibles"].ToString();
-            CargarTallas(tallasDisponibles);
+            // Calcular y mostrar stock total
+            MostrarStockTotal(producto);
         }
 
-        protected void btnAumentar_Click(object sender, EventArgs e)
+        private void CargarTallasDisponibles(DataRow producto)
         {
-            int cantidadActual = int.Parse(lblCantidad.Text);
+            rblTallas.Items.Clear();
 
-            if (cantidadActual < StockDisponible)
+            string tallasDisponibles = producto["TallasDisponibles"].ToString();
+            string[] tallas = tallasDisponibles.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                               .Select(t => t.Trim())
+                                               .ToArray();
+
+            string stockString = producto["Stock"].ToString();
+            string[] stocks = stockString.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                         .Select(s => s.Trim())
+                                         .ToArray();
+
+            // Crear un item por cada talla
+            for (int i = 0; i < tallas.Length; i++)
             {
-                cantidadActual++;
-                lblCantidad.Text = cantidadActual.ToString();
-                OcultarMensajeCantidad();
+                int stock = 0;
+                if (i < stocks.Length)
+                {
+                    int.TryParse(stocks[i], out stock);
+                }
+
+                string textoTalla = $"Talla {tallas[i]}";
+                if (stock > 0)
+                {
+                    textoTalla += $" ({stock} disponibles)";
+                }
+                else
+                {
+                    textoTalla += " (Agotado)";
+                }
+
+                ListItem item = new ListItem(textoTalla, i.ToString());
+                item.Enabled = stock > 0;
+
+                if (stock == 0)
+                {
+                    item.Attributes.Add("class", "talla-agotada");
+                }
+
+                rblTallas.Items.Add(item);
+            }
+
+        }
+
+        private void MostrarStockTotal(DataRow producto)
+        {
+            string stockString = producto["Stock"].ToString();
+            string[] stocks = stockString.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            int stockTotal = 0;
+            foreach (string s in stocks)
+            {
+                if (int.TryParse(s.Trim(), out int stockPorTalla))
+                {
+                    stockTotal += stockPorTalla;
+                }
+            }
+
+            // Mostrar mensaje informativo sobre el stock total (opcional)
+            if (stockTotal == 0)
+            {
+                pnlMensaje.Visible = true;
+                lblMensaje.Text = "Este producto está temporalmente agotado en todas las tallas.";
+                pnlMensaje.CssClass = "mensaje-validacion info";
+            }
+            else if (stockTotal <= 10)
+            {
+                pnlMensaje.Visible = true;
+                lblMensaje.Text = $"¡Últimas unidades disponibles! Solo quedan {stockTotal} en total.";
+                pnlMensaje.CssClass = "mensaje-validacion info";
+            }
+        }
+
+        protected void rblTallas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ProductoActual == null || string.IsNullOrEmpty(rblTallas.SelectedValue))
+                return;
+
+            int indice = Convert.ToInt32(rblTallas.SelectedValue);
+
+            string tallasDisponibles = ProductoActual["TallasDisponibles"].ToString();
+            string[] tallas = tallasDisponibles.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                               .Select(t => t.Trim())
+                                               .ToArray();
+
+            string stockString = ProductoActual["Stock"].ToString();
+            string[] stocks = stockString.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                         .Select(s => s.Trim())
+                                         .ToArray();
+
+            if (indice >= 0 && indice < tallas.Length && indice < stocks.Length)
+            {
+                string tallaSeleccionada = tallas[indice];
+                int stockTalla = 0;
+                int.TryParse(stocks[indice], out stockTalla);
+
+                // Mostrar información de la talla seleccionada
+                MostrarInfoVariante(tallaSeleccionada, stockTalla);
+            }
+        }
+
+        private void MostrarInfoVariante(string talla, int stock)
+        {
+            // Generar SKU
+            string categoria = ProductoActual["Categoria"].ToString().ToUpper().Substring(0, 3);
+            string color = ProductoActual["Color"].ToString().ToUpper().Substring(0, 3);
+            string sku = $"{categoria}-{color}-{talla}";
+
+            lblSKU.Text = sku;
+            lblSKUVariante.Text = sku;
+            lblTallaSeleccionada.Text = talla;
+            lblStockDisponible.Text = stock.ToString();
+
+            // Actualizar alerta de stock para esta talla
+            ActualizarAlertaStock(stock, 5);
+
+            pnlInfoStock.Visible = true;
+            hdnVarianteId.Value = talla; // Guardamos la talla seleccionada
+        }
+
+        private void ActualizarAlertaStock(int stock, int stockMinimo)
+        {
+            if (stock == 0)
+            {
+                pnlStockAlert.CssClass = "stock-alert-detalle stock-agotado-detalle";
+                lblStockAlert.Text = "⚠️ Producto agotado";
+            }
+            else if (stock <= stockMinimo)
+            {
+                pnlStockAlert.CssClass = "stock-alert-detalle stock-bajo-detalle";
+                lblStockAlert.Text = $"⚠️ Stock bajo - Solo {stock} unidades disponibles";
             }
             else
             {
-                MostrarMensajeCantidad("No hay más stock disponible", "error");
-            }
-
-            // Actualizar solo el UpdatePanel
-            upCantidad.Update();
-        }
-
-        protected void btnDisminuir_Click(object sender, EventArgs e)
-        {
-            int cantidadActual = int.Parse(lblCantidad.Text);
-
-            if (cantidadActual > 1)
-            {
-                cantidadActual--;
-                lblCantidad.Text = cantidadActual.ToString();
-                OcultarMensajeCantidad();
-            }
-
-            // Actualizar solo el UpdatePanel
-            upCantidad.Update();
-        }
-
-        private void MostrarMensajeCantidad(string mensaje, string tipo)
-        {
-            pnlMensajeCantidad.Visible = true;
-            pnlMensajeCantidad.CssClass = $"mensaje-validacion {tipo}";
-            lblMensajeCantidad.Text = mensaje;
-        }
-
-        private void OcultarMensajeCantidad()
-        {
-            pnlMensajeCantidad.Visible = false;
-        }
-
-        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
-        {
-            if (!ValidarSeleccion())
-            {
-                return;
-            }
-
-            // Obtener la talla seleccionada
-            string tallaSeleccionada = ObtenerTallaSeleccionada();
-            int cantidad = int.Parse(lblCantidad.Text);
-
-            // Aquí iría la lógica para agregar al carrito
-
-            MostrarMensaje($"¡Producto agregado al carrito! Talla: {tallaSeleccionada}, Cantidad: {cantidad}", "exito");
-
-        }
-
-        protected void btnComprarAhora_Click(object sender, EventArgs e)
-        {
-            if (!ValidarSeleccion())
-            {
-                return;
-            }
-
-            // Obtener la talla seleccionada
-            string tallaSeleccionada = ObtenerTallaSeleccionada();
-            int cantidad = int.Parse(lblCantidad.Text);
-
-            // Agregar al carrito
-            // ... (lógica de agregar al carrito)
-
-            // Redirigir directamente al checkout
-            Response.Redirect("Checkout.aspx");
-        }
-
-        private bool ValidarSeleccion()
-        {
-            // Validar que se haya seleccionado una talla
-            string tallaSeleccionada = ObtenerTallaSeleccionada();
-
-            if (string.IsNullOrEmpty(tallaSeleccionada))
-            {
-                MostrarMensaje("Por favor, selecciona una talla antes de continuar", "error");
-                return false;
-            }
-
-            // Validar cantidad
-            int cantidad = int.Parse(lblCantidad.Text);
-            if (cantidad <= 0 || cantidad > StockDisponible)
-            {
-                MostrarMensaje("La cantidad seleccionada no es válida", "error");
-                return false;
-            }
-
-            return true;
-        }
-
-        private void CargarTallas(string tallasStr)
-        {
-            if (string.IsNullOrEmpty(tallasStr))
-            {
-                return;
-            }
-
-            string[] tallas = tallasStr.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                       .Select(t => t.Trim())
-                                       .OrderBy(t => int.Parse(t))
-                                       .ToArray();
-
-            rblTallas.Items.Clear();
-            foreach (string talla in tallas)
-            {
-                rblTallas.Items.Add(new ListItem(talla, talla));
+                pnlStockAlert.CssClass = "stock-alert-detalle stock-disponible-detalle";
+                lblStockAlert.Text = $"✓ Stock disponible - {stock} unidades";
             }
         }
 
-        private string ObtenerTallaSeleccionada()
-        {
-            if (rblTallas.SelectedItem != null)
-            {
-                return rblTallas.SelectedValue;
-            }
-            return null;
-        }
-
-        private void MostrarMensaje(string mensaje, string tipo)
-        {
-            pnlMensaje.Visible = true;
-            pnlMensaje.CssClass = $"mensaje-validacion {tipo}";
-            lblMensaje.Text = mensaje;
-        }
-
-        private void OcultarMensaje()
-        {
-            pnlMensaje.Visible = false;
-        }
-
-        // Mismo método que en Productos.aspx
         private DataTable ObtenerProductosSimulados()
         {
             DataTable dt = new DataTable();
@@ -243,41 +231,38 @@ namespace KawkiWeb
             dt.Columns.Add("Categoria", typeof(string));
             dt.Columns.Add("Estilo", typeof(string));
             dt.Columns.Add("Color", typeof(string));
-            dt.Columns.Add("Stock", typeof(int));
+            dt.Columns.Add("Stock", typeof(string));
             dt.Columns.Add("ImagenUrl", typeof(string));
 
             // Productos tipo Oxford
-            dt.Rows.Add(1, "Oxford Clásico Beige", "Zapato oxford de cuero genuino con acabado premium, ideal para ocasiones formales y uso diario.", 150.90m, "35, 36, 39", "oxford", "clasico", "beige", 15, "~/Images/OxfordClasicoBeige.jpg");
-            dt.Rows.Add(2, "Oxford Premium Negro", "Zapato oxford de diseño moderno y sofisticado, perfecto para eventos importantes.", 250.90m, "35, 36, 37, 38, 39", "oxford", "charol", "negro", 8, "~/Images/OxfordPremiumNegro.jpg");
-            dt.Rows.Add(3, "Oxford Bicolor Café", "Zapato oxford con elegante combinación de tonos café, estilo vintage refinado.", 160.90m, "36, 37, 38, 39", "oxford", "combinado", "marron", 6, "~/Images/OxfordBicolorCafe.jpg");
+            dt.Rows.Add(1, "Oxford Clásico Beige", "Zapato oxford de cuero genuino con acabado premium, ideal para ocasiones formales y uso diario.", 150.90m, "35, 36, 39", "oxford", "clasico", "beige", "15,5,9", "~/Images/OxfordClasicoBeige.jpg");
+            dt.Rows.Add(2, "Oxford Premium Negro", "Zapato oxford de diseño moderno y sofisticado, perfecto para eventos importantes.", 250.90m, "35, 36, 37, 38, 39", "oxford", "charol", "negro", "15,12,0,5,9", "~/Images/OxfordPremiumNegro.jpg");
+            dt.Rows.Add(3, "Oxford Bicolor Café", "Zapato oxford con elegante combinación de tonos café, estilo vintage refinado.", 160.90m, "36, 37, 38, 39", "oxford", "combinado", "marron", "15,0,5,9", "~/Images/OxfordBicolorCafe.jpg");
 
             // Productos tipo Derby
-            dt.Rows.Add(4, "Derby Elegante Marrón", "Derby de cuero con diseño tejido elegante, versátil para cualquier ocasión.", 215.90m, "35, 36, 37, 38, 39", "derby", "clasico", "marron", 10, "~/Images/DerbyClasicoMarron.jpg");
-            dt.Rows.Add(5, "Derby Charol Crema", "Derby charol con suela gruesa y diseño moderno, máxima comodidad.", 210.90m, "35, 36, 37, 38, 39", "derby", "charol", "crema", 12, "~/Images/DerbyClasicoCrema.jpg");
-            dt.Rows.Add(6, "Derby Clasico Negro", "Derby clasico con suela de goma antideslizante, ideal para caminar.", 169.90m, "36, 37, 38, 39", "derby", "clasico", "negro", 4, "~/Images/DerbyClasicoNegro.jpg");
+            dt.Rows.Add(4, "Derby Elegante Marrón", "Derby de cuero con diseño tejido elegante, versátil para cualquier ocasión.", 215.90m, "35, 36, 37, 38, 39", "derby", "clasico", "marron", "15,12,0,5,9", "~/Images/DerbyClasicoMarron.jpg");
+            dt.Rows.Add(5, "Derby Charol Crema", "Derby charol con suela gruesa y diseño moderno, máxima comodidad.", 210.90m, "35, 36, 37, 38, 39", "derby", "charol", "crema", "15,12,0,5,9", "~/Images/DerbyClasicoCrema.jpg");
+            dt.Rows.Add(6, "Derby Clasico Negro", "Derby clasico con suela de goma antideslizante, ideal para caminar.", 169.90m, "36, 37, 38, 39", "derby", "clasico", "negro", "12,0,5,9", "~/Images/DerbyClasicoNegro.jpg");
 
             return dt;
         }
 
-        protected void rptTallas_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            if (string.IsNullOrEmpty(rblTallas.SelectedValue))
             {
-                RadioButton rb = (RadioButton)e.Item.FindControl("rbTalla");
-                if (rb != null)
-                {
-                    string talla = e.Item.DataItem.ToString();
-
-                    // Asignar ID único para que el label funcione
-                    rb.ID = "rbTalla_" + e.Item.ItemIndex;
-
-                    // Agregar atributo data-talla
-                    rb.Attributes.Add("data-talla", talla);
-
-                    // El InputAttributes permite que el CSS funcione correctamente
-                    rb.InputAttributes.Add("id", "rbTalla_" + e.Item.ItemIndex);
-                }
+                // Mostrar mensaje de que debe seleccionar una talla
+                ScriptManager.RegisterStartupScript(this, GetType(), "alert",
+                    "alert('Por favor selecciona una talla');", true);
+                return;
             }
+
+            // TODO: Implementar lógica para agregar al carrito
+            string tallaSeleccionada = lblTallaSeleccionada.Text;
+            string productoNombre = lblNombreProducto.Text;
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "alert",
+                $"alert('Producto agregado al carrito:\\n{productoNombre}\\nTalla: {tallaSeleccionada}');", true);
         }
     }
 }
