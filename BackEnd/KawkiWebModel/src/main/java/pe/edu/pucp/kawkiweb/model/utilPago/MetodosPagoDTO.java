@@ -6,11 +6,11 @@ public class MetodosPagoDTO {
     private String nombre;
 
     //Constantes para los datos existentes
-    public static final int ID_TARJETA_BANCARIA = 1;
+    public static final int ID_TRANSFERENCIA = 1;
     public static final int ID_YAPE = 2;
     public static final int ID_PLIN = 3;
 
-    public static final String NOMBRE_TARJETA_BANCARIA = "Transferencia";
+    public static final String NOMBRE_TRANSFERENCIA = "Transferencia";
     public static final String NOMBRE_YAPE = "Yape";
     public static final String NOMBRE_PLIN = "Plin";
 
@@ -41,8 +41,8 @@ public class MetodosPagoDTO {
     }
 
     // Métodos de utilidad para verificar el tipo
-    public boolean esTarjetaBancaria() {
-        return this.metodo_pago_id != null && this.metodo_pago_id == ID_TARJETA_BANCARIA;
+    public boolean esTransferencia() {
+        return this.metodo_pago_id != null && this.metodo_pago_id == ID_TRANSFERENCIA;
     }
 
     public boolean esYape() {
