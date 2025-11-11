@@ -45,6 +45,15 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
+                                <asp:LinkButton ID="lnkCambiarEstado" runat="server" 
+                                    CommandArgument='<%# Eval("IdDescuento") %>'
+                                    OnCommand="lnkCambiarEstado_Command"
+                                    CausesValidation="false"
+                                    style="display: inline-block; position: relative; width: 50px; height: 24px; margin-right: 10px; vertical-align: middle; text-decoration: none;">
+                                    <span style="display: block; position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: <%# Convert.ToBoolean(Eval("Activo")) ? "#28a745" : "#ccc" %>; transition: .4s; border-radius: 34px;">
+                                        <span style="display: block; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; transform: <%# Convert.ToBoolean(Eval("Activo")) ? "translateX(26px)" : "translateX(0)" %>;"></span>
+                                    </span>
+                                </asp:LinkButton>
                                 <button type="button" class="btn-editar"
                                     onclick='editarDescuento(<%# Eval("IdDescuento") %>, "<%# Eval("Nombre") %>", "<%# Eval("Porcentaje") %>", "<%# Eval("FechaInicio","{0:yyyy-MM-dd}") %>", "<%# Eval("FechaFin","{0:yyyy-MM-dd}") %>", "<%# Eval("Descripcion") %>")'>
                                     Editar
@@ -137,6 +146,16 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .switch input:checked + .slider {
+            background-color: #28a745;
+        }
+
+        .switch input:checked + .slider span {
+            transform: translateX(26px);
+        }
+    </style>
 
     <script>
         function abrirModalRegistro() {
