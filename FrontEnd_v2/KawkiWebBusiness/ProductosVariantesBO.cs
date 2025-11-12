@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KawkiWebBusiness.KawkiWebWSProductos;
+using KawkiWebBusiness.KawkiWebWSProductosVariantes;
+using coloresDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO;
+using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO;
+using tallasDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO;
 
 namespace KawkiWebBusiness
 {
@@ -19,7 +24,7 @@ namespace KawkiWebBusiness
         /// Inserta una nueva variante de producto
 
         public int? Insertar(string sku, int stock, int stockMinimo,
-            int productoId, ColoresDTO color, TallasDTO talla, string urlImagen, bool disponible = true)
+            int productoId, coloresDTO color, tallasDTO talla, string urlImagen, bool disponible = true)
         {
             try
             {
@@ -48,11 +53,11 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Obtiene una variante de producto por su ID
 
-        public productosVariantesDTO ObtenerPorId(int? prodVarianteId)
+        public productosVariantesDTO ObtenerPorId(int prodVarianteId)
         {
             try
             {
-                if (prodVarianteId == null || prodVarianteId <= 0)
+                if (prodVarianteId <= 0)
                 {
                     System.Diagnostics.Debug.WriteLine("Error: ID de variante inválido");
                     return null;
@@ -75,7 +80,7 @@ namespace KawkiWebBusiness
             try
             {
                 var lista = this.clienteSOAP.listarTodosProdVariante();
-                return lista ?? new List<productosVariantesDTO>();
+                return lista != null ? new List<productosVariantesDTO>(lista) : new List<productosVariantesDTO>();
             }
             catch (Exception ex)
             {
@@ -87,13 +92,13 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Modifica una variante de producto existente
 
-        public int? Modificar(int? prodVarianteId, string sku, int stock,
-            int stockMinimo, int productoId, ColoresDTO color, TallasDTO talla,
+        public int? Modificar(int prodVarianteId, string sku, int stock,
+            int stockMinimo, int productoId, coloresDTO color, tallasDTO talla,
             string urlImagen, bool disponible)
         {
             try
             {
-                if (prodVarianteId == null || prodVarianteId <= 0)
+                if (prodVarianteId <= 0)
                 {
                     System.Diagnostics.Debug.WriteLine("Error: ID de variante inválido");
                     return null;
@@ -124,11 +129,11 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Elimina una variante de producto por su ID
 
-        public int? Eliminar(int? prodVarianteId)
+        public int? Eliminar(int prodVarianteId)
         {
             try
             {
-                if (prodVarianteId == null || prodVarianteId <= 0)
+                if (prodVarianteId <= 0)
                 {
                     System.Diagnostics.Debug.WriteLine("Error: ID de variante inválido");
                     return null;
@@ -148,11 +153,11 @@ namespace KawkiWebBusiness
         /// Actualiza solo el stock de una variante
         /// El backend recalcula automáticamente la alerta de stock
 
-        public bool ActualizarStock(int? prodVarianteId, int? nuevoStock)
+        public bool ActualizarStock(int prodVarianteId, int nuevoStock)
         {
             try
             {
-                if (prodVarianteId == null || nuevoStock == null || nuevoStock < 0)
+                if (prodVarianteId <=0 || nuevoStock < 0)
                 {
                     System.Diagnostics.Debug.WriteLine("Error: Parámetros inválidos para actualizar stock");
                     return false;
@@ -176,7 +181,8 @@ namespace KawkiWebBusiness
             try
             {
                 var lista = this.clienteSOAP.listarConStockBajoProdVariante();
-                return lista ?? new List<productosVariantesDTO>();
+                if (lista == null) return new List<productosVariantesDTO>();
+                return new List<productosVariantesDTO>(lista);
             }
             catch (Exception ex)
             {
@@ -188,11 +194,11 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Lista variantes de un producto específico
 
-        public IList<productosVariantesDTO> ListarPorProducto(int? productoId)
+        public IList<productosVariantesDTO> ListarPorProducto(int productoId)
         {
             try
             {
-                if (productoId == null || productoId <= 0)
+                if (productoId <= 0)
                 {
                     return new List<productosVariantesDTO>();
                 }
@@ -209,17 +215,18 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Lista variantes por color
 
-        public IList<productosVariantesDTO> ListarPorColor(int? colorId)
+        public IList<productosVariantesDTO> ListarPorColor(int colorId)
         {
             try
             {
-                if (colorId == null || colorId <= 0)
+                if (colorId <= 0)
                 {
                     return new List<productosVariantesDTO>();
                 }
 
                 var lista = this.clienteSOAP.listarPorColorProdVariante(colorId);
-                return lista ?? new List<productosVariantesDTO>();
+                if (lista == null) return new List<productosVariantesDTO>();
+                return new List<productosVariantesDTO>(lista);
             }
             catch (Exception ex)
             {
@@ -231,17 +238,18 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Lista variantes por talla
 
-        public IList<productosVariantesDTO> ListarPorTalla(int? tallaId)
+        public IList<productosVariantesDTO> ListarPorTalla(int tallaId)
         {
             try
             {
-                if (tallaId == null || tallaId <= 0)
+                if (tallaId <= 0)
                 {
                     return new List<productosVariantesDTO>();
                 }
 
                 var lista = this.clienteSOAP.listarPorTallaProdVariante(tallaId);
-                return lista ?? new List<productosVariantesDTO>();
+                if (lista == null) return new List<productosVariantesDTO>();
+                return new List<productosVariantesDTO>(lista);
             }
             catch (Exception ex)
             {

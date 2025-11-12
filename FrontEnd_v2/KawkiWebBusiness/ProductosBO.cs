@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KawkiWebBusiness.KawkiWebWSProductos;
 
 namespace KawkiWebBusiness
 {
@@ -16,7 +17,7 @@ namespace KawkiWebBusiness
         }
 
         /// Inserta un nuevo producto en la base de datos
-        public int? Insertar(string descripcion, CategoriasDTO categoria, EstilosDTO estilo, 
+        public int? Insertar(string descripcion, categoriasDTO categoria, estilosDTO estilo, 
             double precioVenta)
         {
             try
@@ -39,11 +40,11 @@ namespace KawkiWebBusiness
         }
 
         /// Obtiene un producto por su ID
-        public productoDTO ObtenerPorId(int? productoId)
+        public productosDTO ObtenerPorId(int productoId)
         {
             try
             {
-                if (productoId == null || productoId <= 0)
+                if (productoId <= 0)
                 {
                     System.Diagnostics.Debug.WriteLine("Error: ID de producto inválido");
                     return null;
@@ -59,22 +60,22 @@ namespace KawkiWebBusiness
         }
 
         /// Lista todos los productos (con sus variantes)
-        public IList<productoDTO> ListarTodos()
+        public IList<productosDTO> ListarTodos()
         {
             try
             {
                 var lista = this.clienteSOAP.listarTodosProducto();
-                return lista ?? new List<productoDTO>();
+                return lista != null ? new List<productosDTO>(lista) : new List<productosDTO>();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error al listar productos: {ex.Message}");
-                return new List<productoDTO>();
+                return new List<productosDTO>();
             }
         }
 
         /// Modifica un producto existente
-        public int? Modificar(int? productoId, string descripcion, CategoriasDTO categoria, EstilosDTO estilo, double precioVenta)
+        public int? Modificar(int? productoId, string descripcion, categoriasDTO categoria, estilosDTO estilo, double precioVenta)
         {
             try
             {
@@ -84,7 +85,7 @@ namespace KawkiWebBusiness
                     return null;
                 }
 
-                int resultado = this.clienteSOAP.modificar(
+                int resultado = this.clienteSOAP.modificarProducto(
                     productoId, 
                     descripcion, 
                     categoria, 
@@ -102,11 +103,11 @@ namespace KawkiWebBusiness
         }
 
         /// Elimina un producto por su ID
-        public int? Eliminar(int? productoId)
+        public int? Eliminar(int productoId)
         {
             try
             {
-                if (productoId == null || productoId <= 0)
+                if (productoId <= 0)
                 {
                     System.Diagnostics.Debug.WriteLine("Error: ID de producto inválido");
                     return null;
@@ -120,7 +121,7 @@ namespace KawkiWebBusiness
                     return null;
                 }
 
-                int resultado = this.clienteSOAP.eliminar(productoId);
+                int resultado = this.clienteSOAP.eliminarProducto(productoId);
                 return resultado > 0 ? (int?)resultado : null;
             }
             catch (Exception ex)
@@ -149,8 +150,7 @@ namespace KawkiWebBusiness
         {
             try
             {
-                var resultado = this.clienteSOAP.calcularStockTotalProducto(productoId);
-                return resultado ?? 0;
+                return this.clienteSOAP.calcularStockTotalProducto(productoId);
             }
             catch (Exception ex)
             {
@@ -160,57 +160,60 @@ namespace KawkiWebBusiness
         }
 
         /// Lista productos por categoría
-        public IList<productoDTO> ListarPorCategoria(int? categoriaId)
+        public IList<productosDTO> ListarPorCategoria(int categoriaId)
         {
             try
             {
-                if (categoriaId == null || categoriaId <= 0)
+                if (categoriaId <= 0)
                 {
-                    return new List<productoDTO>();
+                    return new List<productosDTO>();
                 }
 
                 var lista = this.clienteSOAP.listarPorCategoriaProducto(categoriaId);
-                return lista ?? new List<productosDTO>();
+                if (lista == null) return new List<productosDTO>();
+                return new List<productosDTO>(lista);
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error al listar productos por categoría: {ex.Message}");
-                return new List<productoDTO>();
+                return new List<productosDTO>();
             }
         }
 
         /// Lista productos por estilo
-        public IList<productoDTO> ListarPorEstilo(int? estiloId)
+        public IList<productosDTO> ListarPorEstilo(int estiloId)
         {
             try
             {
-                if (estiloId == null || estiloId <= 0)
+                if (estiloId <= 0)
                 {
-                    return new List<productoDTO>();
+                    return new List<productosDTO>();
                 }
 
                 var lista = this.clienteSOAP.listarPorEstiloProducto(estiloId);
-                return lista ?? new List<productosDTO>();
+                if (lista == null) return new List<productosDTO>();
+                return new List<productosDTO>(lista);
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error al listar productos por estilo: {ex.Message}");
-                return new List<productoDTO>();
+                return new List<productosDTO>();
             }
         }
 
         /// Lista productos con stock bajo (tienen variantes con alerta de stock activada)
-        public IList<productoDTO> ListarConStockBajo()
+        public IList<productosDTO> ListarConStockBajo()
         {
             try
             {
                 var lista = this.clienteSOAP.listarConStockBajoProducto();
-                return lista ?? new List<productosDTO>();
+                if (lista == null) return new List<productosDTO>();
+                return new List<productosDTO>(lista);
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error al listar productos con stock bajo: {ex.Message}");
-                return new List<productoDTO>();
+                return new List<productosDTO>();
             }
         }
 
