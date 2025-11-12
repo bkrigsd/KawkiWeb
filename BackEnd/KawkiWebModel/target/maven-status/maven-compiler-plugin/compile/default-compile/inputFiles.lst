@@ -1,19 +1,19 @@
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\adapter\LocalDateTimeAdapter.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\ComprobantesPagoDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\DescuentosDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\DetalleVentasDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\MovimientosInventarioDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\ProductosDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\ProductosVariantesDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\UsuariosDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilDescuento\TiposBeneficioDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilDescuento\TiposCondicionDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilMovInventario\TiposMovimientoDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilPago\MetodosPagoDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilPago\TiposComprobanteDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilProducto\CategoriasDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilProducto\ColoresDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilProducto\EstilosDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilProducto\TallasDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilUsuario\TiposUsuarioDTO.java
-C:\PUCP\progra3\github\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\VentasDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\adapter\LocalDateTimeAdapter.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\ComprobantesPagoDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\DescuentosDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\DetalleVentasDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\MovimientosInventarioDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\ProductosDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\ProductosVariantesDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\UsuariosDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilDescuento\TiposBeneficioDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilDescuento\TiposCondicionDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilMovInventario\TiposMovimientoDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilPago\MetodosPagoDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilPago\TiposComprobanteDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilProducto\CategoriasDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilProducto\ColoresDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilProducto\EstilosDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilProducto\TallasDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\utilUsuario\TiposUsuarioDTO.java
+C:\Users\51982\Documents\Programación 3\TiendaWeb\TA\KawkiWeb\BackEnd\KawkiWebModel\src\main\java\pe\edu\pucp\kawkiweb\model\VentasDTO.java

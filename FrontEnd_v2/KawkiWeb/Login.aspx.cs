@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using KawkiWebBusiness;
+using KawkiWebBusiness.KawkiWebWSUsuarios;
 
 namespace KawkiWeb
 {
     public partial class Login : Page
     {
+        private UsuarioBO usuarioBO = new UsuarioBO();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Si ya está logueado, redirige según el rol
                 var rol = (Session["Rol"] as string) ?? string.Empty;
 
-                if (rol.Equals("admin", StringComparison.OrdinalIgnoreCase))
-                {
-                    Response.Redirect("Productos.aspx");
-                }
-                else if (rol.Equals("vendedor", StringComparison.OrdinalIgnoreCase))
+                if (rol.Equals("admin", StringComparison.OrdinalIgnoreCase) ||
+                    rol.Equals("vendedor", StringComparison.OrdinalIgnoreCase))
                 {
                     Response.Redirect("Productos.aspx");
                 }
@@ -39,29 +35,59 @@ namespace KawkiWeb
                 return;
             }
 
-            // ADMIN
-            if (usuario.Equals("admin", StringComparison.OrdinalIgnoreCase) &&
-                clave.Equals("admin", StringComparison.OrdinalIgnoreCase))
+            try
             {
-                Session["Rol"] = "admin";
-                Session["Usuario"] = "admin";
-                Response.Redirect("Productos.aspx");
-                return;
-            }
+                var usuarioBO = new UsuarioBO();
+                var usuarioDTO = usuarioBO.AutenticarUsuario(usuario, clave);
 
-            // VENDEDOR
-            if (usuario.Equals("vendedor", StringComparison.OrdinalIgnoreCase) &&
-                clave.Equals("vendedor", StringComparison.OrdinalIgnoreCase))
+                if (usuarioDTO != null)
+                {
+                    // Determinar rol desde el tipoUsuario del backend
+                    string rol = "";
+                    if (usuarioDTO.tipoUsuario != null)
+                    {
+                        string nombreRol = usuarioDTO.tipoUsuario.nombre?.Trim().ToLower();
+                        if (nombreRol == "administrador")
+                            rol = "admin";
+                        else if (nombreRol == "vendedor")
+                            rol = "vendedor";
+                    }
+
+                    // Si no hay tipoUsuario, lo tratamos como usuario sin rol
+                    if (string.IsNullOrEmpty(rol))
+                    {
+                        lblMensaje.Text = "Error: El usuario no tiene rol asignado.";
+                        return;
+                    }
+
+                    // Guardar sesión
+                    Session["Usuario"] = usuarioDTO.nombreUsuario;
+                    Session["Rol"] = rol;
+                    Session["UsuarioNombreCompleto"] = usuarioDTO.nombre + " " + usuarioDTO.apePaterno;
+
+                    // Redirección según el rol
+                    if (rol == "admin")
+                    {
+                        Response.Redirect("Productos.aspx");
+                    }
+                    else if (rol == "vendedor")
+                    {
+                        Response.Redirect("Productos.aspx");
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "Rol no reconocido. Contacte al administrador.";
+                    }
+                }
+                else
+                {
+                    lblMensaje.Text = "Usuario o contraseña incorrectos.";
+                }
+            }
+            catch (Exception ex)
             {
-                Session["Rol"] = "vendedor";
-                Session["Usuario"] = "vendedor";
-                Response.Redirect("Productos.aspx");
-                return;
+                lblMensaje.Text = "Error al iniciar sesión: " + ex.Message;
             }
-
-            // Si más adelante agregas validación real, la pones aquí
-
-            lblMensaje.Text = "Usuario o contraseña incorrectos.";
         }
     }
 }

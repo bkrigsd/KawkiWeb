@@ -58,9 +58,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ProductosBO.cs" />
-    <Compile Include="ProductosVariantesBO.cs" />
+    <Compile Include="Connected Services\KawkiWebWSUsuarios\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsuariosBO.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -163,11 +167,43 @@
     <None Include="Connected Services\KawkiWebWSProductos\ProductosService.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.eliminarUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.listarPorTipoUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.listarTodosUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.modificarUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\UsuariosService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSUsuarios\UsuariosService.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSColores\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSProductosVariantes\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSProductos\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSUsuarios\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\KawkiWebWSProductos\configuration91.svcinfo" />
@@ -201,6 +237,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\KawkiWebWSColores\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSUsuarios\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSUsuarios\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSUsuarios\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
