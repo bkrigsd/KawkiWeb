@@ -225,52 +225,49 @@ namespace KawkiWeb
                 if (producto.variantes == null || producto.variantes.Length == 0)
                     continue;
 
-                // Obtener tallas únicas y sus stocks
-                var tallasDict = new Dictionary<string, int>();
+                // agrupar variantes por color
+                var variantesPorColor = producto.variantes
+                    .GroupBy(v => v.color?.nombre ?? "Sin color");
 
-                foreach (var variante in producto.variantes)
+                foreach (var grupoColor in variantesPorColor)
                 {
-                    if (variante.talla != null)
-                    {
-                        string talla = variante.talla.numero.ToString();
+                    string colorNombre = grupoColor.Key;
+                    string imagen = grupoColor.FirstOrDefault()?.url_imagen ?? "~/Images/no-image.jpg";
 
-                        if (!tallasDict.ContainsKey(talla))
+                    // obtener tallas y stocks de ese color
+                    var tallasDict = new Dictionary<string, int>();
+                    foreach (var variante in grupoColor)
+                    {
+                        if (variante.talla != null)
                         {
+                            string talla = variante.talla.numero.ToString();
                             tallasDict[talla] = variante.stock;
                         }
-                        else
-                        {
-                            tallasDict[talla] += variante.stock;
-                        }
                     }
+
+                    string tallas = string.Join(", ", tallasDict.Keys.OrderBy(t => int.Parse(t)));
+                    string stocks = string.Join(",", tallasDict.Values);
+
+                    string categoriaNombre = producto.categoria.nombre;
+                    string estiloNombre = producto.estilo.nombre;
+
+                    string nombreProducto = $"{categoriaNombre} {estiloNombre} {colorNombre}".Trim();
+                    nombreProducto = char.ToUpper(nombreProducto[0]) + nombreProducto.Substring(1);
+
+                    dt.Rows.Add(
+                        producto.producto_id,
+                        nombreProducto,
+                        producto.descripcion,
+                        producto.precio_venta,
+                        tallas,
+                        categoriaNombre,
+                        estiloNombre,
+                        colorNombre,
+                        stocks,
+                        imagen
+                    );
                 }
-
-                // Ordenar tallas
-                var tallasOrdenadas = tallasDict.OrderBy(t => int.Parse(t.Key)).ToList();
-
-                string tallas = string.Join(", ", tallasOrdenadas.Select(t => t.Key));
-                string stocks = string.Join(",", tallasOrdenadas.Select(t => t.Value));
-
-                // Obtener color principal (primera variante)
-                string color = producto.variantes[0]?.color?.nombre ?? "Sin color";
-
-                // Obtener imagen principal (primera variante)
-                string imagen = producto.variantes[0]?.url_imagen ?? "~/Images/no-image.jpg";
-
-                dt.Rows.Add(
-                    producto.producto_id,
-                    producto.descripcion,
-                    producto.descripcion, 
-                    producto.precio_venta,
-                    tallas,
-                    producto.categoria?.nombre ?? "Sin categoría",
-                    producto.estilo?.nombre ?? "Sin estilo",
-                    color,
-                    stocks,
-                    imagen
-                );
             }
-
             return dt;
         }
 
