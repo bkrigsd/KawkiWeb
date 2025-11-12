@@ -7,7 +7,7 @@ import java.util.List;
 //import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 //import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
 //
-//@XmlRootElement(name = "Venta")
+//@XmlRootElement(name = "venta")
 public class VentasDTO {
 
     //ATRIBUTOS:

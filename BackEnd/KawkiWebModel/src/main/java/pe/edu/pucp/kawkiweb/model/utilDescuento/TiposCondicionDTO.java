@@ -1,5 +1,7 @@
 package pe.edu.pucp.kawkiweb.model.utilDescuento;
-
+//import jakarta.xml.bind.annotation.XmlRootElement;
+//
+//@XmlRootElement(name = "tipo_condicion")
 public class TiposCondicionDTO {
 
     private Integer tipo_condicion_id;
