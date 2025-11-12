@@ -4,6 +4,11 @@ import java.time.LocalDateTime;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
+
+@XmlRootElement(name = "Descuento")
 public class DescuentosDTO {
 
     private Integer descuento_id;
@@ -12,7 +17,9 @@ public class DescuentosDTO {
     private Integer valor_condicion;
     private TiposBeneficioDTO tipo_beneficio;
     private Integer valor_beneficio;
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_inicio;
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_fin;
     private Boolean activo;
 

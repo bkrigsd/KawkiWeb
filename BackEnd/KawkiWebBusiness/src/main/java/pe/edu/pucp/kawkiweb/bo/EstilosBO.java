@@ -1,6 +1,6 @@
 package pe.edu.pucp.kawkiweb.bo;
 
-import java.util.ArrayList;
+import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.EstilosDAO;
 import pe.edu.pucp.kawkiweb.daoImp.EstilosDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
@@ -30,7 +30,7 @@ public class EstilosBO {
         return this.estiloDAO.obtenerPorId(estiloId);
     }
 
-    public ArrayList<EstilosDTO> listarTodos() {
+    public List<EstilosDTO> listarTodos() {
         return this.estiloDAO.listarTodos();
     }
 }

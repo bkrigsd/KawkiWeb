@@ -2,6 +2,7 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import pe.edu.pucp.kawkiweb.daoImp.ProductosDAOImpl;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
@@ -16,13 +17,8 @@ public class ProductosBO {
         this.productoDAO = new ProductosDAOImpl();
     }
 
-    /**
-     * Inserta un nuevo producto en la base de datos
-     *
-     * @return ID del producto insertado, o null si hubo error
-     */
     public Integer insertar(String descripcion, CategoriasDTO categoria,
-            EstilosDTO estilo, Double precio_venta, LocalDateTime fecha_hora_creacion) {
+            EstilosDTO estilo, Double precio_venta) {
 
         try {
             // Validaciones
@@ -36,9 +32,7 @@ public class ProductosBO {
             productoDTO.setCategoria(categoria);
             productoDTO.setEstilo(estilo);
             productoDTO.setPrecio_venta(precio_venta);
-            productoDTO.setFecha_hora_creacion(
-                    fecha_hora_creacion != null ? fecha_hora_creacion : LocalDateTime.now()
-            );
+            productoDTO.setFecha_hora_creacion(LocalDateTime.now());
 
             return this.productoDAO.insertar(productoDTO);
 
@@ -49,13 +43,6 @@ public class ProductosBO {
         }
     }
 
-    /**
-     * Obtiene un producto por su ID (incluye sus variantes)
-     *
-     * @param producto_id ID del producto a buscar
-     * @return ProductosDTO encontrado con sus variantes, o null si no existe o
- hay error
-     */
     public ProductosDTO obtenerPorId(Integer producto_id) {
         try {
             if (producto_id == null || producto_id <= 0) {
@@ -71,14 +58,9 @@ public class ProductosBO {
         }
     }
 
-    /**
-     * Lista todos los productos (con sus variantes)
-     *
-     * @return Lista de productos, o lista vacía si hay error
-     */
-    public ArrayList<ProductosDTO> listarTodos() {
+    public List<ProductosDTO> listarTodos() {
         try {
-            ArrayList<ProductosDTO> lista = this.productoDAO.listarTodos();
+            List<ProductosDTO> lista = this.productoDAO.listarTodos();
             return (lista != null) ? lista : new ArrayList<>();
 
         } catch (Exception e) {
@@ -88,14 +70,8 @@ public class ProductosBO {
         }
     }
 
-    /**
-     * Modifica un producto existente
-     *
-     * @return Número de registros afectados, o null si hubo error
-     */
     public Integer modificar(Integer producto_id, String descripcion,
-            CategoriasDTO categoria, EstilosDTO estilo, Double precio_venta,
-            LocalDateTime fecha_hora_creacion) {
+            CategoriasDTO categoria, EstilosDTO estilo, Double precio_venta) {
 
         try {
             // Validar ID
@@ -116,7 +92,7 @@ public class ProductosBO {
             productoDTO.setCategoria(categoria);
             productoDTO.setEstilo(estilo);
             productoDTO.setPrecio_venta(precio_venta);
-            productoDTO.setFecha_hora_creacion(fecha_hora_creacion);
+            productoDTO.setFecha_hora_creacion(LocalDateTime.now());
 
             return this.productoDAO.modificar(productoDTO);
 
@@ -127,13 +103,6 @@ public class ProductosBO {
         }
     }
 
-    /**
-     * Elimina un producto por su ID NOTA: Verificar que no tenga variantes
-     * asociadas antes de eliminar
-     *
-     * @param producto_id ID del producto a eliminar
-     * @return Número de registros afectados, o null si hubo error
-     */
     public Integer eliminar(Integer producto_id) {
         try {
             if (producto_id == null || producto_id <= 0) {
@@ -174,7 +143,7 @@ public class ProductosBO {
             return false;
         }
 
-        if (descripcion.trim().length() > 500) {
+        if (descripcion.trim().length() > 100) {
             System.err.println("Validación: La descripción es demasiado larga (máx. 500 caracteres)");
             return false;
         }
@@ -253,14 +222,14 @@ public class ProductosBO {
      * @param categoria_id ID de la categoría
      * @return Lista de productos de la categoría
      */
-    public ArrayList<ProductosDTO> listarPorCategoria(Integer categoria_id) {
+    public List<ProductosDTO> listarPorCategoria(Integer categoria_id) {
         try {
             if (categoria_id == null || categoria_id <= 0) {
                 return new ArrayList<>();
             }
 
-            ArrayList<ProductosDTO> todosLosProductos = this.listarTodos();
-            ArrayList<ProductosDTO> productosFiltrados = new ArrayList<>();
+            List<ProductosDTO> todosLosProductos = this.listarTodos();
+            List<ProductosDTO> productosFiltrados = new ArrayList<>();
 
             for (ProductosDTO producto : todosLosProductos) {
                 if (producto.getCategoria() != null
@@ -283,14 +252,14 @@ public class ProductosBO {
      * @param estilo_id ID del estilo
      * @return Lista de productos del estilo
      */
-    public ArrayList<ProductosDTO> listarPorEstilo(Integer estilo_id) {
+    public List<ProductosDTO> listarPorEstilo(Integer estilo_id) {
         try {
             if (estilo_id == null || estilo_id <= 0) {
                 return new ArrayList<>();
             }
 
-            ArrayList<ProductosDTO> todosLosProductos = this.listarTodos();
-            ArrayList<ProductosDTO> productosFiltrados = new ArrayList<>();
+            List<ProductosDTO> todosLosProductos = this.listarTodos();
+            List<ProductosDTO> productosFiltrados = new ArrayList<>();
 
             for (ProductosDTO producto : todosLosProductos) {
                 if (producto.getEstilo() != null
@@ -313,10 +282,10 @@ public class ProductosBO {
      *
      * @return Lista de productos con stock bajo
      */
-    public ArrayList<ProductosDTO> listarConStockBajo() {
+    public List<ProductosDTO> listarConStockBajo() {
         try {
-            ArrayList<ProductosDTO> todosLosProductos = this.listarTodos();
-            ArrayList<ProductosDTO> productosConStockBajo = new ArrayList<>();
+            List<ProductosDTO> todosLosProductos = this.listarTodos();
+            List<ProductosDTO> productosConStockBajo = new ArrayList<>();
 
             for (ProductosDTO producto : todosLosProductos) {
                 if (producto.getVariantes() != null) {

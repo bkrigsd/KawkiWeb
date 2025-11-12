@@ -1,5 +1,8 @@
 package pe.edu.pucp.kawkiweb.model.utilProducto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "Estilo")
 public class EstilosDTO {
 
     private Integer estilo_id;

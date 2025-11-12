@@ -1,6 +1,6 @@
 package pe.edu.pucp.kawkiweb.bo;
 
-import java.util.ArrayList;
+import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.TallasDAO;
 import pe.edu.pucp.kawkiweb.daoImp.TallasDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
@@ -30,7 +30,7 @@ public class TallasBO {
         return this.tallaDAO.obtenerPorId(tallaId);
     }
 
-    public ArrayList<TallasDTO> listarTodos() {
+    public List<TallasDTO> listarTodos() {
         return this.tallaDAO.listarTodos();
     }
 }

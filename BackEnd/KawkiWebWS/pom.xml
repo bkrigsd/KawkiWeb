@@ -27,12 +27,12 @@
         </dependency>
         <dependency>
             <groupId>pe.edu.pucp.KawKiWeb</groupId>
-            <artifactId>KawkiWebBusiness</artifactId>
+            <artifactId>KawkiWebModel</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>pe.edu.pucp.KawKiWeb</groupId>
-            <artifactId>KawkiWebModel</artifactId>
+            <artifactId>KawkiWebBusiness</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

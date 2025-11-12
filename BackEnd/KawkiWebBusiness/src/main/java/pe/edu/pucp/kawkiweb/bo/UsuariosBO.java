@@ -2,6 +2,7 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
@@ -24,19 +25,13 @@ public class UsuariosBO {
         this.usuarioDAO = new UsuariosDAOImpl();
     }
 
-    /**
-     * Inserta un nuevo usuario en la base de datos
-     *
-     * @return ID del usuario insertado, o null si hubo error
-     */
     public Integer insertar(String nombre, String apePaterno, String dni,
             String telefono, String correo, String nombreUsuario,
-            String contrasenha, LocalDateTime fechaHoraCreacion,
-            TiposUsuarioDTO tipoUsuario) {
+            String contrasenha, TiposUsuarioDTO tipoUsuario) {
 
         try {
             // Validaciones básicas
-            if (!validarDatosUsuario(nombre, apePaterno, dni, telefono, correo, 
+            if (!validarDatosUsuario(nombre, apePaterno, dni, telefono, correo,
                     nombreUsuario, contrasenha, tipoUsuario)) {
                 System.err.println("Error: Datos de usuario inválidos");
                 return null;
@@ -68,9 +63,7 @@ public class UsuariosBO {
             usuarioDTO.setCorreo(correo.trim().toLowerCase());
             usuarioDTO.setNombreUsuario(nombreUsuario.trim().toLowerCase());
             usuarioDTO.setContrasenha(contrasenha);
-            usuarioDTO.setFechaHoraCreacion(
-                    fechaHoraCreacion != null ? fechaHoraCreacion : LocalDateTime.now()
-            );
+            usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
             usuarioDTO.setTipoUsuario(tipoUsuario);
 
             return this.usuarioDAO.insertar(usuarioDTO);
@@ -82,12 +75,6 @@ public class UsuariosBO {
         }
     }
 
-    /**
-     * Obtiene un usuario por su ID
-     *
-     * @param usuarioId ID del usuario a buscar
-     * @return UsuariosDTO encontrado, o null si no existe o hay error
-     */
     public UsuariosDTO obtenerPorId(Integer usuarioId) {
         try {
             if (usuarioId == null || usuarioId <= 0) {
@@ -103,14 +90,9 @@ public class UsuariosBO {
         }
     }
 
-    /**
-     * Lista todos los usuarios
-     *
-     * @return Lista de usuarios, o lista vacía si hay error
-     */
-    public ArrayList<UsuariosDTO> listarTodos() {
+    public List<UsuariosDTO> listarTodos() {
         try {
-            ArrayList<UsuariosDTO> lista = this.usuarioDAO.listarTodos();
+            List<UsuariosDTO> lista = this.usuarioDAO.listarTodos();
             return (lista != null) ? lista : new ArrayList<>();
 
         } catch (Exception e) {
@@ -120,15 +102,9 @@ public class UsuariosBO {
         }
     }
 
-    /**
-     * Modifica un usuario existente
-     *
-     * @return Número de registros afectados, o null si hubo error
-     */
     public Integer modificar(Integer usuarioId, String nombre, String apePaterno,
             String dni, String telefono, String correo, String nombreUsuario,
-            String contrasenha, LocalDateTime fechaHoraCreacion,
-            TiposUsuarioDTO tipoUsuario) {
+            String contrasenha, TiposUsuarioDTO tipoUsuario) {
 
         try {
             // Validar ID
@@ -179,7 +155,7 @@ public class UsuariosBO {
             usuarioDTO.setCorreo(correo.trim().toLowerCase());
             usuarioDTO.setNombreUsuario(nombreUsuario.trim().toLowerCase());
             usuarioDTO.setContrasenha(contrasenha);
-            usuarioDTO.setFechaHoraCreacion(fechaHoraCreacion);
+            usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
             usuarioDTO.setTipoUsuario(tipoUsuario);
 
             return this.usuarioDAO.modificar(usuarioDTO);
@@ -191,12 +167,6 @@ public class UsuariosBO {
         }
     }
 
-    /**
-     * Elimina un usuario por su ID
-     *
-     * @param usuarioId ID del usuario a eliminar
-     * @return Número de registros afectados, o null si hubo error
-     */
     public Integer eliminar(Integer usuarioId) {
         try {
             if (usuarioId == null || usuarioId <= 0) {
@@ -230,7 +200,7 @@ public class UsuariosBO {
             return false;
         }
 
-        if (nombre.trim().length() > 100) {
+        if (nombre.trim().length() > 50) {
             System.err.println("Validación: El nombre es demasiado largo (máx. 100 caracteres)");
             return false;
         }
@@ -241,7 +211,7 @@ public class UsuariosBO {
             return false;
         }
 
-        if (apePaterno.trim().length() > 100) {
+        if (apePaterno.trim().length() > 50) {
             System.err.println("Validación: El apellido paterno es demasiado largo (máx. 100 caracteres)");
             return false;
         }
@@ -298,7 +268,7 @@ public class UsuariosBO {
      */
     private boolean existeCorreo(String correo) {
         try {
-            ArrayList<UsuariosDTO> usuarios = this.listarTodos();
+            List<UsuariosDTO> usuarios = this.listarTodos();
             return usuarios.stream()
                     .anyMatch(u -> u.getCorreo() != null
                     && u.getCorreo().equalsIgnoreCase(correo.trim()));
@@ -316,7 +286,7 @@ public class UsuariosBO {
      */
     private boolean existeNombreUsuario(String nombreUsuario) {
         try {
-            ArrayList<UsuariosDTO> usuarios = this.listarTodos();
+            List<UsuariosDTO> usuarios = this.listarTodos();
             return usuarios.stream()
                     .anyMatch(u -> u.getNombreUsuario() != null
                     && u.getNombreUsuario().equalsIgnoreCase(nombreUsuario.trim()));
@@ -334,7 +304,7 @@ public class UsuariosBO {
      */
     private boolean existeDni(String dni) {
         try {
-            ArrayList<UsuariosDTO> usuarios = this.listarTodos();
+            List<UsuariosDTO> usuarios = this.listarTodos();
             return usuarios.stream()
                     .anyMatch(u -> u.getDni() != null && u.getDni().equals(dni));
         } catch (Exception e) {
@@ -349,14 +319,14 @@ public class UsuariosBO {
      * @param tipoUsuarioId ID del tipo de usuario
      * @return Lista de usuarios del tipo especificado
      */
-    public ArrayList<UsuariosDTO> listarPorTipo(Integer tipoUsuarioId) {
+    public List<UsuariosDTO> listarPorTipo(Integer tipoUsuarioId) {
         try {
             if (tipoUsuarioId == null || tipoUsuarioId <= 0) {
                 return new ArrayList<>();
             }
 
-            ArrayList<UsuariosDTO> todosLosUsuarios = this.listarTodos();
-            ArrayList<UsuariosDTO> usuariosFiltrados = new ArrayList<>();
+            List<UsuariosDTO> todosLosUsuarios = this.listarTodos();
+            List<UsuariosDTO> usuariosFiltrados = new ArrayList<>();
 
             for (UsuariosDTO usuario : todosLosUsuarios) {
                 if (usuario.getTipoUsuario() != null
@@ -417,8 +387,7 @@ public class UsuariosBO {
                     usuario.getTelefono(),
                     usuario.getCorreo(),
                     usuario.getNombreUsuario(),
-                    contrasenhaNueva, // En producción, hashear
-                    usuario.getFechaHoraCreacion(),
+                    contrasenhaNueva,
                     usuario.getTipoUsuario()
             );
 
@@ -445,7 +414,7 @@ public class UsuariosBO {
                 return null;
             }
 
-            ArrayList<UsuariosDTO> usuarios = this.listarTodos();
+            List<UsuariosDTO> usuarios = this.listarTodos();
 
             for (UsuariosDTO usuario : usuarios) {
                 boolean coincideUsuario = usuario.getNombreUsuario() != null

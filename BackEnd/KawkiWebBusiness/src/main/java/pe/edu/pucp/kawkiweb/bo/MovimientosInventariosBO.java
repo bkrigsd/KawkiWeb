@@ -2,6 +2,7 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import pe.edu.pucp.kawkiweb.daoImp.MovimientosInventarioDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.ProductosVariantesDAOImpl;
 import pe.edu.pucp.kawkiweb.model.MovimientosInventarioDTO;
@@ -9,6 +10,7 @@ import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
 import pe.edu.pucp.kawkiweb.dao.MovimientosInventarioDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class MovimientosInventariosBO {
 
@@ -20,18 +22,13 @@ public class MovimientosInventariosBO {
         this.productoVarianteDAO = new ProductosVariantesDAOImpl();
     }
 
-    /**
-     * Inserta un nuevo movimiento de inventario y actualiza el stock
-     *
-     * @return ID del movimiento insertado, o null si hubo error
-     */
-    public Integer insertar(Integer cantidad, LocalDateTime fecha_hora_mov,
-            String observacion, TiposMovimientoDTO tipo_movimiento,
-            ProductosVariantesDTO prod_variante) {
+    public Integer insertar(Integer cantidad, String observacion,
+            TiposMovimientoDTO tipo_movimiento, ProductosVariantesDTO prod_variante,
+            UsuariosDTO usuario) {
 
         try {
             // Validaciones
-            if (!validarDatosMovimiento(cantidad, fecha_hora_mov, tipo_movimiento, prod_variante)) {
+            if (!validarDatosMovimiento(cantidad, tipo_movimiento, prod_variante)) {
                 System.err.println("Error: Datos de movimiento inválidos");
                 return null;
             }
@@ -44,17 +41,19 @@ public class MovimientosInventariosBO {
 
             MovimientosInventarioDTO movInventarioDTO = new MovimientosInventarioDTO();
             movInventarioDTO.setCantidad(cantidad);
-            movInventarioDTO.setFecha_hora_mov(fecha_hora_mov);
+            movInventarioDTO.setFecha_hora_mov(LocalDateTime.now());
             movInventarioDTO.setObservacion(observacion);
             movInventarioDTO.setTipo_movimiento(tipo_movimiento);
             movInventarioDTO.setProd_variante(prod_variante);
+            movInventarioDTO.setUsuario(usuario);
 
             // Insertar el movimiento
             Integer resultado = this.movInventarioDAO.insertar(movInventarioDTO);
 
             // Si se insertó correctamente, actualizar el stock del producto variante
             if (resultado != null) {
-                actualizarStockProductoVariante(prod_variante, cantidad, tipo_movimiento);
+                actualizarStockProductoVariante(prod_variante, cantidad,
+                        tipo_movimiento);
             }
 
             return resultado;
@@ -66,13 +65,6 @@ public class MovimientosInventariosBO {
         }
     }
 
-    /**
-     * Obtiene un movimiento de inventario por su ID
-     *
-     * @param movInventarioId ID del movimiento a buscar
-     * @return MovimientosInventarioDTO encontrado, o null si no existe o hay
- error
-     */
     public MovimientosInventarioDTO obtenerPorId(Integer movInventarioId) {
         try {
             if (movInventarioId == null || movInventarioId <= 0) {
@@ -88,14 +80,9 @@ public class MovimientosInventariosBO {
         }
     }
 
-    /**
-     * Lista todos los movimientos de inventario
-     *
-     * @return Lista de movimientos, o lista vacía si hay error
-     */
-    public ArrayList<MovimientosInventarioDTO> listarTodos() {
+    public List<MovimientosInventarioDTO> listarTodos() {
         try {
-            ArrayList<MovimientosInventarioDTO> lista = this.movInventarioDAO.listarTodos();
+            List<MovimientosInventarioDTO> lista = this.movInventarioDAO.listarTodos();
             return (lista != null) ? lista : new ArrayList<>();
 
         } catch (Exception e) {
@@ -105,17 +92,9 @@ public class MovimientosInventariosBO {
         }
     }
 
-    /**
-     * Modifica un movimiento de inventario existente NOTA: Este método NO
-     * actualiza el stock automáticamente para evitar inconsistencias. Se
-     * recomienda evitar modificar movimientos y en su lugar crear movimientos
-     * de ajuste.
-     *
-     * @return Número de registros afectados, o null si hubo error
-     */
     public Integer modificar(Integer mov_inventario_id, Integer cantidad,
-            LocalDateTime fecha_hora_mov, String observacion, TiposMovimientoDTO tipo_movimiento,
-            ProductosVariantesDTO prod_variante) {
+            String observacion, TiposMovimientoDTO tipo_movimiento,
+            ProductosVariantesDTO prod_variante, UsuariosDTO usuario) {
 
         try {
             // Validar ID
@@ -125,7 +104,7 @@ public class MovimientosInventariosBO {
             }
 
             // Validar datos
-            if (!validarDatosMovimiento(cantidad, fecha_hora_mov, tipo_movimiento, prod_variante)) {
+            if (!validarDatosMovimiento(cantidad, tipo_movimiento, prod_variante)) {
                 System.err.println("Error: Datos de movimiento inválidos");
                 return null;
             }
@@ -133,10 +112,11 @@ public class MovimientosInventariosBO {
             MovimientosInventarioDTO movInventarioDTO = new MovimientosInventarioDTO();
             movInventarioDTO.setMov_inventario_id(mov_inventario_id);
             movInventarioDTO.setCantidad(cantidad);
-            movInventarioDTO.setFecha_hora_mov(fecha_hora_mov);
+            movInventarioDTO.setFecha_hora_mov(LocalDateTime.now());
             movInventarioDTO.setObservacion(observacion);
             movInventarioDTO.setTipo_movimiento(tipo_movimiento);
             movInventarioDTO.setProd_variante(prod_variante);
+            movInventarioDTO.setUsuario(usuario);
 
             return this.movInventarioDAO.modificar(movInventarioDTO);
 
@@ -147,14 +127,6 @@ public class MovimientosInventariosBO {
         }
     }
 
-    /**
-     * Elimina un movimiento de inventario por su ID NOTA: Este método NO
-     * revierte el stock. Se recomienda crear movimientos de ajuste en lugar de
-     * eliminar movimientos existentes.
-     *
-     * @param movInventarioId ID del movimiento a eliminar
-     * @return Número de registros afectados, o null si hubo error
-     */
     public Integer eliminar(Integer movInventarioId) {
         try {
             if (movInventarioId == null || movInventarioId <= 0) {
@@ -178,18 +150,12 @@ public class MovimientosInventariosBO {
      *
      * @return true si los datos son válidos, false en caso contrario
      */
-    private boolean validarDatosMovimiento(Integer cantidad, LocalDateTime fecha_hora_mov,
+    private boolean validarDatosMovimiento(Integer cantidad,
             TiposMovimientoDTO tipo_movimiento, ProductosVariantesDTO prod_variante) {
 
         // Validar cantidad
         if (cantidad == null || cantidad <= 0) {
             System.err.println("Validación: La cantidad debe ser mayor a 0");
-            return false;
-        }
-
-        // Validar fecha
-        if (fecha_hora_mov == null) {
-            System.err.println("Validación: La fecha del movimiento no puede ser null");
             return false;
         }
 
@@ -213,7 +179,8 @@ public class MovimientosInventariosBO {
      *
      * @return true si hay stock suficiente, false en caso contrario
      */
-    private boolean validarStockSuficiente(ProductosVariantesDTO prod_variante, Integer cantidad) {
+    private boolean validarStockSuficiente(ProductosVariantesDTO prod_variante,
+            Integer cantidad) {
         try {
             // Obtener el producto variante actualizado de la base de datos
             ProductosVariantesDTO prodVarianteActual = this.productoVarianteDAO.obtenerPorId(
@@ -267,7 +234,6 @@ public class MovimientosInventariosBO {
             } else if (tipo_movimiento.esAjuste()) {
                 // Para ajustes, la cantidad puede ser positiva o negativa
                 // Aquí asumimos que es un valor absoluto que reemplaza el stock
-                // Puedes modificar esta lógica según tus necesidades
                 nuevoStock = cantidad;
             }
 
@@ -296,10 +262,11 @@ public class MovimientosInventariosBO {
      * @param prod_variante Producto variante a ajustar
      * @param stockReal Stock real contado
      * @param observacion Motivo del ajuste
+     * @param usuario usuario que está generando la acción
      * @return ID del movimiento creado, o null si hubo error
      */
     public Integer crearAjusteInventario(ProductosVariantesDTO prod_variante,
-            Integer stockReal, String observacion) {
+            Integer stockReal, String observacion, UsuariosDTO usuario) {
         try {
             if (prod_variante == null || stockReal == null || stockReal < 0) {
                 System.err.println("Error: Datos inválidos para ajuste de inventario");
@@ -326,13 +293,13 @@ public class MovimientosInventariosBO {
             String observacionCompleta = "Ajuste de inventario: Stock anterior: "
                     + prodVarianteActual.getStock() + ", Stock real: " + stockReal
                     + ". " + (observacion != null ? observacion : "");
-
+                   
             return insertar(
                     stockReal,
-                    LocalDateTime.now(),
                     observacionCompleta,
                     tipoAjuste,
-                    prod_variante
+                    prod_variante,
+                    usuario
             );
 
         } catch (Exception e) {
@@ -348,14 +315,15 @@ public class MovimientosInventariosBO {
      * @return ID del movimiento creado, o null si hubo error
      */
     public Integer registrarIngreso(ProductosVariantesDTO prod_variante, Integer cantidad,
-            String observacion) {
+            String observacion, UsuariosDTO usuario) {
         try {
             TiposMovimientoDTO tipoIngreso = new TiposMovimientoDTO(
                     TiposMovimientoDTO.ID_INGRESO,
                     TiposMovimientoDTO.NOMBRE_INGRESO
             );
 
-            return insertar(cantidad, LocalDateTime.now(), observacion, tipoIngreso, prod_variante);
+            return insertar(cantidad, observacion, tipoIngreso, prod_variante,
+                    usuario);
 
         } catch (Exception e) {
             System.err.println("Error al registrar ingreso: " + e.getMessage());
@@ -370,14 +338,15 @@ public class MovimientosInventariosBO {
      * @return ID del movimiento creado, o null si hubo error
      */
     public Integer registrarSalida(ProductosVariantesDTO prod_variante, Integer cantidad,
-            String observacion) {
+            String observacion, UsuariosDTO usuario) {
         try {
             TiposMovimientoDTO tipoSalida = new TiposMovimientoDTO(
                     TiposMovimientoDTO.ID_SALIDA,
                     TiposMovimientoDTO.NOMBRE_SALIDA
             );
 
-            return insertar(cantidad, LocalDateTime.now(), observacion, tipoSalida, prod_variante);
+            return insertar(cantidad, observacion, tipoSalida, prod_variante,
+                    usuario);
 
         } catch (Exception e) {
             System.err.println("Error al registrar salida: " + e.getMessage());

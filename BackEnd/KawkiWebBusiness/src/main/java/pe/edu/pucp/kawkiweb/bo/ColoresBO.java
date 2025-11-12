@@ -1,6 +1,6 @@
 package pe.edu.pucp.kawkiweb.bo;
 
-import java.util.ArrayList;
+import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.ColoresDAO;
 import pe.edu.pucp.kawkiweb.daoImp.ColoresDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
@@ -30,7 +30,7 @@ public class ColoresBO {
         return this.colorDAO.obtenerPorId(colorId);
     }
 
-    public ArrayList<ColoresDTO> listarTodos() {
+    public List<ColoresDTO> listarTodos() {
         return this.colorDAO.listarTodos();
     }
 }

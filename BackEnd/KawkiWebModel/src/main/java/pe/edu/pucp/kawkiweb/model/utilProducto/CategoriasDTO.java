@@ -1,5 +1,8 @@
 package pe.edu.pucp.kawkiweb.model.utilProducto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "Categoria")
 public class CategoriasDTO {
 
     private Integer categoria_id;

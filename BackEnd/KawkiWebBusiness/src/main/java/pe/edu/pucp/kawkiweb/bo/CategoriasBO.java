@@ -1,6 +1,6 @@
 package pe.edu.pucp.kawkiweb.bo;
 
-import java.util.ArrayList;
+import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.CategoriasDAO;
 import pe.edu.pucp.kawkiweb.daoImp.CategoriasDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
@@ -30,7 +30,7 @@ public class CategoriasBO {
         return this.categoriaDAO.obtenerPorId(categoriaId);
     }
 
-    public ArrayList<CategoriasDTO> listarTodos() {
+    public List<CategoriasDTO> listarTodos() {
         return this.categoriaDAO.listarTodos();
     }
 }

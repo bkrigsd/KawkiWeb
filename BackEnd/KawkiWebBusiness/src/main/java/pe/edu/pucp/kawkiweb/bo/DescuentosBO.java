@@ -2,6 +2,7 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import pe.edu.pucp.kawkiweb.daoImp.DescuentosDAOImpl;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
@@ -10,17 +11,12 @@ import pe.edu.pucp.kawkiweb.dao.DescuentosDAO;
 
 public class DescuentosBO {
 
-    private DescuentosDAO promoDAO;
+    private DescuentosDAO descuentoDAO;
 
     public DescuentosBO() {
-        this.promoDAO = new DescuentosDAOImpl();
+        this.descuentoDAO = new DescuentosDAOImpl();
     }
 
-    /**
-     * Inserta una nueva promoción en la base de datos
-     *
-     * @return ID de la promoción insertada, o null si hubo error
-     */
     public Integer insertar(String descripcion, TiposCondicionDTO tipo_condicion,
             Integer valor_condicion, TiposBeneficioDTO tipo_beneficio,
             Integer valor_beneficio, LocalDateTime fecha_inicio,
@@ -28,23 +24,23 @@ public class DescuentosBO {
 
         try {
             // Validaciones
-            if (!validarDatosPromocion(descripcion, tipo_condicion, valor_condicion,
+            if (!validarDatosDescuento(descripcion, tipo_condicion, valor_condicion,
                     tipo_beneficio, valor_beneficio, fecha_inicio, fecha_fin)) {
                 System.err.println("Error: Datos de promoción inválidos");
                 return null;
             }
 
-            DescuentosDTO promoDTO = new DescuentosDTO();
-            promoDTO.setDescripcion(descripcion);
-            promoDTO.setTipo_condicion(tipo_condicion);
-            promoDTO.setValor_condicion(valor_condicion);
-            promoDTO.setTipo_beneficio(tipo_beneficio);
-            promoDTO.setValor_beneficio(valor_beneficio);
-            promoDTO.setFecha_inicio(fecha_inicio);
-            promoDTO.setFecha_fin(fecha_fin);
-            promoDTO.setActivo(activo != null ? activo : true);
+            DescuentosDTO descuentoDTO = new DescuentosDTO();
+            descuentoDTO.setDescripcion(descripcion);
+            descuentoDTO.setTipo_condicion(tipo_condicion);
+            descuentoDTO.setValor_condicion(valor_condicion);
+            descuentoDTO.setTipo_beneficio(tipo_beneficio);
+            descuentoDTO.setValor_beneficio(valor_beneficio);
+            descuentoDTO.setFecha_inicio(fecha_inicio);
+            descuentoDTO.setFecha_fin(fecha_fin);
+            descuentoDTO.setActivo(activo != null ? activo : true);
 
-            return this.promoDAO.insertar(promoDTO);
+            return this.descuentoDAO.insertar(descuentoDTO);
 
         } catch (Exception e) {
             System.err.println("Error al insertar promoción: " + e.getMessage());
@@ -53,19 +49,13 @@ public class DescuentosBO {
         }
     }
 
-    /**
-     * Obtiene una promoción por su ID
-     *
-     * @param descuentoId ID de la promoción a buscar
-     * @return DescuentosDTO encontrado, o null si no existe o hay error
-     */
     public DescuentosDTO obtenerPorId(Integer descuentoId) {
         try {
             if (descuentoId == null || descuentoId <= 0) {
                 System.err.println("Error: ID de promoción inválido");
                 return null;
             }
-            return this.promoDAO.obtenerPorId(descuentoId);
+            return this.descuentoDAO.obtenerPorId(descuentoId);
 
         } catch (Exception e) {
             System.err.println("Error al obtener promoción por ID: " + e.getMessage());
@@ -74,14 +64,9 @@ public class DescuentosBO {
         }
     }
 
-    /**
-     * Lista todas las promociones
-     *
-     * @return Lista de promociones, o lista vacía si hay error
-     */
-    public ArrayList<DescuentosDTO> listarTodos() {
+    public List<DescuentosDTO> listarTodos() {
         try {
-            ArrayList<DescuentosDTO> lista = this.promoDAO.listarTodos();
+            List<DescuentosDTO> lista = this.descuentoDAO.listarTodos();
             return (lista != null) ? lista : new ArrayList<>();
 
         } catch (Exception e) {
@@ -91,11 +76,6 @@ public class DescuentosBO {
         }
     }
 
-    /**
-     * Modifica una promoción existente
-     *
-     * @return Número de registros afectados, o null si hubo error
-     */
     public Integer modificar(Integer descuentoId, String descripcion,
             TiposCondicionDTO tipo_condicion, Integer valor_condicion,
             TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio,
@@ -109,24 +89,24 @@ public class DescuentosBO {
             }
 
             // Validar datos
-            if (!validarDatosPromocion(descripcion, tipo_condicion, valor_condicion,
+            if (!validarDatosDescuento(descripcion, tipo_condicion, valor_condicion,
                     tipo_beneficio, valor_beneficio, fecha_inicio, fecha_fin)) {
                 System.err.println("Error: Datos de promoción inválidos");
                 return null;
             }
 
-            DescuentosDTO promoDTO = new DescuentosDTO();
-            promoDTO.setDescuento_id(descuentoId);
-            promoDTO.setDescripcion(descripcion);
-            promoDTO.setTipo_condicion(tipo_condicion);
-            promoDTO.setValor_condicion(valor_condicion);
-            promoDTO.setTipo_beneficio(tipo_beneficio);
-            promoDTO.setValor_beneficio(valor_beneficio);
-            promoDTO.setFecha_inicio(fecha_inicio);
-            promoDTO.setFecha_fin(fecha_fin);
-            promoDTO.setActivo(activo);
+            DescuentosDTO descuentoDTO = new DescuentosDTO();
+            descuentoDTO.setDescuento_id(descuentoId);
+            descuentoDTO.setDescripcion(descripcion);
+            descuentoDTO.setTipo_condicion(tipo_condicion);
+            descuentoDTO.setValor_condicion(valor_condicion);
+            descuentoDTO.setTipo_beneficio(tipo_beneficio);
+            descuentoDTO.setValor_beneficio(valor_beneficio);
+            descuentoDTO.setFecha_inicio(fecha_inicio);
+            descuentoDTO.setFecha_fin(fecha_fin);
+            descuentoDTO.setActivo(activo);
 
-            return this.promoDAO.modificar(promoDTO);
+            return this.descuentoDAO.modificar(descuentoDTO);
 
         } catch (Exception e) {
             System.err.println("Error al modificar promoción: " + e.getMessage());
@@ -135,12 +115,6 @@ public class DescuentosBO {
         }
     }
 
-    /**
-     * Elimina una promoción por su ID
-     *
-     * @param descuentoId ID de la promoción a eliminar
-     * @return Número de registros afectados, o null si hubo error
-     */
     public Integer eliminar(Integer descuentoId) {
         try {
             if (descuentoId == null || descuentoId <= 0) {
@@ -150,7 +124,7 @@ public class DescuentosBO {
 
             DescuentosDTO promoDTO = new DescuentosDTO();
             promoDTO.setDescuento_id(descuentoId);
-            return this.promoDAO.eliminar(promoDTO);
+            return this.descuentoDAO.eliminar(promoDTO);
 
         } catch (Exception e) {
             System.err.println("Error al eliminar promoción: " + e.getMessage());
@@ -159,22 +133,18 @@ public class DescuentosBO {
         }
     }
 
-    /**
-     * Valida los datos básicos de una promoción
-     *
-     * @return true si los datos son válidos, false en caso contrario
-     */
-    private boolean validarDatosPromocion(String descripcion, TiposCondicionDTO tipo_condicion,
-            Integer valor_condicion, TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio,
+    private boolean validarDatosDescuento(String descripcion,
+            TiposCondicionDTO tipo_condicion, Integer valor_condicion,
+            TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio,
             LocalDateTime fecha_inicio, LocalDateTime fecha_fin) {
-
+        
         // Validar descripción
         if (descripcion == null || descripcion.trim().isEmpty()) {
             System.err.println("Validación: La descripción no puede estar vacía");
             return false;
         }
 
-        if (descripcion.trim().length() > 500) {
+        if (descripcion.trim().length() > 255) {
             System.err.println("Validación: La descripción es demasiado larga (máx. 500 caracteres)");
             return false;
         }
@@ -228,38 +198,31 @@ public class DescuentosBO {
         return true;
     }
 
-    /**
-     * Activa una promoción
-     *
-     * @param descuentoId ID de la promoción
-     * @return true si se activó correctamente, false en caso contrario
-     */
     public boolean activar(Integer descuentoId) {
         try {
-            DescuentosDTO promo = this.obtenerPorId(descuentoId);
-            if (promo == null) {
+            DescuentosDTO descuentoDTO = this.obtenerPorId(descuentoId);
+            if (descuentoDTO == null) {
                 System.err.println("Error: Promoción no encontrada");
                 return false;
             }
 
             // Verificar que la promoción esté vigente
             LocalDateTime ahora = LocalDateTime.now();
-            if (ahora.isBefore(promo.getFecha_inicio()) || ahora.isAfter(promo.getFecha_fin())) {
+            if (ahora.isBefore(descuentoDTO.getFecha_inicio()) || ahora.isAfter(descuentoDTO.getFecha_fin())) {
                 System.err.println("Error: No se puede activar una promoción fuera de su periodo de vigencia");
                 return false;
             }
 
-            promo.setActivo(true);
-            Integer resultado = this.modificar(
-                    promo.getDescuento_id(),
-                    promo.getDescripcion(),
-                    promo.getTipo_condicion(),
-                    promo.getValor_condicion(),
-                    promo.getTipo_beneficio(),
-                    promo.getValor_beneficio(),
-                    promo.getFecha_inicio(),
-                    promo.getFecha_fin(),
-                    promo.getActivo()
+            descuentoDTO.setActivo(true);
+            Integer resultado = this.modificar(descuentoDTO.getDescuento_id(),
+                    descuentoDTO.getDescripcion(),
+                    descuentoDTO.getTipo_condicion(),
+                    descuentoDTO.getValor_condicion(),
+                    descuentoDTO.getTipo_beneficio(),
+                    descuentoDTO.getValor_beneficio(),
+                    descuentoDTO.getFecha_inicio(),
+                    descuentoDTO.getFecha_fin(),
+                    descuentoDTO.getActivo()
             );
 
             return resultado != null && resultado > 0;
@@ -271,31 +234,24 @@ public class DescuentosBO {
         }
     }
 
-    /**
-     * Desactiva una promoción
-     *
-     * @param descuentoId ID de la promoción
-     * @return true si se desactivó correctamente, false en caso contrario
-     */
     public boolean desactivar(Integer descuentoId) {
         try {
-            DescuentosDTO promo = this.obtenerPorId(descuentoId);
-            if (promo == null) {
+            DescuentosDTO descuentoDTO = this.obtenerPorId(descuentoId);
+            if (descuentoDTO == null) {
                 System.err.println("Error: Promoción no encontrada");
                 return false;
             }
 
-            promo.setActivo(false);
-            Integer resultado = this.modificar(
-                    promo.getDescuento_id(),
-                    promo.getDescripcion(),
-                    promo.getTipo_condicion(),
-                    promo.getValor_condicion(),
-                    promo.getTipo_beneficio(),
-                    promo.getValor_beneficio(),
-                    promo.getFecha_inicio(),
-                    promo.getFecha_fin(),
-                    promo.getActivo()
+            descuentoDTO.setActivo(false);
+            Integer resultado = this.modificar(descuentoDTO.getDescuento_id(),
+                    descuentoDTO.getDescripcion(),
+                    descuentoDTO.getTipo_condicion(),
+                    descuentoDTO.getValor_condicion(),
+                    descuentoDTO.getTipo_beneficio(),
+                    descuentoDTO.getValor_beneficio(),
+                    descuentoDTO.getFecha_inicio(),
+                    descuentoDTO.getFecha_fin(),
+                    descuentoDTO.getActivo()
             );
 
             return resultado != null && resultado > 0;
@@ -307,23 +263,18 @@ public class DescuentosBO {
         }
     }
 
-    /**
-     * Lista todas las promociones activas
-     *
-     * @return Lista de promociones activas
-     */
-    public ArrayList<DescuentosDTO> listarActivas() {
+    public List<DescuentosDTO> listarActivas() {
         try {
-            ArrayList<DescuentosDTO> todasLasPromociones = this.listarTodos();
-            ArrayList<DescuentosDTO> promocionesActivas = new ArrayList<>();
+            List<DescuentosDTO> todasLosDescuentos = this.listarTodos();
+            List<DescuentosDTO> descuentosActivos = new ArrayList<>();
 
-            for (DescuentosDTO promo : todasLasPromociones) {
-                if (promo.getActivo() != null && promo.getActivo()) {
-                    promocionesActivas.add(promo);
+            for (DescuentosDTO descuentoDTO : todasLosDescuentos) {
+                if (descuentoDTO.getActivo() != null && descuentoDTO.getActivo()) {
+                    descuentosActivos.add(descuentoDTO);
                 }
             }
 
-            return promocionesActivas;
+            return descuentosActivos;
 
         } catch (Exception e) {
             System.err.println("Error al listar promociones activas: " + e.getMessage());
@@ -331,24 +282,19 @@ public class DescuentosBO {
         }
     }
 
-    /**
-     * Lista las promociones vigentes (activas y dentro del periodo de validez)
-     *
-     * @return Lista de promociones vigentes
-     */
-    public ArrayList<DescuentosDTO> listarVigentes() {
+    public List<DescuentosDTO> listarVigentes() {
         try {
-            ArrayList<DescuentosDTO> todasLasPromociones = this.listarTodos();
-            ArrayList<DescuentosDTO> promocionesVigentes = new ArrayList<>();
+            List<DescuentosDTO> todasLosDescuentos =  this.listarTodos();
+            List<DescuentosDTO> descuentosVigentes = new ArrayList<>();
             LocalDateTime ahora = LocalDateTime.now();
 
-            for (DescuentosDTO promo : todasLasPromociones) {
-                if (esVigente(promo, ahora)) {
-                    promocionesVigentes.add(promo);
+            for (DescuentosDTO descuentoDTO : todasLosDescuentos) {
+                if (esVigente(descuentoDTO, ahora)) {
+                    descuentosVigentes.add(descuentoDTO);
                 }
             }
 
-            return promocionesVigentes;
+            return descuentosVigentes;
 
         } catch (Exception e) {
             System.err.println("Error al listar promociones vigentes: " + e.getMessage());
@@ -356,13 +302,6 @@ public class DescuentosBO {
         }
     }
 
-    /**
-     * Verifica si una promoción está vigente en un momento dado
-     *
-     * @param descuento Promoción a verificar
-     * @param fecha Fecha a verificar
-     * @return true si está vigente, false en caso contrario
-     */
     private boolean esVigente(DescuentosDTO descuento, LocalDateTime fecha) {
         return descuento.getActivo() != null && descuento.getActivo()
                 && descuento.getFecha_inicio() != null && !fecha.isBefore(descuento.getFecha_inicio())
@@ -377,21 +316,22 @@ public class DescuentosBO {
      * @param montoTotal Monto total del pedido
      * @return true si la promoción es aplicable, false en caso contrario
      */
-    public boolean esAplicable(Integer descuentoId, Integer cantidadProductos, Double montoTotal) {
+    public boolean esAplicable(Integer descuentoId, Integer cantidadProductos, 
+            Double montoTotal) {
         try {
-            DescuentosDTO promo = this.obtenerPorId(descuentoId);
+            DescuentosDTO descuentoDTO = this.obtenerPorId(descuentoId);
 
-            if (promo == null || !esVigente(promo, LocalDateTime.now())) {
+            if (descuentoDTO == null || !esVigente(descuentoDTO, LocalDateTime.now())) {
                 return false;
             }
 
             // Verificar condición
-            if (promo.getTipo_condicion().esCantidadMinimaProductos()) {
+            if (descuentoDTO.getTipo_condicion().esCantidadMinimaProductos()) {
                 return cantidadProductos != null
-                        && cantidadProductos >= promo.getValor_condicion();
-            } else if (promo.getTipo_condicion().esMontoMinimoCompra()) {
+                        && cantidadProductos >= descuentoDTO.getValor_condicion();
+            } else if (descuentoDTO.getTipo_condicion().esMontoMinimoCompra()) {
                 return montoTotal != null
-                        && montoTotal >= promo.getValor_condicion();
+                        && montoTotal >= descuentoDTO.getValor_condicion();
             }
 
             return false;
@@ -415,19 +355,19 @@ public class DescuentosBO {
                 return 0.0;
             }
 
-            DescuentosDTO promo = this.obtenerPorId(descuentoId);
+            DescuentosDTO descuentoDTO = this.obtenerPorId(descuentoId);
 
-            if (promo == null || !esVigente(promo, LocalDateTime.now())) {
+            if (descuentoDTO == null || !esVigente(descuentoDTO, LocalDateTime.now())) {
                 return 0.0;
             }
 
             // Calcular descuento según tipo de beneficio
-            if (promo.getTipo_beneficio().esDescuentoPorcentaje()) {
-                return montoTotal * (promo.getValor_beneficio() / 100.0);
-            } else if (promo.getTipo_beneficio().esDescuentoFijo()) {
+            if (descuentoDTO.getTipo_beneficio().esDescuentoPorcentaje()) {
+                return montoTotal * (descuentoDTO.getValor_beneficio() / 100.0);
+            } else if (descuentoDTO.getTipo_beneficio().esDescuentoFijo()) {
                 // El descuento no puede ser mayor al monto total
-                return Math.min(promo.getValor_beneficio().doubleValue(), montoTotal);
-            } else if (promo.getTipo_beneficio().esEnvioGratis()) {
+                return Math.min(descuentoDTO.getValor_beneficio().doubleValue(), montoTotal);
+            } else if (descuentoDTO.getTipo_beneficio().esEnvioGratis()) {
                 // El valor del envío gratis lo maneja el sistema de envíos
                 return 0.0;
             }

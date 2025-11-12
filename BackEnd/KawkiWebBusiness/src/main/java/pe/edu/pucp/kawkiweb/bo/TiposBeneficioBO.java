@@ -1,6 +1,6 @@
 package pe.edu.pucp.kawkiweb.bo;
 
-import java.util.ArrayList;
+import java.util.List;
 import pe.edu.pucp.kawkiweb.dao.TiposBeneficioDAO;
 import pe.edu.pucp.kawkiweb.daoImp.TiposBeneficioDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
@@ -30,7 +30,7 @@ public class TiposBeneficioBO {
         return this.tipoBeneficioDAO.obtenerPorId(tipoBeneficioId);
     }
 
-    public ArrayList<TiposBeneficioDTO> listarTodos() {
+    public List<TiposBeneficioDTO> listarTodos() {
         return this.tipoBeneficioDAO.listarTodos();
     }
 }

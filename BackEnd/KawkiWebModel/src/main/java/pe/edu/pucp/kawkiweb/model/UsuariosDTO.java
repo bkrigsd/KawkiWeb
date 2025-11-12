@@ -3,6 +3,10 @@ package pe.edu.pucp.kawkiweb.model;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 import java.time.LocalDateTime;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
+
 public class UsuariosDTO {
 
     private Integer usuarioId;
@@ -13,6 +17,7 @@ public class UsuariosDTO {
     private String correo;
     private String nombreUsuario;
     private String contrasenha;
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fechaHoraCreacion;
     private TiposUsuarioDTO tipoUsuario;
 

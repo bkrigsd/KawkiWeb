@@ -2,13 +2,13 @@ package pe.edu.pucp.kawkiweb.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import pe.edu.pucp.kawkiweb.daoImp.ProductosDAOImpl;
 import pe.edu.pucp.kawkiweb.daoImp.ProductosVariantesDAOImpl;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
-import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 import pe.edu.pucp.kawkiweb.dao.ProductosDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
 
@@ -22,19 +22,14 @@ public class ProductosVariantesBO {
         this.productoDAO = new ProductosDAOImpl();
     }
 
-    /**
-     * Inserta una nueva variante de producto
-     *
-     * @return ID de la variante insertada, o null si hubo error
-     */
     public Integer insertar(String SKU, Integer stock, Integer stock_minimo,
-            Boolean alerta_stock, Integer producto_id, ColoresDTO color,
-            TallasDTO talla, String url_imagen, LocalDateTime fecha_hora_creacion,
-            Boolean disponible) {
+            Integer producto_id, ColoresDTO color, TallasDTO talla,
+            String url_imagen, Boolean disponible) {
 
         try {
             // Validaciones
-            if (!validarDatosVariante(SKU, stock, stock_minimo, producto_id, color, talla)) {
+            if (!validarDatosVariante(SKU, stock, stock_minimo, producto_id,
+                    color, talla)) {
                 System.err.println("Error: Datos de variante inválidos");
                 return null;
             }
@@ -56,7 +51,6 @@ public class ProductosVariantesBO {
             prodVarianteDTO.setSKU(SKU);
             prodVarianteDTO.setStock(stock);
             prodVarianteDTO.setStock_minimo(stock_minimo);
-
             // Calcular automáticamente alerta_stock
             prodVarianteDTO.setAlerta_stock(stock <= stock_minimo);
 
@@ -64,9 +58,7 @@ public class ProductosVariantesBO {
             prodVarianteDTO.setColor(color);
             prodVarianteDTO.setTalla(talla);
             prodVarianteDTO.setUrl_imagen(url_imagen);
-            prodVarianteDTO.setFecha_hora_creacion(
-                    fecha_hora_creacion != null ? fecha_hora_creacion : LocalDateTime.now()
-            );
+            prodVarianteDTO.setFecha_hora_creacion(LocalDateTime.now());
             prodVarianteDTO.setDisponible(disponible);
 
             return this.prodVarianteDAO.insertar(prodVarianteDTO);
@@ -78,12 +70,6 @@ public class ProductosVariantesBO {
         }
     }
 
-    /**
-     * Obtiene una variante de producto por su ID
-     *
-     * @param prod_variante_id ID de la variante a buscar
-     * @return ProductosVariantesDTO encontrado, o null si no existe o hay error
-     */
     public ProductosVariantesDTO obtenerPorId(Integer prod_variante_id) {
         try {
             if (prod_variante_id == null || prod_variante_id <= 0) {
@@ -99,14 +85,9 @@ public class ProductosVariantesBO {
         }
     }
 
-    /**
-     * Lista todas las variantes de producto
-     *
-     * @return Lista de variantes, o lista vacía si hay error
-     */
-    public ArrayList<ProductosVariantesDTO> listarTodos() {
+    public List<ProductosVariantesDTO> listarTodos() {
         try {
-            ArrayList<ProductosVariantesDTO> lista = this.prodVarianteDAO.listarTodos();
+            List<ProductosVariantesDTO> lista = this.prodVarianteDAO.listarTodos();
             return (lista != null) ? lista : new ArrayList<>();
 
         } catch (Exception e) {
@@ -116,15 +97,9 @@ public class ProductosVariantesBO {
         }
     }
 
-    /**
-     * Modifica una variante de producto existente
-     *
-     * @return Número de registros afectados, o null si hubo error
-     */
     public Integer modificar(Integer prod_variante_id, String SKU, Integer stock,
-            Integer stock_minimo, Boolean alerta_stock, Integer producto_id,
-            ColoresDTO color, TallasDTO talla, String url_imagen,
-            LocalDateTime fecha_hora_creacion, Boolean disponible) {
+            Integer stock_minimo, Integer producto_id, ColoresDTO color,
+            TallasDTO talla, String url_imagen, Boolean disponible) {
 
         try {
             // Validar ID
@@ -144,7 +119,6 @@ public class ProductosVariantesBO {
             prodVarianteDTO.setSKU(SKU);
             prodVarianteDTO.setStock(stock);
             prodVarianteDTO.setStock_minimo(stock_minimo);
-
             // Recalcular alerta_stock
             prodVarianteDTO.setAlerta_stock(stock <= stock_minimo);
 
@@ -152,9 +126,7 @@ public class ProductosVariantesBO {
             prodVarianteDTO.setColor(color);
             prodVarianteDTO.setTalla(talla);
             prodVarianteDTO.setUrl_imagen(url_imagen);
-            prodVarianteDTO.setFecha_hora_creacion(
-                    fecha_hora_creacion != null ? fecha_hora_creacion : LocalDateTime.now()
-            );
+            prodVarianteDTO.setFecha_hora_creacion(LocalDateTime.now());
             prodVarianteDTO.setDisponible(disponible);
 
             return this.prodVarianteDAO.modificar(prodVarianteDTO);
@@ -166,12 +138,6 @@ public class ProductosVariantesBO {
         }
     }
 
-    /**
-     * Elimina una variante de producto por su ID
-     *
-     * @param prod_variante_id ID de la variante a eliminar
-     * @return Número de registros afectados, o null si hubo error
-     */
     public Integer eliminar(Integer prod_variante_id) {
         try {
             if (prod_variante_id == null || prod_variante_id <= 0) {
@@ -205,7 +171,7 @@ public class ProductosVariantesBO {
             return false;
         }
 
-        if (SKU.trim().length() > 50) {
+        if (SKU.trim().length() > 45) {
             System.err.println("Validación: El SKU es demasiado largo (máx. 50 caracteres)");
             return false;
         }
@@ -251,7 +217,7 @@ public class ProductosVariantesBO {
      */
     private boolean existeVariante(Integer producto_id, Integer color_id, Integer talla_id) {
         try {
-            ArrayList<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
+            List<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
 
             return todasLasVariantes.stream().anyMatch(v
                     -> v.getProducto_id().equals(producto_id)
@@ -294,12 +260,10 @@ public class ProductosVariantesBO {
                     variante.getSKU(),
                     variante.getStock(),
                     variante.getStock_minimo(),
-                    variante.getAlerta_stock(),
                     variante.getProducto_id(),
                     variante.getColor(),
                     variante.getTalla(),
                     variante.getUrl_imagen(),
-                    variante.getFecha_hora_creacion(),
                     variante.getDisponible()
             );
 
@@ -317,10 +281,10 @@ public class ProductosVariantesBO {
      *
      * @return Lista de variantes con stock bajo
      */
-    public ArrayList<ProductosVariantesDTO> listarConStockBajo() {
+    public List<ProductosVariantesDTO> listarConStockBajo() {
         try {
-            ArrayList<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
-            ArrayList<ProductosVariantesDTO> variantesConStockBajo = new ArrayList<>();
+            List<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
+            List<ProductosVariantesDTO> variantesConStockBajo = new ArrayList<>();
 
             for (ProductosVariantesDTO variante : todasLasVariantes) {
                 if (variante.getAlerta_stock() != null && variante.getAlerta_stock()) {
@@ -342,7 +306,7 @@ public class ProductosVariantesBO {
      * @param producto_id ID del producto
      * @return Lista de variantes del producto
      */
-    public ArrayList<ProductosVariantesDTO> listarPorProducto(Integer producto_id) {
+    public List<ProductosVariantesDTO> listarPorProducto(Integer producto_id) {
         try {
             if (producto_id == null || producto_id <= 0) {
                 return new ArrayList<>();
@@ -362,14 +326,14 @@ public class ProductosVariantesBO {
      * @param color_id ID del color
      * @return Lista de variantes del color especificado
      */
-    public ArrayList<ProductosVariantesDTO> listarPorColor(Integer color_id) {
+    public List<ProductosVariantesDTO> listarPorColor(Integer color_id) {
         try {
             if (color_id == null || color_id <= 0) {
                 return new ArrayList<>();
             }
 
-            ArrayList<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
-            ArrayList<ProductosVariantesDTO> variantesFiltradas = new ArrayList<>();
+            List<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
+            List<ProductosVariantesDTO> variantesFiltradas = new ArrayList<>();
 
             for (ProductosVariantesDTO variante : todasLasVariantes) {
                 if (variante.getColor() != null
@@ -392,14 +356,14 @@ public class ProductosVariantesBO {
      * @param talla_id ID de la talla
      * @return Lista de variantes de la talla especificada
      */
-    public ArrayList<ProductosVariantesDTO> listarPorTalla(Integer talla_id) {
+    public List<ProductosVariantesDTO> listarPorTalla(Integer talla_id) {
         try {
             if (talla_id == null || talla_id <= 0) {
                 return new ArrayList<>();
             }
 
-            ArrayList<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
-            ArrayList<ProductosVariantesDTO> variantesFiltradas = new ArrayList<>();
+            List<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
+            List<ProductosVariantesDTO> variantesFiltradas = new ArrayList<>();
 
             for (ProductosVariantesDTO variante : todasLasVariantes) {
                 if (variante.getTalla() != null
