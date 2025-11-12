@@ -5,11 +5,22 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using KawkiWebBusiness;
+using KawkiWebBusiness.KawkiWebWSProductos;
 
 namespace KawkiWeb
 {
     public partial class Productos : System.Web.UI.Page
     {
+        private ProductosBO productosBO;
+        private ProductosVariantesBO variantesBO;
+
+        public Productos()
+        {
+            this.productosBO = new ProductosBO();
+            this.variantesBO = new ProductosVariantesBO();
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -96,77 +107,160 @@ namespace KawkiWeb
 
         private void CargarProductos()
         {
-            //datos filtros:
-            string categoria = ddlCategoria.SelectedValue;
-            string estilo = ddlEstilo.SelectedValue;
-            string color = ddlColor.SelectedValue;
-            string talla = ddlTalla.SelectedValue;
-            string busqueda = txtBuscar.Text.Trim();
-
-            DataTable dtProductos = ObtenerProductosSimulados();
-            DataView dv = dtProductos.DefaultView;
-            List<string> filtros = new List<string>();
-
-            if (!string.IsNullOrEmpty(categoria))
+            try
             {
-                filtros.Add($"Categoria = '{categoria}'");
-            }
+                // Obtener TODOS los productos inicialmente
+                IList<productosDTO> productos = productosBO.ListarTodos();
 
-            if (!string.IsNullOrEmpty(estilo))
-            {
-                filtros.Add($"Estilo = '{estilo}'");
-            }
+                System.Diagnostics.Debug.WriteLine("========== INICIO DEBUG ==========");
+                System.Diagnostics.Debug.WriteLine($"Productos iniciales: {productos?.Count ?? 0}");
 
-            if (!string.IsNullOrEmpty(color))
-            {
-                filtros.Add($"Color = '{color}'");
-            }
-
-            if (!string.IsNullOrEmpty(busqueda))
-            {
-                filtros.Add($"Nombre LIKE '%{busqueda}%'");
-            }
-
-            if (filtros.Count > 0)
-            {
-                dv.RowFilter = string.Join(" AND ", filtros);
-            }
-
-            // Filtrar por talla si se seleccionó una
-            if (!string.IsNullOrEmpty(talla))
-            {
-                DataTable dtFiltrado = dv.ToTable();
-                DataTable dtResultado = dtFiltrado.Clone();
-
-                foreach (DataRow row in dtFiltrado.Rows)
+                if (productos == null || productos.Count == 0)
                 {
-                    string tallasDisponibles = row["TallasDisponibles"].ToString();
-                    if (tallasDisponibles.Contains(talla))
-                    {
-                        dtResultado.ImportRow(row);
-                    }
+                    MostrarSinProductos();
+                    return;
                 }
 
-                dv = dtResultado.DefaultView;
-            }
+                // Datos de filtros
+                string categoria = ddlCategoria.SelectedValue;
+                string estilo = ddlEstilo.SelectedValue;
+                string color = ddlColor.SelectedValue;
+                string talla = ddlTalla.SelectedValue;
+                string busqueda = txtBuscar.Text.Trim();
 
-            if (dv.Count > 0)
-            {
-                rptProductos.DataSource = dv;
-                rptProductos.DataBind();
-                lblResultados.Text = $"{dv.Count} producto(s) encontrado(s)";
-                pnlSinProductos.Visible = false;
+                System.Diagnostics.Debug.WriteLine($"Filtros seleccionados:");
+                System.Diagnostics.Debug.WriteLine($"  - Categoria: '{categoria}'");
+                System.Diagnostics.Debug.WriteLine($"  - Estilo: '{estilo}'");
+                System.Diagnostics.Debug.WriteLine($"  - Color: '{color}'");
+                System.Diagnostics.Debug.WriteLine($"  - Talla: '{talla}'");
+                System.Diagnostics.Debug.WriteLine($"  - Busqueda: '{busqueda}'");
+
+                // Crear una lista para filtrar
+                List<productosDTO> productosFiltrados = productos.ToList();
+
+                // FILTRO 1: Categoría
+                if (!string.IsNullOrEmpty(categoria))
+                {
+                    int categoriaId = ObtenerCategoriaIdPorNombre(categoria);
+                    System.Diagnostics.Debug.WriteLine($"CategoriaId obtenido: {categoriaId}");
+
+                    if (categoriaId > 0)
+                    {
+                        productosFiltrados = productosFiltrados
+                            .Where(p => p.categoria != null && p.categoria.categoria_id == categoriaId)
+                            .ToList();
+                    }
+                    System.Diagnostics.Debug.WriteLine($"Después filtro categoría: {productosFiltrados.Count}");
+                }
+
+                // FILTRO 2: Estilo
+                if (!string.IsNullOrEmpty(estilo))
+                {
+                    int estiloId = ObtenerEstiloIdPorNombre(estilo);
+                    System.Diagnostics.Debug.WriteLine($"EstiloId obtenido: {estiloId}");
+
+                    if (estiloId > 0)
+                    {
+                        productosFiltrados = productosFiltrados
+                            .Where(p => p.estilo != null && p.estilo.estilo_id == estiloId)
+                            .ToList();
+                    }
+                    System.Diagnostics.Debug.WriteLine($"Después filtro estilo: {productosFiltrados.Count}");
+                }
+
+                // FILTRO 3: Búsqueda por texto
+                if (!string.IsNullOrEmpty(busqueda))
+                {
+                    productosFiltrados = productosFiltrados
+                        .Where(p => p.descripcion != null &&
+                                   p.descripcion.ToLower().Contains(busqueda.ToLower()))
+                        .ToList();
+                    System.Diagnostics.Debug.WriteLine($"Después filtro búsqueda: {productosFiltrados.Count}");
+                }
+
+                // FILTRO 4: Color
+                if (!string.IsNullOrEmpty(color))
+                {
+                    int colorId = ObtenerColorIdPorNombre(color);
+                    System.Diagnostics.Debug.WriteLine($"ColorId obtenido: {colorId}");
+
+                    if (colorId > 0)
+                    {
+                        productosFiltrados = productosFiltrados
+                            .Where(p => p.variantes != null &&
+                                       p.variantes.Any(v => v.color != null && v.color.color_id == colorId))
+                            .ToList();
+                    }
+                    System.Diagnostics.Debug.WriteLine($"Después filtro color: {productosFiltrados.Count}");
+                }
+
+                // FILTRO 5: Talla
+                if (!string.IsNullOrEmpty(talla))
+                {
+                    int tallaId = ObtenerTallaIdPorNumero(talla);
+                    System.Diagnostics.Debug.WriteLine($"TallaId obtenido: {tallaId}");
+
+                    if (tallaId > 0)
+                    {
+                        productosFiltrados = productosFiltrados
+                            .Where(p => p.variantes != null &&
+                                       p.variantes.Any(v => v.talla != null && v.talla.talla_id == tallaId))
+                            .ToList();
+                    }
+                    System.Diagnostics.Debug.WriteLine($"Después filtro talla: {productosFiltrados.Count}");
+                }
+
+                System.Diagnostics.Debug.WriteLine($"Productos filtrados FINAL: {productosFiltrados.Count}");
+
+                // Ver info del primer producto si existe
+                if (productosFiltrados.Count > 0)
+                {
+                    var p = productosFiltrados[0];
+                    System.Diagnostics.Debug.WriteLine($"Primer producto:");
+                    System.Diagnostics.Debug.WriteLine($"  - ID: {p.producto_id}");
+                    System.Diagnostics.Debug.WriteLine($"  - Descripcion: {p.descripcion}");
+                    System.Diagnostics.Debug.WriteLine($"  - Categoria: {p.categoria?.nombre} (ID: {p.categoria?.categoria_id})");
+                    System.Diagnostics.Debug.WriteLine($"  - Estilo: {p.estilo?.nombre} (ID: {p.estilo?.estilo_id})");
+                    System.Diagnostics.Debug.WriteLine($"  - Variantes: {p.variantes?.Length ?? 0}");
+                }
+
+                // Mostrar resultados
+                if (productosFiltrados.Count > 0)
+                {
+                    DataTable dtProductos = ConvertirProductosADataTable(productosFiltrados);
+
+                    System.Diagnostics.Debug.WriteLine($"Filas en DataTable: {dtProductos.Rows.Count}");
+
+                    if (dtProductos.Rows.Count > 0)
+                    {
+                        rptProductos.DataSource = dtProductos;
+                        rptProductos.DataBind();
+                        lblResultados.Text = $"{dtProductos.Rows.Count} producto(s) encontrado(s)";
+                        pnlSinProductos.Visible = false;
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("ERROR: DataTable vacío pero hay productos filtrados");
+                        MostrarSinProductos();
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("No hay productos después de filtros");
+                    MostrarSinProductos();
+                }
+
+                System.Diagnostics.Debug.WriteLine("========== FIN DEBUG ==========");
             }
-            else
+            catch (Exception ex)
             {
-                rptProductos.DataSource = null;
-                rptProductos.DataBind();
-                lblResultados.Text = "0 productos encontrados";
-                pnlSinProductos.Visible = true;
+                System.Diagnostics.Debug.WriteLine($"EXCEPCION: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
+                MostrarSinProductos();
             }
         }
 
-        private DataTable ObtenerProductosSimulados()
+        private DataTable ConvertirProductosADataTable(IList<productosDTO> productos)
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("ProductoId", typeof(int));
@@ -180,17 +274,124 @@ namespace KawkiWeb
             dt.Columns.Add("Stock", typeof(string));
             dt.Columns.Add("ImagenUrl", typeof(string));
 
-            // Productos tipo Oxford
-            dt.Rows.Add(1, "Oxford Clásico Beige", "Zapato oxford de cuero genuino con acabado premium, ideal para ocasiones formales y uso diario.", 150.90m, "35, 36, 39", "oxford", "clasico", "beige", "15,5,9", "~/Images/OxfordClasicoBeige.jpg");
-            dt.Rows.Add(2, "Oxford Premium Negro", "Zapato oxford de diseño moderno y sofisticado, perfecto para eventos importantes.", 250.90m, "35, 36, 37, 38, 39", "oxford", "charol", "negro", "15,12,0,5,9", "~/Images/OxfordPremiumNegro.jpg");
-            dt.Rows.Add(3, "Oxford Bicolor Café", "Zapato oxford con elegante combinación de tonos café, estilo vintage refinado.", 160.90m, "36, 37, 38, 39", "oxford", "combinado", "marron", "10,0,5,1", "~/Images/OxfordBicolorCafe.jpg");
+            foreach (var producto in productos)
+            {
+                if (producto.variantes == null || producto.variantes.Length == 0)
+                    continue;
 
-            // Productos tipo Derby
-            dt.Rows.Add(4, "Derby Elegante Marrón", "Derby de cuero con diseño tejido elegante, versátil para cualquier ocasión.", 215.90m, "35, 36, 37, 38, 39", "derby", "clasico", "marron", "15,12,0,5,7", "~/Images/DerbyClasicoMarron.jpg");
-            dt.Rows.Add(5, "Derby Charol Crema", "Derby charol con suela gruesa y diseño moderno, máxima comodidad.", 210.90m, "35, 36, 37, 38, 39", "derby", "charol", "crema", "15,12,0,5,2", "~/Images/DerbyClasicoCrema.jpg");
-            dt.Rows.Add(6, "Derby Clasico Negro", "Derby clasico con suela de goma antideslizante, ideal para caminar.", 169.90m, "36, 37, 38, 39", "derby", "clasico", "negro", "12,0,5,9", "~/Images/DerbyClasicoNegro.jpg");
+                // agrupar variantes por color
+                var variantesPorColor = producto.variantes
+                    .GroupBy(v => v.color?.nombre ?? "Sin color");
 
+                foreach (var grupoColor in variantesPorColor)
+                {
+                    string colorNombre = grupoColor.Key;
+                    string imagen = grupoColor.FirstOrDefault()?.url_imagen ?? "~/Images/no-image.jpg";
+
+                    // obtener tallas y stocks de ese color
+                    var tallasDict = new Dictionary<string, int>();
+                    foreach (var variante in grupoColor)
+                    {
+                        if (variante.talla != null)
+                        {
+                            string talla = variante.talla.numero.ToString();
+                            tallasDict[talla] = variante.stock;
+                        }
+                    }
+
+                    string tallas = string.Join(", ", tallasDict.Keys.OrderBy(t => int.Parse(t)));
+                    string stocks = string.Join(",", tallasDict.Values);
+
+                    string categoriaNombre = producto.categoria.nombre;
+                    string estiloNombre = producto.estilo.nombre;
+
+                    string nombreProducto = $"{categoriaNombre} {estiloNombre} {colorNombre}".Trim();
+                    nombreProducto = char.ToUpper(nombreProducto[0]) + nombreProducto.Substring(1);
+
+                    dt.Rows.Add(
+                        producto.producto_id,
+                        nombreProducto,
+                        producto.descripcion,
+                        producto.precio_venta,
+                        tallas,
+                        categoriaNombre,
+                        estiloNombre,
+                        colorNombre,
+                        stocks,
+                        imagen
+                    );
+                }
+            }
             return dt;
+        }
+
+        private void MostrarSinProductos()
+        {
+            rptProductos.DataSource = null;
+            rptProductos.DataBind();
+            lblResultados.Text = "0 productos encontrados";
+            pnlSinProductos.Visible = true;
+        }
+
+        // Métodos auxiliares para mapear nombres a IDs
+        private int ObtenerCategoriaIdPorNombre(string nombre)
+        {
+            switch (nombre)
+            {
+                case "Derby": return 1;
+                case "Oxford": return 2;
+                default: return 0;
+            }
+        }
+
+        private int ObtenerEstiloIdPorNombre(string nombre)
+        {
+            switch (nombre)
+            {
+                case "Charol": return 1;
+                case "Clasico": return 2;
+                case "Combinados": return 3;
+                case "Metalizados": return 4;
+                default: return 0;
+            }
+        }
+
+        private int ObtenerColorIdPorNombre(string nombre)
+        {
+            switch (nombre)
+            {
+                case "Blanco": return 1;
+                case "Camel": return 2;
+                case "Marron": return 3;
+                case "Piel": return 4;
+                case "Celeste": return 5;
+                case "Crema": return 6;
+                case "Beige": return 7;
+                case "Negro": return 8;
+                case "Amarillo": return 9;
+                case "Plata": return 10;
+                case "Azul": return 11;
+                case "Rosado": return 12;
+                case "Gris": return 13;
+                case "Rojo": return 14;
+                case "Turquesa": return 15;
+                case "Acero": return 16;
+                case "Verde": return 17;
+                default: return 0;
+            }
+        }
+
+        private int ObtenerTallaIdPorNumero(string numero)
+        {
+            switch (numero)
+            {
+                case "35": return 1;
+                case "36": return 2;
+                case "37": return 3;
+                case "38": return 4;
+                case "39": return 5;
+                default: return 0;
+            }
         }
 
         // Método para mostrar alertas de stock bajo por tallas
