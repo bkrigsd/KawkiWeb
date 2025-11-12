@@ -1,5 +1,14 @@
 package pe.edu.pucp.kawkiweb.model.utilUsuario;
 
+//import jakarta.xml.bind.annotation.XmlRootElement;
+//
+//@XmlRootElement(name = "tipoUsuario")
+//import jakarta.xml.bind.annotation.XmlRootElement;
+//import jakarta.xml.bind.annotation.XmlAccessType;
+//import jakarta.xml.bind.annotation.XmlAccessorType;
+//
+//@XmlRootElement(name = "TipoUsuario")
+//@XmlAccessorType(XmlAccessType.FIELD)
 public class TiposUsuarioDTO {
 
     private Integer tipoUsuarioId;
