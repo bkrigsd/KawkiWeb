@@ -30,42 +30,52 @@
             </div>
             <div class="card-body">
                 <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="False"
-                    CssClass="table-usuarios" DataKeyNames="IdUsuario">
+                    CssClass="table-usuarios" DataKeyNames="usuarioId">
                     <Columns>
-                        <asp:BoundField DataField="IdUsuario" HeaderText="ID" />
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
-                        <asp:BoundField DataField="ApellidoPaterno" HeaderText="Apellido" />
-                        <asp:BoundField DataField="DNI" HeaderText="DNI" />
-                        <asp:BoundField DataField="Usuario" HeaderText="Usuario" />
-                        <asp:BoundField DataField="Email" HeaderText="Email" />
-                        <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
+                        <asp:BoundField DataField="usuarioId" HeaderText="ID" />
+                        <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                        <asp:BoundField DataField="apePaterno" HeaderText="Apellido" />
+                        <asp:BoundField DataField="dni" HeaderText="DNI" />
+                        <asp:BoundField DataField="nombreUsuario" HeaderText="Usuario" />
+                        <asp:BoundField DataField="correo" HeaderText="Email" />
+                        <asp:BoundField DataField="telefono" HeaderText="Teléfono" />
+
+                        <%-- Rol (objeto anidado tipoUsuario) --%>
                         <asp:TemplateField HeaderText="Rol">
                             <ItemTemplate>
-                                <span class='<%# Eval("Rol").ToString()=="admin" ? "badge-rol badge-admin" : "badge-rol badge-vendedor" %>'>
-                                    <%# Eval("Rol").ToString()=="admin" ? "Administrador" : "Vendedor" %>
-                                </span>
+                                <%# (Eval("tipoUsuario") != null) 
+                                    ? ((KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO)Eval("tipoUsuario")).nombre 
+                                    : "" %>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Estado">
-                            <ItemTemplate>
-                                <span class='<%# Convert.ToBoolean(Eval("Activo")) ? "badge-rol badge-activo" : "badge-rol badge-inactivo" %>'>
-                                    <%# Convert.ToBoolean(Eval("Activo")) ? "Activo" : "Inactivo" %>
-                                </span>
-                            </ItemTemplate>
-                        </asp:TemplateField>
+
+                        <%-- Acciones --%>
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
-                                <button type="button" class="btn-editar" 
-                                    onclick='editarUsuario(<%# Eval("IdUsuario") %>, "<%# Eval("Nombre") %>", "<%# Eval("ApellidoPaterno") %>", "<%# Eval("DNI") %>", "<%# Eval("Usuario") %>", "<%# Eval("Email") %>", "<%# Eval("Telefono") %>", "<%# Eval("Rol") %>", "<%# Eval("Clave") %>")'>
+                                <button type="button" class="btn-editar"
+                                    onclick='<%# "editarUsuario(" 
+                                        + Eval("usuarioId") + ", \"" 
+                                        + Eval("nombre") + "\", \"" 
+                                        + Eval("apePaterno") + "\", \"" 
+                                        + Eval("dni") + "\", \"" 
+                                        + Eval("nombreUsuario") + "\", \"" 
+                                        + Eval("correo") + "\", \"" 
+                                        + Eval("telefono") + "\", \"" 
+                                        + ((Eval("tipoUsuario") != null) 
+                                            ? ((KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO)Eval("tipoUsuario")).nombre 
+                                            : "") + "\", \"" 
+                                        + Eval("contrasenha") + "\")" %>'>
                                     Editar
                                 </button>
-                                <button type="button" class="btn-eliminar" onclick="abrirModalConfirmacion(<%# Eval("IdUsuario") %>)">
+                                <button type="button" class="btn-eliminar" 
+                                    onclick='<%# "abrirModalConfirmacion(" + Eval("usuarioId") + ")" %>'>
                                     Eliminar
                                 </button>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
+
             </div>
         </div>
 
@@ -96,11 +106,11 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">DNI *</label>
-                        <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" MaxLength="7" />
+                        <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" MaxLength="8" />
                         <asp:RequiredFieldValidator ID="rfvDNI" runat="server" ControlToValidate="txtDNI"
                             ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
                         <asp:RegularExpressionValidator ID="revDNI" runat="server" ControlToValidate="txtDNI"
-                            ValidationExpression="^\d{7}$" ErrorMessage="Debe tener 7 dígitos"
+                            ValidationExpression="^\d{8}$" ErrorMessage="Debe tener 8 dígitos"
                             CssClass="text-danger" Display="Dynamic" />
                     </div>
                     <div class="col-md-6 mb-3">
@@ -148,17 +158,18 @@
                         Display="Dynamic" />
                     <asp:RegularExpressionValidator ID="revClave" runat="server"
                         ControlToValidate="txtClave"
-                        ValidationExpression="^.{6,}$"
-                        ErrorMessage="Mínimo 6 caracteres"
+                        ValidationExpression="^.{8,}$"
+                        ErrorMessage="Mínimo 8 caracteres"
                         CssClass="text-danger"
                         Display="Dynamic" />
+
 
                     <small id="lblInfoClave" class="text-muted d-none">
                         Deja la contraseña si no deseas cambiarla.
                     </small>
                 </div>
 
-                <div class="mb-3">
+                <div id="grupoRol" class="mb-3">
                     <label class="form-label">Rol *</label>
                     <asp:DropDownList ID="ddlRol" runat="server" CssClass="form-select">
                         <asp:ListItem Text="-- Seleccione --" Value="" />
@@ -168,6 +179,13 @@
                     <asp:RequiredFieldValidator ID="rfvRol" runat="server" ControlToValidate="ddlRol"
                         InitialValue="" ErrorMessage="Seleccione un rol" CssClass="text-danger" Display="Dynamic" />
                 </div>
+
+                <!-- Campo solo lectura visible en edición -->
+                <div id="grupoRolTexto" class="mb-3 d-none">
+                    <label class="form-label">Rol</label>
+                    <input type="text" id="txtRolLectura" class="form-control" readonly />
+                </div>
+
 
                 <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mb-3" />
 
