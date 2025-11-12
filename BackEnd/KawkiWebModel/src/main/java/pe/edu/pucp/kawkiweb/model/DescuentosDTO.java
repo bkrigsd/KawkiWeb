@@ -8,7 +8,7 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 //import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 //import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
 //
-//@XmlRootElement(name = "Descuento")
+//@XmlRootElement(name = "descuento")
 public class DescuentosDTO {
 
     private Integer descuento_id;
