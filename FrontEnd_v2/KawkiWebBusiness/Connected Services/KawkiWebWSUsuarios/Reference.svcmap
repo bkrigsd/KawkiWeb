@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="8888327d-6815-428c-ae10-b5858a98b2a9" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="277be1a4-6d4b-433e-9963-d019bc9bd6ab" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,8 +22,8 @@
     <MetadataSource Address="http://localhost:8080/KawkiWebWS/UsuariosService?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="UsuariosService.wsdl" MetadataType="Wsdl" ID="ef4a49bd-1d79-447e-9aa6-2aadaca08f9e" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/UsuariosService?wsdl" />
-    <MetadataFile FileName="UsuariosService.xsd" MetadataType="Schema" ID="c691dc3b-38d6-4b6b-98c6-1d5ebce6e8b4" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/UsuariosService?xsd=1" />
+    <MetadataFile FileName="UsuariosService.wsdl" MetadataType="Wsdl" ID="1dedd275-f227-4f65-bd6d-f90f60cbe341" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/UsuariosService?wsdl" />
+    <MetadataFile FileName="UsuariosService.xsd" MetadataType="Schema" ID="ea2bcf35-c38f-4951-a538-9abae060d0b7" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/UsuariosService?xsd=1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

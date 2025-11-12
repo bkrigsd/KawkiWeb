@@ -19,7 +19,7 @@ namespace KawkiWebBusiness
             return this.clienteSOAP.insertarUsuario(nombre, apePaterno, dni, telefono, correo,
                                                     nombreUsuario, contrasenha, tipoUsuario);
         }
-        
+
 
         public int ModificarUsuario(int usuarioId, string nombre, string apePaterno, string dni,
                                     string telefono, string correo, string nombreUsuario,
@@ -60,4 +60,3 @@ namespace KawkiWebBusiness
         }
     }
 }
-
