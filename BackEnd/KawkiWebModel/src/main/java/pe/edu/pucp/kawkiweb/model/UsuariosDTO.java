@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 //import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 //import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
 
+//@XmlRootElement(name = "usuario")
 public class UsuariosDTO {
 
     private Integer usuarioId;

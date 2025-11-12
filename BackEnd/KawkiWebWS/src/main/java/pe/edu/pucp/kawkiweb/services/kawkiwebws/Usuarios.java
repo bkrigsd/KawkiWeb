@@ -8,7 +8,7 @@ import pe.edu.pucp.kawkiweb.bo.UsuariosBO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 
-@WebService(serviceName = "Usuarios")
+@WebService(serviceName = "UsuariosService")
 public class Usuarios {
 
     private UsuariosBO usuarioBO;
@@ -18,7 +18,7 @@ public class Usuarios {
     }
 
     @WebMethod(operationName = "insertarUsuario")
-    public Integer insertar(
+    public Integer insertarUsuario(
             @WebParam(name = "nombre") String nombre,
             @WebParam(name = "apePaterno") String apePaterno,
             @WebParam(name = "dni") String dni,
@@ -33,18 +33,18 @@ public class Usuarios {
     }
 
     @WebMethod(operationName = "obtenerPorIdUsuario")
-    public UsuariosDTO obtenerPorId(
+    public UsuariosDTO obtenerPorIdUsuario(
             @WebParam(name = "usuarioId") Integer usuarioId) {
         return this.usuarioBO.obtenerPorId(usuarioId);
     }
 
     @WebMethod(operationName = "listarTodosUsuario")
-    public ArrayList<UsuariosDTO> listarTodos() {
+    public ArrayList<UsuariosDTO> listarTodosUsuario() {
         return new ArrayList<>(this.usuarioBO.listarTodos());
     }
 
     @WebMethod(operationName = "modificarUsuario")
-    public Integer modificar(
+    public Integer modificarUsuario(
             @WebParam(name = "usuarioId") Integer usuarioId,
             @WebParam(name = "nombre") String nombre,
             @WebParam(name = "apePaterno") String apePaterno,
@@ -60,20 +60,20 @@ public class Usuarios {
     }
 
     @WebMethod(operationName = "eliminarUsuario")
-    public Integer eliminar(
+    public Integer eliminarUsuario(
             @WebParam(name = "usuarioId") Integer usuarioId) {
         return this.usuarioBO.eliminar(usuarioId);
     }
 
     @WebMethod(operationName = "listarPorTipoUsuario")
-    public ArrayList<UsuariosDTO> listarPorTipo(
+    public ArrayList<UsuariosDTO> listarPorTipoUsuario(
             @WebParam(name = "tipoUsuarioId") Integer tipoUsuarioId) {
 
         return new ArrayList<>(this.usuarioBO.listarPorTipo(tipoUsuarioId));
     }
 
     @WebMethod(operationName = "cambiarContrasenhaUsuario")
-    public boolean cambiarContrasenha(
+    public boolean cambiarContrasenhaUsuario(
             @WebParam(name = "usuarioId") Integer usuarioId,
             @WebParam(name = "contrasenhaActual") String contrasenhaActual,
             @WebParam(name = "contrasenhaNueva") String contrasenhaNueva) {
@@ -83,7 +83,7 @@ public class Usuarios {
     }
 
     @WebMethod(operationName = "autenticarUsuario")
-    public UsuariosDTO autenticar(
+    public UsuariosDTO autenticarUsuario(
             @WebParam(name = "nombreUsuario") String nombreUsuario,
             @WebParam(name = "contrasenha") String contrasenha) {
 
