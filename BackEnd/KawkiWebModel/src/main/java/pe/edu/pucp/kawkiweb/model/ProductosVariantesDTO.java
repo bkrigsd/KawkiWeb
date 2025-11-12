@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
-
-@XmlRootElement(name = "ProductoVariante")
+//import jakarta.xml.bind.annotation.XmlRootElement;
+//import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+//import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
+//
+//@XmlRootElement(name = "ProductoVariante")
 public class ProductosVariantesDTO {
 
     private static Integer cantidadProdVariantes = 0;
@@ -23,7 +23,7 @@ public class ProductosVariantesDTO {
     private TallasDTO talla;
     private String url_imagen;
     private Boolean disponible;
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+//    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_creacion;
 
     public ProductosVariantesDTO() {

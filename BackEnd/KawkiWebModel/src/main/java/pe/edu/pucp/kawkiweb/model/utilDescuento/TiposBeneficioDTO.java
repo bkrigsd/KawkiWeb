@@ -1,8 +1,5 @@
 package pe.edu.pucp.kawkiweb.model.utilDescuento;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "TipoBeneficio")
 public class TiposBeneficioDTO {
 
     private Integer tipo_beneficio_id;

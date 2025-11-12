@@ -1,8 +1,5 @@
 package pe.edu.pucp.kawkiweb.model.utilPago;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "TipoComprobante")
 public class TiposComprobanteDTO {
 
     private Integer tipo_comprobante_id;

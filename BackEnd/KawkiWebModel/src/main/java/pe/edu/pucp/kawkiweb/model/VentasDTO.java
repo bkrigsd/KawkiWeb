@@ -3,17 +3,17 @@ package pe.edu.pucp.kawkiweb.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
-
-@XmlRootElement(name = "Venta")
+//import jakarta.xml.bind.annotation.XmlRootElement;
+//import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+//import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
+//
+//@XmlRootElement(name = "Venta")
 public class VentasDTO {
 
     //ATRIBUTOS:
     private Integer venta_id;
     private UsuariosDTO usuario;
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+//    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_creacion;
     private Double total;
     private DescuentosDTO descuento;
