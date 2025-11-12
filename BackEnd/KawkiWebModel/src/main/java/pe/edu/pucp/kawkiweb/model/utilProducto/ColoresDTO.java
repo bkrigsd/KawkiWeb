@@ -1,8 +1,5 @@
 package pe.edu.pucp.kawkiweb.model.utilProducto;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "Colore")
 public class ColoresDTO {
 
     private Integer color_id;

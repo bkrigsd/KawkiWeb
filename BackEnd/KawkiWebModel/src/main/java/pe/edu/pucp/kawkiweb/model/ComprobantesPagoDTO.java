@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import pe.edu.pucp.kawkiweb.model.utilPago.MetodosPagoDTO;
 import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
-
-@XmlRootElement(name = "ComprobantePago")
+//import jakarta.xml.bind.annotation.XmlRootElement;
+//import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+//import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
+//
+//@XmlRootElement(name = "ComprobantePago")
 public class ComprobantesPagoDTO {
 
     private static Integer contadorSerieFactura = 1;
@@ -17,7 +17,7 @@ public class ComprobantesPagoDTO {
     //ATRIBUTOS
     private Integer comprobante_pago_id;
 
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+//    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_creacion;
 
     private TiposComprobanteDTO tipo_comprobante;
