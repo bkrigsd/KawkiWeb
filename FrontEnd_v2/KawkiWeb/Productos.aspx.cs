@@ -107,101 +107,155 @@ namespace KawkiWeb
 
         private void CargarProductos()
         {
-            try { 
-                //datos filtros:
+            try
+            {
+                // Obtener TODOS los productos inicialmente
+                IList<productosDTO> productos = productosBO.ListarTodos();
+
+                System.Diagnostics.Debug.WriteLine("========== INICIO DEBUG ==========");
+                System.Diagnostics.Debug.WriteLine($"Productos iniciales: {productos?.Count ?? 0}");
+
+                if (productos == null || productos.Count == 0)
+                {
+                    MostrarSinProductos();
+                    return;
+                }
+
+                // Datos de filtros
                 string categoria = ddlCategoria.SelectedValue;
                 string estilo = ddlEstilo.SelectedValue;
                 string color = ddlColor.SelectedValue;
                 string talla = ddlTalla.SelectedValue;
                 string busqueda = txtBuscar.Text.Trim();
 
-                // Obtener productos desde el Web Service
-                IList<productosDTO> productos = null;
+                System.Diagnostics.Debug.WriteLine($"Filtros seleccionados:");
+                System.Diagnostics.Debug.WriteLine($"  - Categoria: '{categoria}'");
+                System.Diagnostics.Debug.WriteLine($"  - Estilo: '{estilo}'");
+                System.Diagnostics.Debug.WriteLine($"  - Color: '{color}'");
+                System.Diagnostics.Debug.WriteLine($"  - Talla: '{talla}'");
+                System.Diagnostics.Debug.WriteLine($"  - Busqueda: '{busqueda}'");
 
+                // Crear una lista para filtrar
+                List<productosDTO> productosFiltrados = productos.ToList();
+
+                // FILTRO 1: Categoría
                 if (!string.IsNullOrEmpty(categoria))
                 {
-                    // Necesitas mapear el nombre a ID (esto depende de tu BD)
                     int categoriaId = ObtenerCategoriaIdPorNombre(categoria);
+                    System.Diagnostics.Debug.WriteLine($"CategoriaId obtenido: {categoriaId}");
+
                     if (categoriaId > 0)
                     {
-                        productos = productosBO.ListarPorCategoria(categoriaId);
+                        productosFiltrados = productosFiltrados
+                            .Where(p => p.categoria != null && p.categoria.categoria_id == categoriaId)
+                            .ToList();
                     }
+                    System.Diagnostics.Debug.WriteLine($"Después filtro categoría: {productosFiltrados.Count}");
                 }
 
+                // FILTRO 2: Estilo
                 if (!string.IsNullOrEmpty(estilo))
                 {
                     int estiloId = ObtenerEstiloIdPorNombre(estilo);
+                    System.Diagnostics.Debug.WriteLine($"EstiloId obtenido: {estiloId}");
+
                     if (estiloId > 0)
                     {
-                        productos = productosBO.ListarPorEstilo(estiloId);
+                        productosFiltrados = productosFiltrados
+                            .Where(p => p.estilo != null && p.estilo.estilo_id == estiloId)
+                            .ToList();
                     }
+                    System.Diagnostics.Debug.WriteLine($"Después filtro estilo: {productosFiltrados.Count}");
                 }
 
+                // FILTRO 3: Búsqueda por texto
+                if (!string.IsNullOrEmpty(busqueda))
+                {
+                    productosFiltrados = productosFiltrados
+                        .Where(p => p.descripcion != null &&
+                                   p.descripcion.ToLower().Contains(busqueda.ToLower()))
+                        .ToList();
+                    System.Diagnostics.Debug.WriteLine($"Después filtro búsqueda: {productosFiltrados.Count}");
+                }
+
+                // FILTRO 4: Color
                 if (!string.IsNullOrEmpty(color))
                 {
                     int colorId = ObtenerColorIdPorNombre(color);
+                    System.Diagnostics.Debug.WriteLine($"ColorId obtenido: {colorId}");
+
                     if (colorId > 0)
                     {
-                        // Obtener variantes por color
-                        var variantesPorColor = variantesBO.ListarPorColor(colorId);
-
-                        // Filtrar productos que tengan esas variantes
-                        var productosIdsConColor = variantesPorColor
-                            .Select(v => v.producto_id)
-                            .Distinct()
-                            .ToList();
-
-                        productos = productos
-                            .Where(p => productosIdsConColor.Contains(p.producto_id))
+                        productosFiltrados = productosFiltrados
+                            .Where(p => p.variantes != null &&
+                                       p.variantes.Any(v => v.color != null && v.color.color_id == colorId))
                             .ToList();
                     }
+                    System.Diagnostics.Debug.WriteLine($"Después filtro color: {productosFiltrados.Count}");
                 }
 
-                if (!string.IsNullOrEmpty(busqueda))
-                {
-                    productos = productos
-                            .Where(p => p.descripcion.ToLower().Contains(busqueda.ToLower()))
-                            .ToList();
-                }
-                // Filtrar por talla si se seleccionó una
+                // FILTRO 5: Talla
                 if (!string.IsNullOrEmpty(talla))
                 {
                     int tallaId = ObtenerTallaIdPorNumero(talla);
+                    System.Diagnostics.Debug.WriteLine($"TallaId obtenido: {tallaId}");
+
                     if (tallaId > 0)
                     {
-                        // Obtener variantes por talla
-                        var variantesPorTalla = variantesBO.ListarPorTalla(tallaId);
-
-                        // Filtrar productos que tengan esas variantes
-                        var productosIdsConTalla = variantesPorTalla
-                            .Select(v => v.producto_id)
-                            .Distinct()
-                            .ToList();
-
-                        productos = productos
-                            .Where(p => productosIdsConTalla.Contains(p.producto_id))
+                        productosFiltrados = productosFiltrados
+                            .Where(p => p.variantes != null &&
+                                       p.variantes.Any(v => v.talla != null && v.talla.talla_id == tallaId))
                             .ToList();
                     }
+                    System.Diagnostics.Debug.WriteLine($"Después filtro talla: {productosFiltrados.Count}");
                 }
 
-                // 5. Convertir a DataTable y mostrar
-                if (productos!= null && productos.Count > 0)
-                {
-                    DataTable dtProductos = ConvertirProductosADataTable(productos);
+                System.Diagnostics.Debug.WriteLine($"Productos filtrados FINAL: {productosFiltrados.Count}");
 
-                    rptProductos.DataSource = dtProductos;
-                    rptProductos.DataBind();
-                    lblResultados.Text = $"{productos.Count} producto(s) encontrado(s)";
-                    pnlSinProductos.Visible = false;
+                // Ver info del primer producto si existe
+                if (productosFiltrados.Count > 0)
+                {
+                    var p = productosFiltrados[0];
+                    System.Diagnostics.Debug.WriteLine($"Primer producto:");
+                    System.Diagnostics.Debug.WriteLine($"  - ID: {p.producto_id}");
+                    System.Diagnostics.Debug.WriteLine($"  - Descripcion: {p.descripcion}");
+                    System.Diagnostics.Debug.WriteLine($"  - Categoria: {p.categoria?.nombre} (ID: {p.categoria?.categoria_id})");
+                    System.Diagnostics.Debug.WriteLine($"  - Estilo: {p.estilo?.nombre} (ID: {p.estilo?.estilo_id})");
+                    System.Diagnostics.Debug.WriteLine($"  - Variantes: {p.variantes?.Length ?? 0}");
+                }
+
+                // Mostrar resultados
+                if (productosFiltrados.Count > 0)
+                {
+                    DataTable dtProductos = ConvertirProductosADataTable(productosFiltrados);
+
+                    System.Diagnostics.Debug.WriteLine($"Filas en DataTable: {dtProductos.Rows.Count}");
+
+                    if (dtProductos.Rows.Count > 0)
+                    {
+                        rptProductos.DataSource = dtProductos;
+                        rptProductos.DataBind();
+                        lblResultados.Text = $"{dtProductos.Rows.Count} producto(s) encontrado(s)";
+                        pnlSinProductos.Visible = false;
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("ERROR: DataTable vacío pero hay productos filtrados");
+                        MostrarSinProductos();
+                    }
                 }
                 else
                 {
+                    System.Diagnostics.Debug.WriteLine("No hay productos después de filtros");
                     MostrarSinProductos();
                 }
+
+                System.Diagnostics.Debug.WriteLine("========== FIN DEBUG ==========");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error al cargar productos: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"EXCEPCION: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
                 MostrarSinProductos();
             }
         }
@@ -282,7 +336,7 @@ namespace KawkiWeb
         // Métodos auxiliares para mapear nombres a IDs
         private int ObtenerCategoriaIdPorNombre(string nombre)
         {
-            switch (nombre.ToLower())
+            switch (nombre)
             {
                 case "Derby": return 1;
                 case "Oxford": return 2;
@@ -292,7 +346,7 @@ namespace KawkiWeb
 
         private int ObtenerEstiloIdPorNombre(string nombre)
         {
-            switch (nombre.ToLower())
+            switch (nombre)
             {
                 case "Charol": return 1;
                 case "Clasico": return 2;
@@ -304,7 +358,7 @@ namespace KawkiWeb
 
         private int ObtenerColorIdPorNombre(string nombre)
         {
-            switch (nombre.ToLower())
+            switch (nombre)
             {
                 case "Blanco": return 1;
                 case "Camel": return 2;
