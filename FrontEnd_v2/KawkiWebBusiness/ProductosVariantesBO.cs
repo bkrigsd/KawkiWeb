@@ -19,22 +19,20 @@ namespace KawkiWebBusiness
         /// Inserta una nueva variante de producto
 
         public int? Insertar(string sku, int stock, int stockMinimo,
-            int productoId, int colorId, int tallaId, string urlImagen,
-            DateTime? fechaHoraCreacion = null, bool disponible = true)
+            int productoId, ColoresDTO color, TallasDTO talla, string urlImagen, bool disponible = true)
         {
             try
             {
                 // El web service maneja las validaciones
                 // La alerta de stock se calcula automáticamente en el backend
-                int resultado = this.clienteSOAP.insertar_variante(
+                int resultado = this.clienteSOAP.insertarProdVariante(
                     sku,
                     stock,
                     stockMinimo,
                     productoId,
-                    colorId,
-                    tallaId,
+                    color,
+                    talla,
                     urlImagen,
-                    fechaHoraCreacion ?? DateTime.Now,
                     disponible
                 );
 
@@ -60,7 +58,7 @@ namespace KawkiWebBusiness
                     return null;
                 }
 
-                return this.clienteSOAP.obtenerPorId(prodVarianteId);
+                return this.clienteSOAP.obtenerPorIdProdVariante(prodVarianteId);
             }
             catch (Exception ex)
             {
@@ -76,7 +74,7 @@ namespace KawkiWebBusiness
         {
             try
             {
-                var lista = this.clienteSOAP.listarTodos();
+                var lista = this.clienteSOAP.listarTodosProdVariante();
                 return lista ?? new List<productosVariantesDTO>();
             }
             catch (Exception ex)
@@ -90,8 +88,8 @@ namespace KawkiWebBusiness
         /// Modifica una variante de producto existente
 
         public int? Modificar(int? prodVarianteId, string sku, int stock,
-            int stockMinimo, int productoId, int colorId, int tallaId,
-            string urlImagen, DateTime fechaHoraCreacion, bool disponible)
+            int stockMinimo, int productoId, ColoresDTO color, TallasDTO talla,
+            string urlImagen, bool disponible)
         {
             try
             {
@@ -102,16 +100,15 @@ namespace KawkiWebBusiness
                 }
 
                 // La alerta de stock se recalcula automáticamente en el backend
-                int resultado = this.clienteSOAP.modificar(
+                int resultado = this.clienteSOAP.modificarProdVariante(
                     prodVarianteId,
                     sku,
                     stock,
                     stockMinimo,
                     productoId,
-                    colorId,
-                    tallaId,
+                    color,
+                    talla,
                     urlImagen,
-                    fechaHoraCreacion,
                     disponible
                 );
 
@@ -127,7 +124,7 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Elimina una variante de producto por su ID
 
-        public int? Eliminar(int prodVarianteId)
+        public int? Eliminar(int? prodVarianteId)
         {
             try
             {
@@ -137,7 +134,7 @@ namespace KawkiWebBusiness
                     return null;
                 }
 
-                int resultado = this.clienteSOAP.eliminar(prodVarianteId);
+                int resultado = this.clienteSOAP.eliminarProdVariante(prodVarianteId);
                 return resultado > 0 ? (int?)resultado : null;
             }
             catch (Exception ex)
@@ -161,28 +158,8 @@ namespace KawkiWebBusiness
                     return false;
                 }
 
-                var variante = this.ObtenerPorId(prodVarianteId);
-                if (variante == null)
-                {
-                    System.Diagnostics.Debug.WriteLine("Error: Variante no encontrada");
-                    return false;
-                }
+                return this.clienteSOAP.actualizarStockProdVariante(prodVarianteId, nuevoStock);
 
-                // Llamar al método modificar con el nuevo stock
-                var resultado = this.Modificar(
-                    variante.prod_variante_id,
-                    variante.SKU,
-                    nuevoStock,  // Nuevo stock
-                    variante.stock_minimo,
-                    variante.producto_id,
-                    variante.color.color_id,
-                    variante.talla.talla_id,
-                    variante.url_imagen,
-                    variante.fecha_hora_creacion,
-                    variante.disponible
-                );
-
-                return resultado.HasValue && resultado.Value > 0;
             }
             catch (Exception ex)
             {
@@ -198,11 +175,8 @@ namespace KawkiWebBusiness
         {
             try
             {
-                var todasLasVariantes = this.ListarTodos();
-
-                return todasLasVariantes
-                    .Where(v => v.alerta_stock)
-                    .ToList();
+                var lista = this.clienteSOAP.listarConStockBajoProdVariante();
+                return lista ?? new List<productosVariantesDTO>();
             }
             catch (Exception ex)
             {
@@ -223,7 +197,7 @@ namespace KawkiWebBusiness
                     return new List<productosVariantesDTO>();
                 }
 
-                return this.clienteSOAP.listarPorProductoId(productoId);
+                return this.clienteSOAP.listarPorProductoProdVariante(productoId);
             }
             catch (Exception ex)
             {
@@ -244,11 +218,8 @@ namespace KawkiWebBusiness
                     return new List<productosVariantesDTO>();
                 }
 
-                var todasLasVariantes = this.ListarTodos();
-
-                return todasLasVariantes
-                    .Where(v => v.color != null && v.color.color_id == colorId)
-                    .ToList();
+                var lista = this.clienteSOAP.listarPorColorProdVariante(colorId);
+                return lista ?? new List<productosVariantesDTO>();
             }
             catch (Exception ex)
             {
@@ -269,11 +240,8 @@ namespace KawkiWebBusiness
                     return new List<productosVariantesDTO>();
                 }
 
-                var todasLasVariantes = this.ListarTodos();
-
-                return todasLasVariantes
-                    .Where(v => v.talla != null && v.talla.talla_id == tallaId)
-                    .ToList();
+                var lista = this.clienteSOAP.listarPorTallaProdVariante(tallaId);
+                return lista ?? new List<productosVariantesDTO>();
             }
             catch (Exception ex)
             {
@@ -289,8 +257,7 @@ namespace KawkiWebBusiness
         {
             try
             {
-                var variante = this.ObtenerPorId(prodVarianteId);
-                return variante != null && variante.stock > 0;
+                return this.clienteSOAP.tieneStockDisponibleProdVariante(prodVarianteId);
             }
             catch (Exception ex)
             {

@@ -16,18 +16,17 @@ namespace KawkiWebBusiness
         }
 
         /// Inserta un nuevo producto en la base de datos
-        public int? Insertar(string descripcion, int categoriaId, int estiloId, 
-            double precioVenta, DateTime? fechaHoraCreacion = null)
+        public int? Insertar(string descripcion, CategoriasDTO categoria, EstilosDTO estilo, 
+            double precioVenta)
         {
             try
             {
                 // El web service maneja las validaciones
-                int resultado = this.clienteSOAP.insertar_producto(
+                int resultado = this.clienteSOAP.insertarProducto(
                     descripcion, 
-                    categoriaId, 
-                    estiloId, 
-                    precioVenta, 
-                    fechaHoraCreacion ?? DateTime.Now
+                    categoria, 
+                    estilo, 
+                    precioVenta
                 );
 
                 return resultado > 0 ? (int?)resultado : null;
@@ -50,7 +49,7 @@ namespace KawkiWebBusiness
                     return null;
                 }
 
-                return this.clienteSOAP.obtenerPorId(productoId);
+                return this.clienteSOAP.obtenerPorIdProducto(productoId);
             }
             catch (Exception ex)
             {
@@ -64,7 +63,7 @@ namespace KawkiWebBusiness
         {
             try
             {
-                var lista = this.clienteSOAP.listarTodos();
+                var lista = this.clienteSOAP.listarTodosProducto();
                 return lista ?? new List<productoDTO>();
             }
             catch (Exception ex)
@@ -75,8 +74,7 @@ namespace KawkiWebBusiness
         }
 
         /// Modifica un producto existente
-        public int? Modificar(int? productoId, string descripcion, int categoriaId, 
-            int estiloId, double precioVenta, DateTime fechaHoraCreacion)
+        public int? Modificar(int? productoId, string descripcion, CategoriasDTO categoria, EstilosDTO estilo, double precioVenta)
         {
             try
             {
@@ -89,10 +87,9 @@ namespace KawkiWebBusiness
                 int resultado = this.clienteSOAP.modificar(
                     productoId, 
                     descripcion, 
-                    categoriaId, 
-                    estiloId, 
-                    precioVenta, 
-                    fechaHoraCreacion
+                    categoria, 
+                    estilo, 
+                    precioVenta
                 );
 
                 return resultado > 0 ? (int?)resultado : null;
@@ -138,14 +135,7 @@ namespace KawkiWebBusiness
         {
             try
             {
-                var producto = this.ObtenerPorId(productoId);
-
-                if (producto == null || producto.variantes == null)
-                {
-                    return false;
-                }
-
-                return producto.variantes.Any(v => v.stock > 0);
+                return this.clienteSOAP.tieneStockDisponibleProducto(productoId);
             }
             catch (Exception ex)
             {
@@ -159,14 +149,8 @@ namespace KawkiWebBusiness
         {
             try
             {
-                var producto = this.ObtenerPorId(productoId);
-
-                if (producto == null || producto.variantes == null)
-                {
-                    return 0;
-                }
-
-                return producto.variantes.Sum(v => v.stock);
+                var resultado = this.clienteSOAP.calcularStockTotalProducto(productoId);
+                return resultado ?? 0;
             }
             catch (Exception ex)
             {
@@ -185,11 +169,8 @@ namespace KawkiWebBusiness
                     return new List<productoDTO>();
                 }
 
-                var todosLosProductos = this.ListarTodos();
-                
-                return todosLosProductos
-                    .Where(p => p.categoria != null && p.categoria.categoria_id == categoriaId)
-                    .ToList();
+                var lista = this.clienteSOAP.listarPorCategoriaProducto(categoriaId);
+                return lista ?? new List<productosDTO>();
             }
             catch (Exception ex)
             {
@@ -203,16 +184,13 @@ namespace KawkiWebBusiness
         {
             try
             {
-                if (estidloId == null || estiloId <= 0)
+                if (estiloId == null || estiloId <= 0)
                 {
                     return new List<productoDTO>();
                 }
 
-                var todosLosProductos = this.ListarTodos();
-                
-                return todosLosProductos
-                    .Where(p => p.estilo != null && p.estilo.estilo_id == estiloId)
-                    .ToList();
+                var lista = this.clienteSOAP.listarPorEstiloProducto(estiloId);
+                return lista ?? new List<productosDTO>();
             }
             catch (Exception ex)
             {
@@ -226,12 +204,8 @@ namespace KawkiWebBusiness
         {
             try
             {
-                var todosLosProductos = this.ListarTodos();
-                
-                return todosLosProductos
-                    .Where(p => p.variantes != null && 
-                                p.variantes.Any(v => v.alerta_stock))
-                    .ToList();
+                var lista = this.clienteSOAP.listarConStockBajoProducto();
+                return lista ?? new List<productosDTO>();
             }
             catch (Exception ex)
             {
@@ -240,23 +214,5 @@ namespace KawkiWebBusiness
             }
         }
 
-        /// Lista productos con stock disponible
-        public IList<productoDTO> ListarConStock()
-        {
-            try
-            {
-                var todosLosProductos = this.ListarTodos();
-                
-                return todosLosProductos
-                    .Where(p => p.variantes != null && 
-                                p.variantes.Any(v => v.stock > 0))
-                    .ToList();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al listar productos con stock: {ex.Message}");
-                return new List<productoDTO>();
-            }
-        }
     }
 }
