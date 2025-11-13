@@ -453,3 +453,19 @@ INSERT INTO TIPOS_MOVIMIENTO (nombre) VALUES
 ('Ingreso'),
 ('Salida'),
 ('Ajuste');
+
+INSERT INTO USUARIOS (
+    NOMBRE, APE_PATERNO, DNI, TELEFONO, CORREO, 
+    NOMBRE_USUARIO, CONTRASENHA, FECHA_HORA_CREACION, TIPO_USUARIO_ID
+) VALUES
+-- Vendedor 1
+('Juan', 'Bazán', '77045687', '910789123', 'juan@kawki.com', 'juanba', '20216686', NOW(), 1),
+
+-- Vendedor 2
+('Helen', 'Castillo', '74258741', '986521478', 'helen@kawki.com', 'helencast', '20202079', NOW(), 1),
+
+-- Administrador 1
+('Fabio', 'Ingaruca ', '75412365', '985963214', 'fabio@kawki.com', 'fabioinga', '20216590', NOW(), 2),
+
+-- Administrador 2
+('Angelina ', 'Fernandez ', '74859632', '984712365', 'angelina@kawki.com', 'angelinafer', '20212667', NOW(), 2);
