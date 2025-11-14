@@ -7,6 +7,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using KawkiWebBusiness;
 using KawkiWebBusiness.KawkiWebWSProductos;
+using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO;
+using coloresDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO;
+using tallasDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO;
 
 namespace KawkiWeb
 {
@@ -105,6 +108,7 @@ namespace KawkiWeb
             return html;
         }
 
+        
         private void CargarProductos()
         {
             try
@@ -112,8 +116,8 @@ namespace KawkiWeb
                 // Obtener TODOS los productos inicialmente
                 IList<productosDTO> productos = productosBO.ListarTodos();
 
-                System.Diagnostics.Debug.WriteLine("========== INICIO DEBUG ==========");
-                System.Diagnostics.Debug.WriteLine($"Productos iniciales: {productos?.Count ?? 0}");
+                // Traer todas las variantes desde la tabla productos_variantes
+                var todasLasVariantes = variantesBO.ListarTodos();
 
                 if (productos == null || productos.Count == 0)
                 {
@@ -258,7 +262,7 @@ namespace KawkiWeb
                 System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
                 MostrarSinProductos();
             }
-        }
+        } 
 
         private DataTable ConvertirProductosADataTable(IList<productosDTO> productos)
         {
@@ -447,4 +451,4 @@ namespace KawkiWeb
             return html;
         }
     }
-}
+} 
