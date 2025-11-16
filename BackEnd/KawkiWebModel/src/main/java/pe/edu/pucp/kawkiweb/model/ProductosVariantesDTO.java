@@ -23,6 +23,7 @@ public class ProductosVariantesDTO {
     private TallasDTO talla;
     private String url_imagen;
     private Boolean disponible;
+    private UsuariosDTO usuario;
 //    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_creacion;
 
@@ -30,8 +31,7 @@ public class ProductosVariantesDTO {
         ProductosVariantesDTO.cantidadProdVariantes++;
 
         this.prod_variante_id = null;
-        this.SKU = String.format("%04d", this.prod_variante_id) + '-' + talla
-                + '-' + color;
+        this.SKU = null;
         this.stock = null;
         this.stock_minimo = null;
         this.alerta_stock = null;
@@ -40,6 +40,7 @@ public class ProductosVariantesDTO {
         this.talla = null;
         this.url_imagen = null;
         this.disponible = null;
+        this.usuario = null;
         this.fecha_hora_creacion = LocalDateTime.now();
     }
 
@@ -52,7 +53,8 @@ public class ProductosVariantesDTO {
             ColoresDTO color,
             TallasDTO talla,
             String url_imagen,
-            Boolean disponible) {
+            Boolean disponible,
+            UsuariosDTO usuario) {
 
         this.prod_variante_id = prod_variante_id;
         this.SKU = String.format("%04d", this.prod_variante_id) + '-' + talla
@@ -65,6 +67,7 @@ public class ProductosVariantesDTO {
         this.talla = talla;
         this.url_imagen = url_imagen;
         this.disponible = disponible;
+        this.usuario = usuario;
         this.fecha_hora_creacion = LocalDateTime.now();
     }
 
@@ -79,6 +82,7 @@ public class ProductosVariantesDTO {
         this.talla = prodVariante.talla;
         this.url_imagen = prodVariante.url_imagen;
         this.disponible = prodVariante.disponible;
+        this.usuario = prodVariante.usuario;
         this.fecha_hora_creacion = prodVariante.fecha_hora_creacion;
     }
 
@@ -204,6 +208,14 @@ public class ProductosVariantesDTO {
 
     public static void setCantidadProdVariantes(Integer aCantidadProdVariantes) {
         cantidadProdVariantes = aCantidadProdVariantes;
+    }
+
+    public UsuariosDTO getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuariosDTO usuario) {
+        this.usuario = usuario;
     }
 
 }

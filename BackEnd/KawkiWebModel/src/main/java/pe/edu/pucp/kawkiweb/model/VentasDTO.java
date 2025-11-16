@@ -2,6 +2,7 @@ package pe.edu.pucp.kawkiweb.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import pe.edu.pucp.kawkiweb.model.utilVenta.RedesSocialesDTO;
 
 //import jakarta.xml.bind.annotation.XmlRootElement;
 //import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -17,6 +18,7 @@ public class VentasDTO {
     private LocalDateTime fecha_hora_creacion;
     private Double total;
     private DescuentosDTO descuento;
+    private RedesSocialesDTO redSocial;
     private List<DetalleVentasDTO> detalles;
 
     //CONSTRUCTORES:
@@ -26,17 +28,20 @@ public class VentasDTO {
         this.fecha_hora_creacion = LocalDateTime.now();
         this.total = null;
         this.descuento = null;
+        this.redSocial = null;
         this.detalles = null;
     }
 
     public VentasDTO(Integer venta_id, UsuariosDTO usuario, Double total,
-            DescuentosDTO descuento, List<DetalleVentasDTO> detalles) {
+            DescuentosDTO descuento, RedesSocialesDTO redSocial,
+            List<DetalleVentasDTO> detalles) {
 
         this.venta_id = venta_id;
         this.usuario = usuario;
         this.fecha_hora_creacion = LocalDateTime.now();
         this.total = total;
         this.descuento = descuento;
+        this.redSocial = redSocial;
         this.detalles = detalles;
     }
 
@@ -47,6 +52,7 @@ public class VentasDTO {
         this.fecha_hora_creacion = venta.fecha_hora_creacion;
         this.total = venta.total;
         this.descuento = venta.descuento;
+        this.redSocial = venta.redSocial;
         this.detalles = venta.detalles;
     }
 
@@ -114,6 +120,14 @@ public class VentasDTO {
 
     public void setDetalles(List<DetalleVentasDTO> detalles) {
         this.detalles = detalles;
+    }
+
+    public RedesSocialesDTO getRedSocial() {
+        return redSocial;
+    }
+
+    public void setRedSocial(RedesSocialesDTO redSocial) {
+        this.redSocial = redSocial;
     }
 
 }

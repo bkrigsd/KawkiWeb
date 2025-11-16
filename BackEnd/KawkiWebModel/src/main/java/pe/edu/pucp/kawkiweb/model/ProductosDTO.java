@@ -19,6 +19,7 @@ public class ProductosDTO {
     private Double precio_venta;
 //    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_creacion;
+    private UsuariosDTO usuario;
     private List<ProductosVariantesDTO> variantes;
 
     public ProductosDTO() {
@@ -28,6 +29,7 @@ public class ProductosDTO {
         this.estilo = null;
         this.precio_venta = 0.0;
         this.fecha_hora_creacion = LocalDateTime.now();
+        this.usuario = null;
         this.variantes = null;
     }
 
@@ -37,6 +39,7 @@ public class ProductosDTO {
             CategoriasDTO categoria,
             EstilosDTO estilo,
             Double precio_venta,
+            UsuariosDTO usuario,
             List<ProductosVariantesDTO> variantes) {
 
         this.producto_id = producto_id;
@@ -45,6 +48,7 @@ public class ProductosDTO {
         this.estilo = estilo;
         this.precio_venta = precio_venta;
         this.fecha_hora_creacion = LocalDateTime.now();
+        this.usuario = usuario;
         this.variantes = variantes;
     }
 
@@ -55,6 +59,7 @@ public class ProductosDTO {
         this.estilo = producto.estilo;
         this.precio_venta = producto.precio_venta;
         this.fecha_hora_creacion = producto.fecha_hora_creacion;
+        this.usuario = producto.usuario;
         this.variantes = producto.variantes;
     }
 
@@ -126,4 +131,13 @@ public class ProductosDTO {
     public void setVariantes(List<ProductosVariantesDTO> variantes) {
         this.variantes = variantes;
     }
+
+    public UsuariosDTO getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuariosDTO usuario) {
+        this.usuario = usuario;
+    }
+
 }
