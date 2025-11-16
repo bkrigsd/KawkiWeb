@@ -132,13 +132,6 @@ namespace KawkiWeb
                 string talla = ddlTalla.SelectedValue;
                 string busqueda = txtBuscar.Text.Trim();
 
-                System.Diagnostics.Debug.WriteLine($"Filtros seleccionados:");
-                System.Diagnostics.Debug.WriteLine($"  - Categoria: '{categoria}'");
-                System.Diagnostics.Debug.WriteLine($"  - Estilo: '{estilo}'");
-                System.Diagnostics.Debug.WriteLine($"  - Color: '{color}'");
-                System.Diagnostics.Debug.WriteLine($"  - Talla: '{talla}'");
-                System.Diagnostics.Debug.WriteLine($"  - Busqueda: '{busqueda}'");
-
                 // Crear una lista para filtrar
                 List<productosDTO> productosFiltrados = productos.ToList();
 
@@ -146,7 +139,6 @@ namespace KawkiWeb
                 if (!string.IsNullOrEmpty(categoria))
                 {
                     int categoriaId = ObtenerCategoriaIdPorNombre(categoria);
-                    System.Diagnostics.Debug.WriteLine($"CategoriaId obtenido: {categoriaId}");
 
                     if (categoriaId > 0)
                     {
@@ -154,7 +146,6 @@ namespace KawkiWeb
                             .Where(p => p.categoria != null && p.categoria.categoria_id == categoriaId)
                             .ToList();
                     }
-                    System.Diagnostics.Debug.WriteLine($"Después filtro categoría: {productosFiltrados.Count}");
                 }
 
                 // FILTRO 2: Estilo
