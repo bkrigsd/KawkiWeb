@@ -1,95 +1,111 @@
 package pe.edu.pucp.kawkiWeb.db;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pe.edu.pucp.kawkiWeb.db.util.Cifrado;
+import pe.edu.pucp.kawkiWeb.db.util.MotorDeBaseDeDatos;
 
-public class DBManager {
+public abstract class DBManager {
 
-    //final hace referencia a que es un valor constante
     private static final String ARCHIVO_CONFIGURACION = "jdbc.properties";
+
     private Connection conexion;
     private String driver;
-    private String tipo_de_driver;
-    private String base_de_datos;
-    private String nombre_del_host;
-    private String puerto;
+    protected String tipo_de_driver;
+    protected String base_de_datos;
+    protected String nombre_de_host;
+    protected String puerto;
     private String usuario;
     private String contraseña;
-    private static DBManager dbmanager = null;
+    private static DBManager dbManager = null;
 
-    //No va haber métodos selectores, cómo le voy a dar la contraseña a alguien !!!
-    private DBManager() {
-        //No hace nada el constructor      
+    protected DBManager() {
+        //constructor protegido para evitar que se creen instancias.
+        //Solo se podrá crear una instancia y esta debe hacerse usando el 
+        //método getInstance()
     }
 
     public static DBManager getInstance() {
-        if (DBManager.dbmanager == null) {
-            DBManager.createInstance(); //createInstance es un metodo estático porque lo llama la clase.    
+        if (DBManager.dbManager == null) {
+            DBManager.createInstance();
         }
-        return DBManager.dbmanager;
+        return DBManager.dbManager;
     }
 
     private static void createInstance() {
-        if (DBManager.dbmanager == null) {
-            DBManager.dbmanager = new DBManager();
-            //Este es el mejor momento para leer los datos del archivo, crear la instancia con los valores.
-            DBManager.dbmanager.leer_archivo_de_propiedades();
+        if (DBManager.dbManager == null) {
+            if (DBManager.obtenerMotorDeBaseDeDatos() == MotorDeBaseDeDatos.MYSQL) {
+                DBManager.dbManager = new DBManagerMySQL();
+            } else {
+                DBManager.dbManager = new DBManagerMSSQL();
+            }
+            DBManager.dbManager.leer_archivo_de_propiedades();
         }
     }
 
     public Connection getConnection() {
         try {
             Class.forName(this.driver);
-            try {
-                this.conexion = DriverManager.getConnection(this.getURL(), this.usuario, Cifrado.descifrarMD5(this.contraseña));
-            } catch (SQLException ex) {
-                Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            //System.out.println(this.usuario);
+            //System.out.println(this.contraseña);
+            //System.out.println(Cifrado.descifrarMD5(this.contraseña));
+            this.conexion = DriverManager.getConnection(getURL(), this.usuario, Cifrado.descifrarMD5(this.contraseña));
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.err.println("Error al generar la conexión - " + ex);
         }
-        return this.conexion;
+        return conexion;
     }
 
+    protected abstract String getURL();
+
+    public abstract String retornarSQLParaUltimoAutoGenerado();
+
     private void leer_archivo_de_propiedades() {
-        // en el caso de "/" hace referencia a la raiz de los archivos de recursos
-        // El archivo se encuentra en la carpeta de resources, por eso se agrega el /     
-        String nomArchConf = "/" + ARCHIVO_CONFIGURACION;
         Properties properties = new Properties();
         try {
-            properties.load(this.getClass().getResourceAsStream(nomArchConf));
+            //el siguiente código ha sido probado en MAC
+            //el archivo de configuración se encuentra en la carpeta src/main/resources/jdbc.properties            
+            String nmArchivoConf = "/" + ARCHIVO_CONFIGURACION;
+
+            properties.load(this.getClass().getResourceAsStream(nmArchivoConf));
             this.driver = properties.getProperty("driver");
             this.tipo_de_driver = properties.getProperty("tipo_de_driver");
             this.base_de_datos = properties.getProperty("base_de_datos");
-            this.nombre_del_host = properties.getProperty("nombre_de_host");
+            this.nombre_de_host = properties.getProperty("nombre_de_host");
             this.puerto = properties.getProperty("puerto");
             this.usuario = properties.getProperty("usuario");
             this.contraseña = properties.getProperty("contrasenha");
-
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error al leer el archivo de propiedades - " + ex);
         } catch (IOException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al leer el archivo de propiedades - " + ex);
         }
     }
 
-    //Es el método que nos va a formar esa URL
-    //Con esta URL, el driver puede conectar con la base de datos
-    private String getURL() {
+    private static MotorDeBaseDeDatos obtenerMotorDeBaseDeDatos() {
+        Properties properties = new Properties();
+        try {
+            //el siguiente código ha sido probado en MAC
+            //el archivo de configuración se encuentra en la carpeta src/main/resources/jdbc.properties            
+            String nmArchivoConf = "/" + ARCHIVO_CONFIGURACION;
 
-        String url = this.tipo_de_driver.concat("://");
-        url = url.concat(this.nombre_del_host);
-        url = url.concat(":");
-        url = url.concat(this.puerto);
-        url = url.concat("/");
-        url = url.concat(this.base_de_datos);
-        url = url.concat("?useSSL=false");
-        return url;
-
+            properties.load(DBManager.class.getResourceAsStream(nmArchivoConf));
+            String tipo_de_driver = properties.getProperty("tipo_de_driver");
+            if (tipo_de_driver.equals("jdbc:mysql")) {
+                return MotorDeBaseDeDatos.MYSQL;
+            } else {
+                return MotorDeBaseDeDatos.MSSQL;
+            }
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error al leer el archivo de propiedades - " + ex);
+        } catch (IOException ex) {
+            System.err.println("Error al leer el archivo de propiedades - " + ex);
+        }
+        return null;
     }
 
 }
