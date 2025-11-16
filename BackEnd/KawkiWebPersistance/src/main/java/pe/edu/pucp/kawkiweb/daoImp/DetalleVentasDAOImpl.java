@@ -3,6 +3,7 @@ package pe.edu.pucp.kawkiweb.daoImp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
@@ -119,23 +120,30 @@ public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDA
 
     // BÚSQUEDAS AVANZADAS
     
+    /*
+    * Este método usa un stored procedure para obtener todos los detalles
+    * de una venta específica.
+    * - Se llama automáticamente desde VentasDAOImpl.instanciarObjetoDelResultSet()
+    * - Carga la lista de productos vendidos en cada VentasDTO
+     */
     @Override
     public ArrayList<DetalleVentasDTO> listarPorVentaId(Integer ventaId) {
-        String sql = "SELECT DETALLE_VENTA_ID, CANTIDAD, PRECIO_UNITARIO, "
-                + "SUBTOTAL, VENTA_ID, PROD_VARIANTE_ID "
-                + "FROM DETALLE_VENTAS "
-                + "WHERE VENTA_ID = ?";
 
-        return (ArrayList<DetalleVentasDTO>) super.listarTodos(
-                sql,
-                (params) -> {
-                    try {
-                        this.statement.setInt(1, ventaId);
-                    } catch (SQLException ex) {
-                        System.err.println("Error al setear parámetro pedidoId: " + ex);
-                    }
-                },
-                null
+        // Consumer para setear el parámetro de entrada
+        Consumer<Integer> incluirParametros = (id) -> {
+            try {
+                this.statement.setInt(1, id);
+            } catch (SQLException ex) {
+                System.err.println("Error al setear parámetro ventaId: " + ex);
+            }
+        };
+
+        // Ejecuta el procedimiento almacenado que retorna múltiples registros
+        return (ArrayList<DetalleVentasDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_DETALLES_POR_VENTA",
+                1, // Cantidad de parámetros (solo ventaId)
+                incluirParametros,
+                ventaId
         );
     }
 }

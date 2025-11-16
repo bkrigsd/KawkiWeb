@@ -59,9 +59,9 @@ public class DetalleVentasDAOTest {
     @BeforeEach
     void prepararContexto() {
         eliminarTodo();
+        prepararUsuarioBase();
         prepararProductoBase();
         prepararProductoVarBase();
-        prepararUsuarioBase();
         prepararDescuentoBase();
         prepararVentaBase();
     }
@@ -72,6 +72,25 @@ public class DetalleVentasDAOTest {
         eliminarTodo();
     }
 
+    private void prepararUsuarioBase() {
+        this.usuarioDTO = new UsuariosDTO();
+        this.usuarioDTO.setNombre("David");
+        this.usuarioDTO.setApePaterno("Espinoza");
+        this.usuarioDTO.setDni("71932031");
+        this.usuarioDTO.setTelefono("993294837");
+        this.usuarioDTO.setCorreo("david@test.com");
+        this.usuarioDTO.setNombreUsuario("david04");
+        this.usuarioDTO.setContrasenha("gato");
+        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
+        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
+                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
+        this.usuarioDTO.setActivo(Boolean.TRUE);
+
+        Integer resultado = this.usuarioDAO.insertar(this.usuarioDTO);
+        this.usuarioDTO.setUsuarioId(resultado);
+        assertTrue(resultado != 0);
+    }
+    
     private void prepararProductoBase() {
         this.productoDTO = new ProductosDTO();
         this.productoDTO.setDescripcion("Producto prueba");
@@ -114,25 +133,6 @@ public class DetalleVentasDAOTest {
         assertTrue(resultado != 0);
     }
 
-    private void prepararUsuarioBase() {
-        this.usuarioDTO = new UsuariosDTO();
-        this.usuarioDTO.setNombre("David");
-        this.usuarioDTO.setApePaterno("Espinoza");
-        this.usuarioDTO.setDni("71932031");
-        this.usuarioDTO.setTelefono("993294837");
-        this.usuarioDTO.setCorreo("david@test.com");
-        this.usuarioDTO.setNombreUsuario("david04");
-        this.usuarioDTO.setContrasenha("gato");
-        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
-        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
-                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
-
-        Integer resultado = this.usuarioDAO.insertar(this.usuarioDTO);
-        this.usuarioDTO.setUsuarioId(resultado);
-        assertTrue(resultado != 0);
-    }
-
-    //promocion ejemplo:
     private void prepararDescuentoBase() {
         this.descuentoDTO = new DescuentosDTO();
         this.descuentoDTO.setDescripcion("Promoción Prueba pedido");

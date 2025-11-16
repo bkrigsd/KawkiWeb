@@ -3,6 +3,7 @@ package pe.edu.pucp.kawkiweb.daoImp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
@@ -165,27 +166,6 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
     }
 
     @Override
-    public ArrayList<ProductosVariantesDTO> listarPorProductoId(Integer productoId) {
-        String sql = "SELECT PROD_VARIANTE_ID, SKU, STOCK, STOCK_MINIMO, "
-                + "ALERTA_STOCK, PRODUCTO_ID, COLOR_ID, TALLA_ID, "
-                + "URL_IMAGEN, FECHA_HORA_CREACION, DISPONIBLE"
-                + "FROM PRODUCTOS_VARIANTES "
-                + "WHERE PRODUCTO_ID = ?";
-
-        return (ArrayList<ProductosVariantesDTO>) super.listarTodos(
-                sql,
-                (params) -> {
-                    try {
-                        this.statement.setInt(1, productoId);
-                    } catch (SQLException ex) {
-                        System.err.println("Error al setear parámetro productoId: " + ex);
-                    }
-                },
-                null
-        );
-    }
-
-    @Override
     public Integer modificar(ProductosVariantesDTO prodVariante) {
         this.prodVariante = prodVariante;
         return super.modificar();
@@ -195,6 +175,34 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
     public Integer eliminar(ProductosVariantesDTO prodVariante) {
         this.prodVariante = prodVariante;
         return super.eliminar();
+    }
+
+    //BÚSQUEDAS AVANZADAS
+    /*
+    * Este método usa un stored procedure para obtener todas las variantes
+    * (combinaciones de color y talla) de un producto específico.
+    * - Se llama automáticamente desde ProductosDAOImpl.instanciarObjetoDelResultSet()
+    * - Carga la lista de variantes disponibles en cada ProductosDTO
+     */
+    @Override
+    public ArrayList<ProductosVariantesDTO> listarPorProductoId(Integer productoId) {
+
+        // Consumer para setear el parámetro de entrada
+        Consumer<Integer> incluirParametros = (id) -> {
+            try {
+                this.statement.setInt(1, id);
+            } catch (SQLException ex) {
+                System.err.println("Error al setear parámetro productoId: " + ex);
+            }
+        };
+
+        // Ejecuta el procedimiento almacenado que retorna múltiples registros
+        return (ArrayList<ProductosVariantesDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_VARIANTES_POR_PRODUCTO",
+                1, // Cantidad de parámetros (solo productoId)
+                incluirParametros,
+                productoId
+        );
     }
 
 }
