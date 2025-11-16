@@ -19,6 +19,7 @@ public class VentasDTO {
     private Double total;
     private DescuentosDTO descuento;
     private RedesSocialesDTO redSocial;
+    private Boolean esValida;
     private List<DetalleVentasDTO> detalles;
 
     //CONSTRUCTORES:
@@ -29,12 +30,13 @@ public class VentasDTO {
         this.total = null;
         this.descuento = null;
         this.redSocial = null;
+        this.esValida = null;
         this.detalles = null;
     }
 
     public VentasDTO(Integer venta_id, UsuariosDTO usuario, Double total,
             DescuentosDTO descuento, RedesSocialesDTO redSocial,
-            List<DetalleVentasDTO> detalles) {
+            Boolean esValida, List<DetalleVentasDTO> detalles) {
 
         this.venta_id = venta_id;
         this.usuario = usuario;
@@ -42,6 +44,7 @@ public class VentasDTO {
         this.total = total;
         this.descuento = descuento;
         this.redSocial = redSocial;
+        this.esValida = esValida;
         this.detalles = detalles;
     }
 
@@ -53,6 +56,7 @@ public class VentasDTO {
         this.total = venta.total;
         this.descuento = venta.descuento;
         this.redSocial = venta.redSocial;
+        this.esValida = venta.esValida;
         this.detalles = venta.detalles;
     }
 
@@ -128,6 +132,14 @@ public class VentasDTO {
 
     public void setRedSocial(RedesSocialesDTO redSocial) {
         this.redSocial = redSocial;
+    }
+
+    public Boolean getEsValida() {
+        return esValida;
+    }
+
+    public void setEsValida(Boolean esValida) {
+        this.esValida = esValida;
     }
 
 }

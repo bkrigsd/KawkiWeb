@@ -248,7 +248,7 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
         // Ejecuta el procedimiento almacenado
         // El nombre del SP es el mismo para MySQL y SQL Server
         super.ejecutarConsultaProcedimiento(
-                "SP_OBTENER_COMPROBANTE_MAS_RECIENTE_POR_VENTA",
+                "SP_OBTENER_COMPROBANTE_POR_VENTA",
                 1, // Cantidad de parámetros (solo ventaId)
                 incluirParametros,
                 ventaId

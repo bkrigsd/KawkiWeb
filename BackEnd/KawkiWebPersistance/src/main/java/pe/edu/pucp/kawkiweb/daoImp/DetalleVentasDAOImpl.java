@@ -106,6 +106,20 @@ public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDA
     }
 
     @Override
+    public Integer modificar(DetalleVentasDTO detalleVenta) {
+        this.detalleVenta = detalleVenta;
+        return super.modificar();
+    }
+
+    @Override
+    public Integer eliminar(DetalleVentasDTO detalleVenta) {
+        this.detalleVenta = detalleVenta;
+        return super.eliminar();
+    }
+
+    // BÚSQUEDAS AVANZADAS
+    
+    @Override
     public ArrayList<DetalleVentasDTO> listarPorVentaId(Integer ventaId) {
         String sql = "SELECT DETALLE_VENTA_ID, CANTIDAD, PRECIO_UNITARIO, "
                 + "SUBTOTAL, VENTA_ID, PROD_VARIANTE_ID "
@@ -124,17 +138,4 @@ public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDA
                 null
         );
     }
-
-    @Override
-    public Integer modificar(DetalleVentasDTO detalleVenta) {
-        this.detalleVenta = detalleVenta;
-        return super.modificar();
-    }
-
-    @Override
-    public Integer eliminar(DetalleVentasDTO detalleVenta) {
-        this.detalleVenta = detalleVenta;
-        return super.eliminar();
-    }
-
 }
