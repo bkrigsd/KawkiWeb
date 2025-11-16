@@ -10,8 +10,10 @@ import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.dao.DescuentosDAO;
 import pe.edu.pucp.kawkiweb.dao.DetalleVentasDAO;
+import pe.edu.pucp.kawkiweb.dao.RedesSocialesDAO;
 import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
 import pe.edu.pucp.kawkiweb.dao.VentasDAO;
+import pe.edu.pucp.kawkiweb.model.utilVenta.RedesSocialesDTO;
 
 public class VentasDAOImpl extends BaseDAOImpl implements VentasDAO {
 
@@ -19,6 +21,7 @@ public class VentasDAOImpl extends BaseDAOImpl implements VentasDAO {
     private UsuariosDAO usuarioDAO;
     private DescuentosDAO descuentoDAO;
     private DetalleVentasDAO detalleVentaDAO;
+    private RedesSocialesDAO redSocialDAO;
 
     public VentasDAOImpl() {
         super("VENTAS");
@@ -27,15 +30,17 @@ public class VentasDAOImpl extends BaseDAOImpl implements VentasDAO {
         this.usuarioDAO = new UsuariosDAOImpl();
         this.descuentoDAO = new DescuentosDAOImpl();
         this.detalleVentaDAO = new DetalleVentasDAOImpl();
+        this.redSocialDAO = new RedesSocialesDAOImpl();
     }
 
     @Override
     protected void configurarListaDeColumnas() {
         this.listaColumnas.add(new Columna("VENTA_ID", true, true));
         this.listaColumnas.add(new Columna("USUARIO_ID", false, false));
-        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false));
+        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false, false));
         this.listaColumnas.add(new Columna("TOTAL", false, false));
         this.listaColumnas.add(new Columna("DESCUENTO_ID", false, false));
+        this.listaColumnas.add(new Columna("RED_SOCIAL_ID", false, false));
     }
 
     @Override
@@ -50,21 +55,23 @@ public class VentasDAOImpl extends BaseDAOImpl implements VentasDAO {
         } else {
             this.statement.setNull(4, java.sql.Types.INTEGER);
         }
+
+        this.statement.setInt(5, venta.getRedSocial().getRedSocialId());
     }
 
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException {
         this.statement.setInt(1, this.venta.getUsuario().getUsuarioId());
-        this.statement.setTimestamp(2, java.sql.Timestamp.valueOf(this.venta.getFecha_hora_creacion()));
-        this.statement.setDouble(3, this.venta.getTotal());
+        this.statement.setDouble(2, this.venta.getTotal());
 
         DescuentosDTO descuento = this.venta.getDescuento();
         if (descuento != null && descuento.getDescuento_id() != null) {
-            this.statement.setInt(4, descuento.getDescuento_id());
+            this.statement.setInt(3, descuento.getDescuento_id());
         } else {
-            this.statement.setNull(4, java.sql.Types.INTEGER);
+            this.statement.setNull(3, java.sql.Types.INTEGER);
         }
 
+        this.statement.setInt(4, this.venta.getRedSocial().getRedSocialId());
         this.statement.setInt(5, this.venta.getVenta_id());
     }
 
@@ -102,9 +109,18 @@ public class VentasDAOImpl extends BaseDAOImpl implements VentasDAO {
             this.venta.setDescuento(null);
         }
 
-        // Cargar automáticamente los detalles del venta
-        ArrayList<DetalleVentasDTO> detalles = 
-                this.detalleVentaDAO.listarPorVentaId(this.venta.getVenta_id());
+        // Obtener Red Social completa usando DAO (puede ser null)
+        Integer red_social_id = (Integer) this.resultSet.getObject("RED_SOCIAL_ID");
+        if (red_social_id != null) {
+            RedesSocialesDTO redSocial = this.redSocialDAO.obtenerPorId(red_social_id);
+            this.venta.setRedSocial(redSocial);
+        } else {
+            this.venta.setRedSocial(null);
+        }
+
+        // Cargar automáticamente los detalles de la venta
+        ArrayList<DetalleVentasDTO> detalles
+                = this.detalleVentaDAO.listarPorVentaId(this.venta.getVenta_id());
         this.venta.setDetalles(detalles);
     }
 

@@ -10,17 +10,17 @@ import pe.edu.pucp.kawkiweb.dao.TiposUsuarioDAO;
 import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
 
 public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
-
+    
     private UsuariosDTO usuario;
     private TiposUsuarioDAO tipoUsuarioDAO;
-
+    
     public UsuariosDAOImpl() {
         super("USUARIOS");
         this.usuario = null;
         this.retornarLlavePrimaria = true;
         this.tipoUsuarioDAO = new TiposUsuarioDAOImpl();
     }
-
+    
     @Override
     protected void configurarListaDeColumnas() {
         this.listaColumnas.add(new Columna("USUARIO_ID", true, true));
@@ -31,10 +31,11 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         this.listaColumnas.add(new Columna("CORREO", false, false));
         this.listaColumnas.add(new Columna("NOMBRE_USUARIO", false, false));
         this.listaColumnas.add(new Columna("CONTRASENHA", false, false));
-        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false));
+        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false, false));
         this.listaColumnas.add(new Columna("TIPO_USUARIO_ID", false, false));
+        this.listaColumnas.add(new Columna("ACTIVO", false, false));
     }
-
+    
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
         this.statement.setString(1, this.usuario.getNombre());
@@ -46,8 +47,9 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         this.statement.setString(7, this.usuario.getContrasenha());
         this.statement.setTimestamp(8, java.sql.Timestamp.valueOf(this.usuario.getFechaHoraCreacion()));
         this.statement.setInt(9, this.usuario.getTipoUsuario().getTipoUsuarioId());
+        this.statement.setInt(10, this.usuario.getActivo() ? 1 : 0);
     }
-
+    
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException {
         this.statement.setString(1, this.usuario.getNombre());
@@ -57,21 +59,21 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         this.statement.setString(5, this.usuario.getCorreo());
         this.statement.setString(6, this.usuario.getNombreUsuario());
         this.statement.setString(7, this.usuario.getContrasenha());
-        this.statement.setTimestamp(8, java.sql.Timestamp.valueOf(this.usuario.getFechaHoraCreacion()));
-        this.statement.setInt(9, this.usuario.getTipoUsuario().getTipoUsuarioId());
+        this.statement.setInt(8, this.usuario.getTipoUsuario().getTipoUsuarioId());
+        this.statement.setInt(9, this.usuario.getActivo() ? 1 : 0);
         this.statement.setInt(10, this.usuario.getUsuarioId());
     }
-
+    
     @Override
     protected void incluirValorDeParametrosParaEliminacion() throws SQLException {
         this.statement.setInt(1, this.usuario.getUsuarioId());
     }
-
+    
     @Override
     protected void incluirValorDeParametrosParaObtenerPorId() throws SQLException {
         this.statement.setInt(1, this.usuario.getUsuarioId());
     }
-
+    
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
         this.usuario = new UsuariosDTO();
@@ -89,25 +91,28 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         Integer tipoUsuarioId = this.resultSet.getInt("TIPO_USUARIO_ID");
         TiposUsuarioDTO tipoUsuario = this.tipoUsuarioDAO.obtenerPorId(tipoUsuarioId);
         this.usuario.setTipoUsuario(tipoUsuario);
+        
+        Boolean activo = (Boolean) this.resultSet.getObject("ACTIVO");
+        this.usuario.setActivo(activo);
     }
-
+    
     @Override
     protected void limpiarObjetoDelResultSet() {
         this.usuario = null;
     }
-
+    
     @Override
     protected void agregarObjetoALaLista(List lista) throws SQLException {
         this.instanciarObjetoDelResultSet();
         lista.add(this.usuario);
     }
-
+    
     @Override
     public Integer insertar(UsuariosDTO usuario) {
         this.usuario = usuario;
         return super.insertar();
     }
-
+    
     @Override
     public UsuariosDTO obtenerPorId(Integer usuarioId) {
         this.usuario = new UsuariosDTO();
@@ -115,18 +120,18 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         super.obtenerPorId();
         return this.usuario;
     }
-
+    
     @Override
     public ArrayList<UsuariosDTO> listarTodos() {
         return (ArrayList<UsuariosDTO>) super.listarTodos();
     }
-
+    
     @Override
     public Integer modificar(UsuariosDTO usuario) {
         this.usuario = usuario;
         return super.modificar();
     }
-
+    
     @Override
     public Integer eliminar(UsuariosDTO usuario) {
         this.usuario = usuario;

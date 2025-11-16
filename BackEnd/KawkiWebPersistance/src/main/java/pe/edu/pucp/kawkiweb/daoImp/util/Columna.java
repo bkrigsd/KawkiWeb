@@ -1,61 +1,58 @@
-
-
 package pe.edu.pucp.kawkiweb.daoImp.util;
 
-
 public class Columna {
+
     private String nombre;
     private Boolean esLlavePrimaria;
     private Boolean esAutoGenerado;
+    private Boolean esModificable; // Nueva propiedad
 
     public Columna(String nombre, Boolean esLlavePrimaria, Boolean esAutoGenerado) {
         this.nombre = nombre;
         this.esLlavePrimaria = esLlavePrimaria;
         this.esAutoGenerado = esAutoGenerado;
+        this.esModificable = true; // Por defecto todas las columnas son modificables
     }
 
-    /**
-     * @return the nombre
-     */
+    // Constructor completo con el nuevo parámetro
+    public Columna(String nombre, Boolean esLlavePrimaria, Boolean esAutoGenerado, 
+            Boolean esModificable) {
+        
+        this.nombre = nombre;
+        this.esLlavePrimaria = esLlavePrimaria;
+        this.esAutoGenerado = esAutoGenerado;
+        this.esModificable = esModificable;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
-    /**
-     * @param nombre the nombre to set
-     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    /**
-     * @return the esLlavePrimaria
-     */
     public Boolean getEsLlavePrimaria() {
         return esLlavePrimaria;
     }
 
-    /**
-     * @param esLlavePrimaria the esLlavePrimaria to set
-     */
     public void setEsLlavePrimaria(Boolean esLlavePrimaria) {
         this.esLlavePrimaria = esLlavePrimaria;
     }
 
-    /**
-     * @return the esAutoGenerado
-     */
     public Boolean getEsAutoGenerado() {
         return esAutoGenerado;
     }
 
-    /**
-     * @param esAutoGenerado the esAutoGenerado to set
-     */
     public void setEsAutoGenerado(Boolean esAutoGenerado) {
         this.esAutoGenerado = esAutoGenerado;
     }
-    
-    
-    
+
+    public Boolean getEsModificable() {
+        return esModificable;
+    }
+
+    public void setEsModificable(Boolean esModificable) {
+        this.esModificable = esModificable;
+    }
 }

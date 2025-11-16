@@ -263,7 +263,7 @@ public class ComprobantesPagoDTO {
         contadorSerieBoleta = aContadorSerieBoleta;
     }
 
-    public static Double getIGV() {
+    public static Double getIGVConstante() {
         return IGV;
     }
 

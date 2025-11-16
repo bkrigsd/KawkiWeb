@@ -14,6 +14,8 @@ import pe.edu.pucp.kawkiweb.dao.CategoriasDAO;
 import pe.edu.pucp.kawkiweb.dao.EstilosDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
+import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
 
@@ -21,6 +23,7 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
     private CategoriasDAO categoriaDAO;
     private EstilosDAO estiloDAO;
     private ProductosVariantesDAO productoVarianteDAO;
+    private UsuariosDAO usuarioDAO;
 
     public ProductosDAOImpl() {
         super("PRODUCTOS");
@@ -29,6 +32,7 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         this.categoriaDAO = new CategoriasDAOImpl();
         this.estiloDAO = new EstilosDAOImpl();
         this.productoVarianteDAO = new ProductosVariantesDAOImpl();
+        this.usuarioDAO = new UsuariosDAOImpl();
     }
 
     @Override
@@ -38,7 +42,8 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         this.listaColumnas.add(new Columna("CATEGORIA_ID", false, false));
         this.listaColumnas.add(new Columna("ESTILO_ID", false, false));
         this.listaColumnas.add(new Columna("PRECIO_VENTA", false, false));
-        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false));
+        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false, false));
+        this.listaColumnas.add(new Columna("USUARIO_ID", false, false));
     }
 
     @Override
@@ -52,6 +57,7 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
             fecha = fecha.truncatedTo(ChronoUnit.MILLIS);
         }
         this.statement.setTimestamp(5, java.sql.Timestamp.valueOf(fecha));
+        this.statement.setInt(6, this.producto.getUsuario().getUsuarioId());
     }
 
     @Override
@@ -60,7 +66,7 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         this.statement.setInt(2, this.producto.getCategoria().getCategoria_id());
         this.statement.setInt(3, this.producto.getEstilo().getEstilo_id());
         this.statement.setDouble(4, this.producto.getPrecio_venta());
-        this.statement.setTimestamp(5, java.sql.Timestamp.valueOf(this.producto.getFecha_hora_creacion()));
+        this.statement.setInt(5, this.producto.getUsuario().getUsuarioId());
         this.statement.setInt(6, this.producto.getProducto_id());
     }
 
@@ -93,6 +99,10 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
                 this.resultSet.getTimestamp("FECHA_HORA_CREACION").toLocalDateTime()
         );
 
+        Integer usuario_id = this.resultSet.getInt("USUARIO_ID");
+        UsuariosDTO usuario = this.usuarioDAO.obtenerPorId(usuario_id);
+        this.producto.setUsuario(usuario);
+        
         // Cargar variantes
         ArrayList<ProductosVariantesDTO> variantes
                 = this.productoVarianteDAO.listarPorProductoId(this.producto.getProducto_id());

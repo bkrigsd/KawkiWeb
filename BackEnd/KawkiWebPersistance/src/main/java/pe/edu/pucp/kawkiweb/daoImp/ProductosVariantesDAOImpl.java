@@ -10,12 +10,15 @@ import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
 import pe.edu.pucp.kawkiweb.dao.ColoresDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
 import pe.edu.pucp.kawkiweb.dao.TallasDAO;
+import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosVariantesDAO {
 
     private ProductosVariantesDTO prodVariante;
     private ColoresDAO colorDAO;
     private TallasDAO tallaDAO;
+    private UsuariosDAO usuarioDAO;
 
     public ProductosVariantesDAOImpl() {
         super("PRODUCTOS_VARIANTES");
@@ -23,6 +26,7 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
         this.retornarLlavePrimaria = true;
         this.colorDAO = new ColoresDAOImpl();
         this.tallaDAO = new TallasDAOImpl();
+        this.usuarioDAO = new UsuariosDAOImpl();
     }
 
     @Override
@@ -36,8 +40,9 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
         this.listaColumnas.add(new Columna("COLOR_ID", false, false));
         this.listaColumnas.add(new Columna("TALLA_ID", false, false));
         this.listaColumnas.add(new Columna("URL_IMAGEN", false, false));
-        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false));
+        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false, false));
         this.listaColumnas.add(new Columna("DISPONIBLE", false, false));
+        this.listaColumnas.add(new Columna("USUARIO_ID", false, false));
     }
 
     @Override
@@ -60,6 +65,7 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
         }
         this.statement.setTimestamp(9, java.sql.Timestamp.valueOf(this.prodVariante.getFecha_hora_creacion()));
         this.statement.setInt(10, this.prodVariante.getDisponible() ? 1 : 0);
+        this.statement.setInt(11, this.prodVariante.getUsuario().getUsuarioId());
     }
 
     @Override
@@ -90,8 +96,8 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
         } else {
             this.statement.setNull(8, java.sql.Types.VARCHAR);
         }
-        this.statement.setTimestamp(9, java.sql.Timestamp.valueOf(this.prodVariante.getFecha_hora_creacion()));
-        this.statement.setInt(10, this.prodVariante.getDisponible() ? 1 : 0);
+        this.statement.setInt(9, this.prodVariante.getDisponible() ? 1 : 0);
+        this.statement.setInt(10, this.prodVariante.getUsuario().getUsuarioId());
         this.statement.setInt(11, this.prodVariante.getProd_variante_id());
     }
 
@@ -122,6 +128,10 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
 
         Boolean disponible = (Boolean) this.resultSet.getObject("DISPONIBLE");
         this.prodVariante.setDisponible(disponible);
+
+        Integer usuario_id = this.resultSet.getInt("USUARIO_ID");
+        UsuariosDTO usuario = this.usuarioDAO.obtenerPorId(usuario_id);
+        this.prodVariante.setUsuario(usuario);
     }
 
     @Override
