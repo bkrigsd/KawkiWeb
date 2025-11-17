@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import pe.edu.pucp.kawkiWeb.db.DBManager;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.daoImp.util.Tipo_DML;
+import pe.edu.pucp.kawkiweb.daoImp.util.Tipo_Operacion;
 
 public abstract class BaseDAOImpl {
 
@@ -72,47 +72,47 @@ public abstract class BaseDAOImpl {
     }
 
     protected Integer insertar() {
-        return this.ejecuta_DML(Tipo_DML.INSERTAR);
+        return this.ejecuta_DML(Tipo_Operacion.INSERTAR);
     }
 
     protected Integer modificar() {
-        return this.ejecuta_DML(Tipo_DML.MODIFICAR);
+        return this.ejecuta_DML(Tipo_Operacion.MODIFICAR);
     }
 
     protected Integer eliminar() {
-        return this.ejecuta_DML(Tipo_DML.ELIMINAR);
+        return this.ejecuta_DML(Tipo_Operacion.ELIMINAR);
     }
 
-    private Integer ejecuta_DML(Tipo_DML tipo_operacion) {
+    private Integer ejecuta_DML(Tipo_Operacion tipo_operacion) {
         Integer resultado = 0;
         try {
             this.iniciarTransaccion();
             String sql = null;
             switch (tipo_operacion) {
-                case Tipo_DML.INSERTAR:
+                case Tipo_Operacion.INSERTAR:
                     sql = this.generarSQLParaInsercion();
                     break;
-                case Tipo_DML.MODIFICAR:
+                case Tipo_Operacion.MODIFICAR:
                     sql = this.generarSQLParaModificacion();
                     break;
-                case Tipo_DML.ELIMINAR:
+                case Tipo_Operacion.ELIMINAR:
                     sql = this.generarSQLParaEliminacion();
                     break;
             }
             this.colocarSQLEnStatement(sql);
             switch (tipo_operacion) {
-                case Tipo_DML.INSERTAR:
+                case Tipo_Operacion.INSERTAR:
                     this.incluirValorDeParametrosParaInsercion();
                     break;
-                case Tipo_DML.MODIFICAR:
+                case Tipo_Operacion.MODIFICAR:
                     this.incluirValorDeParametrosParaModificacion();
                     break;
-                case Tipo_DML.ELIMINAR:
+                case Tipo_Operacion.ELIMINAR:
                     this.incluirValorDeParametrosParaEliminacion();
                     break;
             }
             resultado = this.ejecutarDMLEnBD();
-            if (this.retornarLlavePrimaria && tipo_operacion == Tipo_DML.INSERTAR) {
+            if (this.retornarLlavePrimaria && tipo_operacion == Tipo_Operacion.INSERTAR) {
                 resultado = this.retornarUltimoAutoGenerado();
             }
             this.comitarTransaccion();
@@ -268,7 +268,7 @@ public abstract class BaseDAOImpl {
     public Integer retornarUltimoAutoGenerado() {
         Integer resultado = null;
         try {
-            String sql = "select @@last_insert_id as id";
+            String sql = DBManager.getInstance().retornarSQLParaUltimoAutoGenerado();
             this.statement = this.conexion.prepareCall(sql);
             this.resultSet = this.statement.executeQuery();
             if (this.resultSet.next()) {
@@ -471,8 +471,9 @@ public abstract class BaseDAOImpl {
         sql.append(")}");
         return sql.toString();
     }
-    
-    /// MÉTODOS PARA PROCEDIMIENTOS ALMACENADOS ANTIGUOS
+
+
+/// MÉTODOS PARA PROCEDIMIENTOS ALMACENADOS ANTIGUOS
     
 //    public void ejecutarProcedimientoAlmacenado(String sql,
 //            Boolean conTransaccion) {
