@@ -44,15 +44,34 @@
 //    @BeforeEach
 //    void prepararContexto() {
 //        eliminarTodo();
+//        prepararUsuarioBase();
 //        prepararProductoBase();
 //        prepararProductoVarBase();
-//        prepararUsuarioBase();
 //    }
 //
 //    @AfterEach
 //    public void tearDown() {
 //        System.out.println("Limpiando datos después del test...");
 //        eliminarTodo();
+//    }
+//
+//    private void prepararUsuarioBase() {
+//        this.usuarioDTO = new UsuariosDTO();
+//        this.usuarioDTO.setNombre("Eros");
+//        this.usuarioDTO.setApePaterno("Sotelo");
+//        this.usuarioDTO.setDni("77722211");
+//        this.usuarioDTO.setTelefono("999111555");
+//        this.usuarioDTO.setCorreo("eros.sotelo@gmail.com");
+//        this.usuarioDTO.setNombreUsuario("erosotelo");
+//        this.usuarioDTO.setContrasenha("password123");
+//        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
+//        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
+//                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
+//        this.usuarioDTO.setActivo(Boolean.TRUE);
+//
+//        Integer resultado = this.usuarioDAO.insertar(this.usuarioDTO);
+//        this.usuarioDTO.setUsuarioId(resultado);
+//        assertTrue(resultado != 0);
 //    }
 //
 //    private void prepararProductoBase() {
@@ -68,6 +87,7 @@
 //        this.productoDTO.setEstilo(estilo);
 //        this.productoDTO.setPrecio_venta(120.00);
 //        this.productoDTO.setFecha_hora_creacion(LocalDateTime.now());
+//        this.productoDTO.setUsuario(this.usuarioDTO);
 //
 //        this.prodBaseId = this.productoDAO.insertar(this.productoDTO);
 //        this.productoDTO.setProducto_id(this.prodBaseId);
@@ -91,27 +111,10 @@
 //        this.prodVarianteDTO.setTalla(talla);
 //        this.prodVarianteDTO.setFecha_hora_creacion(LocalDateTime.now());
 //        this.prodVarianteDTO.setDisponible(Boolean.TRUE);
+//        this.prodVarianteDTO.setUsuario(this.usuarioDTO);
 //
 //        Integer resultado = this.prodVarDAO.insertar(this.prodVarianteDTO);
 //        this.prodVarianteDTO.setProd_variante_id(resultado);
-//        assertTrue(resultado != 0);
-//    }
-//
-//    private void prepararUsuarioBase() {
-//        this.usuarioDTO = new UsuariosDTO();
-//        this.usuarioDTO.setNombre("Eros");
-//        this.usuarioDTO.setApePaterno("Sotelo");
-//        this.usuarioDTO.setDni("77722211");
-//        this.usuarioDTO.setTelefono("999111555");
-//        this.usuarioDTO.setCorreo("eros.sotelo@gmail.com");
-//        this.usuarioDTO.setNombreUsuario("erosotelo");
-//        this.usuarioDTO.setContrasenha("password123");
-//        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
-//        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
-//                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
-//
-//        Integer resultado = this.usuarioDAO.insertar(this.usuarioDTO);
-//        this.usuarioDTO.setUsuarioId(resultado);
 //        assertTrue(resultado != 0);
 //    }
 //

@@ -1,10 +1,12 @@
 package pe.edu.pucp.kawkiweb.daoImp;
 
 import java.sql.SQLException;
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
@@ -14,6 +16,8 @@ import pe.edu.pucp.kawkiweb.dao.CategoriasDAO;
 import pe.edu.pucp.kawkiweb.dao.EstilosDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
+import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
 
@@ -21,6 +25,7 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
     private CategoriasDAO categoriaDAO;
     private EstilosDAO estiloDAO;
     private ProductosVariantesDAO productoVarianteDAO;
+    private UsuariosDAO usuarioDAO;
 
     public ProductosDAOImpl() {
         super("PRODUCTOS");
@@ -29,6 +34,7 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         this.categoriaDAO = new CategoriasDAOImpl();
         this.estiloDAO = new EstilosDAOImpl();
         this.productoVarianteDAO = new ProductosVariantesDAOImpl();
+        this.usuarioDAO = new UsuariosDAOImpl();
     }
 
     @Override
@@ -38,7 +44,8 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         this.listaColumnas.add(new Columna("CATEGORIA_ID", false, false));
         this.listaColumnas.add(new Columna("ESTILO_ID", false, false));
         this.listaColumnas.add(new Columna("PRECIO_VENTA", false, false));
-        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false));
+        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false, false));
+        this.listaColumnas.add(new Columna("USUARIO_ID", false, false));
     }
 
     @Override
@@ -52,6 +59,7 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
             fecha = fecha.truncatedTo(ChronoUnit.MILLIS);
         }
         this.statement.setTimestamp(5, java.sql.Timestamp.valueOf(fecha));
+        this.statement.setInt(6, this.producto.getUsuario().getUsuarioId());
     }
 
     @Override
@@ -60,7 +68,7 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         this.statement.setInt(2, this.producto.getCategoria().getCategoria_id());
         this.statement.setInt(3, this.producto.getEstilo().getEstilo_id());
         this.statement.setDouble(4, this.producto.getPrecio_venta());
-        this.statement.setTimestamp(5, java.sql.Timestamp.valueOf(this.producto.getFecha_hora_creacion()));
+        this.statement.setInt(5, this.producto.getUsuario().getUsuarioId());
         this.statement.setInt(6, this.producto.getProducto_id());
     }
 
@@ -92,6 +100,10 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         this.producto.setFecha_hora_creacion(
                 this.resultSet.getTimestamp("FECHA_HORA_CREACION").toLocalDateTime()
         );
+
+        Integer usuario_id = this.resultSet.getInt("USUARIO_ID");
+        UsuariosDTO usuario = this.usuarioDAO.obtenerPorId(usuario_id);
+        this.producto.setUsuario(usuario);
 
         // Cargar variantes
         ArrayList<ProductosVariantesDTO> variantes
@@ -139,5 +151,116 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
     public Integer eliminar(ProductosDTO producto) {
         this.producto = producto;
         return super.eliminar();
+    }
+
+    // ========== IMPLEMENTACIÓN DE MÉTODOS AVANZADOS ==========
+    @Override
+    public Boolean tieneStockDisponible(Integer productoId) {
+        Boolean tieneStock = false;
+
+        try {
+            this.abrirConexion();
+
+            // Llamada al stored procedure
+            String sql = "{CALL SP_VERIFICAR_STOCK_DISPONIBLE(?, ?)}";
+            this.colocarSQLEnStatement(sql);
+            this.statement.setInt(1, productoId);
+            this.statement.registerOutParameter(2, Types.TINYINT);
+            this.statement.execute();
+
+            // Obtener el resultado (1 = tiene stock, 0 = no tiene stock)
+            int resultado = this.statement.getInt(2);
+            tieneStock = (resultado == 1);
+
+        } catch (SQLException ex) {
+            System.err.println("Error al verificar stock disponible: " + ex);
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+
+        return tieneStock;
+    }
+
+    @Override
+    public Integer calcularStockTotal(Integer productoId) {
+        Integer stockTotal = 0;
+
+        try {
+            this.abrirConexion();
+
+            // Llamada al stored procedure
+            String sql = "{CALL SP_CALCULAR_STOCK_TOTAL(?, ?)}";
+            this.colocarSQLEnStatement(sql);
+            this.statement.setInt(1, productoId);
+            this.statement.registerOutParameter(2, Types.INTEGER);
+            this.statement.execute();
+
+            // Obtener el stock total
+            stockTotal = this.statement.getInt(2);
+
+        } catch (SQLException ex) {
+            System.err.println("Error al calcular stock total: " + ex);
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+
+        return stockTotal;
+    }
+
+    @Override
+    public ArrayList<ProductosDTO> listarPorCategoria(Integer categoriaId) {
+        // SQL directo con WHERE para filtrar por categoría
+        String sql = "SELECT PRODUCTO_ID, DESCRIPCION, CATEGORIA_ID, ESTILO_ID, "
+                + "PRECIO_VENTA, FECHA_HORA_CREACION, USUARIO_ID "
+                + "FROM PRODUCTOS WHERE CATEGORIA_ID = ?";
+
+        // Consumer para setear el parámetro
+        Consumer<Integer> incluirParametros = (id) -> {
+            try {
+                this.statement.setInt(1, id);
+            } catch (SQLException e) {
+                System.err.println("Error al establecer parámetro categoría: " + e);
+            }
+        };
+
+        return (ArrayList<ProductosDTO>) super.listarTodos(sql, incluirParametros, categoriaId);
+    }
+
+    @Override
+    public ArrayList<ProductosDTO> listarPorEstilo(Integer estiloId) {
+        // SQL directo con WHERE para filtrar por estilo
+        String sql = "SELECT PRODUCTO_ID, DESCRIPCION, CATEGORIA_ID, ESTILO_ID, "
+                + "PRECIO_VENTA, FECHA_HORA_CREACION, USUARIO_ID "
+                + "FROM PRODUCTOS WHERE ESTILO_ID = ?";
+
+        // Consumer para setear el parámetro
+        Consumer<Integer> incluirParametros = (id) -> {
+            try {
+                this.statement.setInt(1, id);
+            } catch (SQLException e) {
+                System.err.println("Error al establecer parámetro estilo: " + e);
+            }
+        };
+
+        return (ArrayList<ProductosDTO>) super.listarTodos(sql, incluirParametros, estiloId);
+    }
+
+    @Override
+    public ArrayList<ProductosDTO> listarConStockBajo() {
+        // Usar el método de BaseDAOImpl para ejecutar SP que retorna lista
+        return (ArrayList<ProductosDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_PRODUCTOS_STOCK_BAJO",
+                0, // Sin parámetros
+                null,
+                null
+        );
     }
 }

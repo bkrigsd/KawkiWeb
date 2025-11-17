@@ -1,9 +1,11 @@
 package pe.edu.pucp.kawkiweb.daoImp;
 
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import pe.edu.pucp.kawkiWeb.db.DBManager;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
 import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
@@ -33,9 +35,9 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
     @Override
     protected void configurarListaDeColumnas() {
         this.listaColumnas.add(new Columna("COMPROBANTE_PAGO_ID", true, true));
-        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false));
+        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false, false));
         this.listaColumnas.add(new Columna("TIPO_COMPROBANTE_ID", false, false));
-        this.listaColumnas.add(new Columna("NUMERO_SERIE", false, false));
+        this.listaColumnas.add(new Columna("NUMERO_SERIE", false, false, false));
         this.listaColumnas.add(new Columna("DNI_CLIENTE", false, false));
         this.listaColumnas.add(new Columna("NOMBRE_CLIENTE", false, false));
         this.listaColumnas.add(new Columna("RUC_CLIENTE", false, false));
@@ -45,6 +47,8 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
         this.listaColumnas.add(new Columna("TOTAL", false, false));
         this.listaColumnas.add(new Columna("VENTA_ID", false, false));
         this.listaColumnas.add(new Columna("METODO_PAGO_ID", false, false));
+        this.listaColumnas.add(new Columna("SUBTOTAL", false, false));
+        this.listaColumnas.add(new Columna("IGV", false, false));
     }
 
     @Override
@@ -92,53 +96,55 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
         this.statement.setDouble(10, this.comprobante.getTotal());
         this.statement.setInt(11, this.comprobante.getVenta().getVenta_id());
         this.statement.setInt(12, this.comprobante.getMetodo_pago().getMetodo_pago_id());
+        this.statement.setDouble(13, this.comprobante.getSubtotal());
+        this.statement.setDouble(14, this.comprobante.getIgv());
     }
 
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException {
-        this.statement.setTimestamp(1, java.sql.Timestamp.valueOf(this.comprobante.getFecha_hora_creacion()));
-        this.statement.setInt(2, this.comprobante.getTipo_comprobante().getTipo_comprobante_id());
-        this.statement.setString(3, this.comprobante.getNumero_serie());
+        this.statement.setInt(1, this.comprobante.getTipo_comprobante().getTipo_comprobante_id());
 
         if (this.comprobante.getDni_cliente() != null) {
-            this.statement.setString(4, this.comprobante.getDni_cliente());
+            this.statement.setString(2, this.comprobante.getDni_cliente());
+        } else {
+            this.statement.setNull(2, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getNombre_cliente() != null) {
+            this.statement.setString(3, this.comprobante.getNombre_cliente());
+        } else {
+            this.statement.setNull(3, java.sql.Types.VARCHAR);
+        }
+
+        if (this.comprobante.getRuc_cliente() != null) {
+            this.statement.setString(4, this.comprobante.getRuc_cliente());
         } else {
             this.statement.setNull(4, java.sql.Types.VARCHAR);
         }
 
-        if (this.comprobante.getNombre_cliente() != null) {
-            this.statement.setString(5, this.comprobante.getNombre_cliente());
+        if (this.comprobante.getRazon_social_cliente() != null) {
+            this.statement.setString(5, this.comprobante.getRazon_social_cliente());
         } else {
             this.statement.setNull(5, java.sql.Types.VARCHAR);
         }
 
-        if (this.comprobante.getRuc_cliente() != null) {
-            this.statement.setString(6, this.comprobante.getRuc_cliente());
+        if (this.comprobante.getDireccion_fiscal_cliente() != null) {
+            this.statement.setString(6, this.comprobante.getDireccion_fiscal_cliente());
         } else {
             this.statement.setNull(6, java.sql.Types.VARCHAR);
         }
 
-        if (this.comprobante.getRazon_social_cliente() != null) {
-            this.statement.setString(7, this.comprobante.getRazon_social_cliente());
+        if (this.comprobante.getTelefono_cliente() != null) {
+            this.statement.setString(7, this.comprobante.getTelefono_cliente());
         } else {
             this.statement.setNull(7, java.sql.Types.VARCHAR);
         }
 
-        if (this.comprobante.getDireccion_fiscal_cliente() != null) {
-            this.statement.setString(8, this.comprobante.getDireccion_fiscal_cliente());
-        } else {
-            this.statement.setNull(8, java.sql.Types.VARCHAR);
-        }
-
-        if (this.comprobante.getTelefono_cliente() != null) {
-            this.statement.setString(9, this.comprobante.getTelefono_cliente());
-        } else {
-            this.statement.setNull(9, java.sql.Types.VARCHAR);
-        }
-
-        this.statement.setDouble(10, this.comprobante.getTotal());
-        this.statement.setInt(11, this.comprobante.getVenta().getVenta_id());
-        this.statement.setInt(12, this.comprobante.getMetodo_pago().getMetodo_pago_id());
+        this.statement.setDouble(8, this.comprobante.getTotal());
+        this.statement.setInt(9, this.comprobante.getVenta().getVenta_id());
+        this.statement.setInt(10, this.comprobante.getMetodo_pago().getMetodo_pago_id());
+        this.statement.setDouble(11, this.comprobante.getSubtotal());
+        this.statement.setDouble(12, this.comprobante.getIgv());
         this.statement.setInt(13, this.comprobante.getComprobante_pago_id());
     }
 
@@ -179,6 +185,8 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
         MetodosPagoDTO metodoPago = this.metodoPagoDAO.obtenerPorId(metodoPagoId);
         this.comprobante.setMetodo_pago(metodoPago);
 
+        this.comprobante.setSubtotal(this.resultSet.getDouble("SUBTOTAL"));
+        this.comprobante.setIgv(this.resultSet.getDouble("IGV"));
     }
 
     @Override
@@ -207,33 +215,6 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
     }
 
     @Override
-    public ComprobantesPagoDTO obtenerPorVentaId(Integer ventaId) {
-        String sql = "SELECT " + generarListaColumnas() + " FROM COMPROBANTES_PAGO WHERE VENTA_ID = ?";
-
-        Consumer<Integer> incluirParametros = (id) -> {
-            try {
-                this.statement.setInt(1, id);
-            } catch (SQLException e) {
-                System.err.println("Error al establecer parámetro: " + e);
-            }
-        };
-
-        List<ComprobantesPagoDTO> lista = super.listarTodos(sql, incluirParametros, ventaId);
-        return lista.isEmpty() ? null : lista.get(0);
-    }
-
-    private String generarListaColumnas() {
-        StringBuilder columnas = new StringBuilder();
-        for (Columna col : this.listaColumnas) {
-            if (columnas.length() > 0) {
-                columnas.append(", ");
-            }
-            columnas.append(col.getNombre());
-        }
-        return columnas.toString();
-    }
-
-    @Override
     public ArrayList<ComprobantesPagoDTO> listarTodos() {
         return (ArrayList<ComprobantesPagoDTO>) super.listarTodos();
     }
@@ -249,4 +230,61 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
         this.comprobante = comprobante;
         return super.eliminar();
     }
+
+    /// BÚSQUEDAS AVANZADAS
+    
+    @Override
+    public ComprobantesPagoDTO obtenerPorVentaId(Integer ventaId) {
+        this.comprobante = null;
+
+        // Consumer para setear el parámetro de entrada
+        Consumer<Integer> incluirParametros = (id) -> {
+            try {
+                this.statement.setInt(1, id);
+            } catch (SQLException e) {
+                System.err.println("Error al establecer parámetro: " + e);
+            }
+        };
+
+        // Ejecuta el procedimiento almacenado
+        // El nombre del SP es el mismo para MySQL y SQL Server
+        super.ejecutarConsultaProcedimiento(
+                "SP_OBTENER_COMPROBANTE_POR_VENTA",
+                1, // Cantidad de parámetros (solo ventaId)
+                incluirParametros,
+                ventaId
+        );
+
+        return this.comprobante;
+    }
+
+    @Override
+    public String obtenerSiguienteNumeroSerie(Integer tipoComprobanteId) {
+        String numeroSerie = null;
+
+        try {
+            this.abrirConexion();
+
+            // Llamada al stored procedure
+            // Funciona tanto para MySQL como SQL Server
+            String sql = "{CALL SP_OBTENER_SIGUIENTE_NUMERO_SERIE(?, ?)}";
+            this.colocarSQLEnStatement(sql);
+            this.statement.setInt(1, tipoComprobanteId);
+            this.statement.registerOutParameter(2, Types.VARCHAR);
+            this.statement.execute();
+            numeroSerie = this.statement.getString(2);
+
+        } catch (SQLException ex) {
+            System.err.println("Error al obtener siguiente número de serie: " + ex);
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+
+        return numeroSerie;
+    }
+
 }

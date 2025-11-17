@@ -10,27 +10,54 @@
 //import static org.junit.jupiter.api.Assertions.*;
 //import org.junit.jupiter.api.BeforeEach;
 //import pe.edu.pucp.kawkiweb.daoImp.ProductosDAOImpl;
+//import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
+//import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+//import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 //
 //public class ProductosDAOTest {
 //
 //    private ProductosDAO productoDAO;
+//    private UsuariosDAO usuarioDAO;
+//    
+//    private UsuariosDTO usuarioDTO;
 //
 //    public ProductosDAOTest() {
 //        this.productoDAO = new ProductosDAOImpl();
+//        this.usuarioDAO = new UsuariosDAOImpl();
 //    }
 //
 //    @BeforeEach
 //    public void setUp() {
 //        System.out.println("Limpiando datos antes del test...");
 //        eliminarTodo();
+//        prepararUsuarioBase();
 //    }
-//
+//    
 //    @AfterEach
 //    public void tearDown() {
 //        System.out.println("Limpiando datos después del test...");
 //        eliminarTodo();
 //    }
 //
+//    private void prepararUsuarioBase() {
+//        this.usuarioDTO = new UsuariosDTO();
+//        this.usuarioDTO.setNombre("Eros");
+//        this.usuarioDTO.setApePaterno("Sotelo");
+//        this.usuarioDTO.setDni("77722211");
+//        this.usuarioDTO.setTelefono("999111555");
+//        this.usuarioDTO.setCorreo("eros.sotelo@gmail.com");
+//        this.usuarioDTO.setNombreUsuario("erosotelo");
+//        this.usuarioDTO.setContrasenha("password123");
+//        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
+//        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
+//                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
+//        this.usuarioDTO.setActivo(Boolean.TRUE);
+//
+//        Integer resultado = this.usuarioDAO.insertar(this.usuarioDTO);
+//        this.usuarioDTO.setUsuarioId(resultado);
+//        assertTrue(resultado != 0);
+//    }
+//    
 //    @Test
 //    public void testInsertar() {
 //        System.out.println("insertar");
@@ -49,6 +76,8 @@
 //        producto.setEstilo(new EstilosDTO(EstilosDTO.ID_CHAROL, EstilosDTO.NOMBRE_CHAROL));
 //        producto.setPrecio_venta(180.89);
 //        producto.setFecha_hora_creacion(LocalDateTime.now());
+//        producto.setUsuario(this.usuarioDTO);
+//        
 //        Integer resultado = this.productoDAO.insertar(producto);
 //        assertTrue(resultado != 0);
 //        listaProductoId.add(resultado);
@@ -60,6 +89,8 @@
 //        producto.setEstilo(new EstilosDTO(EstilosDTO.ID_COMBINADOS, EstilosDTO.NOMBRE_COMBINADOS));
 //        producto.setPrecio_venta(149.99);
 //        producto.setFecha_hora_creacion(LocalDateTime.now());
+//        producto.setUsuario(this.usuarioDTO);
+//        
 //        resultado = this.productoDAO.insertar(producto);
 //        assertTrue(resultado != 0);
 //        listaProductoId.add(resultado);
@@ -71,6 +102,8 @@
 //        producto.setEstilo(new EstilosDTO(EstilosDTO.ID_METALIZADOS, EstilosDTO.NOMBRE_METALIZADOS));
 //        producto.setPrecio_venta(200.48);
 //        producto.setFecha_hora_creacion(LocalDateTime.now());
+//        producto.setUsuario(this.usuarioDTO);
+//        
 //        resultado = this.productoDAO.insertar(producto);
 //        assertTrue(resultado != 0);
 //        listaProductoId.add(resultado);
@@ -155,6 +188,15 @@
 //            assertNotEquals(0, resultado);
 //            ProductosDTO producto = this.productoDAO.obtenerPorId(listaProductos.get(i).getProducto_id());
 //            assertNull(producto);
+//        }
+//        
+//        // Eliminar usuarios
+//        ArrayList<UsuariosDTO> listaUsuarios = this.usuarioDAO.listarTodos();
+//        for (Integer i = 0; i < listaUsuarios.size(); i++) {
+//            Integer resultado = this.usuarioDAO.eliminar(listaUsuarios.get(i));
+//            assertNotEquals(0, resultado);
+//            UsuariosDTO usuario = this.usuarioDAO.obtenerPorId(listaUsuarios.get(i).getUsuarioId());
+//            assertNull(usuario);
 //        }
 //    }
 //}

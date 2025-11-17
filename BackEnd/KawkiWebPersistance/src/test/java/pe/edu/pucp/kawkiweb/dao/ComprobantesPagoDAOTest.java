@@ -1,6 +1,5 @@
 //package pe.edu.pucp.kawkiweb.dao;
 //
-//import java.time.LocalDate;
 //import java.time.LocalDateTime;
 //import java.util.ArrayList;
 //import org.junit.jupiter.api.*;
@@ -13,6 +12,7 @@
 //import pe.edu.pucp.kawkiweb.model.utilPago.MetodosPagoDTO;
 //import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
 //import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
+//import pe.edu.pucp.kawkiweb.model.utilVenta.RedesSocialesDTO;
 //
 //public class ComprobantesPagoDAOTest {
 //
@@ -61,6 +61,7 @@
 //        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
 //        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
 //                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
+//        this.usuarioDTO.setActivo(Boolean.TRUE);
 //
 //        Integer resultado = this.usuarioDAO.insertar(this.usuarioDTO);
 //        this.usuarioDTO.setUsuarioId(resultado);
@@ -72,6 +73,10 @@
 //        this.ventaDTO.setUsuario(this.usuarioDTO);
 //        this.ventaDTO.setFecha_hora_creacion(LocalDateTime.now());
 //        this.ventaDTO.setTotal(109.98);
+//        this.ventaDTO.setRedSocial(new RedesSocialesDTO(
+//                RedesSocialesDTO.ID_FACEBOOK, RedesSocialesDTO.NOMBRE_FACEBOOK));
+//        this.ventaDTO.setEsValida(Boolean.TRUE);
+//        
 //        Integer resultado = this.ventaDAO.insertar(this.ventaDTO);
 //        this.ventaDTO.setVenta_id(resultado);
 //        assertTrue(resultado != 0);
@@ -107,6 +112,8 @@
 //        comprobPago.setTotal(300.50);
 //        comprobPago.setVenta(this.ventaDTO);
 //        comprobPago.setMetodo_pago(this.metodoPagoDTO);
+//        comprobPago.setSubtotal(250.00);
+//        comprobPago.setIgv(18.00);
 //        Integer resultado = this.comprobanteDAO.insertar(comprobPago);
 //        assertTrue(resultado != 0);
 //        listaComprobPagoId.add(resultado);
@@ -120,6 +127,8 @@
 //        comprobPago.setTotal(300.50);
 //        comprobPago.setVenta(this.ventaDTO);
 //        comprobPago.setMetodo_pago(this.metodoPagoDTO);
+//        comprobPago.setSubtotal(250.00);
+//        comprobPago.setIgv(18.00);
 //        resultado = this.comprobanteDAO.insertar(comprobPago);
 //        assertTrue(resultado != 0);
 //        listaComprobPagoId.add(resultado);
@@ -134,6 +143,8 @@
 //        comprobPago.setTotal(300.50);
 //        comprobPago.setVenta(this.ventaDTO);
 //        comprobPago.setMetodo_pago(this.metodoPagoDTO);
+//        comprobPago.setSubtotal(250.00);
+//        comprobPago.setIgv(18.00);
 //        resultado = this.comprobanteDAO.insertar(comprobPago);
 //        assertTrue(resultado != 0);
 //        listaComprobPagoId.add(resultado);

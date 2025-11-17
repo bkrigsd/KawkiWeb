@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 //import jakarta.xml.bind.annotation.XmlRootElement;
 //import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 //import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
-
 //@XmlRootElement(name = "usuario")
 public class UsuariosDTO {
 
@@ -21,6 +20,7 @@ public class UsuariosDTO {
 //    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fechaHoraCreacion;
     private TiposUsuarioDTO tipoUsuario;
+    private Boolean activo;
 
     public UsuariosDTO() {
         this.usuarioId = null;
@@ -33,11 +33,12 @@ public class UsuariosDTO {
         this.contrasenha = null;
         this.fechaHoraCreacion = LocalDateTime.now();
         this.tipoUsuario = null;
+        this.activo = null;
     }
 
     public UsuariosDTO(Integer usuarioId, String nombre, String apePaterno,
             String dni, String telefono, String correo, String nombreUsuario,
-            String contrasenha, TiposUsuarioDTO tipoUsuario) {
+            String contrasenha, TiposUsuarioDTO tipoUsuario, Boolean activo) {
 
         this.usuarioId = usuarioId;
         this.nombre = nombre;
@@ -49,6 +50,7 @@ public class UsuariosDTO {
         this.contrasenha = contrasenha;
         this.fechaHoraCreacion = LocalDateTime.now();
         this.tipoUsuario = tipoUsuario;
+        this.activo = activo;
     }
 
     public UsuariosDTO(UsuariosDTO usuario) {
@@ -62,6 +64,7 @@ public class UsuariosDTO {
         this.contrasenha = usuario.contrasenha;
         this.fechaHoraCreacion = usuario.fechaHoraCreacion;
         this.tipoUsuario = usuario.tipoUsuario;
+        this.activo = usuario.activo;
     }
 
     public void MostrarDetalleUsuario() {
@@ -160,6 +163,14 @@ public class UsuariosDTO {
 
     public void setTipoUsuario(TiposUsuarioDTO tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
 }

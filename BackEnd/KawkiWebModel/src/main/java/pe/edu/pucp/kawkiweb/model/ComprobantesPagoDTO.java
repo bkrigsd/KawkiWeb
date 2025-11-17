@@ -11,8 +11,10 @@ import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
 //@XmlRootElement(name = "ComprobantePago")
 public class ComprobantesPagoDTO {
 
-    private static Integer contadorSerieFactura = 1;
-    private static Integer contadorSerieBoleta = 1;
+//    private static Integer contadorSerieFactura = 1;
+//    private static Integer contadorSerieBoleta = 1;
+
+    private static final Double IGV = 0.18;
 
     //ATRIBUTOS
     private Integer comprobante_pago_id;
@@ -31,6 +33,8 @@ public class ComprobantesPagoDTO {
     private Double total;
     private VentasDTO venta;
     private MetodosPagoDTO metodo_pago;
+    private Double subtotal;
+    private Double igv;
 
     //CONSTRUCTORES
     public ComprobantesPagoDTO() {
@@ -48,10 +52,12 @@ public class ComprobantesPagoDTO {
         this.total = null;
         this.venta = null;
         this.metodo_pago = null;
+        this.subtotal = null;
+        this.igv = null;
     }
 
     public ComprobantesPagoDTO(
-            Integer comprobante_pago_id, Integer pago_id,
+            Integer comprobante_pago_id,
             TiposComprobanteDTO tipo_comprobante, String numero_serie,
             String dni_cliente, String nombre_cliente, String ruc_cliente,
             String razon_social_cliente, String direccion_fiscal_cliente,
@@ -61,7 +67,7 @@ public class ComprobantesPagoDTO {
         this.comprobante_pago_id = comprobante_pago_id;
         this.fecha_hora_creacion = LocalDateTime.now();
         this.tipo_comprobante = tipo_comprobante;
-        generarNumeroSerie();
+        this.numero_serie=numero_serie;
         this.dni_cliente = dni_cliente;
         this.nombre_cliente = nombre_cliente;
         this.ruc_cliente = ruc_cliente;
@@ -71,6 +77,9 @@ public class ComprobantesPagoDTO {
         this.total = total;
         this.venta = venta;
         this.metodo_pago = metodo_pago;
+        this.subtotal = Math.round((this.total / (1.0 + IGV)) * 100.0) / 100.0;
+        this.igv = Math.round((this.total - this.subtotal) * 100.0) / 100.0;
+
     }
 
     public ComprobantesPagoDTO(ComprobantesPagoDTO comprobante) {
@@ -88,6 +97,9 @@ public class ComprobantesPagoDTO {
         this.total = comprobante.total;
         this.venta = comprobante.venta;
         this.metodo_pago = comprobante.metodo_pago;
+        this.subtotal = Math.round((this.total / (1.0 + IGV)) * 100.0) / 100.0;
+        this.igv = Math.round((this.total - this.subtotal) * 100.0) / 100.0;
+
     }
 
     @Override
@@ -107,28 +119,28 @@ public class ComprobantesPagoDTO {
         return sb.toString();
     }
 
-    private void generarNumeroSerie() {
-        String prefijoSerie;
-        String numeroCorrelativo;
-
-        if (this.tipo_comprobante == null) {
-            this.numero_serie = "SIN-TIPO";
-            return;
-        }
-
-        if (this.tipo_comprobante.esFactura()) {
-            prefijoSerie = "F001";
-            numeroCorrelativo = String.format("%08d", contadorSerieFactura++);
-        } else if (this.tipo_comprobante.esBoletaSimple() || this.tipo_comprobante.esBoletaConDNI()) {
-            prefijoSerie = "B001";
-            numeroCorrelativo = String.format("%08d", contadorSerieBoleta++);
-        } else {
-            prefijoSerie = "C001"; // por si en el futuro hay otro tipo
-            numeroCorrelativo = String.format("%08d", 1);
-        }
-
-        this.numero_serie = prefijoSerie + "-" + numeroCorrelativo;
-    }
+//    private void generarNumeroSerie() {
+//        String prefijoSerie;
+//        String numeroCorrelativo;
+//
+//        if (this.tipo_comprobante == null) {
+//            this.numero_serie = "SIN-TIPO";
+//            return;
+//        }
+//
+//        if (this.tipo_comprobante.esFactura()) {
+//            prefijoSerie = "F001";
+//            numeroCorrelativo = String.format("%08d", contadorSerieFactura++);
+//        } else if (this.tipo_comprobante.esBoletaSimple() || this.tipo_comprobante.esBoletaConDNI()) {
+//            prefijoSerie = "B001";
+//            numeroCorrelativo = String.format("%08d", contadorSerieBoleta++);
+//        } else {
+//            prefijoSerie = "C001"; // por si en el futuro hay otro tipo
+//            numeroCorrelativo = String.format("%08d", 1);
+//        }
+//
+//        this.numero_serie = prefijoSerie + "-" + numeroCorrelativo;
+//    }
 
     //GETTERS Y SETTERS
     public Integer getComprobante_pago_id() {
@@ -235,20 +247,40 @@ public class ComprobantesPagoDTO {
         this.metodo_pago = metodo_pago;
     }
 
-    public static Integer getContadorSerieFactura() {
-        return contadorSerieFactura;
+//    public static Integer getContadorSerieFactura() {
+//        return contadorSerieFactura;
+//    }
+//
+//    public static Integer getContadorSerieBoleta() {
+//        return contadorSerieBoleta;
+//    }
+//
+//    public static void setContadorSerieFactura(Integer aContadorSerieFactura) {
+//        contadorSerieFactura = aContadorSerieFactura;
+//    }
+//
+//    public static void setContadorSerieBoleta(Integer aContadorSerieBoleta) {
+//        contadorSerieBoleta = aContadorSerieBoleta;
+//    }
+
+    public static Double getIGVConstante() {
+        return IGV;
     }
 
-    public static Integer getContadorSerieBoleta() {
-        return contadorSerieBoleta;
+    public Double getSubtotal() {
+        return subtotal;
     }
 
-    public static void setContadorSerieFactura(Integer aContadorSerieFactura) {
-        contadorSerieFactura = aContadorSerieFactura;
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
     }
 
-    public static void setContadorSerieBoleta(Integer aContadorSerieBoleta) {
-        contadorSerieBoleta = aContadorSerieBoleta;
+    public Double getIgv() {
+        return igv;
+    }
+
+    public void setIgv(Double igv) {
+        this.igv = igv;
     }
 
 }

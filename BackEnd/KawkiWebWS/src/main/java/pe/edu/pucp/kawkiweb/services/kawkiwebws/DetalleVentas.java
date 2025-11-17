@@ -60,9 +60,9 @@ public class DetalleVentas {
                 ventaId, cantidad, precioUnitario, subtotal);
     }
 
-    @WebMethod(operationName = "eliminarDetalleVenta")
-    public Integer eliminarDetalleVenta(
-            @WebParam(name = "detalleVentaId") Integer detalleVentaId) {
-        return this.detalleVentaBO.eliminar(detalleVentaId);
-    }
+//    @WebMethod(operationName = "eliminarDetalleVenta")
+//    public Integer eliminarDetalleVenta(
+//            @WebParam(name = "detalleVentaId") Integer detalleVentaId) {
+//        return this.detalleVentaBO.eliminar(detalleVentaId);
+//    }
 }

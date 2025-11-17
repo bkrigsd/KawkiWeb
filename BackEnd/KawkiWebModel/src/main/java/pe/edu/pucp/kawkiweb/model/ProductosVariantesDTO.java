@@ -11,7 +11,7 @@ import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
 //@XmlRootElement(name = "ProductoVariante")
 public class ProductosVariantesDTO {
 
-    private static Integer cantidadProdVariantes = 0;
+//    private static Integer cantidadProdVariantes = 0;
 
     private Integer prod_variante_id;
     private String SKU;
@@ -23,15 +23,15 @@ public class ProductosVariantesDTO {
     private TallasDTO talla;
     private String url_imagen;
     private Boolean disponible;
+    private UsuariosDTO usuario;
 //    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_creacion;
 
     public ProductosVariantesDTO() {
-        ProductosVariantesDTO.cantidadProdVariantes++;
+//        ProductosVariantesDTO.cantidadProdVariantes++;
 
         this.prod_variante_id = null;
-        this.SKU = String.format("%04d", this.prod_variante_id) + '-' + talla
-                + '-' + color;
+        this.SKU = null;
         this.stock = null;
         this.stock_minimo = null;
         this.alerta_stock = null;
@@ -40,11 +40,13 @@ public class ProductosVariantesDTO {
         this.talla = null;
         this.url_imagen = null;
         this.disponible = null;
+        this.usuario = null;
         this.fecha_hora_creacion = LocalDateTime.now();
     }
 
     public ProductosVariantesDTO(
             Integer prod_variante_id,
+            String SKU,
             Integer stock,
             Integer stock_minimo,
             Boolean alerta_stock,
@@ -52,11 +54,11 @@ public class ProductosVariantesDTO {
             ColoresDTO color,
             TallasDTO talla,
             String url_imagen,
-            Boolean disponible) {
+            Boolean disponible,
+            UsuariosDTO usuario) {
 
         this.prod_variante_id = prod_variante_id;
-        this.SKU = String.format("%04d", this.prod_variante_id) + '-' + talla
-                + '-' + color;
+        this.SKU = SKU;
         this.stock = stock;
         this.stock_minimo = stock_minimo;
         this.alerta_stock = alerta_stock;
@@ -65,6 +67,7 @@ public class ProductosVariantesDTO {
         this.talla = talla;
         this.url_imagen = url_imagen;
         this.disponible = disponible;
+        this.usuario = usuario;
         this.fecha_hora_creacion = LocalDateTime.now();
     }
 
@@ -79,6 +82,7 @@ public class ProductosVariantesDTO {
         this.talla = prodVariante.talla;
         this.url_imagen = prodVariante.url_imagen;
         this.disponible = prodVariante.disponible;
+        this.usuario = prodVariante.usuario;
         this.fecha_hora_creacion = prodVariante.fecha_hora_creacion;
     }
 
@@ -182,9 +186,9 @@ public class ProductosVariantesDTO {
         this.fecha_hora_creacion = fecha_hora_creacion;
     }
 
-    public static Integer getCantidadProdVariantes() {
-        return cantidadProdVariantes;
-    }
+//    public static Integer getCantidadProdVariantes() {
+//        return cantidadProdVariantes;
+//    }
 
     public String getUrl_imagen() {
         return url_imagen;
@@ -202,8 +206,16 @@ public class ProductosVariantesDTO {
         this.disponible = disponible;
     }
 
-    public static void setCantidadProdVariantes(Integer aCantidadProdVariantes) {
-        cantidadProdVariantes = aCantidadProdVariantes;
+//    public static void setCantidadProdVariantes(Integer aCantidadProdVariantes) {
+//        cantidadProdVariantes = aCantidadProdVariantes;
+//    }
+
+    public UsuariosDTO getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuariosDTO usuario) {
+        this.usuario = usuario;
     }
 
 }

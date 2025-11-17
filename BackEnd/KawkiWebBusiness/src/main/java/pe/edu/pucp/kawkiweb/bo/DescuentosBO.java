@@ -115,29 +115,28 @@ public class DescuentosBO {
         }
     }
 
-    public Integer eliminar(Integer descuentoId) {
-        try {
-            if (descuentoId == null || descuentoId <= 0) {
-                System.err.println("Error: ID de promoción inválido");
-                return null;
-            }
-
-            DescuentosDTO promoDTO = new DescuentosDTO();
-            promoDTO.setDescuento_id(descuentoId);
-            return this.descuentoDAO.eliminar(promoDTO);
-
-        } catch (Exception e) {
-            System.err.println("Error al eliminar promoción: " + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
+//    public Integer eliminar(Integer descuentoId) {
+//        try {
+//            if (descuentoId == null || descuentoId <= 0) {
+//                System.err.println("Error: ID de promoción inválido");
+//                return null;
+//            }
+//
+//            DescuentosDTO promoDTO = new DescuentosDTO();
+//            promoDTO.setDescuento_id(descuentoId);
+//            return this.descuentoDAO.eliminar(promoDTO);
+//
+//        } catch (Exception e) {
+//            System.err.println("Error al eliminar promoción: " + e.getMessage());
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
     private boolean validarDatosDescuento(String descripcion,
             TiposCondicionDTO tipo_condicion, Integer valor_condicion,
             TiposBeneficioDTO tipo_beneficio, Integer valor_beneficio,
             LocalDateTime fecha_inicio, LocalDateTime fecha_fin) {
-        
+
         // Validar descripción
         if (descripcion == null || descripcion.trim().isEmpty()) {
             System.err.println("Validación: La descripción no puede estar vacía");
@@ -263,18 +262,13 @@ public class DescuentosBO {
         }
     }
 
+    /**
+     * Lista descuentos activos usando stored procedure
+     */
     public List<DescuentosDTO> listarActivas() {
         try {
-            List<DescuentosDTO> todasLosDescuentos = this.listarTodos();
-            List<DescuentosDTO> descuentosActivos = new ArrayList<>();
-
-            for (DescuentosDTO descuentoDTO : todasLosDescuentos) {
-                if (descuentoDTO.getActivo() != null && descuentoDTO.getActivo()) {
-                    descuentosActivos.add(descuentoDTO);
-                }
-            }
-
-            return descuentosActivos;
+            // Usar el método del DAO que llama al stored procedure
+            return this.descuentoDAO.listarActivas();
 
         } catch (Exception e) {
             System.err.println("Error al listar promociones activas: " + e.getMessage());
@@ -282,19 +276,13 @@ public class DescuentosBO {
         }
     }
 
+    /**
+     * Lista descuentos vigentes usando stored procedure
+     */
     public List<DescuentosDTO> listarVigentes() {
         try {
-            List<DescuentosDTO> todasLosDescuentos =  this.listarTodos();
-            List<DescuentosDTO> descuentosVigentes = new ArrayList<>();
-            LocalDateTime ahora = LocalDateTime.now();
-
-            for (DescuentosDTO descuentoDTO : todasLosDescuentos) {
-                if (esVigente(descuentoDTO, ahora)) {
-                    descuentosVigentes.add(descuentoDTO);
-                }
-            }
-
-            return descuentosVigentes;
+            // Usar el método del DAO que llama al stored procedure
+            return this.descuentoDAO.listarVigentes();
 
         } catch (Exception e) {
             System.err.println("Error al listar promociones vigentes: " + e.getMessage());
@@ -316,7 +304,7 @@ public class DescuentosBO {
      * @param montoTotal Monto total del pedido
      * @return true si la promoción es aplicable, false en caso contrario
      */
-    public boolean esAplicable(Integer descuentoId, Integer cantidadProductos, 
+    public boolean esAplicable(Integer descuentoId, Integer cantidadProductos,
             Double montoTotal) {
         try {
             DescuentosDTO descuentoDTO = this.obtenerPorId(descuentoId);

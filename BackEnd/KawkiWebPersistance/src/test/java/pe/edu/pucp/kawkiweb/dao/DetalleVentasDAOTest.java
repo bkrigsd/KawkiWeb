@@ -1,34 +1,34 @@
-package pe.edu.pucp.kawkiweb.dao;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import pe.edu.pucp.kawkiweb.daoImp.DetalleVentasDAOImpl;
-import pe.edu.pucp.kawkiweb.daoImp.VentasDAOImpl;
-import pe.edu.pucp.kawkiweb.daoImp.ProductosDAOImpl;
-import pe.edu.pucp.kawkiweb.daoImp.ProductosVariantesDAOImpl;
-import pe.edu.pucp.kawkiweb.daoImp.DescuentosDAOImpl;
-import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
-import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
-import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
-import pe.edu.pucp.kawkiweb.model.VentasDTO;
-import pe.edu.pucp.kawkiweb.model.ProductosDTO;
-import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
-import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
-import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
-import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
-import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
+//package pe.edu.pucp.kawkiweb.dao;
+//
+//import java.time.LocalDateTime;
+//import java.util.ArrayList;
+//import org.junit.jupiter.api.AfterEach;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertNotEquals;
+//import static org.junit.jupiter.api.Assertions.assertNull;
+//import static org.junit.jupiter.api.Assertions.assertTrue;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+//import pe.edu.pucp.kawkiweb.daoImp.DetalleVentasDAOImpl;
+//import pe.edu.pucp.kawkiweb.daoImp.VentasDAOImpl;
+//import pe.edu.pucp.kawkiweb.daoImp.ProductosDAOImpl;
+//import pe.edu.pucp.kawkiweb.daoImp.ProductosVariantesDAOImpl;
+//import pe.edu.pucp.kawkiweb.daoImp.DescuentosDAOImpl;
+//import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
+//import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
+//import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
+//import pe.edu.pucp.kawkiweb.model.VentasDTO;
+//import pe.edu.pucp.kawkiweb.model.ProductosDTO;
+//import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+//import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+//import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
+//import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
+//import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
+//import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
+//import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
+//import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 //import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
+//import pe.edu.pucp.kawkiweb.model.utilVenta.RedesSocialesDTO;
 //
 //public class DetalleVentasDAOTest {
 //
@@ -60,9 +60,9 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 //    @BeforeEach
 //    void prepararContexto() {
 //        eliminarTodo();
+//        prepararUsuarioBase();
 //        prepararProductoBase();
 //        prepararProductoVarBase();
-//        prepararUsuarioBase();
 //        prepararDescuentoBase();
 //        prepararVentaBase();
 //    }
@@ -73,6 +73,25 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 //        eliminarTodo();
 //    }
 //
+//    private void prepararUsuarioBase() {
+//        this.usuarioDTO = new UsuariosDTO();
+//        this.usuarioDTO.setNombre("David");
+//        this.usuarioDTO.setApePaterno("Espinoza");
+//        this.usuarioDTO.setDni("71932031");
+//        this.usuarioDTO.setTelefono("993294837");
+//        this.usuarioDTO.setCorreo("david@test.com");
+//        this.usuarioDTO.setNombreUsuario("david04");
+//        this.usuarioDTO.setContrasenha("gato");
+//        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
+//        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
+//                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
+//        this.usuarioDTO.setActivo(Boolean.TRUE);
+//
+//        Integer resultado = this.usuarioDAO.insertar(this.usuarioDTO);
+//        this.usuarioDTO.setUsuarioId(resultado);
+//        assertTrue(resultado != 0);
+//    }
+//    
 //    private void prepararProductoBase() {
 //        this.productoDTO = new ProductosDTO();
 //        this.productoDTO.setDescripcion("Producto prueba");
@@ -86,6 +105,7 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 //        this.productoDTO.setEstilo(estilo);
 //        this.productoDTO.setPrecio_venta(120.00);
 //        this.productoDTO.setFecha_hora_creacion(LocalDateTime.now());
+//        this.productoDTO.setUsuario(this.usuarioDTO);
 //
 //        this.prodBaseId = this.productoDAO.insertar(this.productoDTO);
 //        this.productoDTO.setProducto_id(this.prodBaseId);
@@ -109,31 +129,13 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 //        this.prodVarianteDTO.setTalla(talla);
 //        this.prodVarianteDTO.setFecha_hora_creacion(LocalDateTime.now());
 //        this.prodVarianteDTO.setDisponible(Boolean.TRUE);
+//        this.prodVarianteDTO.setUsuario(this.usuarioDTO);
 //
 //        Integer resultado = this.prodVarDAO.insertar(this.prodVarianteDTO);
 //        this.prodVarianteDTO.setProd_variante_id(resultado);
 //        assertTrue(resultado != 0);
 //    }
 //
-//    private void prepararUsuarioBase() {
-//        this.usuarioDTO = new UsuariosDTO();
-//        this.usuarioDTO.setNombre("David");
-//        this.usuarioDTO.setApePaterno("Espinoza");
-//        this.usuarioDTO.setDni("71932031");
-//        this.usuarioDTO.setTelefono("993294837");
-//        this.usuarioDTO.setCorreo("david@test.com");
-//        this.usuarioDTO.setNombreUsuario("david04");
-//        this.usuarioDTO.setContrasenha("gato");
-//        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
-//        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
-//                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
-//
-//        Integer resultado = this.usuarioDAO.insertar(this.usuarioDTO);
-//        this.usuarioDTO.setUsuarioId(resultado);
-//        assertTrue(resultado != 0);
-//    }
-//
-//    //promocion ejemplo:
 //    private void prepararDescuentoBase() {
 //        this.descuentoDTO = new DescuentosDTO();
 //        this.descuentoDTO.setDescripcion("Promoción Prueba pedido");
@@ -167,6 +169,10 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 //        this.ventaDTO.setUsuario(this.usuarioDTO);
 //        this.ventaDTO.setFecha_hora_creacion(LocalDateTime.now());
 //        this.ventaDTO.setTotal(109.98);
+//        this.ventaDTO.setDescuento(this.descuentoDTO);
+//        this.ventaDTO.setRedSocial(new RedesSocialesDTO(
+//                RedesSocialesDTO.ID_FACEBOOK, RedesSocialesDTO.NOMBRE_FACEBOOK));
+//        this.ventaDTO.setEsValida(Boolean.TRUE);
 //        this.ventaBaseId = this.ventaDAO.insertar(this.ventaDTO);
 //        this.ventaDTO.setVenta_id(this.ventaBaseId);
 //        assertTrue(this.ventaBaseId != 0);
@@ -288,11 +294,6 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 //            this.ventaDAO.eliminar(venta);
 //        }
 //
-//        ArrayList<UsuariosDTO> listarUsuarios = this.usuarioDAO.listarTodos();
-//        for (UsuariosDTO usuario : listarUsuarios) {
-//            this.usuarioDAO.eliminar(usuario);
-//        }
-//
 //        ArrayList<DescuentosDTO> listaDescuentos = this.descuentoDAO.listarTodos();
 //        for (DescuentosDTO descuento : listaDescuentos) {
 //            this.descuentoDAO.eliminar(descuento);
@@ -306,6 +307,11 @@ import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 //        ArrayList<ProductosDTO> listarProducto = this.productoDAO.listarTodos();
 //        for (ProductosDTO producto : listarProducto) {
 //            this.productoDAO.eliminar(producto);
+//        }
+//        
+//        ArrayList<UsuariosDTO> listarUsuarios = this.usuarioDAO.listarTodos();
+//        for (UsuariosDTO usuario : listarUsuarios) {
+//            this.usuarioDAO.eliminar(usuario);
 //        }
 //    }
 //

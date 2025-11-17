@@ -37,6 +37,8 @@
 //        usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
 //        usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(TiposUsuarioDTO.ID_VENDEDOR,
 //                TiposUsuarioDTO.NOMBRE_VENDEDOR));
+//        usuarioDTO.setActivo(Boolean.TRUE);
+//        
 //        Integer resultado = this.usuarioDAO.insertar(usuarioDTO);
 //        assertTrue(resultado != 0);
 //        listaUsuariosId.add(resultado);
@@ -53,6 +55,8 @@
 //        usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
 //        usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(TiposUsuarioDTO.ID_ADMINISTRADOR,
 //                TiposUsuarioDTO.NOMBRE_ADMINISTRADOR));
+//        usuarioDTO.setActivo(Boolean.TRUE);
+//        
 //        resultado = this.usuarioDAO.insertar(usuarioDTO);
 //        assertTrue(resultado != 0);
 //        listaUsuariosId.add(resultado);

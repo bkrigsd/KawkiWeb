@@ -156,4 +156,39 @@ public class DescuentosDAOImpl extends BaseDAOImpl implements DescuentosDAO {
         this.descuento = descuento;
         return super.eliminar();
     }
+
+    // ========== IMPLEMENTACIÓN DE MÉTODOS CON STORED PROCEDURES ==========
+    /**
+     * Lista descuentos activos usando SP_LISTAR_DESCUENTOS_ACTIVOS
+     */
+    @Override
+    public ArrayList<DescuentosDTO> listarActivas() {
+        // Usar el método base ejecutarConsultaProcedimientoLista
+        // No requiere parámetros, por eso cantidadParametros = 0
+        List<DescuentosDTO> lista = this.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_DESCUENTOS_ACTIVOS",
+                0, // Sin parámetros
+                null,
+                null
+        );
+
+        return (ArrayList<DescuentosDTO>) lista;
+    }
+
+    /**
+     * Lista descuentos vigentes usando SP_LISTAR_DESCUENTOS_VIGENTES
+     */
+    @Override
+    public ArrayList<DescuentosDTO> listarVigentes() {
+        // Usar el método base ejecutarConsultaProcedimientoLista
+        // No requiere parámetros, por eso cantidadParametros = 0
+        List<DescuentosDTO> lista = this.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_DESCUENTOS_VIGENTES",
+                0, // Sin parámetros
+                null,
+                null
+        );
+
+        return (ArrayList<DescuentosDTO>) lista;
+    }
 }

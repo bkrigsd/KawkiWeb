@@ -11,6 +11,7 @@ import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
 import pe.edu.pucp.kawkiweb.dao.ProductosDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 
 public class ProductosVariantesBO {
 
@@ -22,14 +23,14 @@ public class ProductosVariantesBO {
         this.productoDAO = new ProductosDAOImpl();
     }
 
-    public Integer insertar(String SKU, Integer stock, Integer stock_minimo,
+    public Integer insertar(Integer stock, Integer stock_minimo,
             Integer producto_id, ColoresDTO color, TallasDTO talla,
-            String url_imagen, Boolean disponible) {
+            String url_imagen, Boolean disponible, UsuariosDTO usuario) {
 
         try {
             // Validaciones
-            if (!validarDatosVariante(SKU, stock, stock_minimo, producto_id,
-                    color, talla)) {
+            if (!validarDatosVariante(stock, stock_minimo, producto_id,
+                    color, talla, disponible, usuario)) {
                 System.err.println("Error: Datos de variante inválidos");
                 return null;
             }
@@ -41,14 +42,17 @@ public class ProductosVariantesBO {
                 return null;
             }
 
-            // Validar combinación única de producto-color-talla
+            // Validar combinación única de producto-color-talla usando el SP
             if (existeVariante(producto_id, color.getColor_id(), talla.getTalla_id())) {
                 System.err.println("Error: Ya existe una variante con este color y talla para este producto");
                 return null;
             }
 
+            // Generar SKU automáticamente
+            String skuGenerado = generarSKU(producto_id, color, talla);
+
             ProductosVariantesDTO prodVarianteDTO = new ProductosVariantesDTO();
-            prodVarianteDTO.setSKU(SKU);
+            prodVarianteDTO.setSKU(skuGenerado);
             prodVarianteDTO.setStock(stock);
             prodVarianteDTO.setStock_minimo(stock_minimo);
             // Calcular automáticamente alerta_stock
@@ -60,6 +64,7 @@ public class ProductosVariantesBO {
             prodVarianteDTO.setUrl_imagen(url_imagen);
             prodVarianteDTO.setFecha_hora_creacion(LocalDateTime.now());
             prodVarianteDTO.setDisponible(disponible);
+            prodVarianteDTO.setUsuario(usuario);
 
             return this.prodVarianteDAO.insertar(prodVarianteDTO);
 
@@ -97,9 +102,10 @@ public class ProductosVariantesBO {
         }
     }
 
-    public Integer modificar(Integer prod_variante_id, String SKU, Integer stock,
+    public Integer modificar(Integer prod_variante_id, Integer stock,
             Integer stock_minimo, Integer producto_id, ColoresDTO color,
-            TallasDTO talla, String url_imagen, Boolean disponible) {
+            TallasDTO talla, String url_imagen, Boolean disponible,
+            UsuariosDTO usuario) {
 
         try {
             // Validar ID
@@ -109,14 +115,18 @@ public class ProductosVariantesBO {
             }
 
             // Validar datos
-            if (!validarDatosVariante(SKU, stock, stock_minimo, producto_id, color, talla)) {
+            if (!validarDatosVariante(stock, stock_minimo, producto_id,
+                    color, talla, disponible, usuario)) {
                 System.err.println("Error: Datos de variante inválidos");
                 return null;
             }
 
+            // Generar SKU automáticamente
+            String skuGenerado = generarSKU(producto_id, color, talla);
+
             ProductosVariantesDTO prodVarianteDTO = new ProductosVariantesDTO();
             prodVarianteDTO.setProd_variante_id(prod_variante_id);
-            prodVarianteDTO.setSKU(SKU);
+            prodVarianteDTO.setSKU(skuGenerado);
             prodVarianteDTO.setStock(stock);
             prodVarianteDTO.setStock_minimo(stock_minimo);
             // Recalcular alerta_stock
@@ -126,8 +136,8 @@ public class ProductosVariantesBO {
             prodVarianteDTO.setColor(color);
             prodVarianteDTO.setTalla(talla);
             prodVarianteDTO.setUrl_imagen(url_imagen);
-            prodVarianteDTO.setFecha_hora_creacion(LocalDateTime.now());
             prodVarianteDTO.setDisponible(disponible);
+            prodVarianteDTO.setUsuario(usuario);
 
             return this.prodVarianteDAO.modificar(prodVarianteDTO);
 
@@ -138,43 +148,31 @@ public class ProductosVariantesBO {
         }
     }
 
-    public Integer eliminar(Integer prod_variante_id) {
-        try {
-            if (prod_variante_id == null || prod_variante_id <= 0) {
-                System.err.println("Error: ID de variante inválido");
-                return null;
-            }
-
-            ProductosVariantesDTO prodVarianteDTO = new ProductosVariantesDTO();
-            prodVarianteDTO.setProd_variante_id(prod_variante_id);
-            return this.prodVarianteDAO.eliminar(prodVarianteDTO);
-
-        } catch (Exception e) {
-            System.err.println("Error al eliminar variante: " + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
+//    public Integer eliminar(Integer prod_variante_id) {
+//        try {
+//            if (prod_variante_id == null || prod_variante_id <= 0) {
+//                System.err.println("Error: ID de variante inválido");
+//                return null;
+//            }
+//
+//            ProductosVariantesDTO prodVarianteDTO = new ProductosVariantesDTO();
+//            prodVarianteDTO.setProd_variante_id(prod_variante_id);
+//            return this.prodVarianteDAO.eliminar(prodVarianteDTO);
+//
+//        } catch (Exception e) {
+//            System.err.println("Error al eliminar variante: " + e.getMessage());
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
     /**
      * Valida los datos básicos de una variante de producto
      *
      * @return true si los datos son válidos, false en caso contrario
      */
-    private boolean validarDatosVariante(String SKU, Integer stock,
+    private boolean validarDatosVariante(Integer stock,
             Integer stock_minimo, Integer producto_id, ColoresDTO color,
-            TallasDTO talla) {
-
-        // Validar SKU
-        if (SKU == null || SKU.trim().isEmpty()) {
-            System.err.println("Validación: El SKU no puede estar vacío");
-            return false;
-        }
-
-        if (SKU.trim().length() > 45) {
-            System.err.println("Validación: El SKU es demasiado largo (máx. 50 caracteres)");
-            return false;
-        }
+            TallasDTO talla, Boolean disponible, UsuariosDTO usuario) {
 
         // Validar stock
         if (stock == null || stock < 0) {
@@ -206,29 +204,81 @@ public class ProductosVariantesBO {
             return false;
         }
 
+        // Validar disponible
+        if (disponible == null) {
+            System.err.println("Validación: La disponibilidad no puede ser null");
+            return false;
+        }
+
+        // Validar usuario
+        if (usuario == null || usuario.getUsuarioId() == null) {
+            System.err.println("Validación: El usuario no puede ser null");
+            return false;
+        }
+
         return true;
     }
 
     /**
      * Verifica si ya existe una variante con la misma combinación
-     * producto-color-talla
+     * producto-color-talla usando el Stored Procedure
      *
      * @return true si existe, false en caso contrario
      */
     private boolean existeVariante(Integer producto_id, Integer color_id, Integer talla_id) {
         try {
-            List<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
-
-            return todasLasVariantes.stream().anyMatch(v
-                    -> v.getProducto_id().equals(producto_id)
-                    && v.getColor() != null && v.getColor().getColor_id().equals(color_id)
-                    && v.getTalla() != null && v.getTalla().getTalla_id().equals(talla_id)
-            );
-
+            return this.prodVarianteDAO.existeVariante(producto_id, color_id, talla_id);
         } catch (Exception e) {
             System.err.println("Error al verificar existencia de variante: " + e.getMessage());
             return false;
         }
+    }
+
+    /**
+     * Genera el SKU automáticamente siguiendo el formato:
+     * PROD-{producto_id}-{color_3letras}-{numero_talla} Ejemplo:
+     * PROD-0023-NEG-36
+     *
+     * @param producto_id ID del producto
+     * @param color DTO del color
+     * @param talla DTO de la talla
+     * @return SKU generado
+     */
+    private String generarSKU(Integer producto_id, ColoresDTO color, TallasDTO talla) {
+        String colorCodigo = obtenerCodigoColor(color.getNombre());
+
+        return String.format("PROD-%04d-%s-%02d",
+                producto_id,
+                colorCodigo,
+                talla.getNumero()
+        );
+    }
+
+    /**
+     * Obtiene un código de 3 letras del nombre del color Maneja tildes y
+     * caracteres especiales
+     *
+     * @param nombreColor Nombre completo del color
+     * @return Código de 3 letras en mayúsculas
+     */
+    private String obtenerCodigoColor(String nombreColor) {
+        if (nombreColor == null || nombreColor.isEmpty()) {
+            return "XXX";
+        }
+
+        // Eliminar tildes y normalizar
+        String limpio = nombreColor
+                .toUpperCase()
+                .replace("Á", "A")
+                .replace("É", "E")
+                .replace("Í", "I")
+                .replace("Ó", "O")
+                .replace("Ú", "U")
+                .replace("Ñ", "N")
+                .trim();
+
+        // Tomar las primeras 3 letras
+        return limpio.substring(0, Math.min(3, limpio.length()));
     }
 
     /**
@@ -257,14 +307,14 @@ public class ProductosVariantesBO {
 
             Integer resultado = this.modificar(
                     variante.getProd_variante_id(),
-                    variante.getSKU(),
                     variante.getStock(),
                     variante.getStock_minimo(),
                     variante.getProducto_id(),
                     variante.getColor(),
                     variante.getTalla(),
                     variante.getUrl_imagen(),
-                    variante.getDisponible()
+                    variante.getDisponible(),
+                    variante.getUsuario()
             );
 
             return resultado != null && resultado > 0;
@@ -283,17 +333,7 @@ public class ProductosVariantesBO {
      */
     public List<ProductosVariantesDTO> listarConStockBajo() {
         try {
-            List<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
-            List<ProductosVariantesDTO> variantesConStockBajo = new ArrayList<>();
-
-            for (ProductosVariantesDTO variante : todasLasVariantes) {
-                if (variante.getAlerta_stock() != null && variante.getAlerta_stock()) {
-                    variantesConStockBajo.add(variante);
-                }
-            }
-
-            return variantesConStockBajo;
-
+            return this.prodVarianteDAO.listarConStockBajo();
         } catch (Exception e) {
             System.err.println("Error al listar variantes con stock bajo: " + e.getMessage());
             return new ArrayList<>();
@@ -306,7 +346,7 @@ public class ProductosVariantesBO {
      * @param producto_id ID del producto
      * @return Lista de variantes del producto
      */
-    public List<ProductosVariantesDTO> listarPorProducto(Integer producto_id) {
+    public List<ProductosVariantesDTO> listarPorProductoId(Integer producto_id) {
         try {
             if (producto_id == null || producto_id <= 0) {
                 return new ArrayList<>();
@@ -332,17 +372,7 @@ public class ProductosVariantesBO {
                 return new ArrayList<>();
             }
 
-            List<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
-            List<ProductosVariantesDTO> variantesFiltradas = new ArrayList<>();
-
-            for (ProductosVariantesDTO variante : todasLasVariantes) {
-                if (variante.getColor() != null
-                        && color_id.equals(variante.getColor().getColor_id())) {
-                    variantesFiltradas.add(variante);
-                }
-            }
-
-            return variantesFiltradas;
+            return this.prodVarianteDAO.listarPorColor(color_id);
 
         } catch (Exception e) {
             System.err.println("Error al listar variantes por color: " + e.getMessage());
@@ -362,17 +392,7 @@ public class ProductosVariantesBO {
                 return new ArrayList<>();
             }
 
-            List<ProductosVariantesDTO> todasLasVariantes = this.listarTodos();
-            List<ProductosVariantesDTO> variantesFiltradas = new ArrayList<>();
-
-            for (ProductosVariantesDTO variante : todasLasVariantes) {
-                if (variante.getTalla() != null
-                        && talla_id.equals(variante.getTalla().getTalla_id())) {
-                    variantesFiltradas.add(variante);
-                }
-            }
-
-            return variantesFiltradas;
+            return this.prodVarianteDAO.listarPorTalla(talla_id);
 
         } catch (Exception e) {
             System.err.println("Error al listar variantes por talla: " + e.getMessage());
