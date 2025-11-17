@@ -22,86 +22,25 @@ namespace KawkiWebBusiness
         public int? Insertar(string descripcion, categoriasDTO categoria, estilosDTO estilo, 
             double precioVenta, usuariosDTO usuario)
         {
-            try
-            {
-                // El web service maneja las validaciones
-                int resultado = this.clienteSOAP.insertarProducto(
-                    descripcion, 
-                    categoria, 
-                    estilo, 
-                    precioVenta, usuario
-                );
-
-                return resultado > 0 ? (int?)resultado : null;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al insertar producto: {ex.Message}");
-                return null;
-            }
+            return this.clienteSOAP.insertarProducto(descripcion, categoria, estilo, precioVenta, usuario);
         }
 
         /// Obtiene un producto por su ID
         public productosDTO ObtenerPorId(int productoId)
         {
-            try
-            {
-                if (productoId <= 0)
-                {
-                    System.Diagnostics.Debug.WriteLine("Error: ID de producto inválido");
-                    return null;
-                }
-
-                return this.clienteSOAP.obtenerPorIdProducto(productoId);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al obtener producto por ID: {ex.Message}");
-                return null;
-            }
+            return this.clienteSOAP.obtenerPorIdProducto(productoId);
         }
 
         /// Lista todos los productos (con sus variantes)
         public IList<productosDTO> ListarTodos()
         {
-            try
-            {
-                var lista = this.clienteSOAP.listarTodosProducto();
-                return lista != null ? new List<productosDTO>(lista) : new List<productosDTO>();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al listar productos: {ex.Message}");
-                return new List<productosDTO>();
-            }
+            return this.clienteSOAP.listarTodosProducto();
         }
 
         /// Modifica un producto existente
         public int? Modificar(int productoId, string descripcion, categoriasDTO categoria, estilosDTO estilo, double precioVenta, usuariosDTO usuario)
         {
-            try
-            {
-                if (productoId <= 0)
-                {
-                    System.Diagnostics.Debug.WriteLine("Error: ID de producto inválido");
-                    return null;
-                }
-
-                int resultado = this.clienteSOAP.modificarProducto(
-                    productoId, 
-                    descripcion, 
-                    categoria, 
-                    estilo, 
-                    precioVenta, usuario
-                );
-
-                return resultado > 0 ? (int?)resultado : null;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al modificar producto: {ex.Message}");
-                return null;
-            }
+            return this.clienteSOAP.modificarProducto(productoId, descripcion, categoria, estilo, precioVenta, usuario);
         }
 
         /// Elimina un producto por su ID

@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KawkiWebBusiness.KawkiWebWSDetalleVentas;
+using KawkiWebBusiness.KawkiWebWSProductos;
+using KawkiWebBusiness.KawkiWebWSVentas;
+using detalleVentasDTO = KawkiWebBusiness.KawkiWebWSDetalleVentas.detalleVentasDTO;
+using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO;
 
 namespace KawkiWebBusiness
 {
@@ -26,6 +30,19 @@ namespace KawkiWebBusiness
             return this.clienteSOAP.modificarDetalleVenta(detalleVentaId, productoVAR, ventaId, cantidad, precioUnitario, subtotal);
         }
 
+        public detalleVentasDTO ObtenerPorIdDetalleVenta(int detalleVentaId)
+        {
+                return this.clienteSOAP.obtenerPorIdDetalleVenta(detalleVentaId);
+        }
 
+        public IList<detalleVentasDTO> listarTodos()
+        {
+            return this.clienteSOAP.listarTodosDetalleVenta();
+        }
+
+        public IList<detalleVentasDTO> listarPorVentaId(int ventaId)
+        {
+            return this.clienteSOAP.listarPorVentaIdDetalleVenta(ventaId);
+        }
     }
 }

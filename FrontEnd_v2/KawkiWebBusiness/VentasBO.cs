@@ -18,14 +18,14 @@ namespace KawkiWebBusiness
             this.clienteSOAP = new VentasClient();
         }
 
-        public int InsertarVenta(usuariosDTO usuario, double total, descuentosDTO descuento)
+        public int InsertarVenta(usuariosDTO usuario, double total, descuentosDTO descuento, redesSocialesDTO redSocial)
         {
-            return this.clienteSOAP.insertarVenta(usuario, total, descuento);
+            return this.clienteSOAP.insertarVenta(usuario, total, descuento, redSocial);
         }
 
-        public int ModificarVenta(int ventaId, usuariosDTO usuario, double total, descuentosDTO descuento)
+        public int ModificarVenta(int ventaId, usuariosDTO usuario, double total, descuentosDTO descuento, redesSocialesDTO redSocial, bool esValida)
         {
-            return this.clienteSOAP.modificarVenta(ventaId,usuario,total,descuento);
+            return this.clienteSOAP.modificarVenta(ventaId,usuario,total,descuento, redSocial, esValida);
         }
 
         public ventasDTO ObtenerPorIdVenta(int ventaId)
@@ -38,9 +38,9 @@ namespace KawkiWebBusiness
             return this.clienteSOAP.listarTodosVenta();
         }
 
-        public int EliminarVenta(int ventaId)
-        {
-            return this.clienteSOAP.eliminarVenta(ventaId);
-        }
+        //public int EliminarVenta(int ventaId)
+        //{
+        //    return this.clienteSOAP.eliminarVenta(ventaId);
+        //}
     }
 }

@@ -14,25 +14,25 @@ namespace KawkiWebBusiness
         }
         public int InsertarUsuario(string nombre, string apePaterno, string dni,
                                            string telefono, string correo, string nombreUsuario,
-                                           string contrasenha, tiposUsuarioDTO tipoUsuario)
+                                           string contrasenha, tiposUsuarioDTO tipoUsuario, bool activo)
         {
             return this.clienteSOAP.insertarUsuario(nombre, apePaterno, dni, telefono, correo,
-                                                    nombreUsuario, contrasenha, tipoUsuario);
+                                                    nombreUsuario, contrasenha, tipoUsuario,activo);
         }
 
 
         public int ModificarUsuario(int usuarioId, string nombre, string apePaterno, string dni,
                                     string telefono, string correo, string nombreUsuario,
-                                    string contrasenha, tiposUsuarioDTO tipoUsuario)
+                                    string contrasenha, tiposUsuarioDTO tipoUsuario, bool activo)
         {
             return this.clienteSOAP.modificarUsuario(usuarioId, nombre, apePaterno, dni, telefono,
-                                                     correo, nombreUsuario, contrasenha, tipoUsuario);
+                                                     correo, nombreUsuario, contrasenha, tipoUsuario, activo);
         }
 
-        public int EliminarUsuario(int usuarioId)
-        {
-            return this.clienteSOAP.eliminarUsuario(usuarioId);
-        }
+        //public int EliminarUsuario(int usuarioId)
+        //{
+        //    return this.clienteSOAP.eliminarUsuario(usuarioId);
+        //}
 
         public usuariosDTO ObtenerPorIdUsuario(int usuarioId)
         {
@@ -44,10 +44,10 @@ namespace KawkiWebBusiness
             return this.clienteSOAP.listarTodosUsuario();
         }
 
-        public IList<usuariosDTO> ListarPorTipoUsuario(int tipoUsuarioId)
-        {
-            return this.clienteSOAP.listarPorTipoUsuario(tipoUsuarioId);
-        }
+        //public IList<usuariosDTO> ListarPorTipoUsuario(int tipoUsuarioId)
+        //{
+        //    return this.clienteSOAP.listarPorTipoUsuario(tipoUsuarioId);
+        //}
 
         public bool CambiarContrasenhaUsuario(int usuarioId, string contrasenhaActual, string contrasenhaNueva)
         {
