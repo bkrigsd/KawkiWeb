@@ -2393,6 +2393,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\KawkiWebBusiness\KawkiWebBusiness.csproj">
       <Project>{9ea6588b-b633-4a64-82d5-825887e462e2}</Project>
       <Name>KawkiWebBusiness</Name>

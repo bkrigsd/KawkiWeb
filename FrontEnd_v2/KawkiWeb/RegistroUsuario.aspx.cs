@@ -57,8 +57,6 @@ namespace KawkiWeb
         // =====================================================
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            lblMensaje.Text = "";
-            lblMensaje.CssClass = "text-danger d-block mb-2";
 
             try
             {
@@ -73,39 +71,65 @@ namespace KawkiWeb
                 string rol = ddlRol.SelectedValue;
 
                 // === VALIDACIONES ===
-                if (string.IsNullOrEmpty(nombre))
+                bool hayErrores = false;
+                string errorNombre = usuarioBO.validarNombre(nombre);
+                if (errorNombre != null)
                 {
-                    lblMensaje.Text = "El nombre es obligatorio.";
+                    lblErrorNombre.Text = errorNombre;
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
-                if (string.IsNullOrEmpty(apellido))
+                string errorApellido = usuarioBO.validarApellidoPaterno(apellido);
+                if (errorApellido != null)
                 {
-                    lblMensaje.Text = "El apellido es obligatorio.";
+                    lblErrorApellido.Text = errorApellido;
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
-                if (string.IsNullOrEmpty(usuario))
+                string errorNombUser = usuarioBO.validarNombreUsuario(usuario);
+                if (errorNombUser != null)
                 {
-                    lblMensaje.Text = "El nombre de usuario es obligatorio.";
+                    lblErrorUsuario.Text = "Este usuario ya existe";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
                 if (!Regex.IsMatch(dni, @"^\d{8}$"))
                 {
-                    lblMensaje.Text = "El DNI debe tener 8 dígitos numéricos.";
+                    lblErrorDNI.Text = "El DNI debe tener 8 dígitos numéricos.";
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
+                string errorDni = usuarioBO.validarDni(dni);
+                if (errorDni != null)
+                {
+                    lblErrorDNI.Text = "Este DNI ya existe";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
                 if (!Regex.IsMatch(email, @"^[\w\.-]+@([\w-]+\.)+[\w-]{2,}$"))
                 {
-                    lblMensaje.Text = "Ingrese un correo electrónico válido.";
+                    lblErrorEmail.Text = "Ingrese un correo electrónico válido.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
+                string errorEmail = usuarioBO.validarCorreo(email);
+                if(errorEmail != null)
+                {
+                    lblErrorEmail.Text = "Este email ya existe";
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
+                
                 if (!Regex.IsMatch(telefono, @"^\d{9}$"))
                 {
-                    lblMensaje.Text = "El teléfono debe tener 9 dígitos.";
+                    lblErrorTelefono.Text = "El teléfono debe tener 9 dígitos.";
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
+                string errorTelefono = usuarioBO.validarTelefono(telefono);
+                if (errorTelefono != null)
+                {
+                    lblErrorTelefono.Text = "Este teléfono ya existe";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }

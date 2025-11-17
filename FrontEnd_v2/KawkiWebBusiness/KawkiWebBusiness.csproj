@@ -305,6 +305,24 @@
     <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.validarApellidoPaternoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.validarCorreoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.validarDniResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.validarNombreResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.validarNombreUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.validarTelefonoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\KawkiWebWSUsuarios\UsuariosService.wsdl" />
     <None Include="Connected Services\KawkiWebWSUsuarios\UsuariosService.xsd">
       <SubType>Designer</SubType>

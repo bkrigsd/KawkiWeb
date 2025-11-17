@@ -5,6 +5,36 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/UsuariosService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
+  <message name="obtenerPorIdUsuario">
+    <part name="parameters" element="tns:obtenerPorIdUsuario" />
+  </message>
+  <message name="obtenerPorIdUsuarioResponse">
+    <part name="parameters" element="tns:obtenerPorIdUsuarioResponse" />
+  </message>
+  <message name="validarNombre">
+    <part name="parameters" element="tns:validarNombre" />
+  </message>
+  <message name="validarNombreResponse">
+    <part name="parameters" element="tns:validarNombreResponse" />
+  </message>
+  <message name="listarTodosUsuario">
+    <part name="parameters" element="tns:listarTodosUsuario" />
+  </message>
+  <message name="listarTodosUsuarioResponse">
+    <part name="parameters" element="tns:listarTodosUsuarioResponse" />
+  </message>
+  <message name="validarTelefono">
+    <part name="parameters" element="tns:validarTelefono" />
+  </message>
+  <message name="validarTelefonoResponse">
+    <part name="parameters" element="tns:validarTelefonoResponse" />
+  </message>
+  <message name="eliminarUsuario">
+    <part name="parameters" element="tns:eliminarUsuario" />
+  </message>
+  <message name="eliminarUsuarioResponse">
+    <part name="parameters" element="tns:eliminarUsuarioResponse" />
+  </message>
   <message name="listarPorTipoUsuario">
     <part name="parameters" element="tns:listarPorTipoUsuario" />
   </message>
@@ -17,11 +47,11 @@
   <message name="cambiarContrasenhaUsuarioResponse">
     <part name="parameters" element="tns:cambiarContrasenhaUsuarioResponse" />
   </message>
-  <message name="eliminarUsuario">
-    <part name="parameters" element="tns:eliminarUsuario" />
+  <message name="autenticarUsuario">
+    <part name="parameters" element="tns:autenticarUsuario" />
   </message>
-  <message name="eliminarUsuarioResponse">
-    <part name="parameters" element="tns:eliminarUsuarioResponse" />
+  <message name="autenticarUsuarioResponse">
+    <part name="parameters" element="tns:autenticarUsuarioResponse" />
   </message>
   <message name="modificarUsuario">
     <part name="parameters" element="tns:modificarUsuario" />
@@ -35,25 +65,51 @@
   <message name="insertarUsuarioResponse">
     <part name="parameters" element="tns:insertarUsuarioResponse" />
   </message>
-  <message name="listarTodosUsuario">
-    <part name="parameters" element="tns:listarTodosUsuario" />
+  <message name="validarApellidoPaterno">
+    <part name="parameters" element="tns:validarApellidoPaterno" />
   </message>
-  <message name="listarTodosUsuarioResponse">
-    <part name="parameters" element="tns:listarTodosUsuarioResponse" />
+  <message name="validarApellidoPaternoResponse">
+    <part name="parameters" element="tns:validarApellidoPaternoResponse" />
   </message>
-  <message name="obtenerPorIdUsuario">
-    <part name="parameters" element="tns:obtenerPorIdUsuario" />
+  <message name="validarNombreUsuario">
+    <part name="parameters" element="tns:validarNombreUsuario" />
   </message>
-  <message name="obtenerPorIdUsuarioResponse">
-    <part name="parameters" element="tns:obtenerPorIdUsuarioResponse" />
+  <message name="validarNombreUsuarioResponse">
+    <part name="parameters" element="tns:validarNombreUsuarioResponse" />
   </message>
-  <message name="autenticarUsuario">
-    <part name="parameters" element="tns:autenticarUsuario" />
+  <message name="validarCorreo">
+    <part name="parameters" element="tns:validarCorreo" />
   </message>
-  <message name="autenticarUsuarioResponse">
-    <part name="parameters" element="tns:autenticarUsuarioResponse" />
+  <message name="validarCorreoResponse">
+    <part name="parameters" element="tns:validarCorreoResponse" />
+  </message>
+  <message name="validarDni">
+    <part name="parameters" element="tns:validarDni" />
+  </message>
+  <message name="validarDniResponse">
+    <part name="parameters" element="tns:validarDniResponse" />
   </message>
   <portType name="Usuarios">
+    <operation name="obtenerPorIdUsuario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioRequest" message="tns:obtenerPorIdUsuario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioResponse" message="tns:obtenerPorIdUsuarioResponse" />
+    </operation>
+    <operation name="validarNombre">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarNombreRequest" message="tns:validarNombre" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarNombreResponse" message="tns:validarNombreResponse" />
+    </operation>
+    <operation name="listarTodosUsuario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/listarTodosUsuarioRequest" message="tns:listarTodosUsuario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/listarTodosUsuarioResponse" message="tns:listarTodosUsuarioResponse" />
+    </operation>
+    <operation name="validarTelefono">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarTelefonoRequest" message="tns:validarTelefono" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarTelefonoResponse" message="tns:validarTelefonoResponse" />
+    </operation>
+    <operation name="eliminarUsuario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/eliminarUsuarioRequest" message="tns:eliminarUsuario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/eliminarUsuarioResponse" message="tns:eliminarUsuarioResponse" />
+    </operation>
     <operation name="listarPorTipoUsuario">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/listarPorTipoUsuarioRequest" message="tns:listarPorTipoUsuario" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/listarPorTipoUsuarioResponse" message="tns:listarPorTipoUsuarioResponse" />
@@ -62,9 +118,9 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuarioRequest" message="tns:cambiarContrasenhaUsuario" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuarioResponse" message="tns:cambiarContrasenhaUsuarioResponse" />
     </operation>
-    <operation name="eliminarUsuario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/eliminarUsuarioRequest" message="tns:eliminarUsuario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/eliminarUsuarioResponse" message="tns:eliminarUsuarioResponse" />
+    <operation name="autenticarUsuario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRequest" message="tns:autenticarUsuario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioResponse" message="tns:autenticarUsuarioResponse" />
     </operation>
     <operation name="modificarUsuario">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/modificarUsuarioRequest" message="tns:modificarUsuario" />
@@ -74,21 +130,70 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioRequest" message="tns:insertarUsuario" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioResponse" message="tns:insertarUsuarioResponse" />
     </operation>
-    <operation name="listarTodosUsuario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/listarTodosUsuarioRequest" message="tns:listarTodosUsuario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/listarTodosUsuarioResponse" message="tns:listarTodosUsuarioResponse" />
+    <operation name="validarApellidoPaterno">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarApellidoPaternoRequest" message="tns:validarApellidoPaterno" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarApellidoPaternoResponse" message="tns:validarApellidoPaternoResponse" />
     </operation>
-    <operation name="obtenerPorIdUsuario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioRequest" message="tns:obtenerPorIdUsuario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioResponse" message="tns:obtenerPorIdUsuarioResponse" />
+    <operation name="validarNombreUsuario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarNombreUsuarioRequest" message="tns:validarNombreUsuario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarNombreUsuarioResponse" message="tns:validarNombreUsuarioResponse" />
     </operation>
-    <operation name="autenticarUsuario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRequest" message="tns:autenticarUsuario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioResponse" message="tns:autenticarUsuarioResponse" />
+    <operation name="validarCorreo">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarCorreoRequest" message="tns:validarCorreo" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarCorreoResponse" message="tns:validarCorreoResponse" />
+    </operation>
+    <operation name="validarDni">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarDniRequest" message="tns:validarDni" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/validarDniResponse" message="tns:validarDniResponse" />
     </operation>
   </portType>
   <binding name="UsuariosPortBinding" type="tns:Usuarios">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="obtenerPorIdUsuario">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="validarNombre">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarTodosUsuario">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="validarTelefono">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="eliminarUsuario">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="listarPorTipoUsuario">
       <soap:operation soapAction="" />
       <input>
@@ -107,7 +212,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="eliminarUsuario">
+    <operation name="autenticarUsuario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -134,7 +239,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarTodosUsuario">
+    <operation name="validarApellidoPaterno">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -143,7 +248,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerPorIdUsuario">
+    <operation name="validarNombreUsuario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -152,7 +257,16 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="autenticarUsuario">
+    <operation name="validarCorreo">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="validarDni">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

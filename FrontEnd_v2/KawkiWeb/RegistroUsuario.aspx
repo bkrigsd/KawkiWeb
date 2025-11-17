@@ -92,14 +92,12 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Nombre *</label>
                         <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ControlToValidate="txtNombre"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
+                        <asp:Label ID="lblErrorNombre" runat="server" CssClass="text-danger" />
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Apellido Paterno *</label>
                         <asp:TextBox ID="txtApellidoPaterno" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="rfvApellido" runat="server" ControlToValidate="txtApellidoPaterno"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
+                        <asp:Label ID="lblErrorApellido" runat="server" CssClass="text-danger" />
                     </div>
                 </div>
 
@@ -107,38 +105,34 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">DNI *</label>
                         <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" MaxLength="8" />
-                        <asp:RequiredFieldValidator ID="rfvDNI" runat="server" ControlToValidate="txtDNI"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
-                        <asp:RegularExpressionValidator ID="revDNI" runat="server" ControlToValidate="txtDNI"
+                        <asp:Label ID="lblErrorDNI" runat="server" CssClass="text-danger" />
+                        <%--<asp:RegularExpressionValidator ID="revDNI" runat="server" ControlToValidate="txtDNI"
                             ValidationExpression="^\d{8}$" ErrorMessage="Debe tener 8 dígitos"
-                            CssClass="text-danger" Display="Dynamic" />
+                            CssClass="text-danger" Display="Dynamic" />--%>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Usuario *</label>
                         <asp:TextBox ID="txtUsuario" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="rfvUsuario" runat="server" ControlToValidate="txtUsuario"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
+                        <asp:Label ID="lblErrorUsuario" runat="server" CssClass="text-danger" />
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Email *</label>
                     <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" />
-                    <asp:RequiredFieldValidator ID="rfvEmail" runat="server" ControlToValidate="txtEmail"
-                        ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
-                    <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail"
+                    <asp:Label ID="lblErrorEmail" runat="server" CssClass="text-danger" />
+                    <%--<asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail"
                         ValidationExpression="^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$"
-                        ErrorMessage="Correo inválido" CssClass="text-danger" Display="Dynamic" />
+                        ErrorMessage="Correo inválido" CssClass="text-danger" Display="Dynamic" />--%>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Teléfono *</label>
                     <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" MaxLength="9" />
-                    <asp:RequiredFieldValidator ID="rfvTelefono" runat="server" ControlToValidate="txtTelefono"
-                        ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
-                    <asp:RegularExpressionValidator ID="revTelefono" runat="server" ControlToValidate="txtTelefono"
+                    <asp:Label ID="lblErrorTelefono" runat="server" CssClass="text-danger" />
+                    <%--<asp:RegularExpressionValidator ID="revTelefono" runat="server" ControlToValidate="txtTelefono"
                         ValidationExpression="^\d{9}$" ErrorMessage="Debe tener 9 dígitos"
-                        CssClass="text-danger" Display="Dynamic" />
+                        CssClass="text-danger" Display="Dynamic" />--%>
                 </div>
 
                 <div class="mb-3 position-relative">

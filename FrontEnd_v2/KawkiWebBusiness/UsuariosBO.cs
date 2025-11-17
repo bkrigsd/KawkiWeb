@@ -1,6 +1,8 @@
-﻿using System;
+﻿using KawkiWebBusiness.KawkiWebWSUsuarios;
+using System;
 using System.Collections.Generic;
-using KawkiWebBusiness.KawkiWebWSUsuarios;
+using System.Net;
+using System.Xml.Linq;
 
 namespace KawkiWebBusiness
 {
@@ -58,5 +60,31 @@ namespace KawkiWebBusiness
         {
             return this.clienteSOAP.autenticarUsuario(nombreUsuario, contrasenha);
         }
+
+        public String validarNombre(string nombre) {
+            return this.clienteSOAP.validarNombre(nombre);
+        }
+    
+        public String validarApellidoPaterno(string apePaterno) {
+            return this.clienteSOAP.validarApellidoPaterno(apePaterno);
+        }
+
+        public String validarNombreUsuario(string nombreUsuario) {
+            return this.clienteSOAP.validarNombreUsuario(nombreUsuario);
+        }
+
+        public String validarDni(string dni) {
+            return this.clienteSOAP.validarDni(dni);
+        }
+
+        public String validarCorreo(string correo) {
+            return this.clienteSOAP.validarCorreo(correo);
+        }
+
+        public String validarTelefono(string telefono)
+        {
+            return this.clienteSOAP.validarTelefono(telefono);
+        }
+
     }
 }
