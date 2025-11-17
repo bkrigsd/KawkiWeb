@@ -26,10 +26,11 @@ public class Usuarios {
             @WebParam(name = "correo") String correo,
             @WebParam(name = "nombreUsuario") String nombreUsuario,
             @WebParam(name = "contrasenha") String contrasenha,
-            @WebParam(name = "tipoUsuario") TiposUsuarioDTO tipoUsuario) {
+            @WebParam(name = "tipoUsuario") TiposUsuarioDTO tipoUsuario,
+            @WebParam(name = "activo") Boolean activo) {
 
         return this.usuarioBO.insertar(nombre, apePaterno, dni, telefono, correo,
-                nombreUsuario, contrasenha, tipoUsuario);
+                nombreUsuario, contrasenha, tipoUsuario, activo);
     }
 
     @WebMethod(operationName = "obtenerPorIdUsuario")
@@ -53,25 +54,19 @@ public class Usuarios {
             @WebParam(name = "correo") String correo,
             @WebParam(name = "nombreUsuario") String nombreUsuario,
             @WebParam(name = "contrasenha") String contrasenha,
-            @WebParam(name = "tipoUsuario") TiposUsuarioDTO tipoUsuario) {
+            @WebParam(name = "tipoUsuario") TiposUsuarioDTO tipoUsuario,
+            @WebParam(name = "activo") Boolean activo) {
 
         return this.usuarioBO.modificar(usuarioId, nombre, apePaterno, dni, telefono,
-                correo, nombreUsuario, contrasenha, tipoUsuario);
+                correo, nombreUsuario, contrasenha, tipoUsuario, activo);
     }
 
-    @WebMethod(operationName = "eliminarUsuario")
-    public Integer eliminarUsuario(
-            @WebParam(name = "usuarioId") Integer usuarioId) {
-        return this.usuarioBO.eliminar(usuarioId);
-    }
-
-    @WebMethod(operationName = "listarPorTipoUsuario")
-    public ArrayList<UsuariosDTO> listarPorTipoUsuario(
-            @WebParam(name = "tipoUsuarioId") Integer tipoUsuarioId) {
-
-        return new ArrayList<>(this.usuarioBO.listarPorTipo(tipoUsuarioId));
-    }
-
+    // Método eliminar comentado (igual que en el BO)
+//    @WebMethod(operationName = "eliminarUsuario")
+//    public Integer eliminarUsuario(
+//            @WebParam(name = "usuarioId") Integer usuarioId) {
+//        return this.usuarioBO.eliminar(usuarioId);
+//    }
     @WebMethod(operationName = "cambiarContrasenhaUsuario")
     public boolean cambiarContrasenhaUsuario(
             @WebParam(name = "usuarioId") Integer usuarioId,

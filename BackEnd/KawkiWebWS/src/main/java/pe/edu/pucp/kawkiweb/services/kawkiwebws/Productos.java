@@ -6,6 +6,7 @@ import jakarta.jws.WebParam;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.ProductosBO;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 
@@ -23,9 +24,10 @@ public class Productos {
             @WebParam(name = "descripcion") String descripcion,
             @WebParam(name = "categoria") CategoriasDTO categoria,
             @WebParam(name = "estilo") EstilosDTO estilo,
-            @WebParam(name = "precio_venta") Double precio_venta) {
+            @WebParam(name = "precio_venta") Double precio_venta,
+            @WebParam(name = "usuario") UsuariosDTO usuario) {
 
-        return this.productoBO.insertar(descripcion, categoria, estilo, precio_venta);
+        return this.productoBO.insertar(descripcion, categoria, estilo, precio_venta, usuario);
     }
 
     @WebMethod(operationName = "obtenerPorIdProducto")
@@ -45,17 +47,18 @@ public class Productos {
             @WebParam(name = "descripcion") String descripcion,
             @WebParam(name = "categoria") CategoriasDTO categoria,
             @WebParam(name = "estilo") EstilosDTO estilo,
-            @WebParam(name = "precio_venta") Double precio_venta) {
+            @WebParam(name = "precio_venta") Double precio_venta,
+            @WebParam(name = "usuario") UsuariosDTO usuario) {
 
         return this.productoBO.modificar(producto_id, descripcion, categoria,
-                estilo, precio_venta);
+                estilo, precio_venta, usuario);
     }
 
-    @WebMethod(operationName = "eliminarProducto")
-    public Integer eliminarProducto(@WebParam(name = "producto_id") Integer producto_id) {
-        return this.productoBO.eliminar(producto_id);
-    }
-
+    // Método eliminar comentado (igual que en el BO)
+//    @WebMethod(operationName = "eliminarProducto")
+//    public Integer eliminarProducto(@WebParam(name = "producto_id") Integer producto_id) {
+//        return this.productoBO.eliminar(producto_id);
+//    }
     @WebMethod(operationName = "tieneStockDisponibleProducto")
     public boolean tieneStockDisponibleProducto(
             @WebParam(name = "producto_id") Integer producto_id) {
