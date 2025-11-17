@@ -92,6 +92,7 @@
                         OnClick="lnkProducto_Click">
                         
                         <div class="producto-card">
+
                             <asp:Image ID="imgProducto" runat="server" 
                                 ImageUrl='<%# Eval("ImagenUrl") %>' 
                                 AlternateText='<%# Eval("Nombre") %>'
@@ -107,6 +108,9 @@
                                     <%# MostrarTallas(Eval("TallasDisponibles").ToString()) %>
                                 </div>
                                 
+                                <!-- Alerta de stock bajo por tallas -->
+                                <%# MostrarAlertaStockBajo(Eval("TallasDisponibles").ToString(), Eval("Stock").ToString()) %>
+
                                 <div class="producto-precio">S/ <%# Eval("Precio", "{0:N2}") %></div>
                             </div>
                         </div>

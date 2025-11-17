@@ -183,14 +183,67 @@ namespace KawkiWeb
             // Productos tipo Oxford
             dt.Rows.Add(1, "Oxford Clásico Beige", "Zapato oxford de cuero genuino con acabado premium, ideal para ocasiones formales y uso diario.", 150.90m, "35, 36, 39", "oxford", "clasico", "beige", "15,5,9", "~/Images/OxfordClasicoBeige.jpg");
             dt.Rows.Add(2, "Oxford Premium Negro", "Zapato oxford de diseño moderno y sofisticado, perfecto para eventos importantes.", 250.90m, "35, 36, 37, 38, 39", "oxford", "charol", "negro", "15,12,0,5,9", "~/Images/OxfordPremiumNegro.jpg");
-            dt.Rows.Add(3, "Oxford Bicolor Café", "Zapato oxford con elegante combinación de tonos café, estilo vintage refinado.", 160.90m, "36, 37, 38, 39", "oxford", "combinado", "marron", "15,0,5,9", "~/Images/OxfordBicolorCafe.jpg");
+            dt.Rows.Add(3, "Oxford Bicolor Café", "Zapato oxford con elegante combinación de tonos café, estilo vintage refinado.", 160.90m, "36, 37, 38, 39", "oxford", "combinado", "marron", "10,0,5,1", "~/Images/OxfordBicolorCafe.jpg");
 
             // Productos tipo Derby
-            dt.Rows.Add(4, "Derby Elegante Marrón", "Derby de cuero con diseño tejido elegante, versátil para cualquier ocasión.", 215.90m, "35, 36, 37, 38, 39", "derby", "clasico", "marron", "15,12,0,5,9", "~/Images/DerbyClasicoMarron.jpg");
-            dt.Rows.Add(5, "Derby Charol Crema", "Derby charol con suela gruesa y diseño moderno, máxima comodidad.", 210.90m, "35, 36, 37, 38, 39", "derby", "charol", "crema", "15,12,0,5,9", "~/Images/DerbyClasicoCrema.jpg");
+            dt.Rows.Add(4, "Derby Elegante Marrón", "Derby de cuero con diseño tejido elegante, versátil para cualquier ocasión.", 215.90m, "35, 36, 37, 38, 39", "derby", "clasico", "marron", "15,12,0,5,7", "~/Images/DerbyClasicoMarron.jpg");
+            dt.Rows.Add(5, "Derby Charol Crema", "Derby charol con suela gruesa y diseño moderno, máxima comodidad.", 210.90m, "35, 36, 37, 38, 39", "derby", "charol", "crema", "15,12,0,5,2", "~/Images/DerbyClasicoCrema.jpg");
             dt.Rows.Add(6, "Derby Clasico Negro", "Derby clasico con suela de goma antideslizante, ideal para caminar.", 169.90m, "36, 37, 38, 39", "derby", "clasico", "negro", "12,0,5,9", "~/Images/DerbyClasicoNegro.jpg");
 
             return dt;
+        }
+
+        // Método para mostrar alertas de stock bajo por tallas
+        protected string MostrarAlertaStockBajo(string tallasDisponibles, string stockString)
+        {
+            if (string.IsNullOrEmpty(tallasDisponibles) || string.IsNullOrEmpty(stockString))
+                return "";
+
+            var tallas = tallasDisponibles.Split(',').Select(t => t.Trim()).ToArray();
+            var stocks = stockString.Split(',').Select(s => s.Trim()).ToArray();
+
+            if (tallas.Length != stocks.Length)
+                return "";
+
+            List<string> tallasAgotadas = new List<string>();
+            List<string> tallasStockBajo = new List<string>();
+
+            for (int i = 0; i < tallas.Length; i++)
+            {
+                if (int.TryParse(stocks[i], out int stock))
+                {
+                    if (stock == 0)
+                    {
+                        tallasAgotadas.Add(tallas[i]);
+                    }
+                    else if (stock <= 5) // Stock bajo si tiene 5 o menos unidades
+                    {
+                        tallasStockBajo.Add($"{tallas[i]} ({stock})");
+                    }
+                }
+            }
+
+            string html = "";
+
+            // Mostrar tallas agotadas
+            if (tallasAgotadas.Count > 0)
+            {
+                html += $@"<div class='producto-stock-alerta producto-stock-alerta-agotado'>
+                            <i class='fas fa-times-circle'></i>
+                            <strong>Agotado:</strong> Talla(s) {string.Join(", ", tallasAgotadas)}
+                         </div>";
+            }
+
+            // Mostrar tallas con stock bajo
+            if (tallasStockBajo.Count > 0)
+            {
+                html += $@"<div class='producto-stock-alerta'>
+                            <i class='fas fa-exclamation-triangle'></i>
+                            <strong>Stock bajo:</strong> Talla(s) {string.Join(", ", tallasStockBajo)}
+                         </div>";
+            }
+
+            return html;
         }
     }
 }

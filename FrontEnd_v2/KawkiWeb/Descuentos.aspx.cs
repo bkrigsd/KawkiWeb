@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace KawkiWeb
 {
@@ -162,6 +163,32 @@ namespace KawkiWeb
             txtFechaInicio.Text = "";
             txtFechaFin.Text = "";
             txtDescripcion.Text = "";
+        }
+
+        protected void lnkCambiarEstado_Command(object sender, CommandEventArgs e)
+        {
+            try
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+                DataTable dt = ObtenerDescuentosSimulados();
+                DataRow fila = dt.AsEnumerable().FirstOrDefault(r => r.Field<int>("IdDescuento") == id);
+
+                if (fila != null)
+                {
+                    bool estadoActual = Convert.ToBoolean(fila["Activo"]);
+                    fila["Activo"] = !estadoActual;
+
+                    // AQUÍ conectarás con tu backend/business cuando lo tengas:
+                    // DescuentoBusiness.ActualizarEstado(id, !estadoActual);
+
+                    CargarDescuentos();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de error
+                CargarDescuentos();
+            }
         }
     }
 }
