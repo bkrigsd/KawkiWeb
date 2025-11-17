@@ -385,3 +385,110 @@ BEGIN
 END$$
 
 DELIMITER ;
+-- ========================================================
+-- Procedimientos almacenados para Productos - MySQL
+
+USE KAWKI_DB;
+DELIMITER $$
+
+-- =====================================================
+-- SP_VERIFICAR_STOCK_DISPONIBLE
+-- Verifica si un producto tiene stock disponible en alguna de sus variantes
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_VERIFICAR_STOCK_DISPONIBLE$$
+
+CREATE PROCEDURE SP_VERIFICAR_STOCK_DISPONIBLE(
+    IN p_producto_id INT,
+    OUT p_tiene_stock TINYINT
+)
+BEGIN
+    DECLARE v_count INT;
+    
+    -- Contar cuántas variantes del producto tienen stock > 0
+    SELECT COUNT(*) INTO v_count
+    FROM PRODUCTOS_VARIANTES
+    WHERE PRODUCTO_ID = p_producto_id
+    AND STOCK > 0
+    AND DISPONIBLE = 1;
+    
+    -- Si hay al menos una variante con stock, retornar 1, sino 0
+    IF v_count > 0 THEN
+        SET p_tiene_stock = 1;
+    ELSE
+        SET p_tiene_stock = 0;
+    END IF;
+END$$
+
+-- =====================================================
+-- SP_CALCULAR_STOCK_TOTAL
+-- Calcula el stock total de un producto sumando todas sus variantes
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_CALCULAR_STOCK_TOTAL$$
+
+CREATE PROCEDURE SP_CALCULAR_STOCK_TOTAL(
+    IN p_producto_id INT,
+    OUT p_stock_total INT
+)
+BEGIN
+    -- Sumar el stock de todas las variantes del producto
+    SELECT COALESCE(SUM(STOCK), 0) INTO p_stock_total
+    FROM PRODUCTOS_VARIANTES
+    WHERE PRODUCTO_ID = p_producto_id;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_PRODUCTOS_STOCK_BAJO
+-- Lista productos que tienen al menos una variante con alerta de stock
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_PRODUCTOS_STOCK_BAJO$$
+
+CREATE PROCEDURE SP_LISTAR_PRODUCTOS_STOCK_BAJO()
+BEGIN
+    SELECT DISTINCT 
+        P.PRODUCTO_ID,
+        P.DESCRIPCION,
+        P.CATEGORIA_ID,
+        P.ESTILO_ID,
+        P.PRECIO_VENTA,
+        P.FECHA_HORA_CREACION,
+        P.USUARIO_ID
+    FROM PRODUCTOS P
+    INNER JOIN PRODUCTOS_VARIANTES PV ON P.PRODUCTO_ID = PV.PRODUCTO_ID
+    WHERE PV.ALERTA_STOCK = 1
+    ORDER BY P.PRODUCTO_ID;
+END$$
+
+DELIMITER ;
+
+-- =====================================================
+-- Stored Procedure: SP_EXISTE_VARIANTE 
+-- Verifica si existe una variante con la combinación 
+-- producto-color-talla especificada
+-- =====================================================
+USE KAWKI_DB;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS SP_EXISTE_VARIANTE$$
+
+CREATE PROCEDURE SP_EXISTE_VARIANTE(
+    IN p_producto_id INT,
+    IN p_color_id INT,
+    IN p_talla_id INT,
+    OUT p_existe TINYINT
+)
+BEGIN
+    DECLARE v_count INT;
+    
+    -- Contar variantes que coincidan con la combinación
+    SELECT COUNT(*) INTO v_count
+    FROM PRODUCTOS_VARIANTES
+    WHERE PRODUCTO_ID = p_producto_id
+      AND COLOR_ID = p_color_id
+      AND TALLA_ID = p_talla_id;
+    
+    -- Retornar 1 si existe, 0 si no existe
+    SET p_existe = IF(v_count > 0, 1, 0);
+END$$
+
+DELIMITER ;
+

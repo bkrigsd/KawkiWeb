@@ -451,3 +451,121 @@ BEGIN
     SET @p_numero_serie = @v_prefijo + '-' + RIGHT('00000000' + CAST(@v_contador + 1 AS VARCHAR), 8);
 END
 GO
+
+-- Procedimientos almacenados para Productos 
+
+USE KAWKI_DB;
+GO
+
+-- =====================================================
+-- SP_VERIFICAR_STOCK_DISPONIBLE
+-- Verifica si un producto tiene stock disponible en alguna de sus variantes
+-- =====================================================
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_VERIFICAR_STOCK_DISPONIBLE]') AND type in (N'P', N'PC'))
+    DROP PROCEDURE [dbo].[SP_VERIFICAR_STOCK_DISPONIBLE]
+GO
+
+CREATE PROCEDURE [dbo].[SP_VERIFICAR_STOCK_DISPONIBLE]
+    @p_producto_id INT,
+    @p_tiene_stock BIT OUTPUT
+AS
+BEGIN
+    DECLARE @v_count INT;
+    
+    -- Contar cuántas variantes del producto tienen stock > 0
+    SELECT @v_count = COUNT(*)
+    FROM PRODUCTOS_VARIANTES
+    WHERE PRODUCTO_ID = @p_producto_id
+    AND STOCK > 0
+    AND DISPONIBLE = 1;
+    
+    -- Si hay al menos una variante con stock, retornar 1, sino 0
+    IF @v_count > 0
+        SET @p_tiene_stock = 1;
+    ELSE
+        SET @p_tiene_stock = 0;
+END
+GO
+
+-- =====================================================
+-- SP_CALCULAR_STOCK_TOTAL
+-- Calcula el stock total de un producto sumando todas sus variantes
+-- =====================================================
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_CALCULAR_STOCK_TOTAL]') AND type in (N'P', N'PC'))
+    DROP PROCEDURE [dbo].[SP_CALCULAR_STOCK_TOTAL]
+GO
+
+CREATE PROCEDURE [dbo].[SP_CALCULAR_STOCK_TOTAL]
+    @p_producto_id INT,
+    @p_stock_total INT OUTPUT
+AS
+BEGIN
+    -- Sumar el stock de todas las variantes del producto
+    SELECT @p_stock_total = COALESCE(SUM(STOCK), 0)
+    FROM PRODUCTOS_VARIANTES
+    WHERE PRODUCTO_ID = @p_producto_id;
+END
+GO
+
+-- =====================================================
+-- SP_LISTAR_PRODUCTOS_STOCK_BAJO
+-- Lista productos que tienen al menos una variante con alerta de stock
+-- =====================================================
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_LISTAR_PRODUCTOS_STOCK_BAJO]') AND type in (N'P', N'PC'))
+    DROP PROCEDURE [dbo].[SP_LISTAR_PRODUCTOS_STOCK_BAJO]
+GO
+
+CREATE PROCEDURE [dbo].[SP_LISTAR_PRODUCTOS_STOCK_BAJO]
+AS
+BEGIN
+    SELECT DISTINCT 
+        P.PRODUCTO_ID,
+        P.DESCRIPCION,
+        P.CATEGORIA_ID,
+        P.ESTILO_ID,
+        P.PRECIO_VENTA,
+        P.FECHA_HORA_CREACION,
+        P.USUARIO_ID
+    FROM PRODUCTOS P
+    INNER JOIN PRODUCTOS_VARIANTES PV ON P.PRODUCTO_ID = PV.PRODUCTO_ID
+    WHERE PV.ALERTA_STOCK = 1
+    ORDER BY P.PRODUCTO_ID;
+END
+GO
+
+-- =====================================================
+-- Stored Procedure: SP_EXISTE_VARIANTE 
+-- Verifica si existe una variante con la combinación 
+-- producto-color-talla especificada
+-- =====================================================
+
+USE KAWKI_DB;
+GO
+
+IF OBJECT_ID('dbo.SP_EXISTE_VARIANTE', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.SP_EXISTE_VARIANTE;
+GO
+
+CREATE PROCEDURE dbo.SP_EXISTE_VARIANTE
+    @p_producto_id INT,
+    @p_color_id INT,
+    @p_talla_id INT,
+    @p_existe BIT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @v_count INT;
+    
+    -- Contar variantes que coincidan con la combinación
+    SELECT @v_count = COUNT(*)
+    FROM PRODUCTOS_VARIANTES
+    WHERE PRODUCTO_ID = @p_producto_id
+      AND COLOR_ID = @p_color_id
+      AND TALLA_ID = @p_talla_id;
+    
+    -- Retornar 1 si existe, 0 si no existe
+    SET @p_existe = CASE WHEN @v_count > 0 THEN 1 ELSE 0 END;
+END
+GO
+

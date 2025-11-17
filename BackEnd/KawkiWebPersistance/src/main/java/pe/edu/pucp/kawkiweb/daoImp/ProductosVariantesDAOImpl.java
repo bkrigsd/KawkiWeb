@@ -1,6 +1,7 @@
 package pe.edu.pucp.kawkiweb.daoImp;
 
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -205,4 +206,102 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
         );
     }
 
+    /**
+     * Lista variantes filtradas por color usando SELECT directo
+     */
+    @Override
+    public ArrayList<ProductosVariantesDTO> listarPorColor(Integer colorId) {
+        String sql = "SELECT PROD_VARIANTE_ID, SKU, STOCK, STOCK_MINIMO, ALERTA_STOCK, "
+                + "PRODUCTO_ID, COLOR_ID, TALLA_ID, URL_IMAGEN, FECHA_HORA_CREACION, "
+                + "DISPONIBLE, USUARIO_ID "
+                + "FROM PRODUCTOS_VARIANTES WHERE COLOR_ID = ?";
+
+        Consumer<Integer> incluirParametros = (id) -> {
+            try {
+                this.statement.setInt(1, id);
+            } catch (SQLException ex) {
+                System.err.println("Error al establecer parámetro color: " + ex);
+            }
+        };
+
+        return (ArrayList<ProductosVariantesDTO>) super.listarTodos(sql, incluirParametros, colorId);
+    }
+
+    /**
+     * Lista variantes filtradas por talla usando SELECT directo
+     */
+    @Override
+    public ArrayList<ProductosVariantesDTO> listarPorTalla(Integer tallaId) {
+        String sql = "SELECT PROD_VARIANTE_ID, SKU, STOCK, STOCK_MINIMO, ALERTA_STOCK, "
+                + "PRODUCTO_ID, COLOR_ID, TALLA_ID, URL_IMAGEN, FECHA_HORA_CREACION, "
+                + "DISPONIBLE, USUARIO_ID "
+                + "FROM PRODUCTOS_VARIANTES WHERE TALLA_ID = ?";
+
+        Consumer<Integer> incluirParametros = (id) -> {
+            try {
+                this.statement.setInt(1, id);
+            } catch (SQLException ex) {
+                System.err.println("Error al establecer parámetro talla: " + ex);
+            }
+        };
+
+        return (ArrayList<ProductosVariantesDTO>) super.listarTodos(sql, incluirParametros, tallaId);
+    }
+
+    /**
+     * Lista variantes con stock bajo (alerta activada) usando SELECT directo
+     */
+    @Override
+    public ArrayList<ProductosVariantesDTO> listarConStockBajo() {
+        String sql = "SELECT PROD_VARIANTE_ID, SKU, STOCK, STOCK_MINIMO, ALERTA_STOCK, "
+                + "PRODUCTO_ID, COLOR_ID, TALLA_ID, URL_IMAGEN, FECHA_HORA_CREACION, "
+                + "DISPONIBLE, USUARIO_ID "
+                + "FROM PRODUCTOS_VARIANTES WHERE ALERTA_STOCK = 1";
+
+        return (ArrayList<ProductosVariantesDTO>) super.listarTodos(sql, null, null);
+    }
+
+    /**
+     * Verifica si existe una variante con la combinación producto-color-talla
+     * usando Stored Procedure
+     */
+    @Override
+    public boolean existeVariante(Integer productoId, Integer colorId, Integer tallaId) {
+        boolean existe = false;
+
+        try {
+            this.abrirConexion();
+
+            // Generar llamada al SP según el motor de BD
+            String sql = "{CALL SP_EXISTE_VARIANTE(?, ?, ?, ?)}";
+
+            this.colocarSQLEnStatement(sql);
+
+            // Setear parámetros de entrada
+            this.statement.setInt(1, productoId);
+            this.statement.setInt(2, colorId);
+            this.statement.setInt(3, tallaId);
+
+            // Registrar parámetro de salida
+            this.statement.registerOutParameter(4, Types.TINYINT);
+
+            // Ejecutar el procedimiento
+            this.statement.execute();
+
+            // Obtener resultado
+            int resultado = this.statement.getInt(4);
+            existe = (resultado == 1);
+
+        } catch (SQLException ex) {
+            System.err.println("Error al verificar existencia de variante: " + ex);
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+
+        return existe;
+    }
 }
