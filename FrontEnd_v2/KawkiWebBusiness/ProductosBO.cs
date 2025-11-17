@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KawkiWebBusiness.KawkiWebWSProductos;
+using KawkiWebBusiness.KawkiWebWSUsuarios;
+using usuariosDTO = KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO;
 
 namespace KawkiWebBusiness
 {
@@ -18,7 +20,7 @@ namespace KawkiWebBusiness
 
         /// Inserta un nuevo producto en la base de datos
         public int? Insertar(string descripcion, categoriasDTO categoria, estilosDTO estilo, 
-            double precioVenta)
+            double precioVenta, usuariosDTO usuario)
         {
             try
             {
@@ -27,7 +29,7 @@ namespace KawkiWebBusiness
                     descripcion, 
                     categoria, 
                     estilo, 
-                    precioVenta
+                    precioVenta, usuario
                 );
 
                 return resultado > 0 ? (int?)resultado : null;
@@ -75,7 +77,7 @@ namespace KawkiWebBusiness
         }
 
         /// Modifica un producto existente
-        public int? Modificar(int productoId, string descripcion, categoriasDTO categoria, estilosDTO estilo, double precioVenta)
+        public int? Modificar(int productoId, string descripcion, categoriasDTO categoria, estilosDTO estilo, double precioVenta, usuariosDTO usuario)
         {
             try
             {
@@ -90,7 +92,7 @@ namespace KawkiWebBusiness
                     descripcion, 
                     categoria, 
                     estilo, 
-                    precioVenta
+                    precioVenta, usuario
                 );
 
                 return resultado > 0 ? (int?)resultado : null;
@@ -103,33 +105,33 @@ namespace KawkiWebBusiness
         }
 
         /// Elimina un producto por su ID
-        public int? Eliminar(int productoId)
-        {
-            try
-            {
-                if (productoId <= 0)
-                {
-                    System.Diagnostics.Debug.WriteLine("Error: ID de producto inválido");
-                    return null;
-                }
+        //public int? Eliminar(int productoId)
+        //{
+        //    try
+        //    {
+        //        if (productoId <= 0)
+        //        {
+        //            System.Diagnostics.Debug.WriteLine("Error: ID de producto inválido");
+        //            return null;
+        //        }
 
-                // Verificar si el producto tiene variantes
-                var producto = this.ObtenerPorId(productoId);
-                if (producto != null && producto.variantes != null && producto.variantes.Length > 0)
-                {
-                    System.Diagnostics.Debug.WriteLine("Error: No se puede eliminar un producto con variantes asociadas");
-                    return null;
-                }
+        //        // Verificar si el producto tiene variantes
+        //        var producto = this.ObtenerPorId(productoId);
+        //        if (producto != null && producto.variantes != null && producto.variantes.Length > 0)
+        //        {
+        //            System.Diagnostics.Debug.WriteLine("Error: No se puede eliminar un producto con variantes asociadas");
+        //            return null;
+        //        }
 
-                int resultado = this.clienteSOAP.eliminarProducto(productoId);
-                return resultado > 0 ? (int?)resultado : null;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al eliminar producto: {ex.Message}");
-                return null;
-            }
-        }
+        //        int resultado = this.clienteSOAP.eliminarProducto(productoId);
+        //        return resultado > 0 ? (int?)resultado : null;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        System.Diagnostics.Debug.WriteLine($"Error al eliminar producto: {ex.Message}");
+        //        return null;
+        //    }
+        //}
 
         /// Verifica si un producto tiene stock disponible en alguna de sus variantes
         public bool TieneStockDisponible(int productoId)

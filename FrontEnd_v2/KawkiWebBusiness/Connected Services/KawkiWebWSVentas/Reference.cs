@@ -16,24 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
     public interface Ventas {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse obtenerPorIdVenta(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse> obtenerPorIdVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/listarTodosVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/listarTodosVentaResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
@@ -43,13 +25,13 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse> listarTodosVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/eliminarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/eliminarVentaResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaResponse eliminarVenta(KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaRequest request);
+        KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/eliminarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/eliminarVentaResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaResponse> eliminarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaResponse")]
@@ -59,758 +41,15 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse> modificarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest request);
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class usuariosDTO : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string apePaternoField;
-        
-        private string contrasenhaField;
-        
-        private string correoField;
-        
-        private string dniField;
-        
-        private localDateTime fechaHoraCreacionField;
-        
-        private string nombreField;
-        
-        private string nombreUsuarioField;
-        
-        private string telefonoField;
-        
-        private tiposUsuarioDTO tipoUsuarioField;
-        
-        private int usuarioIdField;
-        
-        private bool usuarioIdFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public string apePaterno {
-            get {
-                return this.apePaternoField;
-            }
-            set {
-                this.apePaternoField = value;
-                this.RaisePropertyChanged("apePaterno");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public string contrasenha {
-            get {
-                return this.contrasenhaField;
-            }
-            set {
-                this.contrasenhaField = value;
-                this.RaisePropertyChanged("contrasenha");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
-        public string correo {
-            get {
-                return this.correoField;
-            }
-            set {
-                this.correoField = value;
-                this.RaisePropertyChanged("correo");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
-        public string dni {
-            get {
-                return this.dniField;
-            }
-            set {
-                this.dniField = value;
-                this.RaisePropertyChanged("dni");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
-        public localDateTime fechaHoraCreacion {
-            get {
-                return this.fechaHoraCreacionField;
-            }
-            set {
-                this.fechaHoraCreacionField = value;
-                this.RaisePropertyChanged("fechaHoraCreacion");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
-        public string nombre {
-            get {
-                return this.nombreField;
-            }
-            set {
-                this.nombreField = value;
-                this.RaisePropertyChanged("nombre");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
-        public string nombreUsuario {
-            get {
-                return this.nombreUsuarioField;
-            }
-            set {
-                this.nombreUsuarioField = value;
-                this.RaisePropertyChanged("nombreUsuario");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
-        public string telefono {
-            get {
-                return this.telefonoField;
-            }
-            set {
-                this.telefonoField = value;
-                this.RaisePropertyChanged("telefono");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=8)]
-        public tiposUsuarioDTO tipoUsuario {
-            get {
-                return this.tipoUsuarioField;
-            }
-            set {
-                this.tipoUsuarioField = value;
-                this.RaisePropertyChanged("tipoUsuario");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=9)]
-        public int usuarioId {
-            get {
-                return this.usuarioIdField;
-            }
-            set {
-                this.usuarioIdField = value;
-                this.RaisePropertyChanged("usuarioId");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool usuarioIdSpecified {
-            get {
-                return this.usuarioIdFieldSpecified;
-            }
-            set {
-                this.usuarioIdFieldSpecified = value;
-                this.RaisePropertyChanged("usuarioIdSpecified");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class localDateTime : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class tallasDTO : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private int numeroField;
-        
-        private bool numeroFieldSpecified;
-        
-        private int talla_idField;
-        
-        private bool talla_idFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int numero {
-            get {
-                return this.numeroField;
-            }
-            set {
-                this.numeroField = value;
-                this.RaisePropertyChanged("numero");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool numeroSpecified {
-            get {
-                return this.numeroFieldSpecified;
-            }
-            set {
-                this.numeroFieldSpecified = value;
-                this.RaisePropertyChanged("numeroSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public int talla_id {
-            get {
-                return this.talla_idField;
-            }
-            set {
-                this.talla_idField = value;
-                this.RaisePropertyChanged("talla_id");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool talla_idSpecified {
-            get {
-                return this.talla_idFieldSpecified;
-            }
-            set {
-                this.talla_idFieldSpecified = value;
-                this.RaisePropertyChanged("talla_idSpecified");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class coloresDTO : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private int color_idField;
-        
-        private bool color_idFieldSpecified;
-        
-        private string nombreField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int color_id {
-            get {
-                return this.color_idField;
-            }
-            set {
-                this.color_idField = value;
-                this.RaisePropertyChanged("color_id");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool color_idSpecified {
-            get {
-                return this.color_idFieldSpecified;
-            }
-            set {
-                this.color_idFieldSpecified = value;
-                this.RaisePropertyChanged("color_idSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public string nombre {
-            get {
-                return this.nombreField;
-            }
-            set {
-                this.nombreField = value;
-                this.RaisePropertyChanged("nombre");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class productosVariantesDTO : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private bool alerta_stockField;
-        
-        private bool alerta_stockFieldSpecified;
-        
-        private coloresDTO colorField;
-        
-        private bool disponibleField;
-        
-        private bool disponibleFieldSpecified;
-        
-        private localDateTime fecha_hora_creacionField;
-        
-        private int prod_variante_idField;
-        
-        private bool prod_variante_idFieldSpecified;
-        
-        private int producto_idField;
-        
-        private bool producto_idFieldSpecified;
-        
-        private string sKUField;
-        
-        private int stockField;
-        
-        private bool stockFieldSpecified;
-        
-        private int stock_minimoField;
-        
-        private bool stock_minimoFieldSpecified;
-        
-        private tallasDTO tallaField;
-        
-        private string url_imagenField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public bool alerta_stock {
-            get {
-                return this.alerta_stockField;
-            }
-            set {
-                this.alerta_stockField = value;
-                this.RaisePropertyChanged("alerta_stock");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool alerta_stockSpecified {
-            get {
-                return this.alerta_stockFieldSpecified;
-            }
-            set {
-                this.alerta_stockFieldSpecified = value;
-                this.RaisePropertyChanged("alerta_stockSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public coloresDTO color {
-            get {
-                return this.colorField;
-            }
-            set {
-                this.colorField = value;
-                this.RaisePropertyChanged("color");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
-        public bool disponible {
-            get {
-                return this.disponibleField;
-            }
-            set {
-                this.disponibleField = value;
-                this.RaisePropertyChanged("disponible");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool disponibleSpecified {
-            get {
-                return this.disponibleFieldSpecified;
-            }
-            set {
-                this.disponibleFieldSpecified = value;
-                this.RaisePropertyChanged("disponibleSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
-        public localDateTime fecha_hora_creacion {
-            get {
-                return this.fecha_hora_creacionField;
-            }
-            set {
-                this.fecha_hora_creacionField = value;
-                this.RaisePropertyChanged("fecha_hora_creacion");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
-        public int prod_variante_id {
-            get {
-                return this.prod_variante_idField;
-            }
-            set {
-                this.prod_variante_idField = value;
-                this.RaisePropertyChanged("prod_variante_id");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool prod_variante_idSpecified {
-            get {
-                return this.prod_variante_idFieldSpecified;
-            }
-            set {
-                this.prod_variante_idFieldSpecified = value;
-                this.RaisePropertyChanged("prod_variante_idSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
-        public int producto_id {
-            get {
-                return this.producto_idField;
-            }
-            set {
-                this.producto_idField = value;
-                this.RaisePropertyChanged("producto_id");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool producto_idSpecified {
-            get {
-                return this.producto_idFieldSpecified;
-            }
-            set {
-                this.producto_idFieldSpecified = value;
-                this.RaisePropertyChanged("producto_idSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
-        public string SKU {
-            get {
-                return this.sKUField;
-            }
-            set {
-                this.sKUField = value;
-                this.RaisePropertyChanged("SKU");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
-        public int stock {
-            get {
-                return this.stockField;
-            }
-            set {
-                this.stockField = value;
-                this.RaisePropertyChanged("stock");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool stockSpecified {
-            get {
-                return this.stockFieldSpecified;
-            }
-            set {
-                this.stockFieldSpecified = value;
-                this.RaisePropertyChanged("stockSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=8)]
-        public int stock_minimo {
-            get {
-                return this.stock_minimoField;
-            }
-            set {
-                this.stock_minimoField = value;
-                this.RaisePropertyChanged("stock_minimo");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool stock_minimoSpecified {
-            get {
-                return this.stock_minimoFieldSpecified;
-            }
-            set {
-                this.stock_minimoFieldSpecified = value;
-                this.RaisePropertyChanged("stock_minimoSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=9)]
-        public tallasDTO talla {
-            get {
-                return this.tallaField;
-            }
-            set {
-                this.tallaField = value;
-                this.RaisePropertyChanged("talla");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=10)]
-        public string url_imagen {
-            get {
-                return this.url_imagenField;
-            }
-            set {
-                this.url_imagenField = value;
-                this.RaisePropertyChanged("url_imagen");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class detalleVentasDTO : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private int cantidadField;
-        
-        private bool cantidadFieldSpecified;
-        
-        private int detalle_venta_idField;
-        
-        private bool detalle_venta_idFieldSpecified;
-        
-        private double precio_unitarioField;
-        
-        private bool precio_unitarioFieldSpecified;
-        
-        private productosVariantesDTO prodVarianteField;
-        
-        private double subtotalField;
-        
-        private bool subtotalFieldSpecified;
-        
-        private int venta_idField;
-        
-        private bool venta_idFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int cantidad {
-            get {
-                return this.cantidadField;
-            }
-            set {
-                this.cantidadField = value;
-                this.RaisePropertyChanged("cantidad");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool cantidadSpecified {
-            get {
-                return this.cantidadFieldSpecified;
-            }
-            set {
-                this.cantidadFieldSpecified = value;
-                this.RaisePropertyChanged("cantidadSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public int detalle_venta_id {
-            get {
-                return this.detalle_venta_idField;
-            }
-            set {
-                this.detalle_venta_idField = value;
-                this.RaisePropertyChanged("detalle_venta_id");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool detalle_venta_idSpecified {
-            get {
-                return this.detalle_venta_idFieldSpecified;
-            }
-            set {
-                this.detalle_venta_idFieldSpecified = value;
-                this.RaisePropertyChanged("detalle_venta_idSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
-        public double precio_unitario {
-            get {
-                return this.precio_unitarioField;
-            }
-            set {
-                this.precio_unitarioField = value;
-                this.RaisePropertyChanged("precio_unitario");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool precio_unitarioSpecified {
-            get {
-                return this.precio_unitarioFieldSpecified;
-            }
-            set {
-                this.precio_unitarioFieldSpecified = value;
-                this.RaisePropertyChanged("precio_unitarioSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
-        public productosVariantesDTO prodVariante {
-            get {
-                return this.prodVarianteField;
-            }
-            set {
-                this.prodVarianteField = value;
-                this.RaisePropertyChanged("prodVariante");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
-        public double subtotal {
-            get {
-                return this.subtotalField;
-            }
-            set {
-                this.subtotalField = value;
-                this.RaisePropertyChanged("subtotal");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool subtotalSpecified {
-            get {
-                return this.subtotalFieldSpecified;
-            }
-            set {
-                this.subtotalFieldSpecified = value;
-                this.RaisePropertyChanged("subtotalSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
-        public int venta_id {
-            get {
-                return this.venta_idField;
-            }
-            set {
-                this.venta_idField = value;
-                this.RaisePropertyChanged("venta_id");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool venta_idSpecified {
-            get {
-                return this.venta_idFieldSpecified;
-            }
-            set {
-                this.venta_idFieldSpecified = value;
-                this.RaisePropertyChanged("venta_idSpecified");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse obtenerPorIdVenta(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse> obtenerPorIdVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request);
     }
     
     /// <remarks/>
@@ -825,7 +64,13 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         
         private detalleVentasDTO[] detallesField;
         
+        private bool esValidaField;
+        
+        private bool esValidaFieldSpecified;
+        
         private localDateTime fecha_hora_creacionField;
+        
+        private redesSocialesDTO redSocialField;
         
         private double totalField;
         
@@ -863,6 +108,30 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public bool esValida {
+            get {
+                return this.esValidaField;
+            }
+            set {
+                this.esValidaField = value;
+                this.RaisePropertyChanged("esValida");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool esValidaSpecified {
+            get {
+                return this.esValidaFieldSpecified;
+            }
+            set {
+                this.esValidaFieldSpecified = value;
+                this.RaisePropertyChanged("esValidaSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
         public localDateTime fecha_hora_creacion {
             get {
                 return this.fecha_hora_creacionField;
@@ -874,7 +143,19 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public redesSocialesDTO redSocial {
+            get {
+                return this.redSocialField;
+            }
+            set {
+                this.redSocialField = value;
+                this.RaisePropertyChanged("redSocial");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
         public double total {
             get {
                 return this.totalField;
@@ -898,7 +179,7 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
         public usuariosDTO usuario {
             get {
                 return this.usuarioField;
@@ -910,7 +191,7 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
         public int venta_id {
             get {
                 return this.venta_idField;
@@ -1149,13 +430,31 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class tiposBeneficioDTO : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class localDateTime : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
+    public partial class redesSocialesDTO : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string nombreField;
         
-        private int tipo_beneficio_idField;
+        private int redSocialIdField;
         
-        private bool tipo_beneficio_idFieldSpecified;
+        private bool redSocialIdFieldSpecified;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
@@ -1171,25 +470,861 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public int tipo_beneficio_id {
+        public int redSocialId {
             get {
-                return this.tipo_beneficio_idField;
+                return this.redSocialIdField;
             }
             set {
-                this.tipo_beneficio_idField = value;
-                this.RaisePropertyChanged("tipo_beneficio_id");
+                this.redSocialIdField = value;
+                this.RaisePropertyChanged("redSocialId");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool tipo_beneficio_idSpecified {
+        public bool redSocialIdSpecified {
             get {
-                return this.tipo_beneficio_idFieldSpecified;
+                return this.redSocialIdFieldSpecified;
             }
             set {
-                this.tipo_beneficio_idFieldSpecified = value;
-                this.RaisePropertyChanged("tipo_beneficio_idSpecified");
+                this.redSocialIdFieldSpecified = value;
+                this.RaisePropertyChanged("redSocialIdSpecified");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
+    public partial class tiposUsuarioDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string nombreField;
+        
+        private int tipoUsuarioIdField;
+        
+        private bool tipoUsuarioIdFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public string nombre {
+            get {
+                return this.nombreField;
+            }
+            set {
+                this.nombreField = value;
+                this.RaisePropertyChanged("nombre");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public int tipoUsuarioId {
+            get {
+                return this.tipoUsuarioIdField;
+            }
+            set {
+                this.tipoUsuarioIdField = value;
+                this.RaisePropertyChanged("tipoUsuarioId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool tipoUsuarioIdSpecified {
+            get {
+                return this.tipoUsuarioIdFieldSpecified;
+            }
+            set {
+                this.tipoUsuarioIdFieldSpecified = value;
+                this.RaisePropertyChanged("tipoUsuarioIdSpecified");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
+    public partial class usuariosDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private bool activoField;
+        
+        private bool activoFieldSpecified;
+        
+        private string apePaternoField;
+        
+        private string contrasenhaField;
+        
+        private string correoField;
+        
+        private string dniField;
+        
+        private localDateTime fechaHoraCreacionField;
+        
+        private string nombreField;
+        
+        private string nombreUsuarioField;
+        
+        private string telefonoField;
+        
+        private tiposUsuarioDTO tipoUsuarioField;
+        
+        private int usuarioIdField;
+        
+        private bool usuarioIdFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public bool activo {
+            get {
+                return this.activoField;
+            }
+            set {
+                this.activoField = value;
+                this.RaisePropertyChanged("activo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool activoSpecified {
+            get {
+                return this.activoFieldSpecified;
+            }
+            set {
+                this.activoFieldSpecified = value;
+                this.RaisePropertyChanged("activoSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string apePaterno {
+            get {
+                return this.apePaternoField;
+            }
+            set {
+                this.apePaternoField = value;
+                this.RaisePropertyChanged("apePaterno");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public string contrasenha {
+            get {
+                return this.contrasenhaField;
+            }
+            set {
+                this.contrasenhaField = value;
+                this.RaisePropertyChanged("contrasenha");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public string correo {
+            get {
+                return this.correoField;
+            }
+            set {
+                this.correoField = value;
+                this.RaisePropertyChanged("correo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public string dni {
+            get {
+                return this.dniField;
+            }
+            set {
+                this.dniField = value;
+                this.RaisePropertyChanged("dni");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public localDateTime fechaHoraCreacion {
+            get {
+                return this.fechaHoraCreacionField;
+            }
+            set {
+                this.fechaHoraCreacionField = value;
+                this.RaisePropertyChanged("fechaHoraCreacion");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public string nombre {
+            get {
+                return this.nombreField;
+            }
+            set {
+                this.nombreField = value;
+                this.RaisePropertyChanged("nombre");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
+        public string nombreUsuario {
+            get {
+                return this.nombreUsuarioField;
+            }
+            set {
+                this.nombreUsuarioField = value;
+                this.RaisePropertyChanged("nombreUsuario");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=8)]
+        public string telefono {
+            get {
+                return this.telefonoField;
+            }
+            set {
+                this.telefonoField = value;
+                this.RaisePropertyChanged("telefono");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=9)]
+        public tiposUsuarioDTO tipoUsuario {
+            get {
+                return this.tipoUsuarioField;
+            }
+            set {
+                this.tipoUsuarioField = value;
+                this.RaisePropertyChanged("tipoUsuario");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=10)]
+        public int usuarioId {
+            get {
+                return this.usuarioIdField;
+            }
+            set {
+                this.usuarioIdField = value;
+                this.RaisePropertyChanged("usuarioId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool usuarioIdSpecified {
+            get {
+                return this.usuarioIdFieldSpecified;
+            }
+            set {
+                this.usuarioIdFieldSpecified = value;
+                this.RaisePropertyChanged("usuarioIdSpecified");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
+    public partial class tallasDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int numeroField;
+        
+        private bool numeroFieldSpecified;
+        
+        private int talla_idField;
+        
+        private bool talla_idFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public int numero {
+            get {
+                return this.numeroField;
+            }
+            set {
+                this.numeroField = value;
+                this.RaisePropertyChanged("numero");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool numeroSpecified {
+            get {
+                return this.numeroFieldSpecified;
+            }
+            set {
+                this.numeroFieldSpecified = value;
+                this.RaisePropertyChanged("numeroSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public int talla_id {
+            get {
+                return this.talla_idField;
+            }
+            set {
+                this.talla_idField = value;
+                this.RaisePropertyChanged("talla_id");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool talla_idSpecified {
+            get {
+                return this.talla_idFieldSpecified;
+            }
+            set {
+                this.talla_idFieldSpecified = value;
+                this.RaisePropertyChanged("talla_idSpecified");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
+    public partial class coloresDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int color_idField;
+        
+        private bool color_idFieldSpecified;
+        
+        private string nombreField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public int color_id {
+            get {
+                return this.color_idField;
+            }
+            set {
+                this.color_idField = value;
+                this.RaisePropertyChanged("color_id");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool color_idSpecified {
+            get {
+                return this.color_idFieldSpecified;
+            }
+            set {
+                this.color_idFieldSpecified = value;
+                this.RaisePropertyChanged("color_idSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string nombre {
+            get {
+                return this.nombreField;
+            }
+            set {
+                this.nombreField = value;
+                this.RaisePropertyChanged("nombre");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
+    public partial class productosVariantesDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private bool alerta_stockField;
+        
+        private bool alerta_stockFieldSpecified;
+        
+        private coloresDTO colorField;
+        
+        private bool disponibleField;
+        
+        private bool disponibleFieldSpecified;
+        
+        private localDateTime fecha_hora_creacionField;
+        
+        private int prod_variante_idField;
+        
+        private bool prod_variante_idFieldSpecified;
+        
+        private int producto_idField;
+        
+        private bool producto_idFieldSpecified;
+        
+        private string sKUField;
+        
+        private int stockField;
+        
+        private bool stockFieldSpecified;
+        
+        private int stock_minimoField;
+        
+        private bool stock_minimoFieldSpecified;
+        
+        private tallasDTO tallaField;
+        
+        private string url_imagenField;
+        
+        private usuariosDTO usuarioField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public bool alerta_stock {
+            get {
+                return this.alerta_stockField;
+            }
+            set {
+                this.alerta_stockField = value;
+                this.RaisePropertyChanged("alerta_stock");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool alerta_stockSpecified {
+            get {
+                return this.alerta_stockFieldSpecified;
+            }
+            set {
+                this.alerta_stockFieldSpecified = value;
+                this.RaisePropertyChanged("alerta_stockSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public coloresDTO color {
+            get {
+                return this.colorField;
+            }
+            set {
+                this.colorField = value;
+                this.RaisePropertyChanged("color");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public bool disponible {
+            get {
+                return this.disponibleField;
+            }
+            set {
+                this.disponibleField = value;
+                this.RaisePropertyChanged("disponible");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool disponibleSpecified {
+            get {
+                return this.disponibleFieldSpecified;
+            }
+            set {
+                this.disponibleFieldSpecified = value;
+                this.RaisePropertyChanged("disponibleSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public localDateTime fecha_hora_creacion {
+            get {
+                return this.fecha_hora_creacionField;
+            }
+            set {
+                this.fecha_hora_creacionField = value;
+                this.RaisePropertyChanged("fecha_hora_creacion");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public int prod_variante_id {
+            get {
+                return this.prod_variante_idField;
+            }
+            set {
+                this.prod_variante_idField = value;
+                this.RaisePropertyChanged("prod_variante_id");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool prod_variante_idSpecified {
+            get {
+                return this.prod_variante_idFieldSpecified;
+            }
+            set {
+                this.prod_variante_idFieldSpecified = value;
+                this.RaisePropertyChanged("prod_variante_idSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public int producto_id {
+            get {
+                return this.producto_idField;
+            }
+            set {
+                this.producto_idField = value;
+                this.RaisePropertyChanged("producto_id");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool producto_idSpecified {
+            get {
+                return this.producto_idFieldSpecified;
+            }
+            set {
+                this.producto_idFieldSpecified = value;
+                this.RaisePropertyChanged("producto_idSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public string SKU {
+            get {
+                return this.sKUField;
+            }
+            set {
+                this.sKUField = value;
+                this.RaisePropertyChanged("SKU");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
+        public int stock {
+            get {
+                return this.stockField;
+            }
+            set {
+                this.stockField = value;
+                this.RaisePropertyChanged("stock");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool stockSpecified {
+            get {
+                return this.stockFieldSpecified;
+            }
+            set {
+                this.stockFieldSpecified = value;
+                this.RaisePropertyChanged("stockSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=8)]
+        public int stock_minimo {
+            get {
+                return this.stock_minimoField;
+            }
+            set {
+                this.stock_minimoField = value;
+                this.RaisePropertyChanged("stock_minimo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool stock_minimoSpecified {
+            get {
+                return this.stock_minimoFieldSpecified;
+            }
+            set {
+                this.stock_minimoFieldSpecified = value;
+                this.RaisePropertyChanged("stock_minimoSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=9)]
+        public tallasDTO talla {
+            get {
+                return this.tallaField;
+            }
+            set {
+                this.tallaField = value;
+                this.RaisePropertyChanged("talla");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=10)]
+        public string url_imagen {
+            get {
+                return this.url_imagenField;
+            }
+            set {
+                this.url_imagenField = value;
+                this.RaisePropertyChanged("url_imagen");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=11)]
+        public usuariosDTO usuario {
+            get {
+                return this.usuarioField;
+            }
+            set {
+                this.usuarioField = value;
+                this.RaisePropertyChanged("usuario");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
+    public partial class detalleVentasDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int cantidadField;
+        
+        private bool cantidadFieldSpecified;
+        
+        private int detalle_venta_idField;
+        
+        private bool detalle_venta_idFieldSpecified;
+        
+        private double precio_unitarioField;
+        
+        private bool precio_unitarioFieldSpecified;
+        
+        private productosVariantesDTO prodVarianteField;
+        
+        private double subtotalField;
+        
+        private bool subtotalFieldSpecified;
+        
+        private int venta_idField;
+        
+        private bool venta_idFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public int cantidad {
+            get {
+                return this.cantidadField;
+            }
+            set {
+                this.cantidadField = value;
+                this.RaisePropertyChanged("cantidad");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool cantidadSpecified {
+            get {
+                return this.cantidadFieldSpecified;
+            }
+            set {
+                this.cantidadFieldSpecified = value;
+                this.RaisePropertyChanged("cantidadSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public int detalle_venta_id {
+            get {
+                return this.detalle_venta_idField;
+            }
+            set {
+                this.detalle_venta_idField = value;
+                this.RaisePropertyChanged("detalle_venta_id");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool detalle_venta_idSpecified {
+            get {
+                return this.detalle_venta_idFieldSpecified;
+            }
+            set {
+                this.detalle_venta_idFieldSpecified = value;
+                this.RaisePropertyChanged("detalle_venta_idSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public double precio_unitario {
+            get {
+                return this.precio_unitarioField;
+            }
+            set {
+                this.precio_unitarioField = value;
+                this.RaisePropertyChanged("precio_unitario");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool precio_unitarioSpecified {
+            get {
+                return this.precio_unitarioFieldSpecified;
+            }
+            set {
+                this.precio_unitarioFieldSpecified = value;
+                this.RaisePropertyChanged("precio_unitarioSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public productosVariantesDTO prodVariante {
+            get {
+                return this.prodVarianteField;
+            }
+            set {
+                this.prodVarianteField = value;
+                this.RaisePropertyChanged("prodVariante");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public double subtotal {
+            get {
+                return this.subtotalField;
+            }
+            set {
+                this.subtotalField = value;
+                this.RaisePropertyChanged("subtotal");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool subtotalSpecified {
+            get {
+                return this.subtotalFieldSpecified;
+            }
+            set {
+                this.subtotalFieldSpecified = value;
+                this.RaisePropertyChanged("subtotalSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public int venta_id {
+            get {
+                return this.venta_idField;
+            }
+            set {
+                this.venta_idField = value;
+                this.RaisePropertyChanged("venta_id");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool venta_idSpecified {
+            get {
+                return this.venta_idFieldSpecified;
+            }
+            set {
+                this.venta_idFieldSpecified = value;
+                this.RaisePropertyChanged("venta_idSpecified");
             }
         }
         
@@ -1269,13 +1404,13 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class tiposUsuarioDTO : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class tiposBeneficioDTO : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string nombreField;
         
-        private int tipoUsuarioIdField;
+        private int tipo_beneficio_idField;
         
-        private bool tipoUsuarioIdFieldSpecified;
+        private bool tipo_beneficio_idFieldSpecified;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
@@ -1291,25 +1426,25 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public int tipoUsuarioId {
+        public int tipo_beneficio_id {
             get {
-                return this.tipoUsuarioIdField;
+                return this.tipo_beneficio_idField;
             }
             set {
-                this.tipoUsuarioIdField = value;
-                this.RaisePropertyChanged("tipoUsuarioId");
+                this.tipo_beneficio_idField = value;
+                this.RaisePropertyChanged("tipo_beneficio_id");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool tipoUsuarioIdSpecified {
+        public bool tipo_beneficio_idSpecified {
             get {
-                return this.tipoUsuarioIdFieldSpecified;
+                return this.tipo_beneficio_idFieldSpecified;
             }
             set {
-                this.tipoUsuarioIdFieldSpecified = value;
-                this.RaisePropertyChanged("tipoUsuarioIdSpecified");
+                this.tipo_beneficio_idFieldSpecified = value;
+                this.RaisePropertyChanged("tipo_beneficio_idSpecified");
             }
         }
         
@@ -1320,6 +1455,34 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosVentaRequest {
+        
+        public listarTodosVentaRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosVentaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosVentaResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSVentas.ventasDTO[] @return;
+        
+        public listarTodosVentaResponse() {
+        }
+        
+        public listarTodosVentaResponse(KawkiWebBusiness.KawkiWebWSVentas.ventasDTO[] @return) {
+            this.@return = @return;
         }
     }
     
@@ -1341,13 +1504,18 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento;
         
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial;
+        
         public insertarVentaRequest() {
         }
         
-        public insertarVentaRequest(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento) {
+        public insertarVentaRequest(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial) {
             this.usuario = usuario;
             this.total = total;
             this.descuento = descuento;
+            this.redSocial = redSocial;
         }
     }
     
@@ -1365,6 +1533,67 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         }
         
         public insertarVentaResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarVentaRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int ventaId;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public double total;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool esValida;
+        
+        public modificarVentaRequest() {
+        }
+        
+        public modificarVentaRequest(int ventaId, KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial, bool esValida) {
+            this.ventaId = ventaId;
+            this.usuario = usuario;
+            this.total = total;
+            this.descuento = descuento;
+            this.redSocial = redSocial;
+            this.esValida = esValida;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarVentaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarVentaResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public modificarVentaResponse() {
+        }
+        
+        public modificarVentaResponse(int @return) {
             this.@return = @return;
         }
     }
@@ -1405,121 +1634,6 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosVentaRequest {
-        
-        public listarTodosVentaRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosVentaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosVentaResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSVentas.ventasDTO[] @return;
-        
-        public listarTodosVentaResponse() {
-        }
-        
-        public listarTodosVentaResponse(KawkiWebBusiness.KawkiWebWSVentas.ventasDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarVentaRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int ventaId;
-        
-        public eliminarVentaRequest() {
-        }
-        
-        public eliminarVentaRequest(int ventaId) {
-            this.ventaId = ventaId;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarVentaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarVentaResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public eliminarVentaResponse() {
-        }
-        
-        public eliminarVentaResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarVentaRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int ventaId;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public double total;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento;
-        
-        public modificarVentaRequest() {
-        }
-        
-        public modificarVentaRequest(int ventaId, KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento) {
-            this.ventaId = ventaId;
-            this.usuario = usuario;
-            this.total = total;
-            this.descuento = descuento;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarVentaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarVentaResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public modificarVentaResponse() {
-        }
-        
-        public modificarVentaResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface VentasChannel : KawkiWebBusiness.KawkiWebWSVentas.Ventas, System.ServiceModel.IClientChannel {
     }
@@ -1548,15 +1662,37 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse KawkiWebBusiness.KawkiWebWSVentas.Ventas.listarTodosVenta(KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest request) {
+            return base.Channel.listarTodosVenta(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSVentas.ventasDTO[] listarTodosVenta() {
+            KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest();
+            KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse retVal = ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).listarTodosVenta(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse> KawkiWebBusiness.KawkiWebWSVentas.Ventas.listarTodosVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest request) {
+            return base.Channel.listarTodosVentaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse> listarTodosVentaAsync() {
+            KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest();
+            return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).listarTodosVentaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse KawkiWebBusiness.KawkiWebWSVentas.Ventas.insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request) {
             return base.Channel.insertarVenta(request);
         }
         
-        public int insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento) {
+        public int insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial) {
             KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest();
             inValue.usuario = usuario;
             inValue.total = total;
             inValue.descuento = descuento;
+            inValue.redSocial = redSocial;
             KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse retVal = ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).insertarVenta(inValue);
             return retVal.@return;
         }
@@ -1566,12 +1702,46 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
             return base.Channel.insertarVentaAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento) {
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial) {
             KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest();
             inValue.usuario = usuario;
             inValue.total = total;
             inValue.descuento = descuento;
+            inValue.redSocial = redSocial;
             return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).insertarVentaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse KawkiWebBusiness.KawkiWebWSVentas.Ventas.modificarVenta(KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest request) {
+            return base.Channel.modificarVenta(request);
+        }
+        
+        public int modificarVenta(int ventaId, KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial, bool esValida) {
+            KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest();
+            inValue.ventaId = ventaId;
+            inValue.usuario = usuario;
+            inValue.total = total;
+            inValue.descuento = descuento;
+            inValue.redSocial = redSocial;
+            inValue.esValida = esValida;
+            KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse retVal = ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).modificarVenta(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse> KawkiWebBusiness.KawkiWebWSVentas.Ventas.modificarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest request) {
+            return base.Channel.modificarVentaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse> modificarVentaAsync(int ventaId, KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial, bool esValida) {
+            KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest();
+            inValue.ventaId = ventaId;
+            inValue.usuario = usuario;
+            inValue.total = total;
+            inValue.descuento = descuento;
+            inValue.redSocial = redSocial;
+            inValue.esValida = esValida;
+            return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).modificarVentaAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1595,79 +1765,6 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
             KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest();
             inValue.ventaId = ventaId;
             return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).obtenerPorIdVentaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse KawkiWebBusiness.KawkiWebWSVentas.Ventas.listarTodosVenta(KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest request) {
-            return base.Channel.listarTodosVenta(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSVentas.ventasDTO[] listarTodosVenta() {
-            KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest();
-            KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse retVal = ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).listarTodosVenta(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse> KawkiWebBusiness.KawkiWebWSVentas.Ventas.listarTodosVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest request) {
-            return base.Channel.listarTodosVentaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse> listarTodosVentaAsync() {
-            KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest();
-            return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).listarTodosVentaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaResponse KawkiWebBusiness.KawkiWebWSVentas.Ventas.eliminarVenta(KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaRequest request) {
-            return base.Channel.eliminarVenta(request);
-        }
-        
-        public int eliminarVenta(int ventaId) {
-            KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaRequest();
-            inValue.ventaId = ventaId;
-            KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaResponse retVal = ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).eliminarVenta(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaResponse> KawkiWebBusiness.KawkiWebWSVentas.Ventas.eliminarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaRequest request) {
-            return base.Channel.eliminarVentaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaResponse> eliminarVentaAsync(int ventaId) {
-            KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaRequest();
-            inValue.ventaId = ventaId;
-            return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).eliminarVentaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse KawkiWebBusiness.KawkiWebWSVentas.Ventas.modificarVenta(KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest request) {
-            return base.Channel.modificarVenta(request);
-        }
-        
-        public int modificarVenta(int ventaId, KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento) {
-            KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest();
-            inValue.ventaId = ventaId;
-            inValue.usuario = usuario;
-            inValue.total = total;
-            inValue.descuento = descuento;
-            KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse retVal = ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).modificarVenta(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse> KawkiWebBusiness.KawkiWebWSVentas.Ventas.modificarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest request) {
-            return base.Channel.modificarVentaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse> modificarVentaAsync(int ventaId, KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento) {
-            KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest();
-            inValue.ventaId = ventaId;
-            inValue.usuario = usuario;
-            inValue.total = total;
-            inValue.descuento = descuento;
-            return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).modificarVentaAsync(inValue);
         }
     }
 }

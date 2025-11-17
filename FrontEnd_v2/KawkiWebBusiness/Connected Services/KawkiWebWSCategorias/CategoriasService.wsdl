@@ -5,18 +5,6 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/CategoriasService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="listarTodosCategoria">
-    <part name="parameters" element="tns:listarTodosCategoria" />
-  </message>
-  <message name="listarTodosCategoriaResponse">
-    <part name="parameters" element="tns:listarTodosCategoriaResponse" />
-  </message>
-  <message name="obtenerPorIdCategoria">
-    <part name="parameters" element="tns:obtenerPorIdCategoria" />
-  </message>
-  <message name="obtenerPorIdCategoriaResponse">
-    <part name="parameters" element="tns:obtenerPorIdCategoriaResponse" />
-  </message>
   <message name="modificarCategoria">
     <part name="parameters" element="tns:modificarCategoria" />
   </message>
@@ -29,15 +17,19 @@
   <message name="insertarCategoriaResponse">
     <part name="parameters" element="tns:insertarCategoriaResponse" />
   </message>
+  <message name="obtenerPorIdCategoria">
+    <part name="parameters" element="tns:obtenerPorIdCategoria" />
+  </message>
+  <message name="obtenerPorIdCategoriaResponse">
+    <part name="parameters" element="tns:obtenerPorIdCategoriaResponse" />
+  </message>
+  <message name="listarTodosCategoria">
+    <part name="parameters" element="tns:listarTodosCategoria" />
+  </message>
+  <message name="listarTodosCategoriaResponse">
+    <part name="parameters" element="tns:listarTodosCategoriaResponse" />
+  </message>
   <portType name="Categorias">
-    <operation name="listarTodosCategoria">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaRequest" message="tns:listarTodosCategoria" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaResponse" message="tns:listarTodosCategoriaResponse" />
-    </operation>
-    <operation name="obtenerPorIdCategoria">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/obtenerPorIdCategoriaRequest" message="tns:obtenerPorIdCategoria" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/obtenerPorIdCategoriaResponse" message="tns:obtenerPorIdCategoriaResponse" />
-    </operation>
     <operation name="modificarCategoria">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/modificarCategoriaRequest" message="tns:modificarCategoria" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/modificarCategoriaResponse" message="tns:modificarCategoriaResponse" />
@@ -46,10 +38,27 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/insertarCategoriaRequest" message="tns:insertarCategoria" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/insertarCategoriaResponse" message="tns:insertarCategoriaResponse" />
     </operation>
+    <operation name="obtenerPorIdCategoria">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/obtenerPorIdCategoriaRequest" message="tns:obtenerPorIdCategoria" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/obtenerPorIdCategoriaResponse" message="tns:obtenerPorIdCategoriaResponse" />
+    </operation>
+    <operation name="listarTodosCategoria">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaRequest" message="tns:listarTodosCategoria" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaResponse" message="tns:listarTodosCategoriaResponse" />
+    </operation>
   </portType>
   <binding name="CategoriasPortBinding" type="tns:Categorias">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="listarTodosCategoria">
+    <operation name="modificarCategoria">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="insertarCategoria">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -67,16 +76,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="modificarCategoria">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="insertarCategoria">
+    <operation name="listarTodosCategoria">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

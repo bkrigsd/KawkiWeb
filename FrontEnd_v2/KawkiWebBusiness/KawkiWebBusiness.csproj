@@ -225,9 +225,6 @@
     <None Include="Connected Services\KawkiWebWSProductos\KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\KawkiWebWSProductos\KawkiWebBusiness.KawkiWebWSProductos.eliminarProductoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\KawkiWebWSProductos\KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

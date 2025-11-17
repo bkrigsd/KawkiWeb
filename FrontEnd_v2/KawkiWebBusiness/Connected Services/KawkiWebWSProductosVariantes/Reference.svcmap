@@ -19,7 +19,7 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="	http://localhost:8080/KawkiWebWS/ProductosVariantesService?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address=" http://localhost:8080/KawkiWebWS/ProductosVariantesService?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="ProductosVariantesService.wsdl" MetadataType="Wsdl" ID="7e5ebff3-847c-4103-a4e1-f5758c9a20be" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/ProductosVariantesService?wsdl" />

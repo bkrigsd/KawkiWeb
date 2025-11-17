@@ -33,16 +33,6 @@
       <xs:element minOccurs="0" name="nombre" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="obtenerPorIdCategoria">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="categoriaId" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="obtenerPorIdCategoriaResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="tns:categoriasDTO" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="insertarCategoria">
     <xs:sequence>
       <xs:element minOccurs="0" name="nombreCategoria" type="xs:string" />
@@ -51,6 +41,16 @@
   <xs:complexType name="insertarCategoriaResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdCategoria">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="categoriaId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdCategoriaResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:categoriasDTO" />
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
