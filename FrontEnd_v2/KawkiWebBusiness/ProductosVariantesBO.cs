@@ -25,29 +25,10 @@ namespace KawkiWebBusiness
         /// Inserta una nueva variante de producto
 
         public int? Insertar(int stock, int stockMinimo,
-            int productoId, coloresDTO color, tallasDTO talla, string urlImagen, bool disponible = true, usuariosDTO usuario)
+            int productoId, coloresDTO color, tallasDTO talla, string urlImagen, bool disponible, usuariosDTO usuario)
         {
-            try
-            {
-                // El web service maneja las validaciones
-                // La alerta de stock se calcula automáticamente en el backend
-                int resultado = this.clienteSOAP.insertarProdVariante(
-                    stock,
-                    stockMinimo,
-                    productoId,
-                    color,
-                    talla,
-                    urlImagen,
-                    disponible, usuario
-                );
 
-                return resultado > 0 ? (int?)resultado : null;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al insertar variante: {ex.Message}");
-                return null;
-            }
+            return this.clienteSOAP.insertarProdVariante(stock,stockMinimo,productoId,color, talla, urlImagen,disponible, usuario);
         }
 
         /// <summary>
@@ -96,33 +77,7 @@ namespace KawkiWebBusiness
             int stockMinimo, int productoId, coloresDTO color, tallasDTO talla,
             string urlImagen, bool disponible, usuariosDTO usuario)
         {
-            try
-            {
-                if (prodVarianteId <= 0)
-                {
-                    System.Diagnostics.Debug.WriteLine("Error: ID de variante inválido");
-                    return null;
-                }
-
-                // La alerta de stock se recalcula automáticamente en el backend
-                int resultado = this.clienteSOAP.modificarProdVariante(
-                    prodVarianteId,
-                    stock,
-                    stockMinimo,
-                    productoId,
-                    color,
-                    talla,
-                    urlImagen,
-                    disponible, usuario
-                );
-
-                return resultado > 0 ? (int?)resultado : null;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al modificar variante: {ex.Message}");
-                return null;
-            }
+            return this.clienteSOAP.modificarProdVariante(prodVarianteId,stock, stockMinimo, productoId,color,talla,urlImagen,disponible, usuario);
         }
 
         /// <summary>

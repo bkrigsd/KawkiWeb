@@ -71,6 +71,7 @@ namespace KawkiWeb
                 string telefono = txtTelefono.Text.Trim();
                 string clave = txtClave.Text.Trim();
                 string rol = ddlRol.SelectedValue;
+                bool estado = false;
 
                 // === VALIDACIONES ===
                 if (string.IsNullOrEmpty(nombre))
@@ -170,7 +171,7 @@ namespace KawkiWeb
                             clave = usuarioExistente.contrasenha;
                         }
                     }
-                    int? resultado = usuarioBO.ModificarUsuario(idUsuario, nombre, apellido, dni, telefono, email, usuario, clave, tipoUsuario);
+                    int? resultado = usuarioBO.ModificarUsuario(idUsuario, nombre, apellido, dni, telefono, email, usuario, clave, tipoUsuario, estado);
 
                     if (resultado == null || resultado <= 0)
                     {
@@ -187,7 +188,7 @@ namespace KawkiWeb
                 }
                 else
                 {
-                    int? resultado = usuarioBO.InsertarUsuario(nombre, apellido, dni, telefono,email, usuario, clave, tipoUsuario);
+                    int? resultado = usuarioBO.InsertarUsuario(nombre, apellido, dni, telefono,email, usuario, clave, tipoUsuario, estado);
 
                     if (resultado == null || resultado <= 0)
                     {
@@ -215,23 +216,23 @@ namespace KawkiWeb
         // =====================================================
         // 🔹 Eliminar usuario
         // =====================================================
-        protected void btnConfirmarEliminar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int idUsuario = Convert.ToInt32(hfIdEliminar.Value);
-                usuarioBO.EliminarUsuario(idUsuario);
-                CargarUsuarios();
+        //protected void btnConfirmarEliminar_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int idUsuario = Convert.ToInt32(hfIdEliminar.Value);
+        //        usuarioBO.EliminarUsuario(idUsuario);
+        //        CargarUsuarios();
 
-                ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalEliminar",
-                    "cerrarModalConfirmacion(); mostrarMensajeExito('Usuario eliminado correctamente');", true);
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, GetType(), "ErrorEliminar",
-                    "cerrarModalConfirmacion(); mostrarMensajeError('Error al eliminar: " + ex.Message.Replace("'", "\\'") + "');", true);
-            }
-        }
+        //        ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalEliminar",
+        //            "cerrarModalConfirmacion(); mostrarMensajeExito('Usuario eliminado correctamente');", true);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ScriptManager.RegisterStartupScript(this, GetType(), "ErrorEliminar",
+        //            "cerrarModalConfirmacion(); mostrarMensajeError('Error al eliminar: " + ex.Message.Replace("'", "\\'") + "');", true);
+        //    }
+        //}
 
         // =====================================================
         // 🔹 Utilidades
