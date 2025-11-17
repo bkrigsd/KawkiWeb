@@ -22,7 +22,6 @@ public class ComprobantesPago {
     @WebMethod(operationName = "insertarComprobPago")
     public Integer insertarComprobPago(
             @WebParam(name = "tipo_comprobante") TiposComprobanteDTO tipo_comprobante,
-            @WebParam(name = "numero_serie") String numero_serie,
             @WebParam(name = "dni_cliente") String dni_cliente,
             @WebParam(name = "nombre_cliente") String nombre_cliente,
             @WebParam(name = "ruc_cliente") String ruc_cliente,
@@ -33,7 +32,7 @@ public class ComprobantesPago {
             @WebParam(name = "venta") VentasDTO venta,
             @WebParam(name = "metodoPago") MetodosPagoDTO metodoPago) {
 
-        return this.comprobantePagoBO.insertar(tipo_comprobante, numero_serie,
+        return this.comprobantePagoBO.insertar(tipo_comprobante,
                 dni_cliente, nombre_cliente, ruc_cliente, razon_social_cliente,
                 direccion_fiscal_cliente, telefono_cliente, total, venta, metodoPago);
     }
@@ -53,7 +52,6 @@ public class ComprobantesPago {
     public Integer modificarComprobPago(
             @WebParam(name = "comprobante_pago_id") Integer comprobante_pago_id,
             @WebParam(name = "tipo_comprobante") TiposComprobanteDTO tipo_comprobante,
-            @WebParam(name = "numero_serie") String numero_serie,
             @WebParam(name = "dni_cliente") String dni_cliente,
             @WebParam(name = "nombre_cliente") String nombre_cliente,
             @WebParam(name = "ruc_cliente") String ruc_cliente,
@@ -65,14 +63,19 @@ public class ComprobantesPago {
             @WebParam(name = "metodoPago") MetodosPagoDTO metodoPago) {
 
         return this.comprobantePagoBO.modificar(comprobante_pago_id, tipo_comprobante,
-                numero_serie, dni_cliente, nombre_cliente, ruc_cliente,
+                dni_cliente, nombre_cliente, ruc_cliente,
                 razon_social_cliente, direccion_fiscal_cliente, telefono_cliente,
                 total, venta, metodoPago);
     }
 
-    @WebMethod(operationName = "eliminarComproPago")
-    public Integer eliminarComproPago(
-            @WebParam(name = "comprobante_pago_id") Integer comprobante_pago_id) {
-        return this.comprobantePagoBO.eliminar(comprobante_pago_id);
+//    @WebMethod(operationName = "eliminarComproPago")
+//    public Integer eliminarComproPago(
+//            @WebParam(name = "comprobante_pago_id") Integer comprobante_pago_id) {
+//        return this.comprobantePagoBO.eliminar(comprobante_pago_id);
+//    }
+    @WebMethod(operationName = "obtenerPorVentaIdComprobPago")
+    public ComprobantesPagoDTO obtenerPorVentaIdComprobPago(
+            @WebParam(name = "venta_id") Integer venta_id) {
+        return this.comprobantePagoBO.obtenerPorVentaId(venta_id);
     }
 }

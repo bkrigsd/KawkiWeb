@@ -62,11 +62,11 @@ public class Descuentos {
                 fecha_fin, activo);
     }
 
-    @WebMethod(operationName = "eliminarDescuento")
-    public Integer eliminarDescuento(
-            @WebParam(name = "descuentoId") Integer descuentoId) {
-        return this.descuentoBO.eliminar(descuentoId);
-    }
+//    @WebMethod(operationName = "eliminarDescuento")
+//    public Integer eliminarDescuento(
+//            @WebParam(name = "descuentoId") Integer descuentoId) {
+//        return this.descuentoBO.eliminar(descuentoId);
+//    }
 
     @WebMethod(operationName = "activarDescuento")
     public boolean activarDescuento(

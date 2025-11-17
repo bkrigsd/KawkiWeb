@@ -16,19 +16,6 @@ public class TiposBeneficio {
         this.tipoBeneficioBO = new TiposBeneficioBO();
     }
 
-    @WebMethod(operationName = "insertarTipoBeneficio")
-    public Integer insertarTipoBeneficio(
-            @WebParam(name = "nombreBeneficio") String nombreBeneficio) {
-        return this.tipoBeneficioBO.insertar(nombreBeneficio);
-    }
-
-    @WebMethod(operationName = "modificarTipoBeneficio")
-    public Integer modificarTipoBeneficio(
-            @WebParam(name = "tipoBeneficioId") Integer tipoBeneficioId,
-            @WebParam(name = "nombreBeneficio") String nombreBeneficio) {
-        return this.tipoBeneficioBO.modificar(tipoBeneficioId, nombreBeneficio);
-    }
-
     @WebMethod(operationName = "obtenerPorIdTipoBeneficio")
     public TiposBeneficioDTO obtenerPorIdTipoBeneficio(
             @WebParam(name = "tipoBeneficioId") Integer tipoBeneficioId) {

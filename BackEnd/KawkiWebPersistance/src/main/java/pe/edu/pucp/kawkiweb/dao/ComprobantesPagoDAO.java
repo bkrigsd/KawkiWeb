@@ -16,5 +16,7 @@ public interface ComprobantesPagoDAO {
     public Integer modificar(ComprobantesPagoDTO comprobantePago);
 
     public Integer eliminar(ComprobantesPagoDTO comprobantePago);
+    
+    public String obtenerSiguienteNumeroSerie(Integer tipoComprobanteId);
 
 }

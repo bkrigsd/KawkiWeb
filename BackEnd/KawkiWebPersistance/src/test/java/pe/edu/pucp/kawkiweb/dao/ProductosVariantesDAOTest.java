@@ -13,9 +13,12 @@
 //import pe.edu.pucp.kawkiweb.daoImp.ProductosDAOImpl;
 //import pe.edu.pucp.kawkiweb.daoImp.ProductosVariantesDAOImpl;
 //import pe.edu.pucp.kawkiweb.daoImp.TallasDAOImpl;
+//import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
 //import pe.edu.pucp.kawkiweb.model.ProductosDTO;
+//import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 //import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 //import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
+//import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 //
 //public class ProductosVariantesDAOTest {
 //
@@ -23,10 +26,14 @@
 //    private ProductosDAO productoDAO;
 //    private ColoresDAO colorDAO;
 //    private TallasDAO tallaDAO;
+//    private UsuariosDAO usuarioDAO;
+//    
+//    private UsuariosDTO usuarioDTO;
 //    private Integer productoBaseId;
 //
 //    public ProductosVariantesDAOTest() {
 //        this.prodVarianteDAO = new ProductosVariantesDAOImpl();
+//        this.usuarioDAO = new UsuariosDAOImpl();
 //        this.productoDAO = new ProductosDAOImpl();
 //        this.colorDAO = new ColoresDAOImpl();
 //        this.tallaDAO = new TallasDAOImpl();
@@ -36,6 +43,8 @@
 //    public void setUp() {
 //        System.out.println("Limpiando datos antes del test...");
 //        limpiarBaseDatos();
+//        prepararUsuarioBase();
+//        prepararProductoBase();
 //    }
 //
 //    @AfterEach
@@ -45,6 +54,25 @@
 //        this.productoBaseId = null;
 //    }
 //
+//    private void prepararUsuarioBase() {
+//        this.usuarioDTO = new UsuariosDTO();
+//        this.usuarioDTO.setNombre("Eros");
+//        this.usuarioDTO.setApePaterno("Sotelo");
+//        this.usuarioDTO.setDni("77722211");
+//        this.usuarioDTO.setTelefono("999111555");
+//        this.usuarioDTO.setCorreo("eros.sotelo@gmail.com");
+//        this.usuarioDTO.setNombreUsuario("erosotelo");
+//        this.usuarioDTO.setContrasenha("password123");
+//        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
+//        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
+//                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
+//        this.usuarioDTO.setActivo(Boolean.TRUE);
+//
+//        Integer resultado = this.usuarioDAO.insertar(this.usuarioDTO);
+//        this.usuarioDTO.setUsuarioId(resultado);
+//        assertTrue(resultado != 0);
+//    }
+//    
 //    private void prepararProductoBase() {
 //        ProductosDTO producto = new ProductosDTO();
 //        producto.setDescripcion("Producto Base Derby Clásico para Test de Variantes");
@@ -52,6 +80,8 @@
 //        producto.setEstilo(new EstilosDTO(EstilosDTO.ID_CLASICOS, EstilosDTO.NOMBRE_CLASICOS));
 //        producto.setPrecio_venta(100.00);
 //        producto.setFecha_hora_creacion(LocalDateTime.now());
+//        producto.setUsuario(this.usuarioDTO);
+//        
 //        this.productoBaseId = this.productoDAO.insertar(producto);
 //        assertTrue(this.productoBaseId != 0);
 //    }
@@ -59,7 +89,6 @@
 //    @Test
 //    public void testInsertar() {
 //        System.out.println("insertar");
-//        prepararProductoBase();
 //        ArrayList<Integer> listaProdVariantesId = new ArrayList<>();
 //        insertarProdVariantes(listaProdVariantesId);
 //
@@ -84,6 +113,8 @@
 //        prodVariante.setUrl_imagen("C:carpeta_url_imagen");
 //        prodVariante.setFecha_hora_creacion(LocalDateTime.now());
 //        prodVariante.setDisponible(true);
+//        prodVariante.setUsuario(this.usuarioDTO);
+//        
 //        Integer resultado = this.prodVarianteDAO.insertar(prodVariante);
 //        assertTrue(resultado != 0);
 //        listaProdVariantesId.add(resultado);
@@ -99,6 +130,8 @@
 //        prodVariante.setUrl_imagen("C:carpeta_url_imagen");
 //        prodVariante.setFecha_hora_creacion(LocalDateTime.now());
 //        prodVariante.setDisponible(true);
+//        prodVariante.setUsuario(this.usuarioDTO);
+//        
 //        resultado = this.prodVarianteDAO.insertar(prodVariante);
 //        assertTrue(resultado != 0);
 //        listaProdVariantesId.add(resultado);
@@ -114,6 +147,8 @@
 //        prodVariante.setTalla(this.tallaDAO.obtenerPorId(TallasDTO.ID_TREINTA_CINCO));
 //        prodVariante.setFecha_hora_creacion(LocalDateTime.now());
 //        prodVariante.setDisponible(true);
+//        prodVariante.setUsuario(this.usuarioDTO);
+//        
 //        resultado = this.prodVarianteDAO.insertar(prodVariante);
 //        assertTrue(resultado != 0);
 //        listaProdVariantesId.add(resultado);
@@ -122,8 +157,6 @@
 //    @Test
 //    public void testObtenerPorId() {
 //        System.out.println("obtenerPorId");
-//
-//        prepararProductoBase();
 //
 //        ArrayList<Integer> listaProdVariantesId = new ArrayList<>();
 //        insertarProdVariantes(listaProdVariantesId);
@@ -145,8 +178,6 @@
 //    public void testListarTodos() {
 //        System.out.println("listarTodos");
 //
-//        prepararProductoBase();
-//
 //        ArrayList<Integer> listaProdVariantesId = new ArrayList<>();
 //        insertarProdVariantes(listaProdVariantesId);
 //
@@ -162,8 +193,6 @@
 //    @Test
 //    public void testModificar() {
 //        System.out.println("modificar");
-//
-//        prepararProductoBase();
 //
 //        ArrayList<Integer> listaProdVariantesId = new ArrayList<>();
 //        insertarProdVariantes(listaProdVariantesId);
@@ -201,8 +230,6 @@
 //    public void testEliminar() {
 //        System.out.println("eliminar");
 //
-//        prepararProductoBase();
-//
 //        ArrayList<Integer> listaProdVariantesId = new ArrayList<>();
 //        insertarProdVariantes(listaProdVariantesId);
 //
@@ -230,6 +257,15 @@
 //        ArrayList<ProductosDTO> listaProductos = this.productoDAO.listarTodos();
 //        for (ProductosDTO producto : listaProductos) {
 //            this.productoDAO.eliminar(producto);
+//        }
+//        
+//        // Eliminar usuarios
+//        ArrayList<UsuariosDTO> listaUsuarios = this.usuarioDAO.listarTodos();
+//        for (Integer i = 0; i < listaUsuarios.size(); i++) {
+//            Integer resultado = this.usuarioDAO.eliminar(listaUsuarios.get(i));
+//            assertNotEquals(0, resultado);
+//            UsuariosDTO usuario = this.usuarioDAO.obtenerPorId(listaUsuarios.get(i).getUsuarioId());
+//            assertNull(usuario);
 //        }
 //    }
 //}

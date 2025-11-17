@@ -14,4 +14,14 @@ public interface ProductosDAO {
     public Integer modificar(ProductosDTO producto);
 
     public Integer eliminar(ProductosDTO producto);
+    
+    public Boolean tieneStockDisponible(Integer productoId);
+
+    public Integer calcularStockTotal(Integer productoId);
+
+    public ArrayList<ProductosDTO> listarPorCategoria(Integer categoriaId);
+
+    public ArrayList<ProductosDTO> listarPorEstilo(Integer estiloId);
+
+    public ArrayList<ProductosDTO> listarConStockBajo();
 }

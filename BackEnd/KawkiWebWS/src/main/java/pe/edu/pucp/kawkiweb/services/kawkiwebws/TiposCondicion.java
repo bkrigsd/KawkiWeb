@@ -16,19 +16,6 @@ public class TiposCondicion {
         this.tipoCondicionBO = new TiposCondicionBO();
     }
 
-    @WebMethod(operationName = "insertarTipoCondicion")
-    public Integer insertarTipoCondicion(
-            @WebParam(name = "nombreCondicion") String nombreCondicion) {
-        return this.tipoCondicionBO.insertar(nombreCondicion);
-    }
-
-    @WebMethod(operationName = "modificarTipoCondicion")
-    public Integer modificarTipoCondicion(
-            @WebParam(name = "tipoCondicionId") Integer tipoCondicionId,
-            @WebParam(name = "nombreCondicion") String nombreCondicion) {
-        return this.tipoCondicionBO.modificar(tipoCondicionId, nombreCondicion);
-    }
-
     @WebMethod(operationName = "obtenerPorIdTipoCondicion")
     public TiposCondicionDTO obtenerPorIdTipoCondicion(
             @WebParam(name = "tipoCondicionId") Integer tipoCondicionId) {

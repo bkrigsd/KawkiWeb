@@ -8,6 +8,7 @@ import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
+import pe.edu.pucp.kawkiweb.dao.UsuariosDAO.ResultadoCambioContrasenha;
 
 public class UsuariosBO {
 
@@ -27,30 +28,37 @@ public class UsuariosBO {
 
     public Integer insertar(String nombre, String apePaterno, String dni,
             String telefono, String correo, String nombreUsuario,
-            String contrasenha, TiposUsuarioDTO tipoUsuario) {
+            String contrasenha, TiposUsuarioDTO tipoUsuario,
+            Boolean activo) {
 
         try {
             // Validaciones básicas
             if (!validarDatosUsuario(nombre, apePaterno, dni, telefono, correo,
-                    nombreUsuario, contrasenha, tipoUsuario)) {
+                    nombreUsuario, contrasenha, tipoUsuario, activo)) {
                 System.err.println("Error: Datos de usuario inválidos");
                 return null;
             }
 
-            // Validar que el correo no esté registrado
-            if (existeCorreo(correo)) {
+            // OPTIMIZADO: Verificar unicidad con un solo llamado al SP
+            boolean[] unicidad = this.usuarioDAO.verificarUnicidad(
+                    correo.trim().toLowerCase(),
+                    nombreUsuario.trim().toLowerCase(),
+                    dni,
+                    null // NULL porque es INSERT
+            );
+
+            // unicidad = [correoExiste, usuarioExiste, dniExiste]
+            if (unicidad[0]) {
                 System.err.println("Error: El correo ya está registrado");
                 return null;
             }
 
-            // Validar que el nombre de usuario no esté registrado
-            if (existeNombreUsuario(nombreUsuario)) {
+            if (unicidad[1]) {
                 System.err.println("Error: El nombre de usuario ya está registrado");
                 return null;
             }
 
-            // Validar que el DNI no esté registrado
-            if (existeDni(dni)) {
+            if (unicidad[2]) {
                 System.err.println("Error: El DNI ya está registrado");
                 return null;
             }
@@ -65,6 +73,7 @@ public class UsuariosBO {
             usuarioDTO.setContrasenha(contrasenha);
             usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
             usuarioDTO.setTipoUsuario(tipoUsuario);
+            usuarioDTO.setActivo(activo);
 
             return this.usuarioDAO.insertar(usuarioDTO);
 
@@ -104,7 +113,7 @@ public class UsuariosBO {
 
     public Integer modificar(Integer usuarioId, String nombre, String apePaterno,
             String dni, String telefono, String correo, String nombreUsuario,
-            String contrasenha, TiposUsuarioDTO tipoUsuario) {
+            String contrasenha, TiposUsuarioDTO tipoUsuario, Boolean activo) {
 
         try {
             // Validar ID
@@ -122,26 +131,31 @@ public class UsuariosBO {
 
             // Validaciones básicas
             if (!validarDatosUsuario(nombre, apePaterno, dni, telefono, correo,
-                    nombreUsuario, contrasenha, tipoUsuario)) {
+                    nombreUsuario, contrasenha, tipoUsuario, activo)) {
                 System.err.println("Error: Datos de usuario inválidos");
                 return null;
             }
 
-            // Validar que el correo no esté en uso por otro usuario
-            if (!correo.equalsIgnoreCase(usuarioExistente.getCorreo()) && existeCorreo(correo)) {
+            // OPTIMIZADO: Verificar unicidad excluyendo el usuario actual con un solo llamado al SP
+            boolean[] unicidad = this.usuarioDAO.verificarUnicidad(
+                    correo.trim().toLowerCase(),
+                    nombreUsuario.trim().toLowerCase(),
+                    dni,
+                    usuarioId // Excluye el usuario actual
+            );
+
+            // unicidad = [correoExiste, usuarioExiste, dniExiste]
+            if (unicidad[0]) {
                 System.err.println("Error: El correo ya está registrado por otro usuario");
                 return null;
             }
 
-            // Validar que el nombre de usuario no esté en uso por otro usuario
-            if (!nombreUsuario.equalsIgnoreCase(usuarioExistente.getNombreUsuario())
-                    && existeNombreUsuario(nombreUsuario)) {
+            if (unicidad[1]) {
                 System.err.println("Error: El nombre de usuario ya está registrado por otro usuario");
                 return null;
             }
 
-            // Validar que el DNI no esté en uso por otro usuario
-            if (!dni.equals(usuarioExistente.getDni()) && existeDni(dni)) {
+            if (unicidad[2]) {
                 System.err.println("Error: El DNI ya está registrado por otro usuario");
                 return null;
             }
@@ -155,8 +169,8 @@ public class UsuariosBO {
             usuarioDTO.setCorreo(correo.trim().toLowerCase());
             usuarioDTO.setNombreUsuario(nombreUsuario.trim().toLowerCase());
             usuarioDTO.setContrasenha(contrasenha);
-            usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
             usuarioDTO.setTipoUsuario(tipoUsuario);
+            usuarioDTO.setActivo(activo);
 
             return this.usuarioDAO.modificar(usuarioDTO);
 
@@ -167,24 +181,24 @@ public class UsuariosBO {
         }
     }
 
-    public Integer eliminar(Integer usuarioId) {
-        try {
-            if (usuarioId == null || usuarioId <= 0) {
-                System.err.println("Error: ID de usuario inválido");
-                return null;
-            }
-
-            UsuariosDTO usuarioDTO = new UsuariosDTO();
-            usuarioDTO.setUsuarioId(usuarioId);
-            return this.usuarioDAO.eliminar(usuarioDTO);
-
-        } catch (Exception e) {
-            System.err.println("Error al eliminar usuario: " + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
+//    public Integer eliminar(Integer usuarioId) {
+//        try {
+//            if (usuarioId == null || usuarioId <= 0) {
+//                System.err.println("Error: ID de usuario inválido");
+//                return null;
+//            }
+//
+//            UsuariosDTO usuarioDTO = new UsuariosDTO();
+//            usuarioDTO.setUsuarioId(usuarioId);
+//            return this.usuarioDAO.eliminar(usuarioDTO);
+//
+//        } catch (Exception e) {
+//            System.err.println("Error al eliminar usuario: " + e.getMessage());
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+    
     /**
      * Valida los datos básicos de un usuario
      *
@@ -192,7 +206,7 @@ public class UsuariosBO {
      */
     private boolean validarDatosUsuario(String nombre, String apePaterno,
             String dni, String telefono, String correo, String nombreUsuario,
-            String contrasenha, TiposUsuarioDTO tipoUsuario) {
+            String contrasenha, TiposUsuarioDTO tipoUsuario, Boolean activo) {
 
         // Validar nombre
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -201,7 +215,7 @@ public class UsuariosBO {
         }
 
         if (nombre.trim().length() > 50) {
-            System.err.println("Validación: El nombre es demasiado largo (máx. 100 caracteres)");
+            System.err.println("Validación: El nombre es demasiado largo (máx. 50 caracteres)");
             return false;
         }
 
@@ -212,7 +226,7 @@ public class UsuariosBO {
         }
 
         if (apePaterno.trim().length() > 50) {
-            System.err.println("Validación: El apellido paterno es demasiado largo (máx. 100 caracteres)");
+            System.err.println("Validación: El apellido paterno es demasiado largo (máx. 50 caracteres)");
             return false;
         }
 
@@ -257,94 +271,17 @@ public class UsuariosBO {
             return false;
         }
 
+        // Validar estado
+        if (activo == null) {
+            System.err.println("Validación: El dato activo no puede ser null");
+            return false;
+        }
+
         return true;
     }
 
     /**
-     * Verifica si un correo ya está registrado
-     *
-     * @param correo Correo a verificar
-     * @return true si existe, false en caso contrario
-     */
-    private boolean existeCorreo(String correo) {
-        try {
-            List<UsuariosDTO> usuarios = this.listarTodos();
-            return usuarios.stream()
-                    .anyMatch(u -> u.getCorreo() != null
-                    && u.getCorreo().equalsIgnoreCase(correo.trim()));
-        } catch (Exception e) {
-            System.err.println("Error al verificar correo: " + e.getMessage());
-            return false;
-        }
-    }
-
-    /**
-     * Verifica si un nombre de usuario ya está registrado
-     *
-     * @param nombreUsuario Nombre de usuario a verificar
-     * @return true si existe, false en caso contrario
-     */
-    private boolean existeNombreUsuario(String nombreUsuario) {
-        try {
-            List<UsuariosDTO> usuarios = this.listarTodos();
-            return usuarios.stream()
-                    .anyMatch(u -> u.getNombreUsuario() != null
-                    && u.getNombreUsuario().equalsIgnoreCase(nombreUsuario.trim()));
-        } catch (Exception e) {
-            System.err.println("Error al verificar nombre de usuario: " + e.getMessage());
-            return false;
-        }
-    }
-
-    /**
-     * Verifica si un DNI ya está registrado
-     *
-     * @param dni DNI a verificar
-     * @return true si existe, false en caso contrario
-     */
-    private boolean existeDni(String dni) {
-        try {
-            List<UsuariosDTO> usuarios = this.listarTodos();
-            return usuarios.stream()
-                    .anyMatch(u -> u.getDni() != null && u.getDni().equals(dni));
-        } catch (Exception e) {
-            System.err.println("Error al verificar DNI: " + e.getMessage());
-            return false;
-        }
-    }
-
-    /**
-     * Lista usuarios por tipo
-     *
-     * @param tipoUsuarioId ID del tipo de usuario
-     * @return Lista de usuarios del tipo especificado
-     */
-    public List<UsuariosDTO> listarPorTipo(Integer tipoUsuarioId) {
-        try {
-            if (tipoUsuarioId == null || tipoUsuarioId <= 0) {
-                return new ArrayList<>();
-            }
-
-            List<UsuariosDTO> todosLosUsuarios = this.listarTodos();
-            List<UsuariosDTO> usuariosFiltrados = new ArrayList<>();
-
-            for (UsuariosDTO usuario : todosLosUsuarios) {
-                if (usuario.getTipoUsuario() != null
-                        && tipoUsuarioId.equals(usuario.getTipoUsuario().getTipoUsuarioId())) {
-                    usuariosFiltrados.add(usuario);
-                }
-            }
-
-            return usuariosFiltrados;
-
-        } catch (Exception e) {
-            System.err.println("Error al listar usuarios por tipo: " + e.getMessage());
-            return new ArrayList<>();
-        }
-    }
-
-    /**
-     * Cambia la contraseña de un usuario
+     * Cambia la contraseña de un usuario usando stored procedure
      *
      * @param usuarioId ID del usuario
      * @param contrasenhaActual Contraseña actual
@@ -359,39 +296,27 @@ public class UsuariosBO {
                 return false;
             }
 
-            // Validar longitud de nueva contraseña
+            // Validar longitud de nueva contraseña (validación básica)
             if (contrasenhaNueva.length() < 8) {
                 System.err.println("Error: La nueva contraseña debe tener al menos 8 caracteres");
                 return false;
             }
 
-            UsuariosDTO usuario = this.obtenerPorId(usuarioId);
-            if (usuario == null) {
-                System.err.println("Error: Usuario no encontrado");
-                return false;
-            }
-
-            // Verificar contraseña actual
-            // En producción, usar hash comparison
-            if (!usuario.getContrasenha().equals(contrasenhaActual)) {
-                System.err.println("Error: La contraseña actual es incorrecta");
-                return false;
-            }
-
-            // Actualizar contraseña
-            Integer resultado = this.modificar(
-                    usuario.getUsuarioId(),
-                    usuario.getNombre(),
-                    usuario.getApePaterno(),
-                    usuario.getDni(),
-                    usuario.getTelefono(),
-                    usuario.getCorreo(),
-                    usuario.getNombreUsuario(),
-                    contrasenhaNueva,
-                    usuario.getTipoUsuario()
+            // Llamar al stored procedure que valida TODO
+            ResultadoCambioContrasenha resultado = this.usuarioDAO.cambiarContrasenha(
+                    usuarioId,
+                    contrasenhaActual,
+                    contrasenhaNueva
             );
 
-            return resultado != null && resultado > 0;
+            // Mostrar mensaje del SP
+            if (!resultado.esExitoso()) {
+                System.err.println("Error: " + resultado.getMensaje());
+            } else {
+                System.out.println("Éxito: " + resultado.getMensaje());
+            }
+
+            return resultado.esExitoso();
 
         } catch (Exception e) {
             System.err.println("Error al cambiar contraseña: " + e.getMessage());
@@ -401,7 +326,7 @@ public class UsuariosBO {
     }
 
     /**
-     * Autentica un usuario
+     * Autentica un usuario usando stored procedure
      *
      * @param nombreUsuario Nombre de usuario o correo
      * @param contrasenha Contraseña
@@ -414,22 +339,11 @@ public class UsuariosBO {
                 return null;
             }
 
-            List<UsuariosDTO> usuarios = this.listarTodos();
-
-            for (UsuariosDTO usuario : usuarios) {
-                boolean coincideUsuario = usuario.getNombreUsuario() != null
-                        && usuario.getNombreUsuario().equalsIgnoreCase(nombreUsuario.trim());
-                boolean coincideCorreo = usuario.getCorreo() != null
-                        && usuario.getCorreo().equalsIgnoreCase(nombreUsuario.trim());
-
-                if ((coincideUsuario || coincideCorreo)
-                        && usuario.getContrasenha() != null
-                        && usuario.getContrasenha().equals(contrasenha)) {
-                    return usuario;
-                }
-            }
-
-            return null;
+            // Usar el método del DAO que llama al stored procedure
+            return this.usuarioDAO.autenticar(
+                    nombreUsuario.trim(),
+                    contrasenha
+            );
 
         } catch (Exception e) {
             System.err.println("Error al autenticar usuario: " + e.getMessage());

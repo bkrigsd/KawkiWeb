@@ -1,0 +1,536 @@
+-- MS SQL Server Script
+-- Conversión desde MySQL
+
+-- -----------------------------------------------------
+-- Database KAWKI_DB
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'KAWKI_DB')
+BEGIN
+    CREATE DATABASE KAWKI_DB;
+END
+GO
+
+USE KAWKI_DB;
+GO
+
+-- -----------------------------------------------------
+-- Table CATEGORIAS
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CATEGORIAS]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[CATEGORIAS] (
+        [CATEGORIA_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(50) NOT NULL,
+        CONSTRAINT [PK_CATEGORIAS] PRIMARY KEY CLUSTERED ([CATEGORIA_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table TIPOS_COMPROBANTE
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TIPOS_COMPROBANTE]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[TIPOS_COMPROBANTE] (
+        [TIPO_COMPROBANTE_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(45) NOT NULL,
+        CONSTRAINT [PK_TIPOS_COMPROBANTE] PRIMARY KEY CLUSTERED ([TIPO_COMPROBANTE_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table TIPOS_USUARIO
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TIPOS_USUARIO]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[TIPOS_USUARIO] (
+        [TIPO_USUARIO_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(50) NOT NULL,
+        CONSTRAINT [PK_TIPOS_USUARIO] PRIMARY KEY CLUSTERED ([TIPO_USUARIO_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table USUARIOS
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[USUARIOS]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[USUARIOS] (
+        [USUARIO_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(50) NOT NULL,
+        [APE_PATERNO] VARCHAR(50) NOT NULL,
+        [DNI] VARCHAR(15) NOT NULL,
+        [TELEFONO] VARCHAR(9) NOT NULL,
+        [CORREO] VARCHAR(100) NOT NULL,
+        [NOMBRE_USUARIO] VARCHAR(50) NOT NULL,
+        [CONTRASENHA] VARCHAR(255) NOT NULL,
+        [FECHA_HORA_CREACION] DATETIME NOT NULL DEFAULT GETDATE(),
+        [TIPO_USUARIO_ID] INT NOT NULL,
+        [ACTIVO] BIT NOT NULL,
+        CONSTRAINT [PK_USUARIOS] PRIMARY KEY CLUSTERED ([USUARIO_ID] ASC),
+        CONSTRAINT [UK_USUARIOS_DNI] UNIQUE ([DNI]),
+        CONSTRAINT [UK_USUARIOS_CORREO] UNIQUE ([CORREO]),
+        CONSTRAINT [UK_USUARIOS_NOMBRE_USUARIO] UNIQUE ([NOMBRE_USUARIO]),
+        CONSTRAINT [FK_USUARIOS_TIPOS_USUARIO] FOREIGN KEY ([TIPO_USUARIO_ID])
+            REFERENCES [dbo].[TIPOS_USUARIO] ([TIPO_USUARIO_ID])
+    );
+    CREATE NONCLUSTERED INDEX [IX_USUARIOS_TIPO_USUARIO_ID] ON [dbo].[USUARIOS] ([TIPO_USUARIO_ID] ASC);
+END
+GO
+
+-- -----------------------------------------------------
+-- Table TIPOS_CONDICION
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TIPOS_CONDICION]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[TIPOS_CONDICION] (
+        [TIPO_CONDICION_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(45) NOT NULL,
+        CONSTRAINT [PK_TIPOS_CONDICION] PRIMARY KEY CLUSTERED ([TIPO_CONDICION_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table TIPOS_BENEFICIO
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TIPOS_BENEFICIO]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[TIPOS_BENEFICIO] (
+        [TIPO_BENEFICIO_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(45) NOT NULL,
+        CONSTRAINT [PK_TIPOS_BENEFICIO] PRIMARY KEY CLUSTERED ([TIPO_BENEFICIO_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table DESCUENTOS
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DESCUENTOS]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[DESCUENTOS] (
+        [DESCUENTO_ID] INT IDENTITY(1,1) NOT NULL,
+        [DESCRIPCION] VARCHAR(255) NOT NULL,
+        [TIPO_CONDICION_ID] INT NOT NULL,
+        [VALOR_CONDICION] INT NOT NULL,
+        [TIPO_BENEFICIO_ID] INT NOT NULL,
+        [VALOR_BENEFICIO] INT NOT NULL,
+        [FECHA_INICIO] DATETIME NOT NULL,
+        [FECHA_FIN] DATETIME NOT NULL,
+        [ACTIVO] BIT NOT NULL,
+        CONSTRAINT [PK_DESCUENTOS] PRIMARY KEY CLUSTERED ([DESCUENTO_ID] ASC),
+        CONSTRAINT [FK_DESCUENTOS_TIPOS_CONDICION] FOREIGN KEY ([TIPO_CONDICION_ID])
+            REFERENCES [dbo].[TIPOS_CONDICION] ([TIPO_CONDICION_ID]),
+        CONSTRAINT [FK_DESCUENTOS_TIPOS_BENEFICIO] FOREIGN KEY ([TIPO_BENEFICIO_ID])
+            REFERENCES [dbo].[TIPOS_BENEFICIO] ([TIPO_BENEFICIO_ID])
+    );
+    CREATE NONCLUSTERED INDEX [IX_DESCUENTOS_TIPO_CONDICION_ID] ON [dbo].[DESCUENTOS] ([TIPO_CONDICION_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_DESCUENTOS_TIPO_BENEFICIO_ID] ON [dbo].[DESCUENTOS] ([TIPO_BENEFICIO_ID] ASC);
+END
+GO
+
+-- -----------------------------------------------------
+-- Table REDES_SOCIALES
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[REDES_SOCIALES]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[REDES_SOCIALES] (
+        [RED_SOCIAL_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(25) NOT NULL,
+        CONSTRAINT [PK_REDES_SOCIALES] PRIMARY KEY CLUSTERED ([RED_SOCIAL_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table VENTAS
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[VENTAS]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[VENTAS] (
+        [VENTA_ID] INT IDENTITY(1,1) NOT NULL,
+        [USUARIO_ID] INT NOT NULL,
+        [FECHA_HORA_CREACION] DATETIME NOT NULL DEFAULT GETDATE(),
+        [TOTAL] DECIMAL(10,2) NOT NULL,
+        [DESCUENTO_ID] INT NULL,
+        [RED_SOCIAL_ID] INT NOT NULL,
+        [ES_VALIDA] BIT NOT NULL,
+        CONSTRAINT [PK_VENTAS] PRIMARY KEY CLUSTERED ([VENTA_ID] ASC),
+        CONSTRAINT [FK_VENTAS_USUARIOS] FOREIGN KEY ([USUARIO_ID])
+            REFERENCES [dbo].[USUARIOS] ([USUARIO_ID]),
+        CONSTRAINT [FK_VENTAS_DESCUENTOS] FOREIGN KEY ([DESCUENTO_ID])
+            REFERENCES [dbo].[DESCUENTOS] ([DESCUENTO_ID]),
+        CONSTRAINT [FK_VENTAS_REDES_SOCIALES] FOREIGN KEY ([RED_SOCIAL_ID])
+            REFERENCES [dbo].[REDES_SOCIALES] ([RED_SOCIAL_ID])
+    );
+    CREATE NONCLUSTERED INDEX [IX_VENTAS_USUARIO_ID] ON [dbo].[VENTAS] ([USUARIO_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_VENTAS_DESCUENTO_ID] ON [dbo].[VENTAS] ([DESCUENTO_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_VENTAS_RED_SOCIAL_ID] ON [dbo].[VENTAS] ([RED_SOCIAL_ID] ASC);
+END
+GO
+
+-- -----------------------------------------------------
+-- Table METODOS_PAGO
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[METODOS_PAGO]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[METODOS_PAGO] (
+        [METODO_PAGO_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(30) NOT NULL,
+        CONSTRAINT [PK_METODOS_PAGO] PRIMARY KEY CLUSTERED ([METODO_PAGO_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table COMPROBANTES_PAGO
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[COMPROBANTES_PAGO]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[COMPROBANTES_PAGO] (
+        [COMPROBANTE_PAGO_ID] INT IDENTITY(1,1) NOT NULL,
+        [FECHA_HORA_CREACION] DATETIME NOT NULL DEFAULT GETDATE(),
+        [TIPO_COMPROBANTE_ID] INT NOT NULL,
+        [NUMERO_SERIE] VARCHAR(50) NOT NULL,
+        [DNI_CLIENTE] VARCHAR(8) NULL,
+        [NOMBRE_CLIENTE] VARCHAR(100) NULL,
+        [RUC_CLIENTE] VARCHAR(11) NULL,
+        [RAZON_SOCIAL_CLIENTE] VARCHAR(100) NULL,
+        [DIRECCION_FISCAL_CLIENTE] VARCHAR(200) NULL,
+        [TELEFONO_CLIENTE] VARCHAR(9) NULL,
+        [TOTAL] DECIMAL(10,2) NOT NULL,
+        [VENTA_ID] INT NOT NULL,
+        [METODO_PAGO_ID] INT NOT NULL,
+        [SUBTOTAL] DECIMAL(10,2) NOT NULL,
+        [IGV] DECIMAL(10,2) NOT NULL,
+        CONSTRAINT [PK_COMPROBANTES_PAGO] PRIMARY KEY CLUSTERED ([COMPROBANTE_PAGO_ID] ASC),
+        CONSTRAINT [UK_COMPROBANTES_PAGO_NUMERO_SERIE] UNIQUE ([NUMERO_SERIE]),
+        CONSTRAINT [FK_COMPROBANTES_PAGO_TIPOS_COMPROBANTE] FOREIGN KEY ([TIPO_COMPROBANTE_ID])
+            REFERENCES [dbo].[TIPOS_COMPROBANTE] ([TIPO_COMPROBANTE_ID]),
+        CONSTRAINT [FK_COMPROBANTES_PAGO_VENTAS] FOREIGN KEY ([VENTA_ID])
+            REFERENCES [dbo].[VENTAS] ([VENTA_ID]),
+        CONSTRAINT [FK_COMPROBANTES_PAGO_METODOS_PAGO] FOREIGN KEY ([METODO_PAGO_ID])
+            REFERENCES [dbo].[METODOS_PAGO] ([METODO_PAGO_ID])
+    );
+    CREATE NONCLUSTERED INDEX [IX_COMPROBANTES_PAGO_TIPO_COMPROBANTE_ID] ON [dbo].[COMPROBANTES_PAGO] ([TIPO_COMPROBANTE_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_COMPROBANTES_PAGO_VENTA_ID] ON [dbo].[COMPROBANTES_PAGO] ([VENTA_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_COMPROBANTES_PAGO_METODO_PAGO_ID] ON [dbo].[COMPROBANTES_PAGO] ([METODO_PAGO_ID] ASC);
+END
+GO
+
+-- -----------------------------------------------------
+-- Table ESTILOS
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ESTILOS]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[ESTILOS] (
+        [ESTILO_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(30) NOT NULL,
+        CONSTRAINT [PK_ESTILOS] PRIMARY KEY CLUSTERED ([ESTILO_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table PRODUCTOS
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PRODUCTOS]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[PRODUCTOS] (
+        [PRODUCTO_ID] INT IDENTITY(1,1) NOT NULL,
+        [DESCRIPCION] VARCHAR(100) NOT NULL,
+        [CATEGORIA_ID] INT NOT NULL,
+        [ESTILO_ID] INT NOT NULL,
+        [PRECIO_VENTA] DECIMAL(10,2) NOT NULL,
+        [FECHA_HORA_CREACION] DATETIME NOT NULL DEFAULT GETDATE(),
+        [USUARIO_ID] INT NOT NULL,
+        CONSTRAINT [PK_PRODUCTOS] PRIMARY KEY CLUSTERED ([PRODUCTO_ID] ASC),
+        CONSTRAINT [FK_PRODUCTOS_CATEGORIAS] FOREIGN KEY ([CATEGORIA_ID])
+            REFERENCES [dbo].[CATEGORIAS] ([CATEGORIA_ID]),
+        CONSTRAINT [FK_PRODUCTOS_ESTILOS] FOREIGN KEY ([ESTILO_ID])
+            REFERENCES [dbo].[ESTILOS] ([ESTILO_ID]),
+        CONSTRAINT [FK_PRODUCTOS_USUARIOS] FOREIGN KEY ([USUARIO_ID])
+            REFERENCES [dbo].[USUARIOS] ([USUARIO_ID])
+    );
+    CREATE NONCLUSTERED INDEX [IX_PRODUCTOS_CATEGORIA_ID] ON [dbo].[PRODUCTOS] ([CATEGORIA_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_PRODUCTOS_ESTILO_ID] ON [dbo].[PRODUCTOS] ([ESTILO_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_PRODUCTOS_USUARIO_ID] ON [dbo].[PRODUCTOS] ([USUARIO_ID] ASC);
+END
+GO
+
+-- -----------------------------------------------------
+-- Table COLORES
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[COLORES]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[COLORES] (
+        [COLOR_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(30) NOT NULL,
+        CONSTRAINT [PK_COLORES] PRIMARY KEY CLUSTERED ([COLOR_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table TALLAS
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TALLAS]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[TALLAS] (
+        [TALLA_ID] INT IDENTITY(1,1) NOT NULL,
+        [NUMERO] INT NOT NULL,
+        CONSTRAINT [PK_TALLAS] PRIMARY KEY CLUSTERED ([TALLA_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table PRODUCTOS_VARIANTES
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PRODUCTOS_VARIANTES]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[PRODUCTOS_VARIANTES] (
+        [PROD_VARIANTE_ID] INT IDENTITY(1,1) NOT NULL,
+        [SKU] VARCHAR(45) NOT NULL,
+        [STOCK] INT NOT NULL,
+        [STOCK_MINIMO] INT NOT NULL,
+        [ALERTA_STOCK] BIT NULL,
+        [PRODUCTO_ID] INT NOT NULL,
+        [COLOR_ID] INT NOT NULL,
+        [TALLA_ID] INT NOT NULL,
+        [URL_IMAGEN] VARCHAR(300) NULL,
+        [FECHA_HORA_CREACION] DATETIME NOT NULL DEFAULT GETDATE(),
+        [DISPONIBLE] BIT NOT NULL,
+        [USUARIO_ID] INT NOT NULL,
+        CONSTRAINT [PK_PRODUCTOS_VARIANTES] PRIMARY KEY CLUSTERED ([PROD_VARIANTE_ID] ASC),
+        CONSTRAINT [UK_PRODUCTOS_VARIANTES_SKU] UNIQUE ([SKU]),
+        CONSTRAINT [FK_PRODUCTOS_VARIANTES_PRODUCTOS] FOREIGN KEY ([PRODUCTO_ID])
+            REFERENCES [dbo].[PRODUCTOS] ([PRODUCTO_ID]),
+        CONSTRAINT [FK_PRODUCTOS_VARIANTES_COLORES] FOREIGN KEY ([COLOR_ID])
+            REFERENCES [dbo].[COLORES] ([COLOR_ID]),
+        CONSTRAINT [FK_PRODUCTOS_VARIANTES_TALLAS] FOREIGN KEY ([TALLA_ID])
+            REFERENCES [dbo].[TALLAS] ([TALLA_ID]),
+        CONSTRAINT [FK_PRODUCTOS_VARIANTES_USUARIOS] FOREIGN KEY ([USUARIO_ID])
+            REFERENCES [dbo].[USUARIOS] ([USUARIO_ID])
+    );
+    CREATE NONCLUSTERED INDEX [IX_PRODUCTOS_VARIANTES_PRODUCTO_ID] ON [dbo].[PRODUCTOS_VARIANTES] ([PRODUCTO_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_PRODUCTOS_VARIANTES_COLOR_ID] ON [dbo].[PRODUCTOS_VARIANTES] ([COLOR_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_PRODUCTOS_VARIANTES_TALLA_ID] ON [dbo].[PRODUCTOS_VARIANTES] ([TALLA_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_PRODUCTOS_VARIANTES_USUARIO_ID] ON [dbo].[PRODUCTOS_VARIANTES] ([USUARIO_ID] ASC);
+END
+GO
+
+-- -----------------------------------------------------
+-- Table DETALLE_VENTAS
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DETALLE_VENTAS]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[DETALLE_VENTAS] (
+        [DETALLE_VENTA_ID] INT IDENTITY(1,1) NOT NULL,
+        [CANTIDAD] INT NOT NULL,
+        [PRECIO_UNITARIO] DECIMAL(10,2) NOT NULL,
+        [SUBTOTAL] DECIMAL(10,2) NOT NULL,
+        [VENTA_ID] INT NOT NULL,
+        [PROD_VARIANTE_ID] INT NOT NULL,
+        CONSTRAINT [PK_DETALLE_VENTAS] PRIMARY KEY CLUSTERED ([DETALLE_VENTA_ID] ASC),
+        CONSTRAINT [FK_DETALLE_VENTAS_VENTAS] FOREIGN KEY ([VENTA_ID])
+            REFERENCES [dbo].[VENTAS] ([VENTA_ID]),
+        CONSTRAINT [FK_DETALLE_VENTAS_PRODUCTOS_VARIANTES] FOREIGN KEY ([PROD_VARIANTE_ID])
+            REFERENCES [dbo].[PRODUCTOS_VARIANTES] ([PROD_VARIANTE_ID])
+    );
+    CREATE NONCLUSTERED INDEX [IX_DETALLE_VENTAS_VENTA_ID] ON [dbo].[DETALLE_VENTAS] ([VENTA_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_DETALLE_VENTAS_PROD_VARIANTE_ID] ON [dbo].[DETALLE_VENTAS] ([PROD_VARIANTE_ID] ASC);
+END
+GO
+
+-- -----------------------------------------------------
+-- Table TIPOS_MOVIMIENTO
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TIPOS_MOVIMIENTO]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[TIPOS_MOVIMIENTO] (
+        [TIPO_MOVIMIENTO_ID] INT IDENTITY(1,1) NOT NULL,
+        [NOMBRE] VARCHAR(20) NOT NULL,
+        CONSTRAINT [PK_TIPOS_MOVIMIENTO] PRIMARY KEY CLUSTERED ([TIPO_MOVIMIENTO_ID] ASC)
+    );
+END
+GO
+
+-- -----------------------------------------------------
+-- Table MOVIMIENTOS_INVENTARIO
+-- -----------------------------------------------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[MOVIMIENTOS_INVENTARIO]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[MOVIMIENTOS_INVENTARIO] (
+        [MOV_INVENTARIO_ID] INT IDENTITY(1,1) NOT NULL,
+        [CANTIDAD] INT NOT NULL,
+        [FECHA_HORA_MOV] DATETIME NOT NULL,
+        [OBSERVACION] VARCHAR(200) NULL,
+        [TIPO_MOVIMIENTO_ID] INT NOT NULL,
+        [PROD_VARIANTE_ID] INT NOT NULL,
+        [USUARIO_ID] INT NOT NULL,
+        CONSTRAINT [PK_MOVIMIENTOS_INVENTARIO] PRIMARY KEY CLUSTERED ([MOV_INVENTARIO_ID] ASC),
+        CONSTRAINT [FK_MOVIMIENTOS_INVENTARIO_TIPOS_MOVIMIENTO] FOREIGN KEY ([TIPO_MOVIMIENTO_ID])
+            REFERENCES [dbo].[TIPOS_MOVIMIENTO] ([TIPO_MOVIMIENTO_ID]),
+        CONSTRAINT [FK_MOVIMIENTOS_INVENTARIO_PRODUCTOS_VARIANTES] FOREIGN KEY ([PROD_VARIANTE_ID])
+            REFERENCES [dbo].[PRODUCTOS_VARIANTES] ([PROD_VARIANTE_ID]),
+        CONSTRAINT [FK_MOVIMIENTOS_INVENTARIO_USUARIOS] FOREIGN KEY ([USUARIO_ID])
+            REFERENCES [dbo].[USUARIOS] ([USUARIO_ID])
+    );
+    CREATE NONCLUSTERED INDEX [IX_MOVIMIENTOS_INVENTARIO_TIPO_MOVIMIENTO_ID] ON [dbo].[MOVIMIENTOS_INVENTARIO] ([TIPO_MOVIMIENTO_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_MOVIMIENTOS_INVENTARIO_PROD_VARIANTE_ID] ON [dbo].[MOVIMIENTOS_INVENTARIO] ([PROD_VARIANTE_ID] ASC);
+    CREATE NONCLUSTERED INDEX [IX_MOVIMIENTOS_INVENTARIO_USUARIO_ID] ON [dbo].[MOVIMIENTOS_INVENTARIO] ([USUARIO_ID] ASC);
+END
+GO
+
+-- =====================================================
+-- INSERTS PARA TABLAS MAESTRAS
+-- =====================================================
+
+-- TIPO_USUARIO
+IF NOT EXISTS (SELECT * FROM TIPOS_USUARIO)
+BEGIN
+    INSERT INTO TIPOS_USUARIO (nombre) VALUES
+    ('Vendedor'),
+    ('Administrador');
+END
+GO
+
+-- CATEGORIAS
+IF NOT EXISTS (SELECT * FROM CATEGORIAS)
+BEGIN
+    INSERT INTO CATEGORIAS (nombre) VALUES
+    ('Derby'),
+    ('Oxford');
+END
+GO
+
+-- ESTILOS
+IF NOT EXISTS (SELECT * FROM ESTILOS)
+BEGIN
+    INSERT INTO ESTILOS (nombre) VALUES
+    ('Charol'),
+    (N'Clásicos'),
+    ('Combinados'),
+    ('Metalizados');
+END
+GO
+
+-- METODO_PAGO
+IF NOT EXISTS (SELECT * FROM METODOS_PAGO)
+BEGIN
+    INSERT INTO METODOS_PAGO (nombre) VALUES
+    ('Transferencia'),
+    ('Yape'),
+    ('Plin');
+END
+GO
+
+-- COLORES
+IF NOT EXISTS (SELECT * FROM COLORES)
+BEGIN
+    INSERT INTO COLORES (nombre) VALUES
+    ('Blanco'),
+    ('Camel'),
+    (N'Marrón'),
+    ('Piel'),
+    ('Celeste'),
+    ('Crema'),
+    ('Beige'),
+    ('Negro'),
+    ('Amarillo'),
+    ('Plata'),
+    ('Azul'),
+    ('Rosado'),
+    ('Gris'),
+    ('Rojo'),
+    ('Turquesa'),
+    ('Acero'),
+    ('Verde');
+END
+GO
+
+-- TALLAS
+IF NOT EXISTS (SELECT * FROM TALLAS)
+BEGIN
+    INSERT INTO TALLAS (numero) VALUES
+    (35),
+    (36),
+    (37),
+    (38),
+    (39);
+END
+GO
+
+-- TIPO_BENEFICIO
+IF NOT EXISTS (SELECT * FROM TIPOS_BENEFICIO)
+BEGIN
+    INSERT INTO TIPOS_BENEFICIO (nombre) VALUES
+    ('Descuento por porcentaje'),
+    ('Descuento fijo'),
+    (N'Envío gratis');
+END
+GO
+
+-- TIPO_CONDICION
+IF NOT EXISTS (SELECT * FROM TIPOS_CONDICION)
+BEGIN
+    INSERT INTO TIPOS_CONDICION (nombre) VALUES
+    (N'Cantidad mínima de productos'),
+    (N'Monto mínimo de compra');
+END
+GO
+
+-- TIPO_COMPROBANTES
+IF NOT EXISTS (SELECT * FROM TIPOS_COMPROBANTE)
+BEGIN
+    INSERT INTO TIPOS_COMPROBANTE (nombre) VALUES
+    ('Boleta simple'),
+    ('Boleta con DNI'),
+    ('Factura');
+END
+GO
+
+-- TIPO_MOVIMIENTO
+IF NOT EXISTS (SELECT * FROM TIPOS_MOVIMIENTO)
+BEGIN
+    INSERT INTO TIPOS_MOVIMIENTO (nombre) VALUES
+    ('Ingreso'),
+    ('Salida'),
+    ('Ajuste');
+END
+GO
+
+-- REDES_SOCIALES
+IF NOT EXISTS (SELECT * FROM REDES_SOCIALES)
+BEGIN
+    INSERT INTO REDES_SOCIALES (nombre) VALUES
+    ('Facebook'),
+    ('Instagram'),
+    ('WhatsApp');
+END
+GO
+
+-- USUARIOS
+IF NOT EXISTS (SELECT * FROM USUARIOS)
+BEGIN
+    INSERT INTO USUARIOS (
+        NOMBRE, APE_PATERNO, DNI, TELEFONO, CORREO, 
+        NOMBRE_USUARIO, CONTRASENHA, FECHA_HORA_CREACION, TIPO_USUARIO_ID, ACTIVO
+    ) VALUES
+    -- Vendedor 1
+    ('Juan', N'Bazán', '77045687', '910789123', 'juan@kawki.com', 'juanbaz', '20216686', GETDATE(), 1, 1),
+    
+    -- Vendedor 2
+    ('Helen', 'Castillo', '74258741', '986521478', 'helen@kawki.com', 'helencas', '20202079', GETDATE(), 1, 1),
+    
+    -- Administrador 1
+    ('Fabio', 'Ingaruca', '75412365', '985963214', 'fabio@kawki.com', 'fabioing', '20216590', GETDATE(), 2, 1),
+    
+    -- Administrador 2
+    ('Angelina', 'Fernandez', '74859632', '984712365', 'angelina@kawki.com', 'angelinafer', '20212667', GETDATE(), 2, 1);
+END
+GO

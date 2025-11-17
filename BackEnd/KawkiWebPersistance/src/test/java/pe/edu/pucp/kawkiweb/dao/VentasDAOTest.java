@@ -1,6 +1,5 @@
 //package pe.edu.pucp.kawkiweb.dao;
 //
-//import java.time.LocalDate;
 //import java.time.LocalDateTime;
 //import java.util.ArrayList;
 //import org.junit.jupiter.api.AfterEach;
@@ -19,6 +18,7 @@
 //import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 //import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 //import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
+//import pe.edu.pucp.kawkiweb.model.utilVenta.RedesSocialesDTO;
 //
 //public class VentasDAOTest {
 //
@@ -91,6 +91,7 @@
 //        this.usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
 //        this.usuarioDTO.setTipoUsuario(new TiposUsuarioDTO(
 //                TiposUsuarioDTO.ID_VENDEDOR, TiposUsuarioDTO.NOMBRE_VENDEDOR));
+//        this.usuarioDTO.setActivo(Boolean.TRUE);
 //
 //        this.usuarioBaseId = this.usuarioDAO.insertar(this.usuarioDTO);
 //        this.usuarioDTO.setUsuarioId(usuarioBaseId);
@@ -141,6 +142,10 @@
 //        venta.setUsuario(this.usuarioDTO);
 //        venta.setFecha_hora_creacion(LocalDateTime.now());
 //        venta.setTotal(109.98);
+//        venta.setRedSocial(new RedesSocialesDTO(
+//                RedesSocialesDTO.ID_FACEBOOK, RedesSocialesDTO.NOMBRE_FACEBOOK));
+//        venta.setEsValida(Boolean.TRUE);
+//        
 //        Integer resultado = this.ventaDAO.insertar(venta);
 //        assertTrue(resultado != 0);
 //        listaVentaId.add(resultado);
@@ -151,6 +156,10 @@
 //        venta.setFecha_hora_creacion(LocalDateTime.now());
 //        venta.setTotal(190.98);
 //        venta.setDescuento(this.descuentoDTO);
+//        venta.setRedSocial(new RedesSocialesDTO(
+//                RedesSocialesDTO.ID_FACEBOOK, RedesSocialesDTO.NOMBRE_FACEBOOK));
+//        venta.setEsValida(Boolean.TRUE);
+//        
 //        resultado = this.ventaDAO.insertar(venta);
 //        assertTrue(resultado != 0);
 //        listaVentaId.add(resultado);
@@ -161,6 +170,10 @@
 //        venta.setFecha_hora_creacion(LocalDateTime.now());
 //        venta.setTotal(210.98);
 //        venta.setDescuento(this.descuentoDTO);
+//        venta.setRedSocial(new RedesSocialesDTO(
+//                RedesSocialesDTO.ID_FACEBOOK, RedesSocialesDTO.NOMBRE_FACEBOOK));
+//        venta.setEsValida(Boolean.TRUE);
+//        
 //        resultado = this.ventaDAO.insertar(venta);
 //        assertTrue(resultado != 0);
 //        listaVentaId.add(resultado);

@@ -1,6 +1,7 @@
 package pe.edu.pucp.kawkiweb.daoImp;
 
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
@@ -31,8 +32,9 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         this.listaColumnas.add(new Columna("CORREO", false, false));
         this.listaColumnas.add(new Columna("NOMBRE_USUARIO", false, false));
         this.listaColumnas.add(new Columna("CONTRASENHA", false, false));
-        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false));
+        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false, false));
         this.listaColumnas.add(new Columna("TIPO_USUARIO_ID", false, false));
+        this.listaColumnas.add(new Columna("ACTIVO", false, false));
     }
 
     @Override
@@ -46,6 +48,7 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         this.statement.setString(7, this.usuario.getContrasenha());
         this.statement.setTimestamp(8, java.sql.Timestamp.valueOf(this.usuario.getFechaHoraCreacion()));
         this.statement.setInt(9, this.usuario.getTipoUsuario().getTipoUsuarioId());
+        this.statement.setInt(10, this.usuario.getActivo() ? 1 : 0);
     }
 
     @Override
@@ -57,8 +60,8 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         this.statement.setString(5, this.usuario.getCorreo());
         this.statement.setString(6, this.usuario.getNombreUsuario());
         this.statement.setString(7, this.usuario.getContrasenha());
-        this.statement.setTimestamp(8, java.sql.Timestamp.valueOf(this.usuario.getFechaHoraCreacion()));
-        this.statement.setInt(9, this.usuario.getTipoUsuario().getTipoUsuarioId());
+        this.statement.setInt(8, this.usuario.getTipoUsuario().getTipoUsuarioId());
+        this.statement.setInt(9, this.usuario.getActivo() ? 1 : 0);
         this.statement.setInt(10, this.usuario.getUsuarioId());
     }
 
@@ -89,6 +92,9 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         Integer tipoUsuarioId = this.resultSet.getInt("TIPO_USUARIO_ID");
         TiposUsuarioDTO tipoUsuario = this.tipoUsuarioDAO.obtenerPorId(tipoUsuarioId);
         this.usuario.setTipoUsuario(tipoUsuario);
+
+        Boolean activo = (Boolean) this.resultSet.getObject("ACTIVO");
+        this.usuario.setActivo(activo);
     }
 
     @Override
@@ -131,5 +137,172 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
     public Integer eliminar(UsuariosDTO usuario) {
         this.usuario = usuario;
         return super.eliminar();
+    }
+
+    // ========== IMPLEMENTACIÓN DE MÉTODOS CON STORED PROCEDURES ==========
+    /**
+     * Verifica unicidad usando SP_VERIFICAR_UNICIDAD_USUARIO
+     */
+    @Override
+    public boolean[] verificarUnicidad(String correo, String nombreUsuario, String dni, Integer usuarioIdExcluir) {
+        boolean[] resultado = new boolean[3]; // [correoExiste, usuarioExiste, dniExiste]
+
+        try {
+            this.abrirConexion();
+
+            // Preparar llamada al stored procedure
+            String sql = "{CALL SP_VERIFICAR_UNICIDAD_USUARIO(?, ?, ?, ?, ?, ?, ?)}";
+            this.colocarSQLEnStatement(sql);
+
+            // Parámetros IN
+            this.statement.setString(1, correo);
+            this.statement.setString(2, nombreUsuario);
+            this.statement.setString(3, dni);
+            if (usuarioIdExcluir == null) {
+                this.statement.setNull(4, Types.INTEGER);
+            } else {
+                this.statement.setInt(4, usuarioIdExcluir);
+            }
+
+            // Parámetros OUT
+            this.statement.registerOutParameter(5, Types.BOOLEAN); // p_correo_existe
+            this.statement.registerOutParameter(6, Types.BOOLEAN); // p_usuario_existe
+            this.statement.registerOutParameter(7, Types.BOOLEAN); // p_dni_existe
+
+            // Ejecutar
+            this.statement.execute();
+
+            // Obtener resultados
+            resultado[0] = this.statement.getBoolean(5); // correoExiste
+            resultado[1] = this.statement.getBoolean(6); // usuarioExiste
+            resultado[2] = this.statement.getBoolean(7); // dniExiste
+
+        } catch (SQLException ex) {
+            System.err.println("Error al verificar unicidad: " + ex);
+            // En caso de error, retornar false (no existe)
+            resultado[0] = false;
+            resultado[1] = false;
+            resultado[2] = false;
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar conexión: " + ex);
+            }
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Lista usuarios por tipo usando SP_LISTAR_USUARIOS_POR_TIPO
+     */
+    @Override
+    public ArrayList<UsuariosDTO> listarPorTipo(Integer tipoUsuarioId) {
+        // Usar el método base ejecutarConsultaProcedimientoLista
+        List<UsuariosDTO> lista = this.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_USUARIOS_POR_TIPO",
+                1,
+                params -> {
+                    try {
+                        this.statement.setInt(1, tipoUsuarioId);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al setear parámetro: " + ex);
+                    }
+                },
+                tipoUsuarioId
+        );
+
+        return (ArrayList<UsuariosDTO>) lista;
+    }
+
+    /**
+     * Cambia contraseña usando SP_CAMBIAR_CONTRASENHA
+     */
+    @Override
+    public ResultadoCambioContrasenha cambiarContrasenha(Integer usuarioId, String contrasenhaActual, String contrasenhaNueva) {
+        int codigo = -1;
+        String mensaje = "Error desconocido";
+
+        try {
+            this.abrirConexion();
+
+            // Preparar llamada al stored procedure
+            String sql = "{CALL SP_CAMBIAR_CONTRASENHA(?, ?, ?, ?, ?)}";
+            this.colocarSQLEnStatement(sql);
+
+            // Parámetros IN
+            this.statement.setInt(1, usuarioId);
+            this.statement.setString(2, contrasenhaActual);
+            this.statement.setString(3, contrasenhaNueva);
+
+            // Parámetros OUT
+            this.statement.registerOutParameter(4, Types.INTEGER); // p_resultado
+            this.statement.registerOutParameter(5, Types.VARCHAR); // p_mensaje
+
+            // Ejecutar
+            this.statement.execute();
+
+            // Obtener resultados
+            codigo = this.statement.getInt(4);
+            mensaje = this.statement.getString(5);
+
+        } catch (SQLException ex) {
+            System.err.println("Error al cambiar contraseña: " + ex);
+            codigo = -1;
+            mensaje = "Error en la base de datos: " + ex.getMessage();
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar conexión: " + ex);
+            }
+        }
+
+        return new ResultadoCambioContrasenha(codigo, mensaje);
+    }
+
+    /**
+     * Autentica usuario usando SP_AUTENTICAR_USUARIO
+     */
+    @Override
+    public UsuariosDTO autenticar(String nombreUsuarioOCorreo, String contrasenha) {
+        // Crear objeto temporal para almacenar el resultado
+        UsuariosDTO usuarioAutenticado = null;
+        UsuariosDTO temp = this.usuario; // Guardar referencia actual
+
+        try {
+            this.abrirConexion();
+
+            // Preparar llamada al stored procedure
+            String sql = "{CALL SP_AUTENTICAR_USUARIO(?, ?)}";
+            this.colocarSQLEnStatement(sql);
+
+            // Parámetros IN
+            this.statement.setString(1, nombreUsuarioOCorreo);
+            this.statement.setString(2, contrasenha);
+
+            // Ejecutar
+            this.ejecutarSelectEnDB();
+
+            // Si hay resultado, instanciar el usuario
+            if (this.resultSet.next()) {
+                this.instanciarObjetoDelResultSet();
+                usuarioAutenticado = this.usuario;
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Error al autenticar usuario: " + ex);
+            usuarioAutenticado = null;
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar conexión: " + ex);
+            }
+            this.usuario = temp; // Restaurar referencia original
+        }
+
+        return usuarioAutenticado;
     }
 }

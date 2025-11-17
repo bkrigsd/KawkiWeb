@@ -15,4 +15,8 @@ public interface DescuentosDAO {
 
     public Integer eliminar(DescuentosDTO descuento);
     
+    public ArrayList<DescuentosDTO> listarActivas();
+    
+    public ArrayList<DescuentosDTO> listarVigentes();
+    
 }

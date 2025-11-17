@@ -8,6 +8,7 @@ import pe.edu.pucp.kawkiweb.bo.VentasBO;
 import pe.edu.pucp.kawkiweb.model.VentasDTO;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+import pe.edu.pucp.kawkiweb.model.utilVenta.RedesSocialesDTO;
 
 @WebService(serviceName = "VentasService")
 public class Ventas {
@@ -22,9 +23,10 @@ public class Ventas {
     public Integer insertarVenta(
             @WebParam(name = "usuario") UsuariosDTO usuario,
             @WebParam(name = "total") Double total,
-            @WebParam(name = "descuento") DescuentosDTO descuento) {
+            @WebParam(name = "descuento") DescuentosDTO descuento,
+            @WebParam(name = "redSocial") RedesSocialesDTO redSocial) {
 
-        return this.ventaBO.insertar(usuario, total, descuento);
+        return this.ventaBO.insertar(usuario, total, descuento, redSocial);
     }
 
     @WebMethod(operationName = "obtenerPorIdVenta")
@@ -43,14 +45,18 @@ public class Ventas {
             @WebParam(name = "ventaId") Integer ventaId,
             @WebParam(name = "usuario") UsuariosDTO usuario,
             @WebParam(name = "total") Double total,
-            @WebParam(name = "descuento") DescuentosDTO descuento) {
+            @WebParam(name = "descuento") DescuentosDTO descuento,
+            @WebParam(name = "redSocial") RedesSocialesDTO redSocial,
+            @WebParam(name = "esValida") Boolean esValida) {
 
-        return this.ventaBO.modificar(ventaId, usuario, total, descuento);
+        return this.ventaBO.modificar(ventaId, usuario, total, descuento,
+                redSocial, esValida);
     }
 
-    @WebMethod(operationName = "eliminarVenta")
-    public Integer eliminarVenta(
-            @WebParam(name = "ventaId") Integer ventaId) {
-        return this.ventaBO.eliminar(ventaId);
-    }
+    // Método eliminar comentado (igual que en el BO)
+//    @WebMethod(operationName = "eliminarVenta")
+//    public Integer eliminarVenta(
+//            @WebParam(name = "ventaId") Integer ventaId) {
+//        return this.ventaBO.eliminar(ventaId);
+//    }
 }

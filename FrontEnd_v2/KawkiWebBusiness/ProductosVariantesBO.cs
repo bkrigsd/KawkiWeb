@@ -157,7 +157,7 @@ namespace KawkiWebBusiness
         {
             try
             {
-                if (prodVarianteId <=0 || nuevoStock < 0)
+                if (prodVarianteId <= 0 || nuevoStock < 0)
                 {
                     System.Diagnostics.Debug.WriteLine("Error: Parámetros inválidos para actualizar stock");
                     return false;
@@ -273,6 +273,6 @@ namespace KawkiWebBusiness
                 return false;
             }
         }
-        
+
     }
 }

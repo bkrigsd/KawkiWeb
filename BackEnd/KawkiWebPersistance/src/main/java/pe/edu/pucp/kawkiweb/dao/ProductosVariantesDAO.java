@@ -16,4 +16,13 @@ public interface ProductosVariantesDAO {
     public Integer modificar(ProductosVariantesDTO prodVariante);
 
     public Integer eliminar(ProductosVariantesDTO prodVariante);
+
+    public ArrayList<ProductosVariantesDTO> listarPorColor(Integer colorId);
+
+    public ArrayList<ProductosVariantesDTO> listarPorTalla(Integer tallaId);
+
+    public ArrayList<ProductosVariantesDTO> listarConStockBajo();
+
+    public boolean existeVariante(Integer productoId, Integer colorId, Integer tallaId);
+
 }

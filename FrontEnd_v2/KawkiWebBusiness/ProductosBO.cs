@@ -75,11 +75,11 @@ namespace KawkiWebBusiness
         }
 
         /// Modifica un producto existente
-        public int? Modificar(int? productoId, string descripcion, categoriasDTO categoria, estilosDTO estilo, double precioVenta)
+        public int? Modificar(int productoId, string descripcion, categoriasDTO categoria, estilosDTO estilo, double precioVenta)
         {
             try
             {
-                if (productoId == null || productoId <= 0)
+                if (productoId <= 0)
                 {
                     System.Diagnostics.Debug.WriteLine("Error: ID de producto inválido");
                     return null;

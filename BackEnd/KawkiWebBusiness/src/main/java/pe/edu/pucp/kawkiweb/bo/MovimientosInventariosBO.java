@@ -112,7 +112,6 @@ public class MovimientosInventariosBO {
             MovimientosInventarioDTO movInventarioDTO = new MovimientosInventarioDTO();
             movInventarioDTO.setMov_inventario_id(mov_inventario_id);
             movInventarioDTO.setCantidad(cantidad);
-            movInventarioDTO.setFecha_hora_mov(LocalDateTime.now());
             movInventarioDTO.setObservacion(observacion);
             movInventarioDTO.setTipo_movimiento(tipo_movimiento);
             movInventarioDTO.setProd_variante(prod_variante);
@@ -127,24 +126,23 @@ public class MovimientosInventariosBO {
         }
     }
 
-    public Integer eliminar(Integer movInventarioId) {
-        try {
-            if (movInventarioId == null || movInventarioId <= 0) {
-                System.err.println("Error: ID de movimiento inválido");
-                return null;
-            }
-
-            MovimientosInventarioDTO movInventarioDTO = new MovimientosInventarioDTO();
-            movInventarioDTO.setMov_inventario_id(movInventarioId);
-            return this.movInventarioDAO.eliminar(movInventarioDTO);
-
-        } catch (Exception e) {
-            System.err.println("Error al eliminar movimiento: " + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
+//    public Integer eliminar(Integer movInventarioId) {
+//        try {
+//            if (movInventarioId == null || movInventarioId <= 0) {
+//                System.err.println("Error: ID de movimiento inválido");
+//                return null;
+//            }
+//
+//            MovimientosInventarioDTO movInventarioDTO = new MovimientosInventarioDTO();
+//            movInventarioDTO.setMov_inventario_id(movInventarioId);
+//            return this.movInventarioDAO.eliminar(movInventarioDTO);
+//
+//        } catch (Exception e) {
+//            System.err.println("Error al eliminar movimiento: " + e.getMessage());
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
     /**
      * Valida los datos básicos de un movimiento de inventario
      *
@@ -256,13 +254,13 @@ public class MovimientosInventariosBO {
     }
 
     /**
-     * Crea un movimiento de ajuste de inventario Útil para corregir
+     * Crea un movimiento de ajuste de inventario. Útil para corregir
      * discrepancias entre el stock real y el registrado
      *
      * @param prod_variante Producto variante a ajustar
      * @param stockReal Stock real contado
      * @param observacion Motivo del ajuste
-     * @param usuario usuario que está generando la acción
+     * @param usuario Usuario que está generando la acción
      * @return ID del movimiento creado, o null si hubo error
      */
     public Integer crearAjusteInventario(ProductosVariantesDTO prod_variante,
@@ -293,7 +291,7 @@ public class MovimientosInventariosBO {
             String observacionCompleta = "Ajuste de inventario: Stock anterior: "
                     + prodVarianteActual.getStock() + ", Stock real: " + stockReal
                     + ". " + (observacion != null ? observacion : "");
-                   
+
             return insertar(
                     stockReal,
                     observacionCompleta,
@@ -322,8 +320,7 @@ public class MovimientosInventariosBO {
                     TiposMovimientoDTO.NOMBRE_INGRESO
             );
 
-            return insertar(cantidad, observacion, tipoIngreso, prod_variante,
-                    usuario);
+            return insertar(cantidad, observacion, tipoIngreso, prod_variante, usuario);
 
         } catch (Exception e) {
             System.err.println("Error al registrar ingreso: " + e.getMessage());
@@ -345,13 +342,128 @@ public class MovimientosInventariosBO {
                     TiposMovimientoDTO.NOMBRE_SALIDA
             );
 
-            return insertar(cantidad, observacion, tipoSalida, prod_variante,
-                    usuario);
+            return insertar(cantidad, observacion, tipoSalida, prod_variante, usuario);
 
         } catch (Exception e) {
             System.err.println("Error al registrar salida: " + e.getMessage());
             e.printStackTrace();
             return null;
+        }
+    }
+
+    // =====================================================
+    // MÉTODOS DE CONSULTA
+    // =====================================================
+    /**
+     * Lista movimientos de una variante específica (historial)
+     *
+     * @param prod_variante_id ID de la variante de producto
+     * @return Lista de movimientos ordenados por fecha descendente
+     */
+    public List<MovimientosInventarioDTO> listarPorProductoVariante(Integer prod_variante_id) {
+        try {
+            if (prod_variante_id == null || prod_variante_id <= 0) {
+                return new ArrayList<>();
+            }
+
+            return this.movInventarioDAO.listarPorProductoVariante(prod_variante_id);
+
+        } catch (Exception e) {
+            System.err.println("Error al listar movimientos por producto variante: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Lista movimientos por tipo (ingresos, salidas o ajustes)
+     *
+     * @param tipo_movimiento_id ID del tipo de movimiento
+     * @return Lista de movimientos del tipo especificado
+     */
+    public List<MovimientosInventarioDTO> listarPorTipoMovimiento(Integer tipo_movimiento_id) {
+        try {
+            if (tipo_movimiento_id == null || tipo_movimiento_id <= 0) {
+                return new ArrayList<>();
+            }
+
+            return this.movInventarioDAO.listarPorTipoMovimiento(tipo_movimiento_id);
+
+        } catch (Exception e) {
+            System.err.println("Error al listar movimientos por tipo: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Lista movimientos realizados por un usuario específico (auditoría)
+     *
+     * @param usuario_id ID del usuario
+     * @return Lista de movimientos realizados por el usuario
+     */
+    public List<MovimientosInventarioDTO> listarPorUsuario(Integer usuario_id) {
+        try {
+            if (usuario_id == null || usuario_id <= 0) {
+                return new ArrayList<>();
+            }
+
+            return this.movInventarioDAO.listarPorUsuario(usuario_id);
+
+        } catch (Exception e) {
+            System.err.println("Error al listar movimientos por usuario: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Lista movimientos en un rango de fechas
+     *
+     * @param fecha_inicio Fecha y hora inicial del rango
+     * @param fecha_fin Fecha y hora final del rango
+     * @return Lista de movimientos en el rango especificado
+     */
+    public List<MovimientosInventarioDTO> listarPorRangoFechas(
+            LocalDateTime fecha_inicio, LocalDateTime fecha_fin) {
+        try {
+            if (fecha_inicio == null || fecha_fin == null) {
+                System.err.println("Error: Las fechas no pueden ser null");
+                return new ArrayList<>();
+            }
+
+            if (fecha_inicio.isAfter(fecha_fin)) {
+                System.err.println("Error: La fecha inicial debe ser anterior a la fecha final");
+                return new ArrayList<>();
+            }
+
+            return this.movInventarioDAO.listarPorRangoFechas(fecha_inicio, fecha_fin);
+
+        } catch (Exception e) {
+            System.err.println("Error al listar movimientos por rango de fechas: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Lista los últimos N movimientos de inventario (para dashboard)
+     *
+     * @param limite Número de movimientos a retornar
+     * @return Lista de los últimos movimientos ordenados por fecha descendente
+     */
+    public List<MovimientosInventarioDTO> listarMovimientosRecientes(Integer limite) {
+        try {
+            if (limite == null || limite <= 0) {
+                limite = 10; // Default: últimos 10 movimientos
+            }
+
+            // Límite máximo de seguridad
+            if (limite > 100) {
+                limite = 100;
+            }
+
+            return this.movInventarioDAO.listarMovimientosRecientes(limite);
+
+        } catch (Exception e) {
+            System.err.println("Error al listar movimientos recientes: " + e.getMessage());
+            return new ArrayList<>();
         }
     }
 }
