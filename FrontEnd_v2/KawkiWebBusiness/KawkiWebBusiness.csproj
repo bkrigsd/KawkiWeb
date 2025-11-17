@@ -145,9 +145,6 @@
     <None Include="Connected Services\KawkiWebWSDetalleVentas\KawkiWebBusiness.KawkiWebWSDetalleVentas.detalleVentasDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\KawkiWebWSDetalleVentas\KawkiWebBusiness.KawkiWebWSDetalleVentas.eliminarDetalleVentaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\KawkiWebWSDetalleVentas\KawkiWebBusiness.KawkiWebWSDetalleVentas.insertarDetalleVentaResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -183,9 +180,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\KawkiWebWSProductosVariantes\KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\KawkiWebWSProductosVariantes\KawkiWebBusiness.KawkiWebWSProductosVariantes.eliminarProdVarianteResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\KawkiWebWSProductosVariantes\KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse.datasource">
@@ -281,13 +275,7 @@
     <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.eliminarUsuarioResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.listarPorTipoUsuarioResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.listarTodosUsuarioResponse.datasource">
@@ -305,9 +293,6 @@
     <None Include="Connected Services\KawkiWebWSUsuarios\UsuariosService.wsdl" />
     <None Include="Connected Services\KawkiWebWSUsuarios\UsuariosService.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\KawkiWebWSVentas\KawkiWebBusiness.KawkiWebWSVentas.eliminarVentaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\KawkiWebWSVentas\KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

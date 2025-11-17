@@ -8,6 +8,7 @@ using KawkiWebBusiness.KawkiWebWSProductosVariantes;
 using coloresDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO;
 using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO;
 using tallasDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO;
+using usuariosDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO;
 
 namespace KawkiWebBusiness
 {
@@ -23,22 +24,21 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Inserta una nueva variante de producto
 
-        public int? Insertar(string sku, int stock, int stockMinimo,
-            int productoId, coloresDTO color, tallasDTO talla, string urlImagen, bool disponible = true)
+        public int? Insertar(int stock, int stockMinimo,
+            int productoId, coloresDTO color, tallasDTO talla, string urlImagen, bool disponible = true, usuariosDTO usuario)
         {
             try
             {
                 // El web service maneja las validaciones
                 // La alerta de stock se calcula automáticamente en el backend
                 int resultado = this.clienteSOAP.insertarProdVariante(
-                    sku,
                     stock,
                     stockMinimo,
                     productoId,
                     color,
                     talla,
                     urlImagen,
-                    disponible
+                    disponible, usuario
                 );
 
                 return resultado > 0 ? (int?)resultado : null;
@@ -92,9 +92,9 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Modifica una variante de producto existente
 
-        public int? Modificar(int prodVarianteId, string sku, int stock,
+        public int? Modificar(int prodVarianteId, int stock,
             int stockMinimo, int productoId, coloresDTO color, tallasDTO talla,
-            string urlImagen, bool disponible)
+            string urlImagen, bool disponible, usuariosDTO usuario)
         {
             try
             {
@@ -107,14 +107,13 @@ namespace KawkiWebBusiness
                 // La alerta de stock se recalcula automáticamente en el backend
                 int resultado = this.clienteSOAP.modificarProdVariante(
                     prodVarianteId,
-                    sku,
                     stock,
                     stockMinimo,
                     productoId,
                     color,
                     talla,
                     urlImagen,
-                    disponible
+                    disponible, usuario
                 );
 
                 return resultado > 0 ? (int?)resultado : null;
@@ -129,25 +128,25 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Elimina una variante de producto por su ID
 
-        public int? Eliminar(int prodVarianteId)
-        {
-            try
-            {
-                if (prodVarianteId <= 0)
-                {
-                    System.Diagnostics.Debug.WriteLine("Error: ID de variante inválido");
-                    return null;
-                }
+        //public int? Eliminar(int prodVarianteId)
+        //{
+        //    try
+        //    {
+        //        if (prodVarianteId <= 0)
+        //        {
+        //            System.Diagnostics.Debug.WriteLine("Error: ID de variante inválido");
+        //            return null;
+        //        }
 
-                int resultado = this.clienteSOAP.eliminarProdVariante(prodVarianteId);
-                return resultado > 0 ? (int?)resultado : null;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al eliminar variante: {ex.Message}");
-                return null;
-            }
-        }
+        //        int resultado = this.clienteSOAP.eliminarProdVariante(prodVarianteId);
+        //        return resultado > 0 ? (int?)resultado : null;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        System.Diagnostics.Debug.WriteLine($"Error al eliminar variante: {ex.Message}");
+        //        return null;
+        //    }
+        //}
 
         /// <summary>
         /// Actualiza solo el stock de una variante
@@ -237,7 +236,6 @@ namespace KawkiWebBusiness
 
         /// <summary>
         /// Lista variantes por talla
-
         public IList<productosVariantesDTO> ListarPorTalla(int tallaId)
         {
             try
