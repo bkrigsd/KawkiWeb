@@ -230,7 +230,8 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
         // Usuario de la venta (YA VIENE del JOIN)
         UsuariosDTO usuario = new UsuariosDTO();
         usuario.setUsuarioId(this.resultSet.getInt("USUARIO_ID"));
-        usuario.setNombreUsuario(this.resultSet.getString("NOMBRE_USUARIO"));
+        usuario.setNombre(this.resultSet.getString("USUARIO_NOMBRE"));
+        usuario.setApePaterno(this.resultSet.getString("USUARIO_APE_PATERNO"));
         venta.setUsuario(usuario);
 
         this.comprobante.setVenta(venta);

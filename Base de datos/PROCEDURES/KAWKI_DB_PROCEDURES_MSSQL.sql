@@ -577,7 +577,6 @@ GO
 USE KAWKI_DB;
 GO
 
--- Eliminar el procedimiento si ya existe
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'SP_LISTAR_PRODUCTOS_COMPLETO')
 BEGIN
     DROP PROCEDURE SP_LISTAR_PRODUCTOS_COMPLETO;
@@ -604,9 +603,10 @@ BEGIN
         e.ESTILO_ID,
         e.NOMBRE AS ESTILO_NOMBRE,
         
-        -- Usuario completo (JOIN)
+        -- Usuario completo (JOIN) - NOMBRE Y APE_PATERNO
         u.USUARIO_ID,
-        u.NOMBRE_USUARIO
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
         
     FROM PRODUCTOS p
     INNER JOIN CATEGORIAS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
@@ -624,7 +624,6 @@ GO
 USE KAWKI_DB;
 GO
 
--- Eliminar el procedimiento si ya existe
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'SP_LISTAR_COMPROBANTES_COMPLETO')
 BEGIN
     DROP PROCEDURE SP_LISTAR_COMPROBANTES_COMPLETO;
@@ -661,9 +660,10 @@ BEGIN
         v.TOTAL AS VENTA_TOTAL,
         v.ES_VALIDA,
         
-        -- Usuario de la venta (JOIN)
+        -- Usuario de la venta (JOIN) - NOMBRE Y APE_PATERNO
         u.USUARIO_ID,
-        u.NOMBRE_USUARIO,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO,
         
         -- Método de pago completo (JOIN)
         mp.METODO_PAGO_ID,
@@ -719,5 +719,288 @@ BEGIN
     INNER JOIN TIPOS_CONDICION tc ON d.TIPO_CONDICION_ID = tc.TIPO_CONDICION_ID
     INNER JOIN TIPOS_BENEFICIO tb ON d.TIPO_BENEFICIO_ID = tb.TIPO_BENEFICIO_ID
     ORDER BY d.DESCUENTO_ID DESC;
+END
+GO
+
+-- =====================================================
+-- Stored Procedure: SP_LISTAR_DETALLE_VENTAS_COMPLETO 
+-- Lista todos los detalles de venta con productos variantes completos
+-- =====================================================
+
+USE KAWKI_DB;
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'SP_LISTAR_DETALLE_VENTAS_COMPLETO')
+BEGIN
+    DROP PROCEDURE SP_LISTAR_DETALLE_VENTAS_COMPLETO;
+END
+GO
+
+CREATE PROCEDURE SP_LISTAR_DETALLE_VENTAS_COMPLETO
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        -- Campos del detalle de venta
+        dv.DETALLE_VENTA_ID,
+        dv.CANTIDAD,
+        dv.PRECIO_UNITARIO,
+        dv.SUBTOTAL,
+        dv.VENTA_ID,
+        
+        -- Producto Variante completo (JOIN)
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        pv.STOCK_MINIMO,
+        pv.ALERTA_STOCK,
+        pv.PRODUCTO_ID,
+        pv.URL_IMAGEN,
+        pv.FECHA_HORA_CREACION AS PV_FECHA_HORA_CREACION,
+        pv.DISPONIBLE,
+        
+        -- Color del producto variante (JOIN)
+        c.COLOR_ID,
+        c.NOMBRE AS COLOR_NOMBRE,
+        
+        -- Talla del producto variante (JOIN)
+        t.TALLA_ID,
+        t.NUMERO AS TALLA_NUMERO,
+        
+        -- Usuario del producto variante (JOIN) - NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM DETALLE_VENTAS dv
+    INNER JOIN PRODUCTOS_VARIANTES pv ON dv.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN COLORES c ON pv.COLOR_ID = c.COLOR_ID
+    INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+    INNER JOIN USUARIOS u ON pv.USUARIO_ID = u.USUARIO_ID
+    ORDER BY dv.DETALLE_VENTA_ID;
+END
+GO
+
+-- =====================================================
+-- Stored Procedure: SP_LISTAR_MOVIMIENTOS_INVENTARIO_COMPLETO 
+-- Lista todos los movimientos de inventario con datos completos
+-- =====================================================
+
+USE KAWKI_DB;
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'SP_LISTAR_MOVIMIENTOS_INVENTARIO_COMPLETO')
+BEGIN
+    DROP PROCEDURE SP_LISTAR_MOVIMIENTOS_INVENTARIO_COMPLETO;
+END
+GO
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_INVENTARIO_COMPLETO
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN) - TODOS LOS CAMPOS
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - SOLO ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    ORDER BY mi.FECHA_HORA_MOV DESC;
+END
+GO
+
+-- =====================================================
+-- Stored Procedure: SP_LISTAR_USUARIOS_COMPLETO 
+-- Lista todos los usuarios con tipo de usuario completo
+-- =====================================================
+
+USE KAWKI_DB;
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'SP_LISTAR_USUARIOS_COMPLETO')
+BEGIN
+    DROP PROCEDURE SP_LISTAR_USUARIOS_COMPLETO;
+END
+GO
+
+CREATE PROCEDURE SP_LISTAR_USUARIOS_COMPLETO
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        -- Campos del usuario
+        u.USUARIO_ID,
+        u.NOMBRE,
+        u.APE_PATERNO,
+        u.DNI,
+        u.TELEFONO,
+        u.CORREO,
+        u.NOMBRE_USUARIO,
+        u.CONTRASENHA,
+        u.FECHA_HORA_CREACION,
+        u.ACTIVO,
+        
+        -- Tipo de usuario completo (JOIN) - TODOS LOS CAMPOS (id y nombre)
+        tu.TIPO_USUARIO_ID,
+        tu.NOMBRE AS TIPO_USUARIO_NOMBRE
+        
+    FROM USUARIOS u
+    INNER JOIN TIPOS_USUARIO tu ON u.TIPO_USUARIO_ID = tu.TIPO_USUARIO_ID
+    ORDER BY u.USUARIO_ID;
+END
+GO
+
+-- =====================================================
+-- Stored Procedure: SP_LISTAR_PRODUCTOS_VARIANTES_COMPLETO 
+-- Lista todas las variantes de productos con datos completos
+-- =====================================================
+
+USE KAWKI_DB;
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'SP_LISTAR_PRODUCTOS_VARIANTES_COMPLETO')
+BEGIN
+    DROP PROCEDURE SP_LISTAR_PRODUCTOS_VARIANTES_COMPLETO;
+END
+GO
+
+CREATE PROCEDURE SP_LISTAR_PRODUCTOS_VARIANTES_COMPLETO
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        -- Campos de la variante de producto
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        pv.STOCK_MINIMO,
+        pv.ALERTA_STOCK,
+        pv.URL_IMAGEN,
+        pv.FECHA_HORA_CREACION,
+        pv.DISPONIBLE,
+        
+        -- Color completo (JOIN) - TODOS LOS CAMPOS
+        c.COLOR_ID,
+        c.NOMBRE AS COLOR_NOMBRE,
+        
+        -- Talla completa (JOIN) - TODOS LOS CAMPOS
+        t.TALLA_ID,
+        t.NUMERO AS TALLA_NUMERO,
+        
+        -- Usuario de la variante (JOIN) - ID, NOMBRE, APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO,
+        
+        -- Producto (JOIN) - ID, DESCRIPCION, PRECIO_VENTA
+        p.PRODUCTO_ID,
+        p.DESCRIPCION AS PRODUCTO_DESCRIPCION,
+        p.PRECIO_VENTA AS PRODUCTO_PRECIO_VENTA,
+        
+        -- Categoría del producto (JOIN) - COMPLETA
+        cat.CATEGORIA_ID,
+        cat.NOMBRE AS CATEGORIA_NOMBRE,
+        
+        -- Estilo del producto (JOIN) - COMPLETO
+        e.ESTILO_ID,
+        e.NOMBRE AS ESTILO_NOMBRE,
+        
+        -- Usuario del producto (JOIN) - SOLO ID
+        up.USUARIO_ID AS PRODUCTO_USUARIO_ID
+        
+    FROM PRODUCTOS_VARIANTES pv
+    INNER JOIN COLORES c ON pv.COLOR_ID = c.COLOR_ID
+    INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+    INNER JOIN USUARIOS u ON pv.USUARIO_ID = u.USUARIO_ID
+    INNER JOIN PRODUCTOS p ON pv.PRODUCTO_ID = p.PRODUCTO_ID
+    INNER JOIN CATEGORIAS cat ON p.CATEGORIA_ID = cat.CATEGORIA_ID
+    INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
+    INNER JOIN USUARIOS up ON p.USUARIO_ID = up.USUARIO_ID
+    ORDER BY pv.PROD_VARIANTE_ID;
+END
+GO
+
+-- =====================================================
+-- Stored Procedure: SP_LISTAR_VENTAS_COMPLETO 
+-- Lista todas las ventas con datos completos
+-- =====================================================
+
+USE KAWKI_DB;
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'SP_LISTAR_VENTAS_COMPLETO')
+BEGIN
+    DROP PROCEDURE SP_LISTAR_VENTAS_COMPLETO;
+END
+GO
+
+CREATE PROCEDURE SP_LISTAR_VENTAS_COMPLETO
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        -- Campos de la venta
+        v.VENTA_ID,
+        v.FECHA_HORA_CREACION,
+        v.TOTAL,
+        v.ES_VALIDA,
+        
+        -- Usuario (JOIN) - ID, NOMBRE, APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO,
+        
+        -- Descuento (LEFT JOIN porque puede ser NULL) - TODOS LOS CAMPOS
+        d.DESCUENTO_ID,
+        d.DESCRIPCION AS DESCUENTO_DESCRIPCION,
+        d.VALOR_CONDICION,
+        d.VALOR_BENEFICIO,
+        d.FECHA_INICIO AS DESCUENTO_FECHA_INICIO,
+        d.FECHA_FIN AS DESCUENTO_FECHA_FIN,
+        d.ACTIVO AS DESCUENTO_ACTIVO,
+        
+        -- Tipo de condición del descuento (LEFT JOIN)
+        tc.TIPO_CONDICION_ID,
+        tc.NOMBRE AS TIPO_CONDICION_NOMBRE,
+        
+        -- Tipo de beneficio del descuento (LEFT JOIN)
+        tb.TIPO_BENEFICIO_ID,
+        tb.NOMBRE AS TIPO_BENEFICIO_NOMBRE,
+        
+        -- Red Social (JOIN) - COMPLETA
+        rs.RED_SOCIAL_ID,
+        rs.NOMBRE AS RED_SOCIAL_NOMBRE
+        
+    FROM VENTAS v
+    INNER JOIN USUARIOS u ON v.USUARIO_ID = u.USUARIO_ID
+    LEFT JOIN DESCUENTOS d ON v.DESCUENTO_ID = d.DESCUENTO_ID
+    LEFT JOIN TIPOS_CONDICION tc ON d.TIPO_CONDICION_ID = tc.TIPO_CONDICION_ID
+    LEFT JOIN TIPOS_BENEFICIO tb ON d.TIPO_BENEFICIO_ID = tb.TIPO_BENEFICIO_ID
+    INNER JOIN REDES_SOCIALES rs ON v.RED_SOCIAL_ID = rs.RED_SOCIAL_ID
+    ORDER BY v.VENTA_ID DESC;
 END
 GO

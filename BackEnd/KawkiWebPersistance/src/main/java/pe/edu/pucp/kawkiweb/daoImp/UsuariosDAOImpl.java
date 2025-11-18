@@ -75,6 +75,11 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         this.statement.setInt(1, this.usuario.getUsuarioId());
     }
 
+    /**
+     * Método de instanciación ESTÁNDAR para obtenerPorId(). Hace queries
+     * adicionales para traer objetos completos. Se usa cuando se obtiene UN
+     * SOLO usuario.
+     */
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
         this.usuario = new UsuariosDTO();
@@ -97,14 +102,57 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         this.usuario.setActivo(activo);
     }
 
+    /**
+     * Método de instanciación OPTIMIZADO para listarTodos(). NO hace queries
+     * adicionales porque los datos ya vienen del JOIN. Se usa cuando se listan
+     * MUCHOS usuarios.
+     */
+    protected void instanciarObjetoDelResultSetDesdeJoin() throws SQLException {
+        this.usuario = new UsuariosDTO();
+
+        // Datos básicos del usuario
+        this.usuario.setUsuarioId(this.resultSet.getInt("USUARIO_ID"));
+        this.usuario.setNombre(this.resultSet.getString("NOMBRE"));
+        this.usuario.setApePaterno(this.resultSet.getString("APE_PATERNO"));
+        this.usuario.setDni(this.resultSet.getString("DNI"));
+        this.usuario.setTelefono(this.resultSet.getString("TELEFONO"));
+        this.usuario.setCorreo(this.resultSet.getString("CORREO"));
+        this.usuario.setNombreUsuario(this.resultSet.getString("NOMBRE_USUARIO"));
+        this.usuario.setContrasenha(this.resultSet.getString("CONTRASENHA"));
+        this.usuario.setFechaHoraCreacion(this.resultSet.getTimestamp("FECHA_HORA_CREACION").toLocalDateTime());
+
+        // Tipo de usuario (YA VIENE COMPLETO del JOIN - SIN query adicional)
+        TiposUsuarioDTO tipoUsuario = new TiposUsuarioDTO();
+        tipoUsuario.setTipoUsuarioId(this.resultSet.getInt("TIPO_USUARIO_ID"));
+        tipoUsuario.setNombre(this.resultSet.getString("TIPO_USUARIO_NOMBRE"));
+        this.usuario.setTipoUsuario(tipoUsuario);
+
+        Boolean activo = (Boolean) this.resultSet.getObject("ACTIVO");
+        this.usuario.setActivo(activo);
+    }
+
     @Override
     protected void limpiarObjetoDelResultSet() {
         this.usuario = null;
     }
 
+    /**
+     * Agrega objeto a la lista usando el método de instanciación ESTÁNDAR. Se
+     * usa en obtenerPorId() y otros métodos que NO usan el SP optimizado.
+     */
     @Override
     protected void agregarObjetoALaLista(List lista) throws SQLException {
         this.instanciarObjetoDelResultSet();
+        lista.add(this.usuario);
+    }
+
+    /**
+     * Agrega objeto a la lista usando el método de instanciación OPTIMIZADO. Se
+     * usa en listarTodos() que SÍ usa el SP con JOINs.
+     */
+    @Override
+    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
+        this.instanciarObjetoDelResultSetDesdeJoin();
         lista.add(this.usuario);
     }
 
@@ -122,9 +170,15 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
         return this.usuario;
     }
 
+    /**
+     * Lista todos los usuarios usando el Stored Procedure optimizado. Retorna
+     * usuarios con tipo_usuario completo (id y nombre).
+     */
     @Override
     public ArrayList<UsuariosDTO> listarTodos() {
-        return (ArrayList<UsuariosDTO>) super.listarTodos();
+        return (ArrayList<UsuariosDTO>) super.listarTodosConProcedimiento(
+                "SP_LISTAR_USUARIOS_COMPLETO"
+        );
     }
 
     @Override

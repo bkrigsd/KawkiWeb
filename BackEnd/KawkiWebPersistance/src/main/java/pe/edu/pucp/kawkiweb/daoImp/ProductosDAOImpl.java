@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
-import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 import pe.edu.pucp.kawkiweb.dao.CategoriasDAO;
@@ -146,7 +145,8 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         // Usuario (YA VIENE COMPLETO del JOIN - SIN query adicional)
         UsuariosDTO usuario = new UsuariosDTO();
         usuario.setUsuarioId(this.resultSet.getInt("USUARIO_ID"));
-        usuario.setNombreUsuario(this.resultSet.getString("NOMBRE_USUARIO"));
+        usuario.setNombre(this.resultSet.getString("USUARIO_NOMBRE"));
+        usuario.setApePaterno(this.resultSet.getString("USUARIO_APE_PATERNO"));
         this.producto.setUsuario(usuario);
 
         this.producto.setVariantes(new ArrayList<>());
