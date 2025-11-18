@@ -24,7 +24,7 @@ namespace KawkiWebBusiness
         /// <summary>
         /// Inserta una nueva variante de producto
 
-        public int? Insertar(int stock, int stockMinimo,
+        public int Insertar(int stock, int stockMinimo,
             int productoId, coloresDTO color, tallasDTO talla, string urlImagen, bool disponible, usuariosDTO usuario)
         {
 
@@ -36,21 +36,7 @@ namespace KawkiWebBusiness
 
         public productosVariantesDTO ObtenerPorId(int prodVarianteId)
         {
-            try
-            {
-                if (prodVarianteId <= 0)
-                {
-                    System.Diagnostics.Debug.WriteLine("Error: ID de variante inválido");
-                    return null;
-                }
-
-                return this.clienteSOAP.obtenerPorIdProdVariante(prodVarianteId);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al obtener variante por ID: {ex.Message}");
-                return null;
-            }
+            return this.clienteSOAP.obtenerPorIdProdVariante(prodVarianteId);
         }
 
         /// <summary>
@@ -58,22 +44,13 @@ namespace KawkiWebBusiness
 
         public IList<productosVariantesDTO> ListarTodos()
         {
-            try
-            {
-                var lista = this.clienteSOAP.listarTodosProdVariante();
-                return lista != null ? new List<productosVariantesDTO>(lista) : new List<productosVariantesDTO>();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al listar variantes: {ex.Message}");
-                return new List<productosVariantesDTO>();
-            }
+            return this.clienteSOAP.listarTodosProdVariante();
         }
 
         /// <summary>
         /// Modifica una variante de producto existente
 
-        public int? Modificar(int prodVarianteId, int stock,
+        public int Modificar(int prodVarianteId, int stock,
             int stockMinimo, int productoId, coloresDTO color, tallasDTO talla,
             string urlImagen, bool disponible, usuariosDTO usuario)
         {

@@ -75,29 +75,13 @@ namespace KawkiWebBusiness
         /// Verifica si un producto tiene stock disponible en alguna de sus variantes
         public bool TieneStockDisponible(int productoId)
         {
-            try
-            {
-                return this.clienteSOAP.tieneStockDisponibleProducto(productoId);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al verificar stock del producto: {ex.Message}");
-                return false;
-            }
+            return this.clienteSOAP.tieneStockDisponibleProducto(productoId);
         }
 
         /// Calcula el stock total de un producto sumando todas sus variantes
         public int CalcularStockTotal(int productoId)
         {
-            try
-            {
-                return this.clienteSOAP.calcularStockTotalProducto(productoId);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al calcular stock total: {ex.Message}");
-                return 0;
-            }
+            return this.clienteSOAP.calcularStockTotalProducto(productoId);
         }
 
         /// Lista productos por categoría
