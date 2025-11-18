@@ -569,3 +569,155 @@ BEGIN
 END
 GO
 
+-- =====================================================
+-- Stored Procedure: SP_LISTAR_PRODUCTOS_COMPLETO 
+-- Lista todos los productos completos sin variantes
+-- =====================================================
+
+USE KAWKI_DB;
+GO
+
+-- Eliminar el procedimiento si ya existe
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'SP_LISTAR_PRODUCTOS_COMPLETO')
+BEGIN
+    DROP PROCEDURE SP_LISTAR_PRODUCTOS_COMPLETO;
+END
+GO
+
+CREATE PROCEDURE SP_LISTAR_PRODUCTOS_COMPLETO
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        -- Campos del producto
+        p.PRODUCTO_ID,
+        p.DESCRIPCION,
+        p.PRECIO_VENTA,
+        p.FECHA_HORA_CREACION,
+        
+        -- Categoría completa (JOIN)
+        c.CATEGORIA_ID,
+        c.NOMBRE AS CATEGORIA_NOMBRE,
+        
+        -- Estilo completo (JOIN)
+        e.ESTILO_ID,
+        e.NOMBRE AS ESTILO_NOMBRE,
+        
+        -- Usuario completo (JOIN)
+        u.USUARIO_ID,
+        u.NOMBRE_USUARIO
+        
+    FROM PRODUCTOS p
+    INNER JOIN CATEGORIAS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
+    INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
+    INNER JOIN USUARIOS u ON p.USUARIO_ID = u.USUARIO_ID
+    ORDER BY p.PRODUCTO_ID;
+END
+GO
+
+-- =====================================================
+-- Stored Procedure: SP_LISTAR_COMPROBANTES_COMPLETO 
+-- Lista todos los comprobantes
+-- =====================================================
+
+USE KAWKI_DB;
+GO
+
+-- Eliminar el procedimiento si ya existe
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'SP_LISTAR_COMPROBANTES_COMPLETO')
+BEGIN
+    DROP PROCEDURE SP_LISTAR_COMPROBANTES_COMPLETO;
+END
+GO
+
+CREATE PROCEDURE SP_LISTAR_COMPROBANTES_COMPLETO
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        -- Campos del comprobante
+        cp.COMPROBANTE_PAGO_ID,
+        cp.FECHA_HORA_CREACION,
+        cp.NUMERO_SERIE,
+        cp.DNI_CLIENTE,
+        cp.NOMBRE_CLIENTE,
+        cp.RUC_CLIENTE,
+        cp.RAZON_SOCIAL_CLIENTE,
+        cp.DIRECCION_FISCAL_CLIENTE,
+        cp.TELEFONO_CLIENTE,
+        cp.TOTAL,
+        cp.SUBTOTAL,
+        cp.IGV,
+        
+        -- Tipo de comprobante completo (JOIN)
+        tc.TIPO_COMPROBANTE_ID,
+        tc.NOMBRE AS TIPO_COMPROBANTE_NOMBRE,
+        
+        -- Venta completa (JOIN) - SIN detalles, solo info básica
+        v.VENTA_ID,
+        v.FECHA_HORA_CREACION AS VENTA_FECHA_HORA,
+        v.TOTAL AS VENTA_TOTAL,
+        v.ES_VALIDA,
+        
+        -- Usuario de la venta (JOIN)
+        u.USUARIO_ID,
+        u.NOMBRE_USUARIO,
+        
+        -- Método de pago completo (JOIN)
+        mp.METODO_PAGO_ID,
+        mp.NOMBRE AS METODO_PAGO_NOMBRE
+        
+    FROM COMPROBANTES_PAGO cp
+    INNER JOIN TIPOS_COMPROBANTE tc ON cp.TIPO_COMPROBANTE_ID = tc.TIPO_COMPROBANTE_ID
+    INNER JOIN VENTAS v ON cp.VENTA_ID = v.VENTA_ID
+    INNER JOIN USUARIOS u ON v.USUARIO_ID = u.USUARIO_ID
+    INNER JOIN METODOS_PAGO mp ON cp.METODO_PAGO_ID = mp.METODO_PAGO_ID
+    ORDER BY cp.COMPROBANTE_PAGO_ID DESC;
+END
+GO
+
+-- =====================================================
+-- Stored Procedure: SP_LISTAR_DESCUENTOS_COMPLETO 
+-- Lista todos los descuentos con tipos de condición y beneficio
+-- =====================================================
+USE KAWKI_DB;
+GO
+
+-- Eliminar el procedimiento si ya existe
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'SP_LISTAR_DESCUENTOS_COMPLETO')
+BEGIN
+    DROP PROCEDURE SP_LISTAR_DESCUENTOS_COMPLETO;
+END
+GO
+
+CREATE PROCEDURE SP_LISTAR_DESCUENTOS_COMPLETO
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        -- Campos del descuento
+        d.DESCUENTO_ID,
+        d.DESCRIPCION,
+        d.VALOR_CONDICION,
+        d.VALOR_BENEFICIO,
+        d.FECHA_INICIO,
+        d.FECHA_FIN,
+        d.ACTIVO,
+        
+        -- Tipo de condición completo (JOIN)
+        tc.TIPO_CONDICION_ID,
+        tc.NOMBRE AS TIPO_CONDICION_NOMBRE,
+        
+        -- Tipo de beneficio completo (JOIN)
+        tb.TIPO_BENEFICIO_ID,
+        tb.NOMBRE AS TIPO_BENEFICIO_NOMBRE
+        
+    FROM DESCUENTOS d
+    INNER JOIN TIPOS_CONDICION tc ON d.TIPO_CONDICION_ID = tc.TIPO_CONDICION_ID
+    INNER JOIN TIPOS_BENEFICIO tb ON d.TIPO_BENEFICIO_ID = tb.TIPO_BENEFICIO_ID
+    ORDER BY d.DESCUENTO_ID DESC;
+END
+GO
