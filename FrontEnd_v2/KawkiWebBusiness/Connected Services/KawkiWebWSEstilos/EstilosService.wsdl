@@ -17,17 +17,17 @@
   <message name="listarTodosEstiloResponse">
     <part name="parameters" element="tns:listarTodosEstiloResponse" />
   </message>
-  <message name="obtenerPorIdEstilo">
-    <part name="parameters" element="tns:obtenerPorIdEstilo" />
-  </message>
-  <message name="obtenerPorIdEstiloResponse">
-    <part name="parameters" element="tns:obtenerPorIdEstiloResponse" />
-  </message>
   <message name="modificarEstilo">
     <part name="parameters" element="tns:modificarEstilo" />
   </message>
   <message name="modificarEstiloResponse">
     <part name="parameters" element="tns:modificarEstiloResponse" />
+  </message>
+  <message name="obtenerPorIdEstilo">
+    <part name="parameters" element="tns:obtenerPorIdEstilo" />
+  </message>
+  <message name="obtenerPorIdEstiloResponse">
+    <part name="parameters" element="tns:obtenerPorIdEstiloResponse" />
   </message>
   <portType name="Estilos">
     <operation name="insertarEstilo">
@@ -38,13 +38,13 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloRequest" message="tns:listarTodosEstilo" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloResponse" message="tns:listarTodosEstiloResponse" />
     </operation>
-    <operation name="obtenerPorIdEstilo">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/obtenerPorIdEstiloRequest" message="tns:obtenerPorIdEstilo" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/obtenerPorIdEstiloResponse" message="tns:obtenerPorIdEstiloResponse" />
-    </operation>
     <operation name="modificarEstilo">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloRequest" message="tns:modificarEstilo" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloResponse" message="tns:modificarEstiloResponse" />
+    </operation>
+    <operation name="obtenerPorIdEstilo">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/obtenerPorIdEstiloRequest" message="tns:obtenerPorIdEstilo" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/obtenerPorIdEstiloResponse" message="tns:obtenerPorIdEstiloResponse" />
     </operation>
   </portType>
   <binding name="EstilosPortBinding" type="tns:Estilos">
@@ -67,7 +67,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerPorIdEstilo">
+    <operation name="modificarEstilo">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -76,7 +76,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="modificarEstilo">
+    <operation name="obtenerPorIdEstilo">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
