@@ -5,21 +5,24 @@ import pe.edu.pucp.kawkiweb.model.utilPago.MetodosPagoDTO;
 import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
 
 //import jakarta.xml.bind.annotation.XmlRootElement;
-//import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-//import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
 //
 //@XmlRootElement(name = "ComprobantePago")
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ComprobantesPagoDTO {
 
 //    private static Integer contadorSerieFactura = 1;
 //    private static Integer contadorSerieBoleta = 1;
-
     private static final Double IGV = 0.18;
 
     //ATRIBUTOS
     private Integer comprobante_pago_id;
 
-//    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_creacion;
 
     private TiposComprobanteDTO tipo_comprobante;
@@ -67,7 +70,7 @@ public class ComprobantesPagoDTO {
         this.comprobante_pago_id = comprobante_pago_id;
         this.fecha_hora_creacion = LocalDateTime.now();
         this.tipo_comprobante = tipo_comprobante;
-        this.numero_serie=numero_serie;
+        this.numero_serie = numero_serie;
         this.dni_cliente = dni_cliente;
         this.nombre_cliente = nombre_cliente;
         this.ruc_cliente = ruc_cliente;
@@ -141,7 +144,6 @@ public class ComprobantesPagoDTO {
 //
 //        this.numero_serie = prefijoSerie + "-" + numeroCorrelativo;
 //    }
-
     //GETTERS Y SETTERS
     public Integer getComprobante_pago_id() {
         return comprobante_pago_id;
@@ -262,7 +264,6 @@ public class ComprobantesPagoDTO {
 //    public static void setContadorSerieBoleta(Integer aContadorSerieBoleta) {
 //        contadorSerieBoleta = aContadorSerieBoleta;
 //    }
-
     public static Double getIGVConstante() {
         return IGV;
     }

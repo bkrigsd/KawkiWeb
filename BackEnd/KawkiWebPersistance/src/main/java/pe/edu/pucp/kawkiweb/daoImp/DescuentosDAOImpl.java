@@ -91,6 +91,11 @@ public class DescuentosDAOImpl extends BaseDAOImpl implements DescuentosDAO {
         this.statement.setInt(1, this.descuento.getDescuento_id());
     }
 
+    /**
+     * Método de instanciación ESTÁNDAR para obtenerPorId(). Hace queries
+     * adicionales para traer objetos completos. Se usa cuando se obtiene UN
+     * SOLO descuento.
+     */
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
         this.descuento = new DescuentosDTO();
@@ -115,14 +120,58 @@ public class DescuentosDAOImpl extends BaseDAOImpl implements DescuentosDAO {
         this.descuento.setActivo(this.resultSet.getInt("ACTIVO") == 1);
     }
 
+    /**
+     * Método de instanciación OPTIMIZADO para listarTodos(). NO hace queries
+     * adicionales porque los datos ya vienen del JOIN. Se usa cuando se listan
+     * MUCHOS descuentos.
+     */
+    protected void instanciarObjetoDelResultSetDesdeJoin() throws SQLException {
+        this.descuento = new DescuentosDTO();
+        this.descuento.setDescuento_id(this.resultSet.getInt("DESCUENTO_ID"));
+        this.descuento.setDescripcion(this.resultSet.getString("DESCRIPCION"));
+
+        // Tipo de condición (YA VIENE COMPLETO del JOIN - SIN query adicional)
+        TiposCondicionDTO tipoCondicion = new TiposCondicionDTO();
+        tipoCondicion.setTipo_condicion_id(this.resultSet.getInt("TIPO_CONDICION_ID"));
+        tipoCondicion.setNombre(this.resultSet.getString("TIPO_CONDICION_NOMBRE"));
+        this.descuento.setTipo_condicion(tipoCondicion);
+
+        this.descuento.setValor_condicion(this.resultSet.getInt("VALOR_CONDICION"));
+
+        // Tipo de beneficio (YA VIENE COMPLETO del JOIN - SIN query adicional)
+        TiposBeneficioDTO tipoBeneficio = new TiposBeneficioDTO();
+        tipoBeneficio.setTipo_beneficio_id(this.resultSet.getInt("TIPO_BENEFICIO_ID"));
+        tipoBeneficio.setNombre(this.resultSet.getString("TIPO_BENEFICIO_NOMBRE"));
+        this.descuento.setTipo_beneficio(tipoBeneficio);
+
+        this.descuento.setValor_beneficio(this.resultSet.getInt("VALOR_BENEFICIO"));
+        this.descuento.setFecha_inicio(this.resultSet.getTimestamp("FECHA_INICIO").toLocalDateTime());
+        this.descuento.setFecha_fin(this.resultSet.getTimestamp("FECHA_FIN").toLocalDateTime());
+        this.descuento.setActivo(this.resultSet.getInt("ACTIVO") == 1);
+    }
+
     @Override
     protected void limpiarObjetoDelResultSet() {
         this.descuento = null;
     }
 
+    /**
+     * Agrega objeto a la lista usando el método de instanciación ESTÁNDAR. Se
+     * usa en obtenerPorId() y otros métodos que NO usan el SP optimizado.
+     */
     @Override
     protected void agregarObjetoALaLista(List lista) throws SQLException {
         this.instanciarObjetoDelResultSet();
+        lista.add(this.descuento);
+    }
+
+    /**
+     * Agrega objeto a la lista usando el método de instanciación OPTIMIZADO. Se
+     * usa en listarTodos() que SÍ usa el SP con JOINs.
+     */
+    @Override
+    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
+        this.instanciarObjetoDelResultSetDesdeJoin();
         lista.add(this.descuento);
     }
 
@@ -140,9 +189,15 @@ public class DescuentosDAOImpl extends BaseDAOImpl implements DescuentosDAO {
         return this.descuento;
     }
 
+    /**
+     * Lista todos los descuentos usando el Stored Procedure optimizado. Retorna
+     * descuentos con tipo_condicion y tipo_beneficio completos.
+     */
     @Override
     public ArrayList<DescuentosDTO> listarTodos() {
-        return (ArrayList<DescuentosDTO>) super.listarTodos();
+        return (ArrayList<DescuentosDTO>) super.listarTodosConProcedimiento(
+                "SP_LISTAR_DESCUENTOS_COMPLETO"
+        );
     }
 
     @Override

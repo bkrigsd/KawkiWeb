@@ -4,30 +4,16 @@
   <xs:element name="autenticarUsuarioResponse" type="tns:autenticarUsuarioResponse" />
   <xs:element name="cambiarContrasenhaUsuario" type="tns:cambiarContrasenhaUsuario" />
   <xs:element name="cambiarContrasenhaUsuarioResponse" type="tns:cambiarContrasenhaUsuarioResponse" />
-  <xs:element name="eliminarUsuario" type="tns:eliminarUsuario" />
-  <xs:element name="eliminarUsuarioResponse" type="tns:eliminarUsuarioResponse" />
   <xs:element name="insertarUsuario" type="tns:insertarUsuario" />
   <xs:element name="insertarUsuarioResponse" type="tns:insertarUsuarioResponse" />
-  <xs:element name="listarPorTipoUsuario" type="tns:listarPorTipoUsuario" />
-  <xs:element name="listarPorTipoUsuarioResponse" type="tns:listarPorTipoUsuarioResponse" />
   <xs:element name="listarTodosUsuario" type="tns:listarTodosUsuario" />
   <xs:element name="listarTodosUsuarioResponse" type="tns:listarTodosUsuarioResponse" />
   <xs:element name="modificarUsuario" type="tns:modificarUsuario" />
   <xs:element name="modificarUsuarioResponse" type="tns:modificarUsuarioResponse" />
   <xs:element name="obtenerPorIdUsuario" type="tns:obtenerPorIdUsuario" />
   <xs:element name="obtenerPorIdUsuarioResponse" type="tns:obtenerPorIdUsuarioResponse" />
-  <xs:element name="validarApellidoPaterno" type="tns:validarApellidoPaterno" />
-  <xs:element name="validarApellidoPaternoResponse" type="tns:validarApellidoPaternoResponse" />
-  <xs:element name="validarCorreo" type="tns:validarCorreo" />
-  <xs:element name="validarCorreoResponse" type="tns:validarCorreoResponse" />
-  <xs:element name="validarDni" type="tns:validarDni" />
-  <xs:element name="validarDniResponse" type="tns:validarDniResponse" />
-  <xs:element name="validarNombre" type="tns:validarNombre" />
-  <xs:element name="validarNombreResponse" type="tns:validarNombreResponse" />
-  <xs:element name="validarNombreUsuario" type="tns:validarNombreUsuario" />
-  <xs:element name="validarNombreUsuarioResponse" type="tns:validarNombreUsuarioResponse" />
-  <xs:element name="validarTelefono" type="tns:validarTelefono" />
-  <xs:element name="validarTelefonoResponse" type="tns:validarTelefonoResponse" />
+  <xs:element name="tiposUsuarioDTO" type="tns:tiposUsuarioDTO" />
+  <xs:element name="usuariosDTO" type="tns:usuariosDTO" />
   <xs:complexType name="listarTodosUsuario">
     <xs:sequence />
   </xs:complexType>
@@ -38,86 +24,23 @@
   </xs:complexType>
   <xs:complexType name="usuariosDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" name="apePaterno" type="xs:string" />
-      <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
-      <xs:element minOccurs="0" name="correo" type="xs:string" />
-      <xs:element minOccurs="0" name="dni" type="xs:string" />
-      <xs:element minOccurs="0" name="fechaHoraCreacion" type="tns:localDateTime" />
-      <xs:element minOccurs="0" name="nombre" type="xs:string" />
-      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
-      <xs:element minOccurs="0" name="telefono" type="xs:string" />
-      <xs:element minOccurs="0" name="tipoUsuario" type="tns:tiposUsuarioDTO" />
       <xs:element minOccurs="0" name="usuarioId" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+      <xs:element minOccurs="0" name="apePaterno" type="xs:string" />
+      <xs:element minOccurs="0" name="dni" type="xs:string" />
+      <xs:element minOccurs="0" name="telefono" type="xs:string" />
+      <xs:element minOccurs="0" name="correo" type="xs:string" />
+      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
+      <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
+      <xs:element minOccurs="0" name="fechaHoraCreacion" type="xs:string" />
+      <xs:element minOccurs="0" name="tipoUsuario" type="tns:tiposUsuarioDTO" />
+      <xs:element minOccurs="0" name="activo" type="xs:boolean" />
     </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="localDateTime" final="extension restriction">
-    <xs:sequence />
   </xs:complexType>
   <xs:complexType name="tiposUsuarioDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" name="nombre" type="xs:string" />
       <xs:element minOccurs="0" name="tipoUsuarioId" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="eliminarUsuario">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="usuarioId" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="eliminarUsuarioResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="autenticarUsuario">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
-      <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="autenticarUsuarioResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="tns:usuariosDTO" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="validarCorreo">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="correo" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="validarCorreoResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="validarTelefono">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="telefono" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="validarTelefonoResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="validarDni">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="dni" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="validarDniResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="validarNombreUsuario">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="validarNombreUsuarioResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="obtenerPorIdUsuario">
@@ -130,24 +53,15 @@
       <xs:element minOccurs="0" name="return" type="tns:usuariosDTO" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="validarApellidoPaterno">
+  <xs:complexType name="autenticarUsuario">
     <xs:sequence>
-      <xs:element minOccurs="0" name="apePaterno" type="xs:string" />
+      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
+      <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="validarApellidoPaternoResponse">
+  <xs:complexType name="autenticarUsuarioResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="listarPorTipoUsuario">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="tipoUsuarioId" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="listarPorTipoUsuarioResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:usuariosDTO" />
+      <xs:element minOccurs="0" name="return" type="tns:usuariosDTO" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="cambiarContrasenhaUsuario">
@@ -172,6 +86,7 @@
       <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
       <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
       <xs:element minOccurs="0" name="tipoUsuario" type="tns:tiposUsuarioDTO" />
+      <xs:element minOccurs="0" name="activo" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="insertarUsuarioResponse">
@@ -190,21 +105,12 @@
       <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
       <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
       <xs:element minOccurs="0" name="tipoUsuario" type="tns:tiposUsuarioDTO" />
+      <xs:element minOccurs="0" name="activo" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="modificarUsuarioResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="validarNombre">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="nombre" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="validarNombreResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

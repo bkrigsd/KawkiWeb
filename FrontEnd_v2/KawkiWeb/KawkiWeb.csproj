@@ -14,8 +14,7 @@
     <AssemblyName>KawkiWeb</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -2190,10 +2189,13 @@
     <Content Include="Content\Stylo\gestionproductos.css" />
     <Content Include="Content\Stylo\historialventaadmin.css" />
     <Content Include="Content\Stylo\historialventavendedor.css" />
+    <Content Include="Content\Stylo\kawki-modern.css" />
+    <Content Include="Content\Stylo\Master.css" />
     <Content Include="Content\Stylo\producto.css" />
     <Content Include="Content\Stylo\registrouser.css" />
     <Content Include="Content\Stylo\registroventa.css" />
     <Content Include="DetalleProducto.aspx" />
+    <Content Include="Error404.aspx" />
     <Content Include="RegistroUsuario.aspx" />
     <Content Include="GestionProductos.aspx" />
     <Content Include="Global.asax" />
@@ -2250,6 +2252,13 @@
     </Compile>
     <Compile Include="DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error404.aspx.cs">
+      <DependentUpon>Error404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error404.aspx.designer.cs">
+      <DependentUpon>Error404.aspx</DependentUpon>
     </Compile>
     <Compile Include="RegistroUsuario.aspx.cs">
       <DependentUpon>RegistroUsuario.aspx</DependentUpon>

@@ -49,6 +49,9 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
+                        <%-- Nuevo: Columna para Activo --%>
+                        <asp:CheckBoxField DataField="activo" HeaderText="Activo" ReadOnly="true" />
+
                         <%-- Acciones --%>
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
@@ -67,15 +70,14 @@
                                         + Eval("contrasenha") + "\")" %>'>
                                     Editar
                                 </button>
-                                <button type="button" class="btn-eliminar" 
+                                <%--<button type="button" class="btn-eliminar" 
                                     onclick='<%# "abrirModalConfirmacion(" + Eval("usuarioId") + ")" %>'>
                                     Eliminar
-                                </button>
+                                </button>--%>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
-
             </div>
         </div>
 
@@ -174,12 +176,16 @@
                         InitialValue="" ErrorMessage="Seleccione un rol" CssClass="text-danger" Display="Dynamic" />
                 </div>
 
-                <!-- Campo solo lectura visible en edición -->
+                <!-- Nuevo: Checkbox para Activo -->
+                <div class="mb-3">
+                    <asp:CheckBox ID="chkActivo" runat="server" Text="Usuario activo" Checked="true" />
+                </div>
+
+                <%--<!-- Campo solo lectura visible en edición -->
                 <div id="grupoRolTexto" class="mb-3 d-none">
                     <label class="form-label">Rol</label>
                     <input type="text" id="txtRolLectura" class="form-control" readonly />
-                </div>
-
+                </div>--%>
 
                 <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mb-3" />
 
@@ -202,8 +208,8 @@
                 <asp:HiddenField ID="hfIdEliminar" runat="server" Value="0" />
                 <div>
                     <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModalConfirmacion()">Cancelar</button>
-                    <asp:Button ID="btnConfirmarEliminar" runat="server" CssClass="btn-kawki-primary" style="background-color: #dc3545;"
-                        Text="Eliminar" OnClick="btnConfirmarEliminar_Click" CausesValidation="false" UseSubmitBehavior="true" />
+                    <%--<asp:Button ID="btnConfirmarEliminar" runat="server" CssClass="btn-kawki-primary" style="background-color: #dc3545;"
+                        Text="Eliminar" OnClick="btnConfirmarEliminar_Click" CausesValidation="false" UseSubmitBehavior="true" />--%>
                 </div>
             </div>
         </div>

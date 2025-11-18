@@ -186,6 +186,15 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvRol;
 
         /// <summary>
+        /// Control chkActivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkActivo;
+
+        /// <summary>
         /// Control lblMensaje.
         /// </summary>
         /// <remarks>
@@ -211,14 +220,5 @@ namespace KawkiWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfIdEliminar;
-
-        /// <summary>
-        /// Control btnConfirmarEliminar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConfirmarEliminar;
     }
 }

@@ -22,6 +22,11 @@ namespace KawkiWeb
             var rol = (Session["Rol"] as string) ?? string.Empty;
             var usuario = (Session["Usuario"] as string) ?? string.Empty;
 
+            if (Session["Usuario"] != null)
+                lnkPerfil.NavigateUrl = "Perfil.aspx";
+            else
+                lnkPerfil.NavigateUrl = "Login.aspx";
+
             bool logueado = !string.IsNullOrEmpty(usuario);
             bool esVendedor = rol.Equals("vendedor", StringComparison.OrdinalIgnoreCase);
             bool esAdmin = rol.Equals("admin", StringComparison.OrdinalIgnoreCase);

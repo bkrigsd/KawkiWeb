@@ -356,6 +356,62 @@ public abstract class BaseDAOImpl {
     /// MÉTODOS PARA PROCEDIMIENTOS ALMACENADOS
     
     /**
+    * Ejecuta un stored procedure optimizado para listar todos los registros
+    * con JOINs incluidos.
+    * Este método está diseñado para trabajar con SPs que hacen JOINs y 
+    * retornan datos completos, evitando queries adicionales.
+    * 
+    * @param nombreProcedimiento Nombre del SP (ej: "SP_LISTAR_PRODUCTOS_COMPLETO")
+    * @return Lista de objetos del tipo correspondiente
+    */
+    protected List listarTodosConProcedimiento(String nombreProcedimiento) {
+
+        List lista = new ArrayList<>();
+
+        try {
+            this.abrirConexion();
+
+            // Generar llamada al SP: {CALL nombre_procedimiento()}
+            String sql = generarLlamadaSP(nombreProcedimiento, 0);
+
+            this.colocarSQLEnStatement(sql);
+            this.ejecutarSelectEnDB();
+
+            while (this.resultSet.next()) {
+                // Llamar al método que cada DAO puede sobreescribir
+                this.agregarObjetoALaListaDesdeJoin(lista);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Error al listar todos con procedimiento: " + ex);
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+
+        return lista;
+    }
+
+    /**
+     * Método template que los DAOs hijos pueden sobreescribir para agregar
+     * objetos a la lista cuando los datos vienen de un JOIN (stored procedure).
+     *
+     * Por defecto, usa el método estándar agregarObjetoALaLista(), pero los
+     * DAOs pueden implementar su propia lógica para manejar los campos
+     * adicionales que vienen del JOIN.
+     *
+     * @param lista Lista donde se agregarán los objetos
+     * @throws SQLException Si hay error al procesar el ResultSet
+     */
+    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
+        // Por defecto, usa el método estándar de instanciación
+        this.agregarObjetoALaLista(lista);
+    }
+
+    /**
      * Ejecuta un procedimiento almacenado que retorna UN solo registro. Útil
      * para búsquedas personalizadas más allá del CRUD básico.
      *

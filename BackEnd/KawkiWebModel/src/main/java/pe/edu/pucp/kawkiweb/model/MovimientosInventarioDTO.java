@@ -4,15 +4,19 @@ import java.time.LocalDateTime;
 import pe.edu.pucp.kawkiweb.model.utilMovInventario.TiposMovimientoDTO;
 
 //import jakarta.xml.bind.annotation.XmlRootElement;
-//import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-//import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
 //
 //@XmlRootElement(name = "MovimientoInventario")
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MovimientosInventarioDTO {
 
     private Integer mov_inventario_id;
     private Integer cantidad;
-//    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_mov;
     private String observacion;
     private TiposMovimientoDTO tipo_movimiento;

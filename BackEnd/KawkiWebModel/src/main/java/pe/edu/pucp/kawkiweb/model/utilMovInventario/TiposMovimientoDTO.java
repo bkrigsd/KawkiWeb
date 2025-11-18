@@ -1,5 +1,9 @@
 package pe.edu.pucp.kawkiweb.model.utilMovInventario;
 
+import jakarta.xml.bind.annotation.*;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class TiposMovimientoDTO {
 
     private Integer tipoMovimientoId;

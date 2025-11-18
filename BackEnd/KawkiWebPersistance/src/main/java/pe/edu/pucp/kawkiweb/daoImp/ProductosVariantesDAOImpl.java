@@ -13,7 +13,10 @@ import pe.edu.pucp.kawkiweb.dao.ColoresDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
 import pe.edu.pucp.kawkiweb.dao.TallasDAO;
 import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
+import pe.edu.pucp.kawkiweb.model.ProductosDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 
 public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosVariantesDAO {
 
@@ -103,6 +106,11 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
         this.statement.setInt(11, this.prodVariante.getProd_variante_id());
     }
 
+    /**
+     * Método de instanciación ESTÁNDAR para obtenerPorId(). Hace queries
+     * adicionales para traer objetos completos. Se usa cuando se obtiene UNA
+     * SOLA variante de producto.
+     */
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
         this.prodVariante = new ProductosVariantesDTO();
@@ -136,14 +144,101 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
         this.prodVariante.setUsuario(usuario);
     }
 
+    /**
+     * Método de instanciación OPTIMIZADO para listarTodos(). NO hace queries
+     * adicionales porque los datos ya vienen del JOIN. Se usa cuando se listan
+     * MUCHAS variantes de producto.
+     */
+    protected void instanciarObjetoDelResultSetDesdeJoin() throws SQLException {
+        this.prodVariante = new ProductosVariantesDTO();
+
+        // Datos básicos de la variante
+        this.prodVariante.setProd_variante_id(this.resultSet.getInt("PROD_VARIANTE_ID"));
+        this.prodVariante.setSKU(this.resultSet.getString("SKU"));
+        this.prodVariante.setStock(this.resultSet.getInt("STOCK"));
+        this.prodVariante.setStock_minimo(this.resultSet.getInt("STOCK_MINIMO"));
+
+        Boolean alertaStock = (Boolean) this.resultSet.getObject("ALERTA_STOCK");
+        this.prodVariante.setAlerta_stock(alertaStock);
+
+        this.prodVariante.setUrl_imagen((String) this.resultSet.getObject("URL_IMAGEN"));
+        this.prodVariante.setFecha_hora_creacion(this.resultSet.getTimestamp("FECHA_HORA_CREACION").toLocalDateTime());
+
+        Boolean disponible = (Boolean) this.resultSet.getObject("DISPONIBLE");
+        this.prodVariante.setDisponible(disponible);
+
+        // Color (YA VIENE COMPLETO del JOIN - SIN query adicional)
+        ColoresDTO color = new ColoresDTO();
+        color.setColor_id(this.resultSet.getInt("COLOR_ID"));
+        color.setNombre(this.resultSet.getString("COLOR_NOMBRE"));
+        this.prodVariante.setColor(color);
+
+        // Talla (YA VIENE COMPLETA del JOIN - SIN query adicional)
+        TallasDTO talla = new TallasDTO();
+        talla.setTalla_id(this.resultSet.getInt("TALLA_ID"));
+        talla.setNumero(this.resultSet.getInt("TALLA_NUMERO"));
+        this.prodVariante.setTalla(talla);
+
+        // Usuario de la variante (YA VIENE del JOIN - ID, NOMBRE, APE_PATERNO)
+        UsuariosDTO usuario = new UsuariosDTO();
+        usuario.setUsuarioId(this.resultSet.getInt("USUARIO_ID"));
+        usuario.setNombre(this.resultSet.getString("USUARIO_NOMBRE"));
+        usuario.setApePaterno(this.resultSet.getString("USUARIO_APE_PATERNO"));
+        this.prodVariante.setUsuario(usuario);
+
+        // Producto (YA VIENE del JOIN - ID, DESCRIPCION, CATEGORIA, ESTILO, PRECIO_VENTA, USUARIO_ID)
+        ProductosDTO producto = new ProductosDTO();
+        producto.setProducto_id(this.resultSet.getInt("PRODUCTO_ID"));
+        producto.setDescripcion(this.resultSet.getString("PRODUCTO_DESCRIPCION"));
+        producto.setPrecio_venta(this.resultSet.getDouble("PRODUCTO_PRECIO_VENTA"));
+
+        // Categoría del producto (YA VIENE COMPLETA del JOIN)
+        CategoriasDTO categoria = new CategoriasDTO();
+        categoria.setCategoria_id(this.resultSet.getInt("CATEGORIA_ID"));
+        categoria.setNombre(this.resultSet.getString("CATEGORIA_NOMBRE"));
+        producto.setCategoria(categoria);
+
+        // Estilo del producto (YA VIENE COMPLETO del JOIN)
+        EstilosDTO estilo = new EstilosDTO();
+        estilo.setEstilo_id(this.resultSet.getInt("ESTILO_ID"));
+        estilo.setNombre(this.resultSet.getString("ESTILO_NOMBRE"));
+        producto.setEstilo(estilo);
+
+        // Usuario del producto (YA VIENE del JOIN - SOLO ID)
+        UsuariosDTO usuarioProducto = new UsuariosDTO();
+        usuarioProducto.setUsuarioId(this.resultSet.getInt("PRODUCTO_USUARIO_ID"));
+        producto.setUsuario(usuarioProducto);
+
+        // Setear el producto_id en la variante (para compatibilidad)
+        this.prodVariante.setProducto_id(producto.getProducto_id());
+
+        // Nota: No seteamos el producto completo en la variante porque 
+        // ProductosVariantesDTO solo tiene producto_id, no ProductosDTO
+        // Si necesitas acceder al producto completo, deberás agregar ese campo al DTO
+    }
+
     @Override
     protected void limpiarObjetoDelResultSet() {
         this.prodVariante = null;
     }
 
+    /**
+     * Agrega objeto a la lista usando el método de instanciación ESTÁNDAR. Se
+     * usa en obtenerPorId() y otros métodos que NO usan el SP optimizado.
+     */
     @Override
     protected void agregarObjetoALaLista(List lista) throws SQLException {
         this.instanciarObjetoDelResultSet();
+        lista.add(this.prodVariante);
+    }
+
+    /**
+     * Agrega objeto a la lista usando el método de instanciación OPTIMIZADO. Se
+     * usa en listarTodos() que SÍ usa el SP con JOINs.
+     */
+    @Override
+    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
+        this.instanciarObjetoDelResultSetDesdeJoin();
         lista.add(this.prodVariante);
     }
 
@@ -161,9 +256,17 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
         return this.prodVariante;
     }
 
+    /**
+     * Lista todas las variantes de productos usando el Stored Procedure
+     * optimizado. Retorna variantes con color completo, talla completa, usuario
+     * (id, nombre, ape_paterno), y producto (id, descripcion, categoria
+     * completa, estilo completo, precio_venta, usuario_id).
+     */
     @Override
     public ArrayList<ProductosVariantesDTO> listarTodos() {
-        return (ArrayList<ProductosVariantesDTO>) super.listarTodos();
+        return (ArrayList<ProductosVariantesDTO>) super.listarTodosConProcedimiento(
+                "SP_LISTAR_PRODUCTOS_VARIANTES_COMPLETO"
+        );
     }
 
     @Override
