@@ -1,8 +1,12 @@
 package pe.edu.pucp.kawkiweb.model;
 
 //import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.*;
 //
 //@XmlRootElement(name = "DetalleVenta")
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DetalleVentasDTO {
 
     //ATRIBUTOS:

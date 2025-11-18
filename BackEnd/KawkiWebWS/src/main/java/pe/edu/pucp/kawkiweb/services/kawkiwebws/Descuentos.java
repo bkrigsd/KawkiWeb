@@ -3,10 +3,12 @@ package pe.edu.pucp.kawkiweb.services.kawkiwebws;
 import jakarta.jws.WebService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.kawkiweb.bo.DescuentosBO;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
+import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposBeneficioDTO;
 import pe.edu.pucp.kawkiweb.model.utilDescuento.TiposCondicionDTO;
 
@@ -26,8 +28,8 @@ public class Descuentos {
             @WebParam(name = "valor_condicion") Integer valor_condicion,
             @WebParam(name = "tipo_beneficio") TiposBeneficioDTO tipo_beneficio,
             @WebParam(name = "valor_beneficio") Integer valor_beneficio,
-            @WebParam(name = "fecha_inicio") LocalDateTime fecha_inicio,
-            @WebParam(name = "fecha_fin") LocalDateTime fecha_fin,
+            @WebParam(name = "fecha_inicio") @XmlJavaTypeAdapter(LocalDateTimeAdapter.class) LocalDateTime fecha_inicio,
+            @WebParam(name = "fecha_fin") @XmlJavaTypeAdapter(LocalDateTimeAdapter.class) LocalDateTime fecha_fin,
             @WebParam(name = "activo") Boolean activo) {
         
         return this.descuentoBO.insertar(descripcion, tipo_condicion, valor_condicion,
@@ -53,8 +55,8 @@ public class Descuentos {
             @WebParam(name = "valor_condicion") Integer valor_condicion,
             @WebParam(name = "tipo_beneficio") TiposBeneficioDTO tipo_beneficio,
             @WebParam(name = "valor_beneficio") Integer valor_beneficio,
-            @WebParam(name = "fecha_inicio") LocalDateTime fecha_inicio,
-            @WebParam(name = "fecha_fin") LocalDateTime fecha_fin,
+            @WebParam(name = "fecha_inicio") @XmlJavaTypeAdapter(LocalDateTimeAdapter.class) LocalDateTime fecha_inicio,
+            @WebParam(name = "fecha_fin") @XmlJavaTypeAdapter(LocalDateTimeAdapter.class) LocalDateTime fecha_fin,
             @WebParam(name = "activo") Boolean activo) {
 
         return this.descuentoBO.modificar(descuentoId, descripcion, tipo_condicion,

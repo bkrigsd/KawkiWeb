@@ -1,5 +1,9 @@
 package pe.edu.pucp.kawkiweb.model.utilVenta;
 
+import jakarta.xml.bind.annotation.*;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class RedesSocialesDTO {
 
     private Integer redSocialId;

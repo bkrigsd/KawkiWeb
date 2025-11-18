@@ -5,14 +5,17 @@ import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
 
 //import jakarta.xml.bind.annotation.XmlRootElement;
-//import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-//import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
 //
 //@XmlRootElement(name = "ProductoVariante")
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProductosVariantesDTO {
 
 //    private static Integer cantidadProdVariantes = 0;
-
     private Integer prod_variante_id;
     private String SKU;
     private Integer stock;
@@ -24,7 +27,7 @@ public class ProductosVariantesDTO {
     private String url_imagen;
     private Boolean disponible;
     private UsuariosDTO usuario;
-//    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_creacion;
 
     public ProductosVariantesDTO() {
@@ -189,7 +192,6 @@ public class ProductosVariantesDTO {
 //    public static Integer getCantidadProdVariantes() {
 //        return cantidadProdVariantes;
 //    }
-
     public String getUrl_imagen() {
         return url_imagen;
     }
@@ -209,7 +211,6 @@ public class ProductosVariantesDTO {
 //    public static void setCantidadProdVariantes(Integer aCantidadProdVariantes) {
 //        cantidadProdVariantes = aCantidadProdVariantes;
 //    }
-
     public UsuariosDTO getUsuario() {
         return usuario;
     }
