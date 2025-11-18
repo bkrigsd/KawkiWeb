@@ -2190,6 +2190,7 @@
     <Content Include="Content\Stylo\historialventaadmin.css" />
     <Content Include="Content\Stylo\historialventavendedor.css" />
     <Content Include="Content\Stylo\kawki-modern.css" />
+    <Content Include="Content\Stylo\Master.css" />
     <Content Include="Content\Stylo\producto.css" />
     <Content Include="Content\Stylo\registrouser.css" />
     <Content Include="Content\Stylo\registroventa.css" />
