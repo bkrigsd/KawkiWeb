@@ -1,7 +1,12 @@
 package pe.edu.pucp.kawkiweb.model.utilDescuento;
+
+import jakarta.xml.bind.annotation.*;
 //import jakarta.xml.bind.annotation.XmlRootElement;
 //
 //@XmlRootElement(name = "tipo_beneficio")
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class TiposBeneficioDTO {
 
     private Integer tipo_beneficio_id;
