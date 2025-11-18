@@ -9,6 +9,9 @@ import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.dao.DetalleVentasDAO;
 import pe.edu.pucp.kawkiweb.dao.ProductosVariantesDAO;
+import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.ColoresDTO;
+import pe.edu.pucp.kawkiweb.model.utilProducto.TallasDTO;
 
 public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDAO {
 
@@ -61,6 +64,11 @@ public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDA
         this.statement.setInt(1, this.detalleVenta.getDetalle_venta_id());
     }
 
+    /**
+     * Método de instanciación ESTÁNDAR para obtenerPorId(). Hace queries
+     * adicionales para traer objetos completos. Se usa cuando se obtiene UN
+     * SOLO detalle de venta.
+     */
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
         this.detalleVenta = new DetalleVentasDTO();
@@ -76,14 +84,77 @@ public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDA
         this.detalleVenta.setProdVariante(productoVar);
     }
 
+    /**
+     * Método de instanciación OPTIMIZADO para listarTodos(). NO hace queries
+     * adicionales porque los datos ya vienen del JOIN. Se usa cuando se listan
+     * MUCHOS detalles de venta.
+     */
+    protected void instanciarObjetoDelResultSetDesdeJoin() throws SQLException {
+        this.detalleVenta = new DetalleVentasDTO();
+
+        // Datos básicos del detalle de venta
+        this.detalleVenta.setDetalle_venta_id(this.resultSet.getInt("DETALLE_VENTA_ID"));
+        this.detalleVenta.setCantidad(this.resultSet.getInt("CANTIDAD"));
+        this.detalleVenta.setPrecio_unitario(this.resultSet.getDouble("PRECIO_UNITARIO"));
+        this.detalleVenta.setSubtotal(this.resultSet.getDouble("SUBTOTAL"));
+        this.detalleVenta.setVenta_id(this.resultSet.getInt("VENTA_ID"));
+
+        // Producto Variante (YA VIENE COMPLETO del JOIN - SIN query adicional)
+        ProductosVariantesDTO productoVariante = new ProductosVariantesDTO();
+        productoVariante.setProd_variante_id(this.resultSet.getInt("PROD_VARIANTE_ID"));
+        productoVariante.setSKU(this.resultSet.getString("SKU"));
+        productoVariante.setStock(this.resultSet.getInt("STOCK"));
+        productoVariante.setStock_minimo(this.resultSet.getInt("STOCK_MINIMO"));
+        productoVariante.setAlerta_stock(this.resultSet.getBoolean("ALERTA_STOCK"));
+        productoVariante.setProducto_id(this.resultSet.getInt("PRODUCTO_ID"));
+        productoVariante.setUrl_imagen(this.resultSet.getString("URL_IMAGEN"));
+        productoVariante.setFecha_hora_creacion(this.resultSet.getTimestamp("PV_FECHA_HORA_CREACION").toLocalDateTime());
+        productoVariante.setDisponible(this.resultSet.getBoolean("DISPONIBLE"));
+
+        // Color del producto variante (YA VIENE del JOIN)
+        ColoresDTO color = new ColoresDTO();
+        color.setColor_id(this.resultSet.getInt("COLOR_ID"));
+        color.setNombre(this.resultSet.getString("COLOR_NOMBRE"));
+        productoVariante.setColor(color);
+
+        // Talla del producto variante (YA VIENE del JOIN)
+        TallasDTO talla = new TallasDTO();
+        talla.setTalla_id(this.resultSet.getInt("TALLA_ID"));
+        talla.setNumero(this.resultSet.getInt("TALLA_NUMERO"));
+        productoVariante.setTalla(talla);
+
+        // Usuario del producto variante (YA VIENE del JOIN) - CON NOMBRE Y APELLIDO
+        UsuariosDTO usuario = new UsuariosDTO();
+        usuario.setUsuarioId(this.resultSet.getInt("USUARIO_ID"));
+        usuario.setNombre(this.resultSet.getString("USUARIO_NOMBRE"));
+        usuario.setApePaterno(this.resultSet.getString("USUARIO_APE_PATERNO"));
+        productoVariante.setUsuario(usuario);
+
+        this.detalleVenta.setProdVariante(productoVariante);
+    }
+
     @Override
     protected void limpiarObjetoDelResultSet() {
         this.detalleVenta = null;
     }
 
+    /**
+     * Agrega objeto a la lista usando el método de instanciación ESTÁNDAR. Se
+     * usa en obtenerPorId() y otros métodos que NO usan el SP optimizado.
+     */
     @Override
     protected void agregarObjetoALaLista(List lista) throws SQLException {
         this.instanciarObjetoDelResultSet();
+        lista.add(this.detalleVenta);
+    }
+
+    /**
+     * Agrega objeto a la lista usando el método de instanciación OPTIMIZADO. Se
+     * usa en listarTodos() que SÍ usa el SP con JOINs.
+     */
+    @Override
+    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
+        this.instanciarObjetoDelResultSetDesdeJoin();
         lista.add(this.detalleVenta);
     }
 
@@ -101,9 +172,15 @@ public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDA
         return this.detalleVenta;
     }
 
+    /**
+     * Lista todos los detalles de venta usando el Stored Procedure optimizado.
+     * Retorna detalles con producto_variante (color, talla, usuario) completo.
+     */
     @Override
     public ArrayList<DetalleVentasDTO> listarTodos() {
-        return (ArrayList<DetalleVentasDTO>) super.listarTodos();
+        return (ArrayList<DetalleVentasDTO>) super.listarTodosConProcedimiento(
+                "SP_LISTAR_DETALLE_VENTAS_COMPLETO"
+        );
     }
 
     @Override
@@ -119,7 +196,6 @@ public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDA
     }
 
     // BÚSQUEDAS AVANZADAS
-    
     /*
     * Este método usa un stored procedure para obtener todos los detalles
     * de una venta específica.

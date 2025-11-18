@@ -1,5 +1,9 @@
 package pe.edu.pucp.kawkiweb.model.utilPago;
 
+import jakarta.xml.bind.annotation.*;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MetodosPagoDTO {
 
     private Integer metodo_pago_id;

@@ -1,5 +1,9 @@
 package pe.edu.pucp.kawkiweb.model.utilProducto;
 
+import jakarta.xml.bind.annotation.*;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ColoresDTO {
 
     private Integer color_id;

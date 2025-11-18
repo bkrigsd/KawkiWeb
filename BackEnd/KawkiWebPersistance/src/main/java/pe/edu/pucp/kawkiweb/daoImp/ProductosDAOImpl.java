@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
-import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 import pe.edu.pucp.kawkiweb.dao.CategoriasDAO;
@@ -82,6 +81,11 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         this.statement.setInt(1, this.producto.getProducto_id());
     }
 
+    /**
+     * Método de instanciación ESTÁNDAR para obtenerPorId(). Hace queries
+     * adicionales para traer objetos completos. Se usa cuando se obtiene UN
+     * SOLO producto.
+     */
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
         this.producto = new ProductosDTO();
@@ -106,9 +110,46 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         this.producto.setUsuario(usuario);
 
         // Cargar variantes
-        ArrayList<ProductosVariantesDTO> variantes
-                = this.productoVarianteDAO.listarPorProductoId(this.producto.getProducto_id());
-        this.producto.setVariantes(variantes);
+//        ArrayList<ProductosVariantesDTO> variantes
+//                = this.productoVarianteDAO.listarPorProductoId(this.producto.getProducto_id());
+//        this.producto.setVariantes(variantes);
+        this.producto.setVariantes(new ArrayList<>());
+    }
+
+    /**
+     * Método de instanciación OPTIMIZADO para listarTodos(). NO hace queries
+     * adicionales porque los datos ya vienen del JOIN. Se usa cuando se listan
+     * MUCHOS productos.
+     */
+    protected void instanciarObjetoDelResultSetDesdeJoin() throws SQLException {
+        this.producto = new ProductosDTO();
+        this.producto.setProducto_id(this.resultSet.getInt("PRODUCTO_ID"));
+        this.producto.setDescripcion(this.resultSet.getString("DESCRIPCION"));
+        this.producto.setPrecio_venta(this.resultSet.getDouble("PRECIO_VENTA"));
+        this.producto.setFecha_hora_creacion(
+                this.resultSet.getTimestamp("FECHA_HORA_CREACION").toLocalDateTime()
+        );
+
+        // Categoría (YA VIENE COMPLETA del JOIN - SIN query adicional)
+        CategoriasDTO categoria = new CategoriasDTO();
+        categoria.setCategoria_id(this.resultSet.getInt("CATEGORIA_ID"));
+        categoria.setNombre(this.resultSet.getString("CATEGORIA_NOMBRE"));
+        this.producto.setCategoria(categoria);
+
+        // Estilo (YA VIENE COMPLETO del JOIN - SIN query adicional)
+        EstilosDTO estilo = new EstilosDTO();
+        estilo.setEstilo_id(this.resultSet.getInt("ESTILO_ID"));
+        estilo.setNombre(this.resultSet.getString("ESTILO_NOMBRE"));
+        this.producto.setEstilo(estilo);
+
+        // Usuario (YA VIENE COMPLETO del JOIN - SIN query adicional)
+        UsuariosDTO usuario = new UsuariosDTO();
+        usuario.setUsuarioId(this.resultSet.getInt("USUARIO_ID"));
+        usuario.setNombre(this.resultSet.getString("USUARIO_NOMBRE"));
+        usuario.setApePaterno(this.resultSet.getString("USUARIO_APE_PATERNO"));
+        this.producto.setUsuario(usuario);
+
+        this.producto.setVariantes(new ArrayList<>());
     }
 
     @Override
@@ -116,9 +157,23 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         this.producto = null;
     }
 
+    /**
+     * Agrega objeto a la lista usando el método de instanciación ESTÁNDAR. Se
+     * usa en obtenerPorId() y otros métodos que NO usan el SP optimizado.
+     */
     @Override
     protected void agregarObjetoALaLista(List lista) throws SQLException {
         this.instanciarObjetoDelResultSet();
+        lista.add(this.producto);
+    }
+
+    /**
+     * Agrega objeto a la lista usando el método de instanciación OPTIMIZADO. Se
+     * usa en listarTodos() que SÍ usa el SP con JOINs.
+     */
+    @Override
+    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
+        this.instanciarObjetoDelResultSetDesdeJoin();
         lista.add(this.producto);
     }
 
@@ -136,9 +191,16 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         return this.producto;
     }
 
+    /**
+     * Lista todos los productos usando el Stored Procedure optimizado. Retorna
+     * productos con categoría, estilo y usuario completos, pero SIN variantes
+     * (para evitar lentitud).
+     */
     @Override
     public ArrayList<ProductosDTO> listarTodos() {
-        return (ArrayList<ProductosDTO>) super.listarTodos();
+        return (ArrayList<ProductosDTO>) super.listarTodosConProcedimiento(
+                "SP_LISTAR_PRODUCTOS_COMPLETO"
+        );
     }
 
     @Override

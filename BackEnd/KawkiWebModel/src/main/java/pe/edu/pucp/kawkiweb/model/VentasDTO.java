@@ -5,16 +5,20 @@ import java.util.List;
 import pe.edu.pucp.kawkiweb.model.utilVenta.RedesSocialesDTO;
 
 //import jakarta.xml.bind.annotation.XmlRootElement;
-//import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-//import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
 //
 //@XmlRootElement(name = "venta")
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class VentasDTO {
 
     //ATRIBUTOS:
     private Integer venta_id;
     private UsuariosDTO usuario;
-//    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_creacion;
     private Double total;
     private DescuentosDTO descuento;

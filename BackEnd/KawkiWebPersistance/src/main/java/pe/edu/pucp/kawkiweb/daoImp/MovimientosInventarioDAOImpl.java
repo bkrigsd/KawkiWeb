@@ -87,6 +87,11 @@ public class MovimientosInventarioDAOImpl extends BaseDAOImpl implements Movimie
         this.statement.setInt(1, this.movInventario.getMov_inventario_id());
     }
 
+    /**
+     * Método de instanciación ESTÁNDAR para obtenerPorId(). Hace queries
+     * adicionales para traer objetos completos. Se usa cuando se obtiene UN
+     * SOLO movimiento de inventario.
+     */
     @Override
     protected void instanciarObjetoDelResultSet() throws SQLException {
         this.movInventario = new MovimientosInventarioDTO();
@@ -108,14 +113,63 @@ public class MovimientosInventarioDAOImpl extends BaseDAOImpl implements Movimie
         this.movInventario.setUsuario(usuario);
     }
 
+    /**
+     * Método de instanciación OPTIMIZADO para listarTodos(). NO hace queries
+     * adicionales porque los datos ya vienen del JOIN. Se usa cuando se listan
+     * MUCHOS movimientos de inventario.
+     */
+    protected void instanciarObjetoDelResultSetDesdeJoin() throws SQLException {
+        this.movInventario = new MovimientosInventarioDTO();
+
+        // Datos básicos del movimiento de inventario
+        this.movInventario.setMov_inventario_id(this.resultSet.getInt("MOV_INVENTARIO_ID"));
+        this.movInventario.setCantidad(this.resultSet.getInt("CANTIDAD"));
+        this.movInventario.setFecha_hora_mov(this.resultSet.getTimestamp("FECHA_HORA_MOV").toLocalDateTime());
+        this.movInventario.setObservacion(this.resultSet.getString("OBSERVACION"));
+
+        // Tipo de movimiento (YA VIENE COMPLETO del JOIN - SIN query adicional)
+        TiposMovimientoDTO tipoMovimiento = new TiposMovimientoDTO();
+        tipoMovimiento.setTipoMovimientoId(this.resultSet.getInt("TIPO_MOVIMIENTO_ID"));
+        tipoMovimiento.setNombre(this.resultSet.getString("TIPO_MOVIMIENTO_NOMBRE"));
+        this.movInventario.setTipo_movimiento(tipoMovimiento);
+
+        // Producto Variante (YA VIENE del JOIN - SOLO ID, SKU Y STOCK)
+        ProductosVariantesDTO prodVariante = new ProductosVariantesDTO();
+        prodVariante.setProd_variante_id(this.resultSet.getInt("PROD_VARIANTE_ID"));
+        prodVariante.setSKU(this.resultSet.getString("SKU"));
+        prodVariante.setStock(this.resultSet.getInt("STOCK"));
+        this.movInventario.setProd_variante(prodVariante);
+
+        // Usuario (YA VIENE del JOIN - ID, NOMBRE Y APE_PATERNO)
+        UsuariosDTO usuario = new UsuariosDTO();
+        usuario.setUsuarioId(this.resultSet.getInt("USUARIO_ID"));
+        usuario.setNombre(this.resultSet.getString("USUARIO_NOMBRE"));
+        usuario.setApePaterno(this.resultSet.getString("USUARIO_APE_PATERNO"));
+        this.movInventario.setUsuario(usuario);
+    }
+
     @Override
     protected void limpiarObjetoDelResultSet() {
         this.movInventario = null;
     }
 
+    /**
+     * Agrega objeto a la lista usando el método de instanciación ESTÁNDAR. Se
+     * usa en obtenerPorId() y otros métodos que NO usan el SP optimizado.
+     */
     @Override
     protected void agregarObjetoALaLista(List lista) throws SQLException {
         this.instanciarObjetoDelResultSet();
+        lista.add(this.movInventario);
+    }
+
+    /**
+     * Agrega objeto a la lista usando el método de instanciación OPTIMIZADO. Se
+     * usa en listarTodos() que SÍ usa el SP con JOINs.
+     */
+    @Override
+    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
+        this.instanciarObjetoDelResultSetDesdeJoin();
         lista.add(this.movInventario);
     }
 
@@ -133,9 +187,16 @@ public class MovimientosInventarioDAOImpl extends BaseDAOImpl implements Movimie
         return this.movInventario;
     }
 
+    /**
+     * Lista todos los movimientos de inventario usando el Stored Procedure
+     * optimizado. Retorna movimientos con tipo_movimiento completo,
+     * prod_variante (id, sku, stock) y usuario (id, nombre, ape_paterno).
+     */
     @Override
     public ArrayList<MovimientosInventarioDTO> listarTodos() {
-        return (ArrayList<MovimientosInventarioDTO>) super.listarTodos();
+        return (ArrayList<MovimientosInventarioDTO>) super.listarTodosConProcedimiento(
+                "SP_LISTAR_MOVIMIENTOS_INVENTARIO_COMPLETO"
+        );
     }
 
     @Override

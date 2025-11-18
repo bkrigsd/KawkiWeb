@@ -1,5 +1,9 @@
 package pe.edu.pucp.kawkiweb.model.utilPago;
 
+import jakarta.xml.bind.annotation.*;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class TiposComprobanteDTO {
 
     private Integer tipo_comprobante_id;
@@ -48,7 +52,7 @@ public class TiposComprobanteDTO {
     public boolean esBoletaConDNI() {
         return this.tipo_comprobante_id != null && this.tipo_comprobante_id == ID_BOLETA_DNI;
     }
-    
+
     public boolean esFactura() {
         return this.tipo_comprobante_id != null && this.tipo_comprobante_id == ID_FACTURA;
     }

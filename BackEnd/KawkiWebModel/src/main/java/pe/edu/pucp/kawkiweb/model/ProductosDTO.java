@@ -6,10 +6,14 @@ import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.EstilosDTO;
 
 //import jakarta.xml.bind.annotation.XmlRootElement;
-//import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-//import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import pe.edu.pucp.kawkiweb.model.adapter.LocalDateTimeAdapter;
 //
 //@XmlRootElement(name = "Producto")
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProductosDTO {
 
     private Integer producto_id;
@@ -17,7 +21,7 @@ public class ProductosDTO {
     private CategoriasDTO categoria;
     private EstilosDTO estilo;
     private Double precio_venta;
-//    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime fecha_hora_creacion;
     private UsuariosDTO usuario;
     private List<ProductosVariantesDTO> variantes;
