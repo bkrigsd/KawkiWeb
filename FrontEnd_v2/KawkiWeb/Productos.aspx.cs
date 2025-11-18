@@ -10,6 +10,7 @@ using KawkiWebBusiness.KawkiWebWSProductos;
 using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO;
 using coloresDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO;
 using tallasDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO;
+using KawkiWebBusiness.KawkiWebWSProductosVariantes;
 
 namespace KawkiWeb
 {
@@ -50,14 +51,45 @@ namespace KawkiWeb
             CargarProductos();
         }
 
-        // Evento para redirigir al detalle del producto
         protected void lnkProducto_Click(object sender, EventArgs e)
         {
             LinkButton lnk = (LinkButton)sender;
-            string productoId = lnk.CommandArgument;
 
-            // Redirigir a la página de detalle con el ID del producto
-            Response.Redirect("DetalleProducto.aspx?id=" + productoId);
+            // Separar todos los datos del CommandArgument
+            string[] datos = lnk.CommandArgument.Split('|');
+
+            if (datos.Length < 9)
+            {
+                // Error de datos
+                Response.Redirect("Productos.aspx");
+                return;
+            }
+
+            string productoId = datos[0];
+            string color = datos[1];
+            string tallas = datos[2];
+            string stocks = datos[3];
+            string stocksMinimos = datos[4]; 
+            string imagen = datos[5];
+            string nombre = datos[6];
+            string precio = datos[7];
+            string descripcion = datos[8];
+            string categoria = datos[9];
+
+            // Guardar en Session
+            Session["DetalleProductoId"] = productoId;
+            Session["DetalleColor"] = color;
+            Session["DetalleTallas"] = tallas;
+            Session["DetalleStocks"] = stocks;
+            Session["DetalleStocksMinimos"] = stocksMinimos;
+            Session["DetalleImagen"] = imagen;
+            Session["DetalleNombre"] = nombre;
+            Session["DetallePrecio"] = precio;
+            Session["DetalleDescripcion"] = descripcion;
+            Session["DetalleCategoria"] = categoria;
+
+            // Redirigir con URL limpia
+            Response.Redirect($"DetalleProducto.aspx?id={productoId}&color={Server.UrlEncode(color)}");
         }
 
         // Método para tallas disponibles
@@ -306,6 +338,7 @@ namespace KawkiWeb
             dt.Columns.Add("Estilo", typeof(string));
             dt.Columns.Add("Color", typeof(string));
             dt.Columns.Add("Stock", typeof(string));
+            dt.Columns.Add("StockMinimo", typeof(string));
             dt.Columns.Add("ImagenUrl", typeof(string));
 
             foreach (var kvp in productosConVariantes)
@@ -325,6 +358,7 @@ namespace KawkiWeb
                     .Where(v => v.color != null) // Solo variantes con color
                     .GroupBy(v => v.color.nombre);
 
+
                 foreach (var grupoColor in variantesPorColor)
                 {
                     string colorNombre = grupoColor.Key;
@@ -337,24 +371,28 @@ namespace KawkiWeb
                     }
 
                     // Obtener tallas y stocks de ese color
-                    var tallasDict = new Dictionary<int, int>(); // talla_numero => stock
+                    var tallasInfo = new Dictionary<int, (int stock, int stockMinimo)>();
 
                     foreach (var variante in grupoColor)
                     {
                         if (variante.talla != null)
                         {
                             int numeroTalla = variante.talla.numero; // Es un INT
-                            tallasDict[numeroTalla] = variante.stock;
+                            tallasInfo[numeroTalla] = (variante.stock, variante.stock_minimo);
                         }
                     }
 
                     // Crear el string de tallas ordenadas
                     string tallas = string.Join(", ",
-                        tallasDict.Keys.OrderBy(t => t).Select(t => t.ToString()));
+                        tallasInfo.Keys.OrderBy(t => t).Select(t => t.ToString()));
 
                     // Crear el string de stocks en el mismo orden
                     string stocks = string.Join(",",
-                        tallasDict.OrderBy(kvp2 => kvp2.Key).Select(kvp2 => kvp2.Value));
+                        tallasInfo.OrderBy(kvp2 => kvp2.Key).Select(kvp2 => kvp2.Value.stock));
+
+                    // Crear el string de stocks mínimos en el mismo orden
+                    string stocksMinimos = string.Join(",",
+                        tallasInfo.OrderBy(kvp2 => kvp2.Key).Select(kvp2 => kvp2.Value.stockMinimo));
 
                     // Obtener nombres
                     string categoriaNombre = producto.categoria.nombre ?? "";
@@ -380,6 +418,7 @@ namespace KawkiWeb
                         estiloNombre,
                         colorNombre,
                         stocks,
+                        stocksMinimos,
                         imagen
                     );
 
@@ -397,15 +436,16 @@ namespace KawkiWeb
         }
 
         // Método para mostrar alertas de stock bajo por tallas
-        protected string MostrarAlertaStockBajo(string tallasDisponibles, string stockString)
+        protected string MostrarAlertaStockBajo(string tallasDisponibles, string stockString, string stockMinimoString)
         {
             if (string.IsNullOrEmpty(tallasDisponibles) || string.IsNullOrEmpty(stockString))
                 return "";
 
             var tallas = tallasDisponibles.Split(',').Select(t => t.Trim()).ToArray();
             var stocks = stockString.Split(',').Select(s => s.Trim()).ToArray();
+            var stocksMinimos = stockMinimoString.Split(',').Select(s => s.Trim()).ToArray();
 
-            if (tallas.Length != stocks.Length)
+            if (tallas.Length != stocks.Length || tallas.Length != stocksMinimos.Length)
                 return "";
 
             List<string> tallasAgotadas = new List<string>();
@@ -413,13 +453,13 @@ namespace KawkiWeb
 
             for (int i = 0; i < tallas.Length; i++)
             {
-                if (int.TryParse(stocks[i], out int stock))
+                if (int.TryParse(stocks[i], out int stock) && int.TryParse(stocksMinimos[i], out int stockMinimo))
                 {
                     if (stock == 0)
                     {
                         tallasAgotadas.Add(tallas[i]);
                     }
-                    else if (stock <= 5) // Stock bajo si tiene 5 o menos unidades
+                    else if (stock <= stockMinimo) 
                     {
                         tallasStockBajo.Add($"{tallas[i]} ({stock})");
                     }
