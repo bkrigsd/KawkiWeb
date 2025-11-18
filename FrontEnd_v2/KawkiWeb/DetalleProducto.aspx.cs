@@ -57,6 +57,7 @@ namespace KawkiWeb
                 string imagen = Session["DetalleImagen"].ToString();
                 string tallasParam = Session["DetalleTallas"].ToString();
                 string stocksParam = Session["DetalleStocks"].ToString();
+                string stocksMinimoParam = Session["DetalleStocksMinimos"].ToString(); // ✅ Con 's' al final
 
                 // Llenar página (sin consultas)
                 Page.Title = nombre + " - Kawki";
@@ -65,7 +66,7 @@ namespace KawkiWeb
                 lblDescripcion.Text = descripcion;
                 lblPrecio.Text = $"S/ {precio:N2}";
 
-                // Extraer categoría del nombre 
+                // Extraer categoría del nombre
                 string categoria = nombre.Split(' ')[0];
                 lblCategoriaTag.Text = categoria.ToUpper();
                 lblCategoriaBadge.Text = categoria.ToUpper();
@@ -74,7 +75,7 @@ namespace KawkiWeb
                 imgProductoPrincipal.AlternateText = nombre;
 
                 // Cargar tallas SIN consultar BD
-                CargarTallasRapido(productoId, color, tallasParam, stocksParam);
+                CargarTallasRapido(productoId, color, tallasParam, stocksParam, stocksMinimoParam);
             }
             catch (Exception ex)
             {
@@ -83,60 +84,69 @@ namespace KawkiWeb
             }
         }
 
-        private void CargarTallasRapido(int productoId, string color, string tallasParam, string stocksParam)
+        private void CargarTallasRapido(int productoId, string color, string tallasParam, string stocksParam, string stocksMinimoParam)
         {
             rblTallas.Items.Clear();
 
             var tallas = tallasParam.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                    .Select(t => t.Trim())
-                                    .ToArray();
+                .Select(t => t.Trim())
+                .ToArray();
 
             var stocks = stocksParam.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                    .Select(s => int.Parse(s.Trim()))
-                                    .ToArray();
+                .Select(s => int.Parse(s.Trim()))
+                .ToArray();
 
-            if (tallas.Length != stocks.Length)
+            var stocksMinimo = stocksMinimoParam.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => int.Parse(s.Trim()))
+                .ToArray();
+
+            if (tallas.Length != stocks.Length || tallas.Length != stocksMinimo.Length)
             {
                 MostrarMensaje("Error en los datos de tallas.", "error");
                 return;
             }
 
-            // Solo consultar variantes si seleccionan una talla
-            // Guardar el mapeo talla -> stock en ViewState
-            var tallaStockMap = new System.Collections.Generic.Dictionary<string, int>();
-
+            // Crear estructura de datos para ViewState
+            var tallaInfoMap = new System.Collections.Generic.Dictionary<string, (int stock, int stockMinimo)>();
             int stockTotal = 0;
+            int tallasConStockBajo = 0;
             int tallasAgotadas = 0;
 
             for (int i = 0; i < tallas.Length; i++)
             {
                 string talla = tallas[i];
                 int stock = stocks[i];
+                int stockMinimo = stocksMinimo[i];
+
                 stockTotal += stock;
+                tallaInfoMap[talla] = (stock, stockMinimo);
 
-                tallaStockMap[talla] = stock;
+                // Determinar estado de la talla
+                bool agotado = stock == 0;
+                bool stockBajo = !agotado && stock <= stockMinimo;
 
+                if (agotado) tallasAgotadas++;
+                else if (stockBajo) tallasConStockBajo++;
+
+                // Texto descriptivo en los botones
                 string textoTalla = $"Talla {talla}";
 
-                if (stock > 0)
+                if (agotado)
                 {
-                    textoTalla += $" - {stock} disponibles";
-                    if (stock <= 5)
-                        textoTalla += " ⚠️";
+                    textoTalla += " - Agotado";
                 }
-                else
+                else if (stockBajo)
                 {
-                    textoTalla += " - AGOTADO ❌";
-                    tallasAgotadas++;
+                    textoTalla += " - Stock bajo";
                 }
 
-                // Solo buscaremos el prod_variante_id cuando seleccionen
                 ListItem item = new ListItem(textoTalla, talla);
                 item.Enabled = stock > 0;
 
-                if (stock == 0)
+                // Clases CSS para el estilo visual
+                if (agotado)
                     item.Attributes.Add("class", "talla-agotada");
-                else if (stock <= 5)
+                else if (stockBajo)
                     item.Attributes.Add("class", "talla-stock-bajo");
 
                 rblTallas.Items.Add(item);
@@ -145,21 +155,24 @@ namespace KawkiWeb
             // Guardar info en ViewState para cuando seleccionen
             ViewState["ProductoId"] = productoId;
             ViewState["Color"] = color;
-            ViewState["TallaStockMap"] = tallaStockMap;
+            ViewState["TallaInfoMap"] = tallaInfoMap;
 
-            // Alertas
+            // MOSTRAR SOLO UN MENSAJE GENERAL SI ES NECESARIO
             if (stockTotal == 0)
             {
-                MostrarMensaje("❌ Producto agotado en todas las tallas.", "error");
+                MostrarMensaje("Este producto está agotado en todas las tallas.", "error");
             }
-            else if (stockTotal <= 10)
+            else if (tallasConStockBajo > 0 && tallasAgotadas == 0)
             {
-                MostrarMensaje($"⚠️ Stock bajo: Solo {stockTotal} unidades disponibles en total.", "warning");
+                // Solo si hay stock bajo pero ninguna agotada
+                MostrarMensaje($"Algunas tallas tienen stock limitado. ¡Reserva pronto!", "warning");
             }
-            else if (tallasAgotadas > 0)
+            else if (tallasAgotadas > 0 && stockTotal > 0)
             {
-                MostrarMensaje($"ℹ️ {tallasAgotadas} talla(s) agotada(s).", "info");
+                // Hay algunas agotadas pero otras disponibles
+                MostrarMensaje($"Algunas tallas están agotadas. Verifica disponibilidad por talla.", "info");
             }
+            // Si todo está bien (stock normal), NO mostrar mensaje
         }
 
         private void CargarDesdeBaseDatos(int productoId, string color)
@@ -179,7 +192,7 @@ namespace KawkiWeb
 
             if (variantes.Count == 0)
             {
-                MostrarMensaje("No hay variantes disponibles.", "info");
+                MostrarMensaje("No hay variantes disponibles para este color.", "info");
                 return;
             }
 
@@ -205,10 +218,10 @@ namespace KawkiWeb
                 imgProductoPrincipal.AlternateText = nombreProducto;
             }
 
-            CargarTallasDesdeVariantes(variantes);
+            CargarTallasDesdeVariantes(productoId, color, variantes);
         }
 
-        private void CargarTallasDesdeVariantes(System.Collections.Generic.List<productosVariantesDTO> variantes)
+        private void CargarTallasDesdeVariantes(int productoId, string color, System.Collections.Generic.List<productosVariantesDTO> variantes)
         {
             rblTallas.Items.Clear();
 
@@ -217,53 +230,67 @@ namespace KawkiWeb
                 .GroupBy(v => v.talla.numero)
                 .OrderBy(g => g.Key);
 
+            var tallaInfoMap = new System.Collections.Generic.Dictionary<string, (int stock, int stockMinimo)>();
             int stockTotal = 0;
+            int tallasConStockBajo = 0;
             int tallasAgotadas = 0;
 
             foreach (var grupo in grupos)
             {
-                int talla = grupo.Key;
+                int numeroTalla = grupo.Key;
                 int stock = grupo.Sum(v => v.stock);
                 var variante = grupo.First();
+                int stockMinimo = variante.stock_minimo;
 
                 stockTotal += stock;
+                tallaInfoMap[numeroTalla.ToString()] = (stock, stockMinimo);
 
-                string textoTalla = $"Talla {talla}";
+                // Determinar estado
+                bool agotado = stock == 0;
+                bool stockBajo = !agotado && stock <= stockMinimo;
 
-                if (stock > 0)
+                if (agotado) tallasAgotadas++;
+                else if (stockBajo) tallasConStockBajo++;
+
+                // Texto descriptivo en los botones
+                string textoTalla = $"Talla {numeroTalla}";
+
+                if (agotado)
                 {
-                    textoTalla += $" - {stock} disponibles";
-                    if (stock <= 5)
-                        textoTalla += " ⚠️";
+                    textoTalla += " - Agotado";
                 }
-                else
+                else if (stockBajo)
                 {
-                    textoTalla += " - AGOTADO ❌";
-                    tallasAgotadas++;
+                    textoTalla += " - Stock bajo";
                 }
 
                 ListItem item = new ListItem(textoTalla, variante.prod_variante_id.ToString());
                 item.Enabled = stock > 0;
 
-                if (stock == 0)
+                if (agotado)
                     item.Attributes.Add("class", "talla-agotada");
-                else if (stock <= 5)
+                else if (stockBajo)
                     item.Attributes.Add("class", "talla-stock-bajo");
 
                 rblTallas.Items.Add(item);
             }
 
+            // Guardar en ViewState
+            ViewState["ProductoId"] = productoId;
+            ViewState["Color"] = color;
+            ViewState["TallaInfoMap"] = tallaInfoMap;
+
             if (stockTotal == 0)
             {
-                MostrarMensaje("❌ Producto agotado en todas las tallas.", "error");
+                MostrarMensaje("Este producto está agotado en todas las tallas.", "error");
             }
-            else if (stockTotal <= 10)
+            else if (tallasConStockBajo > 0 && tallasAgotadas == 0)
             {
-                MostrarMensaje($"⚠️ Stock bajo: Solo {stockTotal} unidades disponibles en total.", "warning");
+                MostrarMensaje($"Algunas tallas tienen stock limitado. ¡Reserva pronto!", "warning");
             }
-            else if (tallasAgotadas > 0)
+            else if (tallasAgotadas > 0 && stockTotal > 0)
             {
-                MostrarMensaje($"ℹ️ {tallasAgotadas} talla(s) agotada(s).", "info");
+                MostrarMensaje($"Algunas tallas están agotadas. Verifica disponibilidad por talla.", "info");
             }
         }
 
@@ -279,17 +306,18 @@ namespace KawkiWeb
             if (string.IsNullOrEmpty(rblTallas.SelectedValue))
                 return;
 
-            // ✅ AHORA SÍ consultar la variante específica
+            // consultar la variante específica
             int productoId = (int)ViewState["ProductoId"];
             string color = ViewState["Color"].ToString();
             string tallaSeleccionada = rblTallas.SelectedValue;
 
             // Buscar la variante con esta talla y color
             var variante = productosVariantesBO.ListarPorProducto(productoId)
-                .FirstOrDefault(v => v.color != null &&
-                                    v.color.nombre.Equals(color, StringComparison.OrdinalIgnoreCase) &&
-                                    v.talla != null &&
-                                    v.talla.numero.ToString() == tallaSeleccionada);
+                .FirstOrDefault(v =>
+                    v.color != null &&
+                    v.color.nombre.Equals(color, StringComparison.OrdinalIgnoreCase) &&
+                    v.talla != null &&
+                    v.talla.numero.ToString() == tallaSeleccionada);
 
             if (variante != null)
             {
@@ -320,17 +348,17 @@ namespace KawkiWeb
             if (stock == 0)
             {
                 pnlStockAlert.CssClass = "stock-alert-detalle stock-agotado-detalle";
-                lblStockAlert.Text = "⚠️ Producto agotado";
+                lblStockAlert.Text = "Producto agotado";
             }
             else if (stock <= stockMinimo)
             {
                 pnlStockAlert.CssClass = "stock-alert-detalle stock-bajo-detalle";
-                lblStockAlert.Text = $"⚠️ Stock bajo - Solo {stock} unidades disponibles";
+                lblStockAlert.Text = $"Stock bajo - Solo {stock} unidades disponibles";
             }
             else
             {
                 pnlStockAlert.CssClass = "stock-alert-detalle stock-disponible-detalle";
-                lblStockAlert.Text = $"✓ Stock disponible - {stock} unidades";
+                lblStockAlert.Text = $"Stock disponible - {stock} unidades";
             }
         }
     }

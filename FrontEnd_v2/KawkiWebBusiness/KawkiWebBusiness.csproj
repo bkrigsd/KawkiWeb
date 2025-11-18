@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriasBO.cs" />
     <Compile Include="Connected Services\KawkiWebWSCategorias\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -89,6 +90,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="DetalleVentasBO.cs" />
+    <Compile Include="EstilosBO.cs" />
     <Compile Include="ProductosBO.cs" />
     <Compile Include="ProductosVariantesBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
