@@ -104,12 +104,6 @@ public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDA
         productoVariante.setProd_variante_id(this.resultSet.getInt("PROD_VARIANTE_ID"));
         productoVariante.setSKU(this.resultSet.getString("SKU"));
         productoVariante.setStock(this.resultSet.getInt("STOCK"));
-        productoVariante.setStock_minimo(this.resultSet.getInt("STOCK_MINIMO"));
-        productoVariante.setAlerta_stock(this.resultSet.getBoolean("ALERTA_STOCK"));
-        productoVariante.setProducto_id(this.resultSet.getInt("PRODUCTO_ID"));
-        productoVariante.setUrl_imagen(this.resultSet.getString("URL_IMAGEN"));
-        productoVariante.setFecha_hora_creacion(this.resultSet.getTimestamp("PV_FECHA_HORA_CREACION").toLocalDateTime());
-        productoVariante.setDisponible(this.resultSet.getBoolean("DISPONIBLE"));
 
         // Color del producto variante (YA VIENE del JOIN)
         ColoresDTO color = new ColoresDTO();
@@ -196,30 +190,39 @@ public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDA
     }
 
     // BÚSQUEDAS AVANZADAS
-    /*
-    * Este método usa un stored procedure para obtener todos los detalles
-    * de una venta específica.
-    * - Se llama automáticamente desde VentasDAOImpl.instanciarObjetoDelResultSet()
-    * - Carga la lista de productos vendidos en cada VentasDTO
+    /**
+     * Lista detalles de venta por venta_id usando SP optimizado. El SP trae
+     * todos los datos con JOINs, sin necesidad de queries adicionales. Se llama
+     * automáticamente desde VentasDAOImpl.instanciarObjetoDelResultSet() para
+     * cargar la lista de productos vendidos en cada VentasDTO.
      */
     @Override
     public ArrayList<DetalleVentasDTO> listarPorVentaId(Integer ventaId) {
+        List lista = new ArrayList<>();
 
-        // Consumer para setear el parámetro de entrada
-        Consumer<Integer> incluirParametros = (id) -> {
-            try {
-                this.statement.setInt(1, id);
-            } catch (SQLException ex) {
-                System.err.println("Error al setear parámetro ventaId: " + ex);
+        try {
+            this.abrirConexion();
+
+            String sql = "{CALL SP_LISTAR_DETALLES_POR_VENTA(?)}";
+            this.colocarSQLEnStatement(sql);
+            this.statement.setInt(1, ventaId);
+            this.ejecutarSelectEnDB();
+
+            while (this.resultSet.next()) {
+                // Usar el método optimizado que NO hace queries adicionales
+                this.agregarObjetoALaListaDesdeJoin(lista);
             }
-        };
 
-        // Ejecuta el procedimiento almacenado que retorna múltiples registros
-        return (ArrayList<DetalleVentasDTO>) super.ejecutarConsultaProcedimientoLista(
-                "SP_LISTAR_DETALLES_POR_VENTA",
-                1, // Cantidad de parámetros (solo ventaId)
-                incluirParametros,
-                ventaId
-        );
+        } catch (SQLException ex) {
+            System.err.println("Error al listar detalles por venta: " + ex);
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+
+        return (ArrayList<DetalleVentasDTO>) lista;
     }
 }

@@ -311,27 +311,38 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
 
     /// BÚSQUEDAS AVANZADAS
     
-    @Override
+    /**
+ * Obtiene el comprobante de pago asociado a una venta usando SP optimizado
+ * El SP trae todos los datos con JOINs, sin necesidad de queries adicionales
+ */
+@Override
     public ComprobantesPagoDTO obtenerPorVentaId(Integer ventaId) {
         this.comprobante = null;
 
-        // Consumer para setear el parámetro de entrada
-        Consumer<Integer> incluirParametros = (id) -> {
-            try {
-                this.statement.setInt(1, id);
-            } catch (SQLException e) {
-                System.err.println("Error al establecer parámetro: " + e);
-            }
-        };
+        try {
+            this.abrirConexion();
 
-        // Ejecuta el procedimiento almacenado
-        // El nombre del SP es el mismo para MySQL y SQL Server
-        super.ejecutarConsultaProcedimiento(
-                "SP_OBTENER_COMPROBANTE_POR_VENTA",
-                1, // Cantidad de parámetros (solo ventaId)
-                incluirParametros,
-                ventaId
-        );
+            String sql = "{CALL SP_OBTENER_COMPROBANTE_POR_VENTA(?)}";
+            this.colocarSQLEnStatement(sql);
+            this.statement.setInt(1, ventaId);
+            this.ejecutarSelectEnDB();
+
+            if (this.resultSet.next()) {
+                // Usar el método optimizado que NO hace queries adicionales
+                this.instanciarObjetoDelResultSetDesdeJoin();
+            } else {
+                this.limpiarObjetoDelResultSet();
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Error al obtener comprobante por venta: " + ex);
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
 
         return this.comprobante;
     }

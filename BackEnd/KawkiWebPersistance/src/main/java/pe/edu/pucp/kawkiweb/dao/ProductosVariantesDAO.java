@@ -25,4 +25,6 @@ public interface ProductosVariantesDAO {
 
     public boolean existeVariante(Integer productoId, Integer colorId, Integer tallaId);
 
+    boolean existeVarianteParaModificar(Integer varianteId, Integer productoId, 
+                                         Integer colorId, Integer tallaId);
 }
