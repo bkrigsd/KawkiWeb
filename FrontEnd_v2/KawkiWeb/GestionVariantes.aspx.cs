@@ -46,7 +46,7 @@ namespace KawkiWeb
         {
             try
             {
-                var producto = productosBO.ObtenerPorId(productoId);
+                var producto = productosBO.ObtenerPorIdProducto(productoId);
                 if (producto == null)
                 {
                     MostrarError("Producto no encontrado");

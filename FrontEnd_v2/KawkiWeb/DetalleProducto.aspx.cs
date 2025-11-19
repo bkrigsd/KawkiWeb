@@ -178,7 +178,7 @@ namespace KawkiWeb
         private void CargarDesdeBaseDatos(int productoId, string color)
         {
             // Fallback: si no hay Session, hacer la consulta completa
-            productosDTO producto = productosBO.ObtenerPorId(productoId);
+            productosDTO producto = productosBO.ObtenerPorIdProducto(productoId);
 
             if (producto == null)
             {
