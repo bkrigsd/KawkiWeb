@@ -120,7 +120,7 @@
                             <div class="col-md-2">
                                 <label class="form-label" for="<%= txtPrecioUnitario.ClientID %>">Precio unitario</label>
                                 <asp:TextBox ID="txtPrecioUnitario" runat="server" CssClass="form-control"
-                                    placeholder="0.00" />
+                                    placeholder="0.00" ReadOnly="true" />
                             </div>
                             <div class="col-md-3 d-grid">
                                 <asp:Button ID="btnAgregarProducto" runat="server"
@@ -187,12 +187,15 @@
                             </asp:DropDownList>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" for="<%= txtDescuento.ClientID %>">Descuento aplicado (S/)</label>
-                            <asp:TextBox ID="txtDescuento" runat="server" CssClass="form-control"
-                                Text="0.00"
-                                AutoPostBack="true" OnTextChanged="txtDescuento_TextChanged" />
-                            <span class="text-muted-small">Ingresa 0 si no se aplicó descuento.</span>
+                        <div class="col-md-3">
+                            <label class="form-label" for="<%= ddlDescuentos.ClientID %>">Descuentos</label>
+                            <asp:DropDownList 
+                                ID="ddlDescuentos" 
+                                runat="server" 
+                                CssClass="form-select"
+                                AutoPostBack="true"
+                                OnSelectedIndexChanged="ddlDescuentos_SelectedIndexChanged">
+                            </asp:DropDownList>
                         </div>
 
                         <hr />

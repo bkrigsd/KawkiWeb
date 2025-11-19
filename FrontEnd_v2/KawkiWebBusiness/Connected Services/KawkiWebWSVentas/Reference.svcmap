@@ -19,7 +19,7 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="	http://localhost:8080/KawkiWebWS/VentasService?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address=" http://localhost:8080/KawkiWebWS/VentasService?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="VentasService.xsd" MetadataType="Schema" ID="1de8a857-448f-43d7-8c0b-9379486eae5f" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/VentasService?xsd=1" />

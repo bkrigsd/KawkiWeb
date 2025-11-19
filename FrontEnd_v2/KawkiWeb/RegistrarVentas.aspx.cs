@@ -1,15 +1,18 @@
 ﻿using KawkiWebBusiness;
 using KawkiWebBusiness.BO;
 using KawkiWebBusiness.KawkiWebWSDetalleVentas;
+using KawkiWebBusiness.KawkiWebWSProductos;
 using KawkiWebBusiness.KawkiWebWSVentas;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 
 namespace KawkiWeb
 {
@@ -23,6 +26,7 @@ namespace KawkiWeb
                 if (ViewState["DetalleVentas"] == null)
                 {
                     var dt = new DataTable();
+                    dt.Columns.Add("ProductoId", typeof(int));
                     dt.Columns.Add("Producto", typeof(string));
                     dt.Columns.Add("Cantidad", typeof(int));
                     dt.Columns.Add("PrecioUnitario", typeof(decimal));
@@ -45,42 +49,42 @@ namespace KawkiWeb
                 ActualizarTotales();
             }
         }
-        private DataTable ObtenerProductos()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Id", typeof(int));
-            dt.Columns.Add("Nombre", typeof(string));
-            dt.Columns.Add("Descripcion", typeof(string));
-            dt.Columns.Add("Precio", typeof(decimal));
-            dt.Columns.Add("Tallas", typeof(string));
-            dt.Columns.Add("Tipo", typeof(string));
-            dt.Columns.Add("Material", typeof(string));
-            dt.Columns.Add("Color", typeof(string));
-            dt.Columns.Add("Stock", typeof(string));
-            dt.Columns.Add("Imagen", typeof(string));
-
-            // Productos tipo Oxford
-            dt.Rows.Add(1, "Oxford Clásico Beige", "Zapato oxford de cuero genuino con acabado premium, ideal para ocasiones formales y uso diario.", 150.90m, "35, 36, 39", "oxford", "clasico", "beige", "15,5,9", "~/Images/OxfordClasicoBeige.jpg");
-            dt.Rows.Add(2, "Oxford Premium Negro", "Zapato oxford de diseño moderno y sofisticado, perfecto para eventos importantes.", 250.90m, "35, 36, 37, 38, 39", "oxford", "charol", "negro", "15,12,0,5,9", "~/Images/OxfordPremiumNegro.jpg");
-            dt.Rows.Add(3, "Oxford Bicolor Café", "Zapato oxford con elegante combinación de tonos café, estilo vintage refinado.", 160.90m, "36, 37, 38, 39", "oxford", "combinado", "marron", "15,0,5,9", "~/Images/OxfordBicolorCafe.jpg");
-
-            // Productos tipo Derby
-            dt.Rows.Add(4, "Derby Elegante Marrón", "Derby de cuero con diseño tejido elegante, versátil para cualquier ocasión.", 215.90m, "35, 36, 37, 38, 39", "derby", "clasico", "marron", "15,12,0,5,9", "~/Images/DerbyClasicoMarron.jpg");
-            dt.Rows.Add(5, "Derby Charol Crema", "Derby charol con suela gruesa y diseño moderno, máxima comodidad.", 210.90m, "35, 36, 37, 38, 39", "derby", "charol", "crema", "15,12,0,5,9", "~/Images/DerbyClasicoCrema.jpg");
-            dt.Rows.Add(6, "Derby Clasico Negro", "Derby clásico con suela de goma antideslizante, ideal para caminar.", 169.90m, "36, 37, 38, 39", "derby", "clasico", "negro", "12,0,5,9", "~/Images/DerbyClasicoNegro.jpg");
-
-            return dt;
-        }
+       
         private void CargarProductos()
         {
-            var productos = ObtenerProductos();
-            ddlProducto.DataSource = productos;
-            ddlProducto.DataTextField = "Nombre";
-            ddlProducto.DataValueField = "Precio"; // autocompleta con el precio
-            ddlProducto.DataBind();
+            try
+            {
+                var cliente = new KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantesClient();
+                var respuesta = cliente.listarTodosProdVariante();
 
-            ddlProducto.Items.Insert(0, new ListItem("-- Selecciona un producto --", ""));
+                ddlProducto.Items.Clear();
+
+                if (respuesta == null || respuesta.Length == 0)
+                {
+                    ddlProducto.Items.Add(new ListItem("-- No hay productos --", ""));
+                    return;
+                }
+
+                var lista = respuesta.Select(p => new
+                {
+                    id = p.prod_variante_id,
+                    texto = $"{p.SKU}"
+                }).ToList();
+
+                ddlProducto.DataSource = lista;
+                ddlProducto.DataTextField = "texto";
+                ddlProducto.DataValueField = "id";
+                ddlProducto.DataBind();
+
+                ddlProducto.Items.Insert(0, new ListItem("-- Selecciona --", ""));
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al cargar productos: " + ex.Message;
+                lblMensaje.CssClass = "text-danger";
+            }
         }
+
 
         #region Métodos de Validación
 
@@ -378,7 +382,6 @@ namespace KawkiWeb
         #endregion
         protected void btnAgregarProducto_Click(object sender, EventArgs e)
         {
-            // Validar selección de producto
             if (string.IsNullOrEmpty(ddlProducto.SelectedValue))
             {
                 lblMensaje.Text = "Selecciona un producto antes de agregar.";
@@ -390,7 +393,6 @@ namespace KawkiWeb
             int cantidad;
             decimal precioUnitario;
 
-            // Validaciones básicas
             if (!int.TryParse(txtCantidad.Text, out cantidad) || cantidad <= 0)
             {
                 lblMensaje.Text = "La cantidad debe ser un número mayor que 0.";
@@ -400,34 +402,36 @@ namespace KawkiWeb
 
             if (!decimal.TryParse(txtPrecioUnitario.Text, out precioUnitario) || precioUnitario <= 0)
             {
-                lblMensaje.Text = "El precio unitario debe ser un número válido.";
+                lblMensaje.Text = "El precio unitario debe ser válido.";
                 lblMensaje.CssClass = "text-danger";
                 return;
             }
 
             decimal subtotal = cantidad * precioUnitario;
 
-            // Aquí asumes que tienes una lista o DataTable en memoria (ejemplo)
             DataTable dt = ViewState["DetalleVentas"] as DataTable;
             if (dt == null)
             {
                 dt = new DataTable();
-                dt.Columns.Add("Producto");
+                dt.Columns.Add("ProductoId", typeof(int));      // Aquí guardamos prod_variante_id
+                dt.Columns.Add("Producto", typeof(string));
                 dt.Columns.Add("Cantidad", typeof(int));
                 dt.Columns.Add("PrecioUnitario", typeof(decimal));
                 dt.Columns.Add("Subtotal", typeof(decimal));
             }
 
-            dt.Rows.Add(producto, cantidad, precioUnitario, subtotal);
+            // ⬅️ ESTE ES EL ID CORRECTO AHORA (prod_variante_id)
+            int varianteId = Convert.ToInt32(ddlProducto.SelectedValue);
+
+            dt.Rows.Add(varianteId, producto, cantidad, precioUnitario, subtotal);
+
             ViewState["DetalleVentas"] = dt;
 
             gvDetalle.DataSource = dt;
             gvDetalle.DataBind();
 
-            // Actualizar totales
             ActualizarTotales();
 
-            // Limpiar campos
             ddlProducto.SelectedIndex = 0;
             txtCantidad.Text = "1";
             txtPrecioUnitario.Text = "";
@@ -436,18 +440,51 @@ namespace KawkiWeb
             lblMensaje.CssClass = "text-success";
         }
 
+
         protected void ddlProducto_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(ddlProducto.SelectedValue))
+            if (string.IsNullOrEmpty(ddlProducto.SelectedValue))
             {
-                // Rellenar el precio según la selección
-                txtPrecioUnitario.Text = ddlProducto.SelectedValue;
+                txtPrecioUnitario.Text = "";
+                return;
             }
-            else
+
+            int varianteId = Convert.ToInt32(ddlProducto.SelectedValue);
+
+            try
             {
-                txtPrecioUnitario.Text = string.Empty;
+                // 1. Obtener la variante
+                var clienteVar = new KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantesClient();
+                var variante = clienteVar.obtenerPorIdProdVariante(varianteId);
+
+                if (variante == null)
+                {
+                    lblMensaje.Text = "No se encontró la variante seleccionada.";
+                    return;
+                }
+
+                // 2. Obtener el producto usando producto_id
+                var clienteProd = new KawkiWebBusiness.KawkiWebWSProductos.ProductosClient();
+                var producto = clienteProd.obtenerPorIdProducto(variante.producto_id);
+
+                if (producto == null)
+                {
+                    lblMensaje.Text = "No se encontró el producto vinculado.";
+                    return;
+                }
+
+                // 3. Mostrar precioVenta real
+                decimal precio = (decimal)producto.precio_venta;
+                txtPrecioUnitario.Text = precio.ToString("0.00");
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error cargando precio: " + ex.Message;
+                lblMensaje.CssClass = "text-danger";
             }
         }
+
+
         protected void ddlComprobante_SelectedIndexChanged(object sender, EventArgs e)
         {
             string tipo = ddlComprobante.SelectedValue;
@@ -586,7 +623,7 @@ namespace KawkiWeb
                 int usuarioId = Convert.ToInt32(Session["UsuarioId"]);
 
                 // 2. Crear el usuariosDTO del WSDL de Ventas
-                var usuarioVendedor = new KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO()
+                var usuarioVendedor = new KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO
                 {
                     usuarioId = usuarioId
                 };
@@ -619,22 +656,53 @@ namespace KawkiWeb
 
                 // 5. Registrar detalles de venta
                 DetalleVentasBO detalleBO = new DetalleVentasBO();
+                
 
-                foreach (GridViewRow row in DetalleVentas.Rows)
+                foreach (DataRow row in DetalleVentas.Rows)
                 {
-                    int prodVarId = Convert.ToInt32(row.Cells[0].Text);
-                    int cantidad = Convert.ToInt32(row.Cells[2].Text);
-                    double precio = Convert.ToDouble(row.Cells[3].Text);
-                    double subtotal = Convert.ToDouble(row.Cells[4].Text);
-
-                    // Crear objeto productosVariantesDTO para DetalleVentasService
-                    var productoVar = new KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO
+                    try
                     {
-                        prod_variante_id = prodVarId
-                    };
+                        string pid = row["ProductoId"]?.ToString();
+                        string cant = row["Cantidad"]?.ToString();
+                        string prec = row["PrecioUnitario"]?.ToString();
+                        string subt = row["Subtotal"]?.ToString();
 
-                    detalleBO.InsertarDetalleVenta(productoVar, ventaId, cantidad, precio, subtotal);
+                        Debug.WriteLine("----------------------------------------");
+                        Debug.WriteLine("ProductoId: " + (pid == null ? "[null]" : "'" + pid + "'"));
+                        Debug.WriteLine("Cantidad: " + (cant == null ? "[null]" : "'" + cant + "'"));
+                        Debug.WriteLine("Precio: " + (prec == null ? "[null]" : "'" + prec + "'"));
+                        Debug.WriteLine("Subtotal: " + (subt == null ? "[null]" : "'" + subt + "'"));
+                        Debug.WriteLine("----------------------------------------");
+
+                        // Forzamos mostrar valores REALES
+                        lblMensaje.Text = $"Debug → ProductoId: '{pid}', Cantidad: '{cant}', Precio: '{prec}', Subtotal: '{subt}'";
+                        lblMensaje.CssClass = "text-warning mb-2 d-block";
+                        return; // <-- detiene el proceso después de mostrar el mensaje
+                    }
+                    catch (Exception ex)
+                    {
+                        lblMensaje.Text = "Dato inválido en el detalle ➝ " + ex.Message;
+                        lblMensaje.CssClass = "text-danger mb-2 d-block";
+                        return;
+                    }
                 }
+
+
+                //foreach (DataRow row in DetalleVentas.Rows)
+                //{
+                //    int prodVarId = Convert.ToInt32(row["ProductoId"]);
+                //    int cantidad = Convert.ToInt32(row["Cantidad"]);
+                //    double precio = Convert.ToDouble(row["PrecioUnitario"]);
+                //    double subtotal = Convert.ToDouble(row["Subtotal"]);
+
+                //    // Crear objeto productosVariantesDTO para DetalleVentasService
+                //    var productoVar = new KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO
+                //    {
+                //        prod_variante_id = prodVarId
+                //    };
+
+                //    detalleBO.InsertarDetalleVenta(productoVar, ventaId, cantidad, precio, subtotal);
+                //}
 
                 // 6. Todo OK
                 lblMensaje.CssClass = "text-success mb-2 d-block";

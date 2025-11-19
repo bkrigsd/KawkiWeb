@@ -16,6 +16,15 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
     public interface Ventas {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse obtenerPorIdVenta(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse> obtenerPorIdVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/listarTodosVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/listarTodosVentaResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
@@ -41,15 +50,6 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse obtenerPorIdVenta(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse> obtenerPorIdVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request);
     }
     
     /// <remarks/>
@@ -1443,6 +1443,42 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdVentaRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int ventaId;
+        
+        public obtenerPorIdVentaRequest() {
+        }
+        
+        public obtenerPorIdVentaRequest(int ventaId) {
+            this.ventaId = ventaId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdVentaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdVentaResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSVentas.ventasDTO @return;
+        
+        public obtenerPorIdVentaResponse() {
+        }
+        
+        public obtenerPorIdVentaResponse(KawkiWebBusiness.KawkiWebWSVentas.ventasDTO @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class listarTodosVentaRequest {
         
@@ -1580,42 +1616,6 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdVentaRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int ventaId;
-        
-        public obtenerPorIdVentaRequest() {
-        }
-        
-        public obtenerPorIdVentaRequest(int ventaId) {
-            this.ventaId = ventaId;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdVentaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdVentaResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSVentas.ventasDTO @return;
-        
-        public obtenerPorIdVentaResponse() {
-        }
-        
-        public obtenerPorIdVentaResponse(KawkiWebBusiness.KawkiWebWSVentas.ventasDTO @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface VentasChannel : KawkiWebBusiness.KawkiWebWSVentas.Ventas, System.ServiceModel.IClientChannel {
     }
@@ -1641,6 +1641,29 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         
         public VentasClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse KawkiWebBusiness.KawkiWebWSVentas.Ventas.obtenerPorIdVenta(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request) {
+            return base.Channel.obtenerPorIdVenta(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSVentas.ventasDTO obtenerPorIdVenta(int ventaId) {
+            KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest();
+            inValue.ventaId = ventaId;
+            KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse retVal = ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).obtenerPorIdVenta(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse> KawkiWebBusiness.KawkiWebWSVentas.Ventas.obtenerPorIdVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request) {
+            return base.Channel.obtenerPorIdVentaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse> obtenerPorIdVentaAsync(int ventaId) {
+            KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest();
+            inValue.ventaId = ventaId;
+            return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).obtenerPorIdVentaAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1724,29 +1747,6 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
             inValue.descuento = descuento;
             inValue.redSocial = redSocial;
             return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).insertarVentaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse KawkiWebBusiness.KawkiWebWSVentas.Ventas.obtenerPorIdVenta(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request) {
-            return base.Channel.obtenerPorIdVenta(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSVentas.ventasDTO obtenerPorIdVenta(int ventaId) {
-            KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest();
-            inValue.ventaId = ventaId;
-            KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse retVal = ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).obtenerPorIdVenta(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse> KawkiWebBusiness.KawkiWebWSVentas.Ventas.obtenerPorIdVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest request) {
-            return base.Channel.obtenerPorIdVentaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse> obtenerPorIdVentaAsync(int ventaId) {
-            KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaRequest();
-            inValue.ventaId = ventaId;
-            return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).obtenerPorIdVentaAsync(inValue);
         }
     }
 }
