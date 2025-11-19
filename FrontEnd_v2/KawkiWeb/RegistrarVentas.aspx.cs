@@ -1,4 +1,7 @@
-﻿using KawkiWebBusiness.KawkiWebWSVentas;
+﻿using KawkiWebBusiness;
+using KawkiWebBusiness.BO;
+using KawkiWebBusiness.KawkiWebWSDetalleVentas;
+using KawkiWebBusiness.KawkiWebWSVentas;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -563,7 +566,7 @@ namespace KawkiWeb
                 return;
             }
 
-            // Validar que el total sea mayor a 0
+            // Validar total
             decimal total = 0m;
             if (!decimal.TryParse(lblTotal.Text.Replace("S/", "").Trim(), out total) || total <= 0)
             {
@@ -573,8 +576,7 @@ namespace KawkiWeb
 
             try
             {
-                // lógica real de guardado en BD
-                // 1. Recoger datos
+                // 1️⃣ Recoger datos del formulario
                 string nombreCliente = txtNombreCliente.Text.Trim();
                 string telefono = txtTelefono.Text.Trim();
                 string canal = ddlCanal.SelectedValue;
@@ -582,21 +584,67 @@ namespace KawkiWeb
                 string metodoPago = ddlMetodoPago.SelectedValue;
                 string notas = txtNotas.Text.Trim();
 
-                //string ruc = txtRuc.Text.Trim();
-                //string razonSocial = txtRazonSocial.Text.Trim();
-                //string direccion = txtDireccion.Text.Trim();
-                //string dni = txtDni.Text.Trim();
+                string ruc = txtRUC.Text.Trim();
+                string razonSocial = txtRazonSocial.Text.Trim();
+                string direccion = txtDireccionFiscal.Text.Trim();
+                string dni = txtDNI.Text.Trim();
 
-                ventasDTO ventasDTO = new ventasDTO();
-                
-                // VentasDAO.RegistrarVenta(nombreCliente, telefono, email, direccion, 
-                //                         canal, comprobante, metodoPago, notas, 
-                //                         DetalleVentas, total);
+                // 2️ CREAR OBJETOS DTO PARA EL WS
+                // Usuario
+                var usuario = new KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO
+                {
+                    nombre = nombreCliente,
+                    telefono = telefono,
+                    dni = dni,
+                };
+
+                // Descuento (aún no usas, enviamos null)
+                descuentosDTO descuento = null;
+
+                // Canal = red social
+                var redSocial = new redesSocialesDTO
+                {
+                    nombre = canal
+                };
+
+
+                // 3️⃣ INSERTAR VENTA Y OBTENER EL ID NUEVO
+
+                VentasBO ventasBO = new VentasBO();
+
+                int ventaId = ventasBO.InsertarVenta(usuario, (double)total, descuento, redSocial);
+
+                if (ventaId <= 0)
+                {
+                    lblMensaje.Text = "No se pudo registrar la venta.";
+                    return;
+                }
+
+                // 4️ REGISTRAR DETALLES DE VENTA
+
+                DetalleVentasBO detalleBO = new DetalleVentasBO();
+
+                foreach (GridViewRow row in DetalleVentas.Rows)
+                {
+                    int prodVarId = Convert.ToInt32(row.Cells[0].Text);
+                    int cantidad = Convert.ToInt32(row.Cells[2].Text);
+                    double precio = Convert.ToDouble(row.Cells[3].Text);
+                    double subtotal = Convert.ToDouble(row.Cells[4].Text);
+
+                    // Crear objeto productosVariantesDTO
+                    var productoVar = new KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO
+                    {
+                        prod_variante_id = prodVarId
+                    };
+
+                    detalleBO.InsertarDetalleVenta(productoVar, ventaId, cantidad, precio, subtotal);
+                }
+
+                // 5 TODO OK → MENSAJE
 
                 lblMensaje.CssClass = "text-success mb-2 d-block";
                 lblMensaje.Text = "✓ Venta registrada correctamente.";
 
-                // Limpiar formulario después de registrar
                 LimpiarFormulario();
             }
             catch (Exception ex)
