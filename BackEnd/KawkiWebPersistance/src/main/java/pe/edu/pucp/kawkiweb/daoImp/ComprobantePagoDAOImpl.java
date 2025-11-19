@@ -1,7 +1,6 @@
 package pe.edu.pucp.kawkiweb.daoImp;
 
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
@@ -336,31 +335,19 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
 
     @Override
     public String obtenerSiguienteNumeroSerie(Integer tipoComprobanteId) {
-        String numeroSerie = null;
-
-        try {
-            this.abrirConexion();
-
-            // Llamada al stored procedure
-            // Funciona tanto para MySQL como SQL Server
-            String sql = "{CALL SP_OBTENER_SIGUIENTE_NUMERO_SERIE(?, ?)}";
-            this.colocarSQLEnStatement(sql);
-            this.statement.setInt(1, tipoComprobanteId);
-            this.statement.registerOutParameter(2, Types.VARCHAR);
-            this.statement.execute();
-            numeroSerie = this.statement.getString(2);
-
-        } catch (SQLException ex) {
-            System.err.println("Error al obtener siguiente número de serie: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return numeroSerie;
+        return super.ejecutarSPConOutString(
+                "SP_OBTENER_SIGUIENTE_NUMERO_SERIE",
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al setear tipoComprobanteId: " + ex);
+                    }
+                },
+                tipoComprobanteId,
+                null // Valor por defecto
+        );
     }
 
 }

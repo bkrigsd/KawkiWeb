@@ -84,4 +84,14 @@ public class Usuarios {
 
         return this.usuarioBO.autenticar(nombreUsuario, contrasenha);
     }
+    
+    @WebMethod(operationName = "verificarUnicidad")
+    public boolean[] verificarUnicidad(
+            @WebParam(name = "correo") String correo, 
+            @WebParam(name = "nombreUsuario") String nombreUsuario, 
+            @WebParam(name = "dni") String dni, 
+            @WebParam(name = "usuarioIdExcluir") Integer usuarioIdExcluir){
+        
+        return this.usuarioBO.verificarUnicidad(correo, nombreUsuario, dni, usuarioIdExcluir);
+    }
 }

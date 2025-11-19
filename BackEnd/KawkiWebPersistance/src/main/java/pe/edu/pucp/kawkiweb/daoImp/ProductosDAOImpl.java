@@ -1,7 +1,6 @@
 package pe.edu.pucp.kawkiweb.daoImp;
 
 import java.sql.SQLException;
-import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -217,63 +216,36 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
     // ========== IMPLEMENTACIÓN DE MÉTODOS AVANZADOS ==========
     @Override
     public Boolean tieneStockDisponible(Integer productoId) {
-        Boolean tieneStock = false;
-
-        try {
-            this.abrirConexion();
-
-            // Llamada al stored procedure
-            String sql = "{CALL SP_VERIFICAR_STOCK_DISPONIBLE(?, ?)}";
-            this.colocarSQLEnStatement(sql);
-            this.statement.setInt(1, productoId);
-            this.statement.registerOutParameter(2, Types.TINYINT);
-            this.statement.execute();
-
-            // Obtener el resultado (1 = tiene stock, 0 = no tiene stock)
-            int resultado = this.statement.getInt(2);
-            tieneStock = (resultado == 1);
-
-        } catch (SQLException ex) {
-            System.err.println("Error al verificar stock disponible: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return tieneStock;
+        return super.ejecutarSPConOutBoolean(
+                "SP_VERIFICAR_STOCK_DISPONIBLE",
+                1, // 1 parámetro IN
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al setear productoId: " + ex);
+                    }
+                },
+                productoId,
+                false // Valor por defecto
+        );
     }
 
     @Override
     public Integer calcularStockTotal(Integer productoId) {
-        Integer stockTotal = 0;
-
-        try {
-            this.abrirConexion();
-
-            // Llamada al stored procedure
-            String sql = "{CALL SP_CALCULAR_STOCK_TOTAL(?, ?)}";
-            this.colocarSQLEnStatement(sql);
-            this.statement.setInt(1, productoId);
-            this.statement.registerOutParameter(2, Types.INTEGER);
-            this.statement.execute();
-
-            // Obtener el stock total
-            stockTotal = this.statement.getInt(2);
-
-        } catch (SQLException ex) {
-            System.err.println("Error al calcular stock total: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return stockTotal;
+        return super.ejecutarSPConOutInteger(
+                "SP_CALCULAR_STOCK_TOTAL",
+                1, // 1 parámetro IN
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al setear productoId: " + ex);
+                    }
+                },
+                productoId,
+                0 // Valor por defecto
+        );
     }
 
     /**

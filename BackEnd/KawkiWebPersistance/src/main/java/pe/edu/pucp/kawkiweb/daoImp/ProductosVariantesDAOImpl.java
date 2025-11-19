@@ -1,7 +1,6 @@
 package pe.edu.pucp.kawkiweb.daoImp;
 
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -339,42 +338,22 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
      */
     @Override
     public boolean existeVariante(Integer productoId, Integer colorId, Integer tallaId) {
-        boolean existe = false;
-
-        try {
-            this.abrirConexion();
-
-            // Generar llamada al SP según el motor de BD
-            String sql = "{CALL SP_EXISTE_VARIANTE(?, ?, ?, ?)}";
-
-            this.colocarSQLEnStatement(sql);
-
-            // Setear parámetros de entrada
-            this.statement.setInt(1, productoId);
-            this.statement.setInt(2, colorId);
-            this.statement.setInt(3, tallaId);
-
-            // Registrar parámetro de salida
-            this.statement.registerOutParameter(4, Types.TINYINT);
-
-            // Ejecutar el procedimiento
-            this.statement.execute();
-
-            // Obtener resultado
-            int resultado = this.statement.getInt(4);
-            existe = (resultado == 1);
-
-        } catch (SQLException ex) {
-            System.err.println("Error al verificar existencia de variante: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return existe;
+        return super.ejecutarSPConOutBoolean(
+                "SP_EXISTE_VARIANTE",
+                3,
+                (params) -> {
+                    try {
+                        Integer[] p = (Integer[]) params;
+                        this.statement.setInt(1, p[0]);
+                        this.statement.setInt(2, p[1]);
+                        this.statement.setInt(3, p[2]);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al setear parámetros: " + ex);
+                    }
+                },
+                new Integer[]{productoId, colorId, tallaId},
+                false
+        );
     }
 
     /**
@@ -382,43 +361,24 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
      * producto-color-talla EXCLUYENDO la variante que se está modificando
      */
     @Override
-    public boolean existeVarianteParaModificar(Integer varianteId, Integer productoId,
-            Integer colorId, Integer tallaId) {
-        boolean existe = false;
-
-        try {
-            this.abrirConexion();
-
-            // Llamada al stored procedure
-            String sql = "{CALL SP_EXISTE_VARIANTE_PARA_MODIFICAR(?, ?, ?, ?, ?)}";
-            this.colocarSQLEnStatement(sql);
-
-            // Parámetros de entrada
-            this.statement.setInt(1, varianteId);
-            this.statement.setInt(2, productoId);
-            this.statement.setInt(3, colorId);
-            this.statement.setInt(4, tallaId);
-
-            // Parámetro de salida
-            this.statement.registerOutParameter(5, Types.TINYINT);
-
-            // Ejecutar el procedimiento
-            this.statement.execute();
-
-            // Obtener resultado
-            int resultado = this.statement.getInt(5);
-            existe = (resultado == 1);
-
-        } catch (SQLException ex) {
-            System.err.println("Error al verificar existencia de variante para modificar: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return existe;
+    public boolean existeVarianteParaModificar(Integer varianteId, 
+            Integer productoId, Integer colorId, Integer tallaId) {
+        return super.ejecutarSPConOutBoolean(
+                "SP_EXISTE_VARIANTE_PARA_MODIFICAR",
+                4,
+                (params) -> {
+                    try {
+                        Integer[] p = (Integer[]) params;
+                        this.statement.setInt(1, p[0]);  // varianteId
+                        this.statement.setInt(2, p[1]);  // productoId
+                        this.statement.setInt(3, p[2]);  // colorId
+                        this.statement.setInt(4, p[3]);  // tallaId
+                    } catch (SQLException ex) {
+                        System.err.println("Error al setear parámetros: " + ex);
+                    }
+                },
+                new Integer[]{varianteId, productoId, colorId, tallaId},
+                false
+        );
     }
 }
