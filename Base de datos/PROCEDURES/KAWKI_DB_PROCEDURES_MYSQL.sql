@@ -2,12 +2,16 @@
 -- STORED PROCEDURES
 -- =====================================================
 
+-- =====================================================
+-- SP_OBTENER_COMPROBANTE_POR_VENTA - MySQL (Optimizado)
+-- Obtiene el comprobante de pago de una venta con datos completos
+-- (solo si la venta es válida)
+-- =====================================================
+
 USE KAWKI_DB;
 
 DELIMITER $$
--- =====================================================
--- Obtener el comprobante de pago de una venta (solo si la venta es válida)
--- =====================================================
+
 DROP PROCEDURE IF EXISTS SP_OBTENER_COMPROBANTE_POR_VENTA$$
 
 CREATE PROCEDURE SP_OBTENER_COMPROBANTE_POR_VENTA(
@@ -15,10 +19,11 @@ CREATE PROCEDURE SP_OBTENER_COMPROBANTE_POR_VENTA(
 )
 BEGIN
     -- Retorna el comprobante solo si la venta asociada es válida
+    -- CON TODOS LOS DATOS COMPLETOS mediante JOINs (sin necesidad de queries adicionales)
     SELECT 
+        -- Campos del comprobante
         cp.COMPROBANTE_PAGO_ID,
         cp.FECHA_HORA_CREACION,
-        cp.TIPO_COMPROBANTE_ID,
         cp.NUMERO_SERIE,
         cp.DNI_CLIENTE,
         cp.NOMBRE_CLIENTE,
@@ -27,25 +32,47 @@ BEGIN
         cp.DIRECCION_FISCAL_CLIENTE,
         cp.TELEFONO_CLIENTE,
         cp.TOTAL,
-        cp.VENTA_ID,
-        cp.METODO_PAGO_ID,
         cp.SUBTOTAL,
-        cp.IGV
+        cp.IGV,
+        
+        -- Tipo de comprobante completo (JOIN)
+        tc.TIPO_COMPROBANTE_ID,
+        tc.NOMBRE AS TIPO_COMPROBANTE_NOMBRE,
+        
+        -- Venta completa (JOIN) - SIN detalles, solo info básica
+        v.VENTA_ID,
+        v.FECHA_HORA_CREACION AS VENTA_FECHA_HORA,
+        v.TOTAL AS VENTA_TOTAL,
+        v.ES_VALIDA,
+        
+        -- Usuario de la venta (JOIN) - NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO,
+        
+        -- Método de pago completo (JOIN)
+        mp.METODO_PAGO_ID,
+        mp.NOMBRE AS METODO_PAGO_NOMBRE
+        
     FROM COMPROBANTES_PAGO cp
+    INNER JOIN TIPOS_COMPROBANTE tc ON cp.TIPO_COMPROBANTE_ID = tc.TIPO_COMPROBANTE_ID
     INNER JOIN VENTAS v ON cp.VENTA_ID = v.VENTA_ID
+    INNER JOIN USUARIOS u ON v.USUARIO_ID = u.USUARIO_ID
+    INNER JOIN METODOS_PAGO mp ON cp.METODO_PAGO_ID = mp.METODO_PAGO_ID
     WHERE cp.VENTA_ID = p_venta_id 
       AND v.ES_VALIDA = 1;
 END$$
 
 DELIMITER ;
 
+-- =====================================================
+-- SP_LISTAR_DETALLES_POR_VENTA - MySQL (Optimizado)
+-- Lista detalles de venta con productos variantes completos
+-- =====================================================
 USE KAWKI_DB;
 
 DELIMITER $$
 
--- =====================================================
--- LISTAR DETALLES DE VENTA POR VENTA_ID
--- =====================================================
 DROP PROCEDURE IF EXISTS SP_LISTAR_DETALLES_POR_VENTA$$
 
 CREATE PROCEDURE SP_LISTAR_DETALLES_POR_VENTA(
@@ -53,14 +80,38 @@ CREATE PROCEDURE SP_LISTAR_DETALLES_POR_VENTA(
 )
 BEGIN
     SELECT 
-        DETALLE_VENTA_ID,
-        CANTIDAD,
-        PRECIO_UNITARIO,
-        SUBTOTAL,
-        VENTA_ID,
-        PROD_VARIANTE_ID
-    FROM DETALLE_VENTAS
-    WHERE VENTA_ID = p_venta_id;
+        -- Campos del detalle de venta
+        dv.DETALLE_VENTA_ID,
+        dv.CANTIDAD,
+        dv.PRECIO_UNITARIO,
+        dv.SUBTOTAL,
+        dv.VENTA_ID,
+        
+        -- Producto Variante completo (JOIN)
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Color del producto variante (JOIN)
+        c.COLOR_ID,
+        c.NOMBRE AS COLOR_NOMBRE,
+        
+        -- Talla del producto variante (JOIN)
+        t.TALLA_ID,
+        t.NUMERO AS TALLA_NUMERO,
+        
+        -- Usuario del producto variante (JOIN) - NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM DETALLE_VENTAS dv
+    INNER JOIN PRODUCTOS_VARIANTES pv ON dv.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN COLORES c ON pv.COLOR_ID = c.COLOR_ID
+    INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+    INNER JOIN USUARIOS u ON pv.USUARIO_ID = u.USUARIO_ID
+    WHERE dv.VENTA_ID = p_venta_id
+    ORDER BY dv.DETALLE_VENTA_ID;
 END$$
 
 DELIMITER ;
@@ -177,6 +228,10 @@ END$$
 -- 2. SP_LISTAR_USUARIOS_POR_TIPO
 -- Lista usuarios filtrados por tipo de usuario
 -- =====================================================
+USE KAWKI_DB;
+
+DELIMITER $$
+
 DROP PROCEDURE IF EXISTS SP_LISTAR_USUARIOS_POR_TIPO$$
 
 CREATE PROCEDURE SP_LISTAR_USUARIOS_POR_TIPO(
@@ -184,20 +239,26 @@ CREATE PROCEDURE SP_LISTAR_USUARIOS_POR_TIPO(
 )
 BEGIN
     SELECT 
-        U.USUARIO_ID,
-        U.NOMBRE,
-        U.APE_PATERNO,
-        U.DNI,
-        U.TELEFONO,
-        U.CORREO,
-        U.NOMBRE_USUARIO,
-        U.CONTRASENHA,
-        U.FECHA_HORA_CREACION,
-        U.TIPO_USUARIO_ID,
-        U.ACTIVO
-    FROM USUARIOS U
-    WHERE U.TIPO_USUARIO_ID = p_tipo_usuario_id
-    ORDER BY U.NOMBRE, U.APE_PATERNO;
+        -- Campos del usuario
+        u.USUARIO_ID,
+        u.NOMBRE,
+        u.APE_PATERNO,
+        u.DNI,
+        u.TELEFONO,
+        u.CORREO,
+        u.NOMBRE_USUARIO,
+        u.CONTRASENHA,
+        u.FECHA_HORA_CREACION,
+        u.ACTIVO,
+        
+        -- Tipo de usuario completo (JOIN) - TODOS LOS CAMPOS (id y nombre)
+        tu.TIPO_USUARIO_ID,
+        tu.NOMBRE AS TIPO_USUARIO_NOMBRE
+        
+    FROM USUARIOS u
+    INNER JOIN TIPOS_USUARIO tu ON u.TIPO_USUARIO_ID = tu.TIPO_USUARIO_ID
+    WHERE u.TIPO_USUARIO_ID = p_tipo_usuario_id
+    ORDER BY u.NOMBRE, u.APE_PATERNO;
 END$$
 
 
@@ -266,6 +327,10 @@ END$$
 -- Autentica un usuario por nombre de usuario o correo
 -- Retorna los datos del usuario si las credenciales son válidas
 -- =====================================================
+USE KAWKI_DB;
+
+DELIMITER $$
+
 DROP PROCEDURE IF EXISTS SP_AUTENTICAR_USUARIO$$
 
 CREATE PROCEDURE SP_AUTENTICAR_USUARIO(
@@ -274,80 +339,108 @@ CREATE PROCEDURE SP_AUTENTICAR_USUARIO(
 )
 BEGIN
     SELECT 
-        U.USUARIO_ID,
-        U.NOMBRE,
-        U.APE_PATERNO,
-        U.DNI,
-        U.TELEFONO,
-        U.CORREO,
-        U.NOMBRE_USUARIO,
-        U.CONTRASENHA,
-        U.FECHA_HORA_CREACION,
-        U.TIPO_USUARIO_ID,
-        U.ACTIVO
-    FROM USUARIOS U
-    WHERE (U.NOMBRE_USUARIO = p_nombre_usuario_o_correo 
-           OR U.CORREO = p_nombre_usuario_o_correo)
-    AND U.CONTRASENHA = p_contrasenha
-    AND U.ACTIVO = 1
+        -- Campos del usuario
+        u.USUARIO_ID,
+        u.NOMBRE,
+        u.APE_PATERNO,
+        u.DNI,
+        u.TELEFONO,
+        u.CORREO,
+        u.NOMBRE_USUARIO,
+        u.CONTRASENHA,
+        u.FECHA_HORA_CREACION,
+        u.ACTIVO,
+        
+        -- Tipo de usuario completo (JOIN) - TODOS LOS CAMPOS (id y nombre)
+        tu.TIPO_USUARIO_ID,
+        tu.NOMBRE AS TIPO_USUARIO_NOMBRE
+        
+    FROM USUARIOS u
+    INNER JOIN TIPOS_USUARIO tu ON u.TIPO_USUARIO_ID = tu.TIPO_USUARIO_ID
+    WHERE (u.NOMBRE_USUARIO = p_nombre_usuario_o_correo 
+           OR u.CORREO = p_nombre_usuario_o_correo)
+    AND u.CONTRASENHA = p_contrasenha
+    AND u.ACTIVO = 1
     LIMIT 1;
 END$$
 
 DELIMITER ;
 
 -- =====================================================
--- STORED PROCEDURES PARA DESCUENTOS
+-- STORED PROCEDURES PARA DESCUENTOS - MySQL (Optimizados)
 -- =====================================================
 USE KAWKI_DB;
-DELIMITER $
+
+DELIMITER $$
 
 -- =====================================================
--- 5. SP_LISTAR_DESCUENTOS_ACTIVOS
--- Lista descuentos que están marcados como activos
+-- SP_LISTAR_DESCUENTOS_ACTIVOS (Optimizado con JOINs)
+-- Lista descuentos activos con tipos de condición y beneficio completos
 -- =====================================================
-DROP PROCEDURE IF EXISTS SP_LISTAR_DESCUENTOS_ACTIVOS$
+DROP PROCEDURE IF EXISTS SP_LISTAR_DESCUENTOS_ACTIVOS$$
 
 CREATE PROCEDURE SP_LISTAR_DESCUENTOS_ACTIVOS()
 BEGIN
     SELECT 
-        DESCUENTO_ID,
-        DESCRIPCION,
-        TIPO_CONDICION_ID,
-        VALOR_CONDICION,
-        TIPO_BENEFICIO_ID,
-        VALOR_BENEFICIO,
-        FECHA_INICIO,
-        FECHA_FIN,
-        ACTIVO
-    FROM DESCUENTOS
-    WHERE ACTIVO = 1
-    ORDER BY FECHA_INICIO DESC;
-END$
+        -- Campos del descuento
+        d.DESCUENTO_ID,
+        d.DESCRIPCION,
+        d.VALOR_CONDICION,
+        d.VALOR_BENEFICIO,
+        d.FECHA_INICIO,
+        d.FECHA_FIN,
+        d.ACTIVO,
+        
+        -- Tipo de condición completo (JOIN)
+        tc.TIPO_CONDICION_ID,
+        tc.NOMBRE AS TIPO_CONDICION_NOMBRE,
+        
+        -- Tipo de beneficio completo (JOIN)
+        tb.TIPO_BENEFICIO_ID,
+        tb.NOMBRE AS TIPO_BENEFICIO_NOMBRE
+        
+    FROM DESCUENTOS d
+    INNER JOIN TIPOS_CONDICION tc ON d.TIPO_CONDICION_ID = tc.TIPO_CONDICION_ID
+    INNER JOIN TIPOS_BENEFICIO tb ON d.TIPO_BENEFICIO_ID = tb.TIPO_BENEFICIO_ID
+    WHERE d.ACTIVO = 1
+    ORDER BY d.FECHA_INICIO DESC;
+END$$
 
 -- =====================================================
--- 6. SP_LISTAR_DESCUENTOS_VIGENTES
+-- SP_LISTAR_DESCUENTOS_VIGENTES (Optimizado con JOINs)
 -- Lista descuentos activos y dentro del periodo de vigencia
+-- con tipos de condición y beneficio completos
 -- =====================================================
-DROP PROCEDURE IF EXISTS SP_LISTAR_DESCUENTOS_VIGENTES$
+DROP PROCEDURE IF EXISTS SP_LISTAR_DESCUENTOS_VIGENTES$$
 
 CREATE PROCEDURE SP_LISTAR_DESCUENTOS_VIGENTES()
 BEGIN
     SELECT 
-        DESCUENTO_ID,
-        DESCRIPCION,
-        TIPO_CONDICION_ID,
-        VALOR_CONDICION,
-        TIPO_BENEFICIO_ID,
-        VALOR_BENEFICIO,
-        FECHA_INICIO,
-        FECHA_FIN,
-        ACTIVO
-    FROM DESCUENTOS
-    WHERE ACTIVO = 1
-    AND FECHA_INICIO <= NOW()
-    AND FECHA_FIN >= NOW()
-    ORDER BY FECHA_INICIO DESC;
-END$
+        -- Campos del descuento
+        d.DESCUENTO_ID,
+        d.DESCRIPCION,
+        d.VALOR_CONDICION,
+        d.VALOR_BENEFICIO,
+        d.FECHA_INICIO,
+        d.FECHA_FIN,
+        d.ACTIVO,
+        
+        -- Tipo de condición completo (JOIN)
+        tc.TIPO_CONDICION_ID,
+        tc.NOMBRE AS TIPO_CONDICION_NOMBRE,
+        
+        -- Tipo de beneficio completo (JOIN)
+        tb.TIPO_BENEFICIO_ID,
+        tb.NOMBRE AS TIPO_BENEFICIO_NOMBRE
+        
+    FROM DESCUENTOS d
+    INNER JOIN TIPOS_CONDICION tc ON d.TIPO_CONDICION_ID = tc.TIPO_CONDICION_ID
+    INNER JOIN TIPOS_BENEFICIO tb ON d.TIPO_BENEFICIO_ID = tb.TIPO_BENEFICIO_ID
+    WHERE d.ACTIVO = 1
+      AND d.FECHA_INICIO <= NOW()
+      AND d.FECHA_FIN >= NOW()
+    ORDER BY d.FECHA_INICIO DESC;
+END$$
 
 DELIMITER ;
 
@@ -437,25 +530,124 @@ BEGIN
 END$$
 
 -- =====================================================
--- SP_LISTAR_PRODUCTOS_STOCK_BAJO
--- Lista productos que tienen al menos una variante con alerta de stock
+-- STORED PROCEDURES PARA PRODUCTOS - BÚSQUEDAS AVANZADAS (MySQL)
+-- =====================================================
+
+USE KAWKI_DB;
+DELIMITER $$
+
+-- =====================================================
+-- SP_LISTAR_PRODUCTOS_POR_CATEGORIA
+-- Lista productos filtrados por categoría con JOINs completos
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_PRODUCTOS_POR_CATEGORIA$$
+
+CREATE PROCEDURE SP_LISTAR_PRODUCTOS_POR_CATEGORIA(
+    IN p_categoria_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos del producto
+        p.PRODUCTO_ID,
+        p.DESCRIPCION,
+        p.PRECIO_VENTA,
+        p.FECHA_HORA_CREACION,
+        
+        -- Categoría completa (JOIN)
+        c.CATEGORIA_ID,
+        c.NOMBRE AS CATEGORIA_NOMBRE,
+        
+        -- Estilo completo (JOIN)
+        e.ESTILO_ID,
+        e.NOMBRE AS ESTILO_NOMBRE,
+        
+        -- Usuario completo (JOIN) - NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS p
+    INNER JOIN CATEGORIAS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
+    INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
+    INNER JOIN USUARIOS u ON p.USUARIO_ID = u.USUARIO_ID
+    WHERE p.CATEGORIA_ID = p_categoria_id
+    ORDER BY p.PRODUCTO_ID;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_PRODUCTOS_POR_ESTILO
+-- Lista productos filtrados por estilo con JOINs completos
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_PRODUCTOS_POR_ESTILO$$
+
+CREATE PROCEDURE SP_LISTAR_PRODUCTOS_POR_ESTILO(
+    IN p_estilo_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos del producto
+        p.PRODUCTO_ID,
+        p.DESCRIPCION,
+        p.PRECIO_VENTA,
+        p.FECHA_HORA_CREACION,
+        
+        -- Categoría completa (JOIN)
+        c.CATEGORIA_ID,
+        c.NOMBRE AS CATEGORIA_NOMBRE,
+        
+        -- Estilo completo (JOIN)
+        e.ESTILO_ID,
+        e.NOMBRE AS ESTILO_NOMBRE,
+        
+        -- Usuario completo (JOIN) - NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS p
+    INNER JOIN CATEGORIAS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
+    INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
+    INNER JOIN USUARIOS u ON p.USUARIO_ID = u.USUARIO_ID
+    WHERE p.ESTILO_ID = p_estilo_id
+    ORDER BY p.PRODUCTO_ID;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_PRODUCTOS_STOCK_BAJO (OPTIMIZADO CON JOINS)
+-- Lista productos con al menos una variante con alerta de stock
+-- Ahora retorna datos completos mediante JOINs
 -- =====================================================
 DROP PROCEDURE IF EXISTS SP_LISTAR_PRODUCTOS_STOCK_BAJO$$
 
 CREATE PROCEDURE SP_LISTAR_PRODUCTOS_STOCK_BAJO()
 BEGIN
     SELECT DISTINCT 
-        P.PRODUCTO_ID,
-        P.DESCRIPCION,
-        P.CATEGORIA_ID,
-        P.ESTILO_ID,
-        P.PRECIO_VENTA,
-        P.FECHA_HORA_CREACION,
-        P.USUARIO_ID
-    FROM PRODUCTOS P
-    INNER JOIN PRODUCTOS_VARIANTES PV ON P.PRODUCTO_ID = PV.PRODUCTO_ID
-    WHERE PV.ALERTA_STOCK = 1
-    ORDER BY P.PRODUCTO_ID;
+        -- Campos del producto
+        p.PRODUCTO_ID,
+        p.DESCRIPCION,
+        p.PRECIO_VENTA,
+        p.FECHA_HORA_CREACION,
+        
+        -- Categoría completa (JOIN)
+        c.CATEGORIA_ID,
+        c.NOMBRE AS CATEGORIA_NOMBRE,
+        
+        -- Estilo completo (JOIN)
+        e.ESTILO_ID,
+        e.NOMBRE AS ESTILO_NOMBRE,
+        
+        -- Usuario completo (JOIN) - NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS p
+    INNER JOIN CATEGORIAS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
+    INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
+    INNER JOIN USUARIOS u ON p.USUARIO_ID = u.USUARIO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON p.PRODUCTO_ID = pv.PRODUCTO_ID
+    WHERE pv.ALERTA_STOCK = 1
+    ORDER BY p.PRODUCTO_ID;
 END$$
 
 DELIMITER ;
@@ -651,12 +843,6 @@ BEGIN
         pv.PROD_VARIANTE_ID,
         pv.SKU,
         pv.STOCK,
-        pv.STOCK_MINIMO,
-        pv.ALERTA_STOCK,
-        pv.PRODUCTO_ID,
-        pv.URL_IMAGEN,
-        pv.FECHA_HORA_CREACION AS PV_FECHA_HORA_CREACION,
-        pv.DISPONIBLE,
         
         -- Color del producto variante (JOIN)
         c.COLOR_ID,
@@ -778,47 +964,28 @@ BEGIN
         pv.STOCK,
         pv.STOCK_MINIMO,
         pv.ALERTA_STOCK,
+        pv.PRODUCTO_ID,
         pv.URL_IMAGEN,
         pv.FECHA_HORA_CREACION,
         pv.DISPONIBLE,
         
-        -- Color completo (JOIN) - TODOS LOS CAMPOS
+        -- Color completo (JOIN)
         c.COLOR_ID,
         c.NOMBRE AS COLOR_NOMBRE,
         
-        -- Talla completa (JOIN) - TODOS LOS CAMPOS
+        -- Talla completa (JOIN)
         t.TALLA_ID,
         t.NUMERO AS TALLA_NUMERO,
         
-        -- Usuario de la variante (JOIN) - ID, NOMBRE, APE_PATERNO
+        -- Usuario de la variante (JOIN)
         u.USUARIO_ID,
         u.NOMBRE AS USUARIO_NOMBRE,
-        u.APE_PATERNO AS USUARIO_APE_PATERNO,
-        
-        -- Producto (JOIN) - ID, DESCRIPCION, PRECIO_VENTA
-        p.PRODUCTO_ID,
-        p.DESCRIPCION AS PRODUCTO_DESCRIPCION,
-        p.PRECIO_VENTA AS PRODUCTO_PRECIO_VENTA,
-        
-        -- Categoría del producto (JOIN) - COMPLETA
-        cat.CATEGORIA_ID,
-        cat.NOMBRE AS CATEGORIA_NOMBRE,
-        
-        -- Estilo del producto (JOIN) - COMPLETO
-        e.ESTILO_ID,
-        e.NOMBRE AS ESTILO_NOMBRE,
-        
-        -- Usuario del producto (JOIN) - SOLO ID
-        up.USUARIO_ID AS PRODUCTO_USUARIO_ID
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
         
     FROM PRODUCTOS_VARIANTES pv
     INNER JOIN COLORES c ON pv.COLOR_ID = c.COLOR_ID
     INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
     INNER JOIN USUARIOS u ON pv.USUARIO_ID = u.USUARIO_ID
-    INNER JOIN PRODUCTOS p ON pv.PRODUCTO_ID = p.PRODUCTO_ID
-    INNER JOIN CATEGORIAS cat ON p.CATEGORIA_ID = cat.CATEGORIA_ID
-    INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
-    INNER JOIN USUARIOS up ON p.USUARIO_ID = up.USUARIO_ID
     ORDER BY pv.PROD_VARIANTE_ID;
 END$$
 
@@ -876,6 +1043,380 @@ BEGIN
     LEFT JOIN TIPOS_BENEFICIO tb ON d.TIPO_BENEFICIO_ID = tb.TIPO_BENEFICIO_ID
     INNER JOIN REDES_SOCIALES rs ON v.RED_SOCIAL_ID = rs.RED_SOCIAL_ID
     ORDER BY v.VENTA_ID DESC;
+END$$
+
+DELIMITER ;
+
+-- =====================================================
+-- Stored Procedure: SP_EXISTE_VARIANTE_PARA_MODIFICAR 
+-- Verifica si existe OTRA variante con la combinación 
+-- producto-color-talla, excluyendo la variante que se está modificando
+-- =====================================================
+
+USE KAWKI_DB;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS SP_EXISTE_VARIANTE_PARA_MODIFICAR$$
+
+CREATE PROCEDURE SP_EXISTE_VARIANTE_PARA_MODIFICAR(
+    IN p_variante_id INT,
+    IN p_producto_id INT,
+    IN p_color_id INT,
+    IN p_talla_id INT,
+    OUT p_existe TINYINT
+)
+BEGIN
+    DECLARE v_count INT;
+    
+    -- Contar variantes que coincidan con la combinación
+    -- EXCLUYENDO la variante que se está modificando
+    SELECT COUNT(*) INTO v_count
+    FROM PRODUCTOS_VARIANTES
+    WHERE PRODUCTO_ID = p_producto_id
+      AND COLOR_ID = p_color_id
+      AND TALLA_ID = p_talla_id
+      AND PROD_VARIANTE_ID != p_variante_id;
+    
+    -- Retornar 1 si existe otra variante con esa combinación, 0 si no existe
+    SET p_existe = IF(v_count > 0, 1, 0);
+END$$
+
+DELIMITER ;
+
+-- =====================================================
+-- SP_LISTAR_VARIANTES_POR_COLOR
+-- Lista variantes filtradas por color
+-- =====================================================
+USE KAWKI_DB;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS SP_LISTAR_VARIANTES_POR_COLOR$$
+
+CREATE PROCEDURE SP_LISTAR_VARIANTES_POR_COLOR(
+    IN p_color_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos de la variante
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        pv.STOCK_MINIMO,
+        pv.ALERTA_STOCK,
+        pv.PRODUCTO_ID,
+        pv.URL_IMAGEN,
+        pv.FECHA_HORA_CREACION,
+        pv.DISPONIBLE,
+        
+        -- Color completo (JOIN)
+        c.COLOR_ID,
+        c.NOMBRE AS COLOR_NOMBRE,
+        
+        -- Talla completa (JOIN)
+        t.TALLA_ID,
+        t.NUMERO AS TALLA_NUMERO,
+        
+        -- Usuario de la variante (JOIN)
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS_VARIANTES pv
+    INNER JOIN COLORES c ON pv.COLOR_ID = c.COLOR_ID
+    INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+    INNER JOIN USUARIOS u ON pv.USUARIO_ID = u.USUARIO_ID
+    WHERE pv.COLOR_ID = p_color_id
+    ORDER BY pv.PROD_VARIANTE_ID;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_VARIANTES_POR_TALLA
+-- Lista variantes filtradas por talla
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_VARIANTES_POR_TALLA$$
+
+CREATE PROCEDURE SP_LISTAR_VARIANTES_POR_TALLA(
+    IN p_talla_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos de la variante
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        pv.STOCK_MINIMO,
+        pv.ALERTA_STOCK,
+        pv.PRODUCTO_ID,
+        pv.URL_IMAGEN,
+        pv.FECHA_HORA_CREACION,
+        pv.DISPONIBLE,
+        
+        -- Color completo (JOIN)
+        c.COLOR_ID,
+        c.NOMBRE AS COLOR_NOMBRE,
+        
+        -- Talla completa (JOIN)
+        t.TALLA_ID,
+        t.NUMERO AS TALLA_NUMERO,
+        
+        -- Usuario de la variante (JOIN)
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS_VARIANTES pv
+    INNER JOIN COLORES c ON pv.COLOR_ID = c.COLOR_ID
+    INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+    INNER JOIN USUARIOS u ON pv.USUARIO_ID = u.USUARIO_ID
+    WHERE pv.TALLA_ID = p_talla_id
+    ORDER BY pv.PROD_VARIANTE_ID;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_VARIANTES_STOCK_BAJO
+-- Lista variantes con stock bajo (alerta activada)
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_VARIANTES_STOCK_BAJO$$
+
+CREATE PROCEDURE SP_LISTAR_VARIANTES_STOCK_BAJO()
+BEGIN
+    SELECT 
+        -- Campos de la variante
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        pv.STOCK_MINIMO,
+        pv.ALERTA_STOCK,
+        pv.PRODUCTO_ID,
+        pv.URL_IMAGEN,
+        pv.FECHA_HORA_CREACION,
+        pv.DISPONIBLE,
+        
+        -- Color completo (JOIN)
+        c.COLOR_ID,
+        c.NOMBRE AS COLOR_NOMBRE,
+        
+        -- Talla completa (JOIN)
+        t.TALLA_ID,
+        t.NUMERO AS TALLA_NUMERO,
+        
+        -- Usuario de la variante (JOIN)
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS_VARIANTES pv
+    INNER JOIN COLORES c ON pv.COLOR_ID = c.COLOR_ID
+    INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+    INNER JOIN USUARIOS u ON pv.USUARIO_ID = u.USUARIO_ID
+    WHERE pv.ALERTA_STOCK = 1
+    ORDER BY pv.PROD_VARIANTE_ID;
+END$$
+
+DELIMITER ;
+
+-- =====================================================
+-- STORED PROCEDURES PARA MOVIMIENTOS_INVENTARIO - MySQL
+-- Búsquedas avanzadas optimizadas con JOINs
+-- =====================================================
+
+USE KAWKI_DB;
+DELIMITER $$
+
+-- =====================================================
+-- SP_LISTAR_MOVIMIENTOS_POR_PRODUCTO_VARIANTE
+-- Lista movimientos filtrados por producto variante
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_MOVIMIENTOS_POR_PRODUCTO_VARIANTE$$
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_POR_PRODUCTO_VARIANTE(
+    IN p_prod_variante_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN)
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    WHERE mi.PROD_VARIANTE_ID = p_prod_variante_id
+    ORDER BY mi.FECHA_HORA_MOV DESC;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_MOVIMIENTOS_POR_TIPO_MOVIMIENTO
+-- Lista movimientos filtrados por tipo de movimiento
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_MOVIMIENTOS_POR_TIPO_MOVIMIENTO$$
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_POR_TIPO_MOVIMIENTO(
+    IN p_tipo_movimiento_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN)
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    WHERE mi.TIPO_MOVIMIENTO_ID = p_tipo_movimiento_id
+    ORDER BY mi.FECHA_HORA_MOV DESC;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_MOVIMIENTOS_POR_USUARIO
+-- Lista movimientos filtrados por usuario
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_MOVIMIENTOS_POR_USUARIO$$
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_POR_USUARIO(
+    IN p_usuario_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN)
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    WHERE mi.USUARIO_ID = p_usuario_id
+    ORDER BY mi.FECHA_HORA_MOV DESC;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_MOVIMIENTOS_POR_RANGO_FECHAS
+-- Lista movimientos en un rango de fechas
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_MOVIMIENTOS_POR_RANGO_FECHAS$$
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_POR_RANGO_FECHAS(
+    IN p_fecha_inicio DATETIME,
+    IN p_fecha_fin DATETIME
+)
+BEGIN
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN)
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    WHERE mi.FECHA_HORA_MOV BETWEEN p_fecha_inicio AND p_fecha_fin
+    ORDER BY mi.FECHA_HORA_MOV DESC;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_MOVIMIENTOS_RECIENTES
+-- Lista los últimos N movimientos
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_MOVIMIENTOS_RECIENTES$$
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_RECIENTES(
+    IN p_limite INT
+)
+BEGIN
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN)
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    ORDER BY mi.FECHA_HORA_MOV DESC
+    LIMIT p_limite;
 END$$
 
 DELIMITER ;

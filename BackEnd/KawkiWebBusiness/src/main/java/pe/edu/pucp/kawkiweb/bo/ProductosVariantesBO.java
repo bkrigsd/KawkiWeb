@@ -49,7 +49,7 @@ public class ProductosVariantesBO {
             }
 
             // Generar SKU automáticamente
-            String skuGenerado = generarSKU(producto_id, color, talla);
+            String skuGenerado = generarSKU(producto, color, talla);
 
             ProductosVariantesDTO prodVarianteDTO = new ProductosVariantesDTO();
             prodVarianteDTO.setSKU(skuGenerado);
@@ -121,17 +121,29 @@ public class ProductosVariantesBO {
                 return null;
             }
 
-            // Generar SKU automáticamente
-            String skuGenerado = generarSKU(producto_id, color, talla);
+            // Obtener el producto completo para generar el SKU
+            ProductosDTO producto = this.productoDAO.obtenerPorId(producto_id);
+            if (producto == null) {
+                System.err.println("Error: El producto con ID " + producto_id + " no existe");
+                return null;
+            }
+
+            // NUEVO: Validar que la nueva combinación no existe en OTRA variante
+            if (existeVarianteParaModificar(prod_variante_id, producto_id,
+                    color.getColor_id(), talla.getTalla_id())) {
+                System.err.println("Error: Ya existe otra variante con este color y talla para este producto");
+                return null;
+            }
+
+            // Generar SKU con el producto completo
+            String skuGenerado = generarSKU(producto, color, talla);
 
             ProductosVariantesDTO prodVarianteDTO = new ProductosVariantesDTO();
             prodVarianteDTO.setProd_variante_id(prod_variante_id);
             prodVarianteDTO.setSKU(skuGenerado);
             prodVarianteDTO.setStock(stock);
             prodVarianteDTO.setStock_minimo(stock_minimo);
-            // Recalcular alerta_stock
             prodVarianteDTO.setAlerta_stock(stock <= stock_minimo);
-
             prodVarianteDTO.setProducto_id(producto_id);
             prodVarianteDTO.setColor(color);
             prodVarianteDTO.setTalla(talla);
@@ -235,20 +247,35 @@ public class ProductosVariantesBO {
     }
 
     /**
-     * Genera el SKU automáticamente siguiendo el formato:
-     * PROD-{producto_id}-{color_3letras}-{numero_talla} Ejemplo:
-     * PROD-0023-NEG-36
-     *
-     * @param producto_id ID del producto
-     * @param color DTO del color
-     * @param talla DTO de la talla
-     * @return SKU generado
+     * Verifica si existe otra variante con la misma combinación
+     * producto-color-talla EXCLUYENDO la variante que se está modificando
      */
-    private String generarSKU(Integer producto_id, ColoresDTO color, TallasDTO talla) {
+    private boolean existeVarianteParaModificar(Integer varianteIdActual,
+            Integer producto_id, Integer color_id, Integer talla_id) {
+        try {
+            return this.prodVarianteDAO.existeVarianteParaModificar(
+                    varianteIdActual, producto_id, color_id, talla_id
+            );
+        } catch (Exception e) {
+            System.err.println("Error al verificar existencia de variante para modificar: " + e.getMessage());
+            return true; // Por seguridad, asumir que existe para evitar duplicados
+        }
+    }
+
+    /**
+     * Genera el SKU automáticamente con el formato:
+     * {categoria}-{estilo}-{producto_id}-{color}-{talla} Ejemplo:
+     * DER-CHA-0023-NEG-36
+     */
+    private String generarSKU(ProductosDTO producto, ColoresDTO color, TallasDTO talla) {
+        String categoriaCodigo = obtenerCodigoCategoria(producto.getCategoria().getNombre());
+        String estiloCodigo = obtenerCodigoEstilo(producto.getEstilo().getNombre());
         String colorCodigo = obtenerCodigoColor(color.getNombre());
 
-        return String.format("PROD-%04d-%s-%02d",
-                producto_id,
+        return String.format("%s-%s-%04d-%s-%02d",
+                categoriaCodigo,
+                estiloCodigo,
+                producto.getProducto_id(),
                 colorCodigo,
                 talla.getNumero()
         );
@@ -278,6 +305,42 @@ public class ProductosVariantesBO {
                 .trim();
 
         // Tomar las primeras 3 letras
+        return limpio.substring(0, Math.min(3, limpio.length()));
+    }
+
+    private String obtenerCodigoCategoria(String nombreCategoria) {
+        if (nombreCategoria == null || nombreCategoria.isEmpty()) {
+            return "XXX";
+        }
+
+        String limpio = nombreCategoria
+                .toUpperCase()
+                .replace("Á", "A")
+                .replace("É", "E")
+                .replace("Í", "I")
+                .replace("Ó", "O")
+                .replace("Ú", "U")
+                .replace("Ñ", "N")
+                .trim();
+
+        return limpio.substring(0, Math.min(3, limpio.length()));
+    }
+
+    private String obtenerCodigoEstilo(String nombreEstilo) {
+        if (nombreEstilo == null || nombreEstilo.isEmpty()) {
+            return "XXX";
+        }
+
+        String limpio = nombreEstilo
+                .toUpperCase()
+                .replace("Á", "A")
+                .replace("É", "E")
+                .replace("Í", "I")
+                .replace("Ó", "O")
+                .replace("Ú", "U")
+                .replace("Ñ", "N")
+                .trim();
+
         return limpio.substring(0, Math.min(3, limpio.length()));
     }
 

@@ -1,10 +1,8 @@
 package pe.edu.pucp.kawkiweb.daoImp;
 
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
 import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
@@ -311,25 +309,24 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
 
     /// BÚSQUEDAS AVANZADAS
     
-    @Override
+    /**
+    * Obtiene el comprobante de pago asociado a una venta usando SP optimizado
+    * El SP trae todos los datos con JOINs, sin necesidad de queries adicionales
+    */
+   @Override
     public ComprobantesPagoDTO obtenerPorVentaId(Integer ventaId) {
-        this.comprobante = null;
+        this.comprobante = new ComprobantesPagoDTO();
 
-        // Consumer para setear el parámetro de entrada
-        Consumer<Integer> incluirParametros = (id) -> {
-            try {
-                this.statement.setInt(1, id);
-            } catch (SQLException e) {
-                System.err.println("Error al establecer parámetro: " + e);
-            }
-        };
-
-        // Ejecuta el procedimiento almacenado
-        // El nombre del SP es el mismo para MySQL y SQL Server
-        super.ejecutarConsultaProcedimiento(
+        super.ejecutarConsultaProcedimientoConJoin(
                 "SP_OBTENER_COMPROBANTE_POR_VENTA",
-                1, // Cantidad de parámetros (solo ventaId)
-                incluirParametros,
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro ventaId: " + ex);
+                    }
+                },
                 ventaId
         );
 
@@ -338,31 +335,19 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
 
     @Override
     public String obtenerSiguienteNumeroSerie(Integer tipoComprobanteId) {
-        String numeroSerie = null;
-
-        try {
-            this.abrirConexion();
-
-            // Llamada al stored procedure
-            // Funciona tanto para MySQL como SQL Server
-            String sql = "{CALL SP_OBTENER_SIGUIENTE_NUMERO_SERIE(?, ?)}";
-            this.colocarSQLEnStatement(sql);
-            this.statement.setInt(1, tipoComprobanteId);
-            this.statement.registerOutParameter(2, Types.VARCHAR);
-            this.statement.execute();
-            numeroSerie = this.statement.getString(2);
-
-        } catch (SQLException ex) {
-            System.err.println("Error al obtener siguiente número de serie: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return numeroSerie;
+        return super.ejecutarSPConOutString(
+                "SP_OBTENER_SIGUIENTE_NUMERO_SERIE",
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al setear tipoComprobanteId: " + ex);
+                    }
+                },
+                tipoComprobanteId,
+                null // Valor por defecto
+        );
     }
 
 }
