@@ -324,4 +324,40 @@
         }
 
     </script>
+<<<<<<< HEAD
+
+    <script>
+        function validarCampoUnico(campo, valor, labelErrorId) {
+            var idActual = document.getElementById("<%= hfIdUsuario.ClientID %>").value;
+
+            if (valor.trim() === "") {
+                document.getElementById(labelErrorId).innerText = "";
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "RegistroUsuario.aspx/ValidarUnicoAjax",
+                data: JSON.stringify({ campo: campo, valor: valor, idActual: parseInt(idActual) }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var esUnico = response.d;
+                    if (!esUnico) {
+                        document.getElementById(labelErrorId).innerText = campo + " ya existe.";
+                    } else {
+                        document.getElementById(labelErrorId).innerText = "";
+                    }
+                }
+            });
+        }
+    </script>
+
+<<<<<<< HEAD
 </asp:Content>
+=======
+</asp:Content>
+>>>>>>> parent of 0c7614b (guardar)
+=======
+</asp:Content>
+>>>>>>> parent of 33b2d43 (Merge remote-tracking branch 'origin/Fabio' into Angelina)

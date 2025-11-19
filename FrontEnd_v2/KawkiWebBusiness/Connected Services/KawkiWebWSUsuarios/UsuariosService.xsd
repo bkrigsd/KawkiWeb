@@ -12,8 +12,6 @@
   <xs:element name="modificarUsuarioResponse" type="tns:modificarUsuarioResponse" />
   <xs:element name="obtenerPorIdUsuario" type="tns:obtenerPorIdUsuario" />
   <xs:element name="obtenerPorIdUsuarioResponse" type="tns:obtenerPorIdUsuarioResponse" />
-  <xs:element name="tiposUsuarioDTO" type="tns:tiposUsuarioDTO" />
-  <xs:element name="usuariosDTO" type="tns:usuariosDTO" />
   <xs:complexType name="listarTodosUsuario">
     <xs:sequence />
   </xs:complexType>
@@ -24,23 +22,26 @@
   </xs:complexType>
   <xs:complexType name="usuariosDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" name="usuarioId" type="xs:int" />
-      <xs:element minOccurs="0" name="nombre" type="xs:string" />
-      <xs:element minOccurs="0" name="apePaterno" type="xs:string" />
-      <xs:element minOccurs="0" name="dni" type="xs:string" />
-      <xs:element minOccurs="0" name="telefono" type="xs:string" />
-      <xs:element minOccurs="0" name="correo" type="xs:string" />
-      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
-      <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
-      <xs:element minOccurs="0" name="fechaHoraCreacion" type="xs:string" />
-      <xs:element minOccurs="0" name="tipoUsuario" type="tns:tiposUsuarioDTO" />
       <xs:element minOccurs="0" name="activo" type="xs:boolean" />
+      <xs:element minOccurs="0" name="apePaterno" type="xs:string" />
+      <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
+      <xs:element minOccurs="0" name="correo" type="xs:string" />
+      <xs:element minOccurs="0" name="dni" type="xs:string" />
+      <xs:element minOccurs="0" name="fechaHoraCreacion" type="tns:localDateTime" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
+      <xs:element minOccurs="0" name="telefono" type="xs:string" />
+      <xs:element minOccurs="0" name="tipoUsuario" type="tns:tiposUsuarioDTO" />
+      <xs:element minOccurs="0" name="usuarioId" type="xs:int" />
     </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="localDateTime" final="extension restriction">
+    <xs:sequence />
   </xs:complexType>
   <xs:complexType name="tiposUsuarioDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" name="tipoUsuarioId" type="xs:int" />
       <xs:element minOccurs="0" name="nombre" type="xs:string" />
+      <xs:element minOccurs="0" name="tipoUsuarioId" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="obtenerPorIdUsuario">

@@ -12,7 +12,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h1><i class="fas fa-boxes-stacked me-2"></i>Gestión de Productos</h1>
-                    <p>Administra, crea y actualiza los productos del inventario del sistema Kawki</p>
+                    <p>Administra los productos del inventario (zapatos con múltiples variantes)</p>
                 </div>
                 <button type="button" class="btn-kawki-primary" onclick="abrirModalRegistro()">
                     <i class="fas fa-plus me-1"></i> Nuevo Producto
@@ -29,33 +29,51 @@
                 </div>
             </div>
             <div class="card-body">
-                <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="False" CssClass="table-usuarios" DataKeyNames="Codigo" OnRowCommand="gvProductos_RowCommand">
+                <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="False" 
+                    CssClass="table-usuarios" DataKeyNames="ProductoId" 
+                    OnRowCommand="gvProductos_RowCommand">
                     <Columns>
-                        <asp:BoundField DataField="Codigo" HeaderText="Código" />
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                        <asp:BoundField DataField="ProductoId" HeaderText="ID" />
+                        <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
                         <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
-                        <asp:BoundField DataField="Color" HeaderText="Color" />
-                        <asp:BoundField DataField="Precio" HeaderText="Precio (S/.)" DataFormatString="{0:0.00}" />
-                        <asp:BoundField DataField="Stock" HeaderText="Stock" />
-                        <asp:TemplateField HeaderText="Estado">
-                            <ItemTemplate>
-                                <span class='<%# Convert.ToBoolean(Eval("Activo")) ? "badge-rol badge-activo" : "badge-rol badge-inactivo" %>'>
-                                    <%# Convert.ToBoolean(Eval("Activo")) ? "Activo" : "Inactivo" %>
-                                </span>
-                            </ItemTemplate>
-                        </asp:TemplateField>
+                        <asp:BoundField DataField="Estilo" HeaderText="Estilo" />
+                        <asp:BoundField DataField="Precio" HeaderText="Precio (S/.)" 
+                            DataFormatString="{0:N2}" />
+                        <asp:BoundField DataField="CantidadVariantes" HeaderText="# Variantes" />
+
+                        <asp:BoundField DataField="IdCategoria" Visible="false" />
+                        <asp:BoundField DataField="IdEstilo" Visible="false" />
+                        
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
                                 <button type="button" class="btn-editar"
-                                    onclick='editarProducto("<%# Eval("Codigo") %>", "<%# Eval("Nombre") %>", "<%# Eval("Categoria") %>", "<%# Eval("Color") %>", "<%# Eval("Precio") %>", "<%# Eval("Stock") %>", "<%# Eval("Descripcion") %>", "<%# Eval("Activo") %>")'>
-                                    Editar
+                                    onclick='editarProducto(
+                                        "<%# Eval("ProductoId") %>",
+                                        "<%# Eval("Descripcion") %>",
+                                        "<%# Eval("IdCategoria") %>",
+                                        "<%# Eval("IdEstilo") %>",
+                                        "<%# Eval("Precio") %>",
+                                        "<%# Eval("CantidadVariantes") %>"
+                                    )'>
+                                    <i class="fas fa-edit"></i> Editar
                                 </button>
-                                <button type="button" class="btn-eliminar" onclick='abrirModalConfirmacion("<%# Eval("Codigo") %>")'>
-                                    Eliminar
-                                </button>
+
+                                <asp:LinkButton runat="server" 
+                                    CommandName="VerVariantes" 
+                                    CommandArgument='<%# Eval("ProductoId") %>'
+                                    CssClass="btn-kawki-primary btn-sm"
+                                    CausesValidation="false">
+                                    <i class="fas fa-palette"></i> Variantes
+                                </asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
+                    <EmptyDataTemplate>
+                        <div class="text-center p-4">
+                            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No hay productos registrados</p>
+                        </div>
+                    </EmptyDataTemplate>
                 </asp:GridView>
             </div>
         </div>
@@ -67,85 +85,69 @@
                     <h5 id="tituloModal"><i class="fas fa-plus me-2"></i>Registrar nuevo producto</h5>
                 </div>
 
-                <asp:HiddenField ID="hfCodigo" runat="server" Value="0" />
+                <asp:HiddenField ID="hfProductoId" runat="server" Value="0" />
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Nombre *</label>
-                        <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ControlToValidate="txtNombre"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Precio (S/.) *</label>
-                        <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="rfvPrecio" runat="server" ControlToValidate="txtPrecio"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
-                        <asp:RegularExpressionValidator ID="revPrecio" runat="server" ControlToValidate="txtPrecio"
-                            ValidationExpression="^\d+(\.\d{1,2})?$" ErrorMessage="Ingrese un número válido"
-                            CssClass="text-danger" Display="Dynamic" />
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label">Descripción del Producto *</label>
+                    <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" 
+                        placeholder="Ej: Zapato Oxford Clásico en Cuero Premium" />
+                    <asp:RequiredFieldValidator ID="rfvDescripcion" runat="server" 
+                        ControlToValidate="txtDescripcion"
+                        ErrorMessage="La descripción es obligatoria" 
+                        CssClass="text-danger" Display="Dynamic" />
                 </div>
 
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Categoría *</label>
                         <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select">
-                            <asp:ListItem Text="-- Seleccione --" Value="" />
-                            <asp:ListItem>Oxford</asp:ListItem>
-                            <asp:ListItem>Derby</asp:ListItem>
-                            <asp:ListItem>Casual</asp:ListItem>
                         </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="rfvCategoria" runat="server" ControlToValidate="ddlCategoria"
-                            InitialValue="" ErrorMessage="Seleccione una categoría" CssClass="text-danger" Display="Dynamic" />
+                        <asp:RequiredFieldValidator ID="rfvCategoria" runat="server" 
+                            ControlToValidate="ddlCategoria"
+                            InitialValue="0" ErrorMessage="Seleccione una categoría" 
+                            CssClass="text-danger" Display="Dynamic" />
                     </div>
+                    
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Color *</label>
-                        <asp:TextBox ID="txtColor" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="rfvColor" runat="server" ControlToValidate="txtColor"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
+                        <label class="form-label">Estilo *</label>
+                        <asp:DropDownList ID="ddlEstilo" runat="server" CssClass="form-select">
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="rfvEstilo" runat="server" 
+                            ControlToValidate="ddlEstilo"
+                            InitialValue="0" ErrorMessage="Seleccione un estilo" 
+                            CssClass="text-danger" Display="Dynamic" />
                     </div>
+                    
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Stock *</label>
-                        <asp:TextBox ID="txtStock" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="rfvStock" runat="server" ControlToValidate="txtStock"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
-                        <asp:RegularExpressionValidator ID="revStock" runat="server" ControlToValidate="txtStock"
-                            ValidationExpression="^\d+$" ErrorMessage="Debe ingresar un número entero"
+                        <label class="form-label">Precio (S/.) *</label>
+                        <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" 
+                            placeholder="0.00" />
+                        <asp:RequiredFieldValidator ID="rfvPrecio" runat="server" 
+                            ControlToValidate="txtPrecio"
+                            ErrorMessage="El precio es obligatorio" 
+                            CssClass="text-danger" Display="Dynamic" />
+                        <asp:RegularExpressionValidator ID="revPrecio" runat="server" 
+                            ControlToValidate="txtPrecio"
+                            ValidationExpression="^\d+(\.\d{1,2})?$" 
+                            ErrorMessage="Ingrese un precio válido"
                             CssClass="text-danger" Display="Dynamic" />
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Descripción</label>
-                    <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine"
-                        CssClass="form-control" Rows="3" />
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Nota:</strong> Los colores, tallas y stock se gestionan en las 
+                    <strong>Variantes de Producto</strong> después de crear el producto base.
                 </div>
 
                 <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mb-3" />
 
                 <div class="text-end">
-                    <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModal()">Cancelar</button>
+                    <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModal()">
+                        Cancelar
+                    </button>
                     <asp:Button ID="btnGuardar" runat="server" CssClass="btn-kawki-primary"
-                        Text="Registrar producto" OnClick="btnGuardar_Click" />
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Confirmación -->
-        <div id="modalConfirmacion" class="modal-confirmacion">
-            <div class="modal-content-kawki">
-                <div class="modal-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <h5>¿Confirmar eliminación?</h5>
-                <p>Esta acción no se puede deshacer</p>
-                <asp:HiddenField ID="hfCodigoEliminar" runat="server" Value="0" />
-                <div>
-                    <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModalConfirmacion()">Cancelar</button>
-                    <asp:Button ID="btnConfirmarEliminar" runat="server" CssClass="btn-kawki-primary"
-                        style="background-color:#dc3545;" Text="Eliminar"
-                        OnClick="btnConfirmarEliminar_Click" CausesValidation="false" UseSubmitBehavior="true" />
+                        Text="Registrar producto" OnClick="btnGuardar_Click" CausesValidation="false" />
                 </div>
             </div>
         </div>
@@ -166,40 +168,28 @@
             document.getElementById("<%= btnGuardar.ClientID %>").value = "Actualizar producto";
         }
 
+        function editarProducto(codigo, nombre, categoria, estilo, color, precio, stock, descripcion) {
+            document.getElementById("<%= hfProductoId.ClientID %>").value = codigo;
+            document.getElementById("<%= ddlCategoria.ClientID %>").value = categoria;
+            document.getElementById("<%= ddlEstilo.ClientID %>").value = estilo;
+            document.getElementById("<%= txtPrecio.ClientID %>").value = precio;
+            document.getElementById("<%= txtDescripcion.ClientID %>").value = descripcion;
+
+            abrirModalEditar();
+        }
+
         function cerrarModal() {
             document.getElementById("modalProducto").classList.remove("show");
             limpiarFormulario();
         }
 
         function limpiarFormulario() {
-            document.getElementById("<%= hfCodigo.ClientID %>").value = "0";
-            document.getElementById("<%= txtNombre.ClientID %>").value = "";
+            document.getElementById("<%= hfProductoId.ClientID %>").value = "0";
+            document.getElementById("<%= txtDescripcion.ClientID %>").value = "";
             document.getElementById("<%= txtPrecio.ClientID %>").value = "";
             document.getElementById("<%= ddlCategoria.ClientID %>").selectedIndex = 0;
-            document.getElementById("<%= txtColor.ClientID %>").value = "";
-            document.getElementById("<%= txtStock.ClientID %>").value = "";
-            document.getElementById("<%= txtDescripcion.ClientID %>").value = "";
+            document.getElementById("<%= ddlEstilo.ClientID %>").selectedIndex = 0;
             document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
-        }
-
-        function abrirModalConfirmacion(codigo) {
-            document.getElementById("<%= hfCodigoEliminar.ClientID %>").value = codigo;
-            document.getElementById("modalConfirmacion").classList.add("show");
-        }
-
-        function cerrarModalConfirmacion() {
-            document.getElementById("modalConfirmacion").classList.remove("show");
-        }
-
-        function editarProducto(codigo, nombre, categoria, color, precio, stock, descripcion) {
-            document.getElementById("<%= hfCodigo.ClientID %>").value = codigo;
-            document.getElementById("<%= txtNombre.ClientID %>").value = nombre;
-            document.getElementById("<%= ddlCategoria.ClientID %>").value = categoria;
-            document.getElementById("<%= txtColor.ClientID %>").value = color;
-            document.getElementById("<%= txtPrecio.ClientID %>").value = precio;
-            document.getElementById("<%= txtStock.ClientID %>").value = stock;
-            document.getElementById("<%= txtDescripcion.ClientID %>").value = descripcion;
-            abrirModalEditar();
         }
 
         function mostrarMensajeExito(mensaje) {

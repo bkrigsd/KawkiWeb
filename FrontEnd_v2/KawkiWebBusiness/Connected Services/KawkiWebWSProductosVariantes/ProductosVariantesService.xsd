@@ -2,8 +2,6 @@
 <xs:schema xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="actualizarStockProdVariante" type="tns:actualizarStockProdVariante" />
   <xs:element name="actualizarStockProdVarianteResponse" type="tns:actualizarStockProdVarianteResponse" />
-  <xs:element name="eliminarProdVariante" type="tns:eliminarProdVariante" />
-  <xs:element name="eliminarProdVarianteResponse" type="tns:eliminarProdVarianteResponse" />
   <xs:element name="insertarProdVariante" type="tns:insertarProdVariante" />
   <xs:element name="insertarProdVarianteResponse" type="tns:insertarProdVarianteResponse" />
   <xs:element name="listarConStockBajoProdVariante" type="tns:listarConStockBajoProdVariante" />
@@ -22,20 +20,8 @@
   <xs:element name="obtenerPorIdProdVarianteResponse" type="tns:obtenerPorIdProdVarianteResponse" />
   <xs:element name="tieneStockDisponibleProdVariante" type="tns:tieneStockDisponibleProdVariante" />
   <xs:element name="tieneStockDisponibleProdVarianteResponse" type="tns:tieneStockDisponibleProdVarianteResponse" />
-  <xs:complexType name="actualizarStockProdVariante">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
-      <xs:element minOccurs="0" name="nuevo_stock" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="actualizarStockProdVarianteResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="insertarProdVariante">
     <xs:sequence>
-      <xs:element minOccurs="0" name="SKU" type="xs:string" />
       <xs:element minOccurs="0" name="stock" type="xs:int" />
       <xs:element minOccurs="0" name="stock_minimo" type="xs:int" />
       <xs:element minOccurs="0" name="producto_id" type="xs:int" />
@@ -43,6 +29,7 @@
       <xs:element minOccurs="0" name="talla" type="tns:tallasDTO" />
       <xs:element minOccurs="0" name="url_imagen" type="xs:string" />
       <xs:element minOccurs="0" name="disponible" type="xs:boolean" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="coloresDTO">
@@ -55,6 +42,30 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="numero" type="xs:int" />
       <xs:element minOccurs="0" name="talla_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="usuariosDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="activo" type="xs:boolean" />
+      <xs:element minOccurs="0" name="apePaterno" type="xs:string" />
+      <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
+      <xs:element minOccurs="0" name="correo" type="xs:string" />
+      <xs:element minOccurs="0" name="dni" type="xs:string" />
+      <xs:element minOccurs="0" name="fechaHoraCreacion" type="tns:localDateTime" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
+      <xs:element minOccurs="0" name="telefono" type="xs:string" />
+      <xs:element minOccurs="0" name="tipoUsuario" type="tns:tiposUsuarioDTO" />
+      <xs:element minOccurs="0" name="usuarioId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="localDateTime" final="extension restriction">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="tiposUsuarioDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+      <xs:element minOccurs="0" name="tipoUsuarioId" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="insertarProdVarianteResponse">
@@ -72,14 +83,25 @@
       <xs:element name="return" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="listarPorProductoProdVariante">
+  <xs:complexType name="actualizarStockProdVariante">
     <xs:sequence>
-      <xs:element minOccurs="0" name="producto_id" type="xs:int" />
+      <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
+      <xs:element minOccurs="0" name="nuevo_stock" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="listarPorProductoProdVarianteResponse">
+  <xs:complexType name="actualizarStockProdVarianteResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosVariantesDTO" />
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdProdVariante">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdProdVarianteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:productosVariantesDTO" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="productosVariantesDTO">
@@ -95,27 +117,15 @@
       <xs:element minOccurs="0" name="stock_minimo" type="xs:int" />
       <xs:element minOccurs="0" name="talla" type="tns:tallasDTO" />
       <xs:element minOccurs="0" name="url_imagen" type="xs:string" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="localDateTime" final="extension restriction">
-    <xs:sequence />
-  </xs:complexType>
-  <xs:complexType name="obtenerPorIdProdVariante">
+  <xs:complexType name="listarPorProductoProdVariante">
     <xs:sequence>
-      <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
+      <xs:element minOccurs="0" name="producto_id" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="obtenerPorIdProdVarianteResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="tns:productosVariantesDTO" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="listarPorColorProdVariante">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="color_id" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="listarPorColorProdVarianteResponse">
+  <xs:complexType name="listarPorProductoProdVarianteResponse">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosVariantesDTO" />
     </xs:sequence>
@@ -126,6 +136,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="listarPorTallaProdVarianteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosVariantesDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorColorProdVariante">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="color_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorColorProdVarianteResponse">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosVariantesDTO" />
     </xs:sequence>
@@ -141,7 +161,6 @@
   <xs:complexType name="modificarProdVariante">
     <xs:sequence>
       <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
-      <xs:element minOccurs="0" name="SKU" type="xs:string" />
       <xs:element minOccurs="0" name="stock" type="xs:int" />
       <xs:element minOccurs="0" name="stock_minimo" type="xs:int" />
       <xs:element minOccurs="0" name="producto_id" type="xs:int" />
@@ -149,19 +168,10 @@
       <xs:element minOccurs="0" name="talla" type="tns:tallasDTO" />
       <xs:element minOccurs="0" name="url_imagen" type="xs:string" />
       <xs:element minOccurs="0" name="disponible" type="xs:boolean" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="modificarProdVarianteResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="eliminarProdVariante">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="eliminarProdVarianteResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="xs:int" />
     </xs:sequence>
