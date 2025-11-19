@@ -20,6 +20,103 @@
             </div>
         </div>
 
+        <!-- Filtros de búsqueda -->
+        <div class="card-kawki mb-3">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="fas fa-search"></i> <span>Filtros de búsqueda</span>
+                </div>
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-3 mb-2">
+                    <label class="form-label">Nombre / Apellido</label>
+                    <asp:TextBox ID="txtFiltroNombre" runat="server" CssClass="form-control"
+                        placeholder="Buscar por nombre..." AutoPostBack="true"
+                        OnTextChanged="AplicarFiltros" />
+                </div>
+
+                <div class="col-md-2 mb-2">
+                    <label class="form-label">DNI</label>
+                    <asp:TextBox ID="txtFiltroDNI" runat="server" CssClass="form-control"
+                        MaxLength="8" AutoPostBack="true"
+                        placeholder="DNI" OnTextChanged="AplicarFiltros" />
+                </div>
+
+                <div class="col-md-2 mb-2">
+                    <label class="form-label">Usuario</label>
+                    <asp:TextBox ID="txtFiltroUsuario" runat="server" CssClass="form-control"
+                        placeholder="Nombre usuario" AutoPostBack="true"
+                        OnTextChanged="AplicarFiltros" />
+                </div>
+
+                <div class="col-md-2 mb-2">
+                    <label class="form-label">Rol</label>
+                    <asp:DropDownList ID="ddlFiltroRol" runat="server" CssClass="form-select"
+                        AutoPostBack="true" OnSelectedIndexChanged="AplicarFiltros">
+                        <asp:ListItem Text="-- Todos --" Value="" />
+                        <asp:ListItem Text="Administrador" Value="Administrador" />
+                        <asp:ListItem Text="Vendedor" Value="Vendedor" />
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-2 mb-2">
+                    <label class="form-label">Estado</label>
+                    <asp:DropDownList ID="ddlFiltroEstado" runat="server" CssClass="form-select"
+                        AutoPostBack="true" OnSelectedIndexChanged="AplicarFiltros">
+                        <asp:ListItem Text="-- Todos --" Value="" />
+                        <asp:ListItem Text="Activo" Value="true" />
+                        <asp:ListItem Text="Inactivo" Value="false" />
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-1 d-flex align-items-end">
+                    <button type="button" class="btn-kawki-outline w-100" onclick="limpiarFiltros()">
+                        Limpiar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Panel de Ordenamiento -->
+        <div class="card-kawki mb-3">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="fas fa-sort"></i> <span>Ordenar registros</span>
+                </div>
+            </div>
+
+            <div class="card-body row">
+
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Ordenar por</label>
+                    <asp:DropDownList ID="ddlOrdenarPor" runat="server" CssClass="form-select"
+                        AutoPostBack="true" OnSelectedIndexChanged="ActualizarOrden">
+                        <asp:ListItem Text="ID" Value="usuarioId" />
+                        <asp:ListItem Text="Nombre" Value="nombre" />
+                        <asp:ListItem Text="Apellido" Value="apePaterno" />
+                        <asp:ListItem Text="DNI" Value="dni" />
+                        <asp:ListItem Text="Usuario" Value="nombreUsuario" />
+                        <asp:ListItem Text="Email" Value="correo" />
+                        <asp:ListItem Text="Teléfono" Value="telefono" />
+                        <asp:ListItem Text="Rol" Value="tipoUsuario.nombre" />
+                        <asp:ListItem Text="Activo" Value="activo" />
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-3 mb-2">
+                    <label class="form-label">Dirección</label>
+                    <asp:DropDownList ID="ddlDireccion" runat="server" CssClass="form-select"
+                        AutoPostBack="true" OnSelectedIndexChanged="ActualizarOrden">
+                        <asp:ListItem Text="Ascendente" Value="ASC" />
+                        <asp:ListItem Text="Descendente" Value="DESC" />
+                    </asp:DropDownList>
+                </div>
+
+            </div>
+        </div>
+
         <!-- Card con tabla -->
         <div class="card-kawki">
             <div class="card-header">
@@ -417,6 +514,17 @@
                 icono.classList.add("fa-eye");
             }
         }
+
+        function limpiarFiltros() {
+            document.getElementById("<%= txtFiltroNombre.ClientID %>").value = "";
+            document.getElementById("<%= txtFiltroDNI.ClientID %>").value = "";
+            document.getElementById("<%= txtFiltroUsuario.ClientID %>").value = "";
+            document.getElementById("<%= ddlFiltroRol.ClientID %>").selectedIndex = 0;
+            document.getElementById("<%= ddlFiltroEstado.ClientID %>").selectedIndex = 0;
+            __doPostBack('', '');
+        }
+
+
     </script>
 
     <script>

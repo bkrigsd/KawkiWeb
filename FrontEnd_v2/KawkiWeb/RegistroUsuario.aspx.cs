@@ -1,10 +1,11 @@
-﻿using System;
+﻿using KawkiWebBusiness;
+using KawkiWebBusiness.KawkiWebWSUsuarios;
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
-using KawkiWebBusiness;
-using KawkiWebBusiness.KawkiWebWSUsuarios;
+using System.Web.UI.WebControls;
 
 namespace KawkiWeb
 {
@@ -62,14 +63,80 @@ namespace KawkiWeb
             {
                 var lista = usuarioBO.ListarTodosUsuario();
                 lblMensaje.Text = $"Usuarios devueltos: {(lista == null ? 0 : lista.Count)}";
-                gvUsuarios.DataSource = lista;
-                gvUsuarios.DataBind();
+                if (!string.IsNullOrEmpty(txtFiltroNombre.Text) ||
+                    !string.IsNullOrEmpty(txtFiltroDNI.Text) ||
+                    !string.IsNullOrEmpty(txtFiltroUsuario.Text) ||
+                    !string.IsNullOrEmpty(ddlFiltroRol.SelectedValue) ||
+                    !string.IsNullOrEmpty(ddlFiltroEstado.SelectedValue))
+                {
+                    AplicarFiltros(null, null);
+                }
+                else
+                {
+                    gvUsuarios.DataSource = lista;
+                    gvUsuarios.DataBind();
+                }
             }
             catch (Exception ex)
             {
                 lblMensaje.Text = "Error al cargar usuarios: " + ex.Message;
                 lblMensaje.CssClass = "text-danger d-block mb-2";
             }
+        }
+
+        protected void AplicarFiltros(object sender, EventArgs e)
+        {
+            var lista = usuarioBO.ListarTodosUsuario();
+
+            if (lista == null) return;
+
+            string filtroNombre = txtFiltroNombre.Text.Trim().ToLower();
+            string filtroDNI = txtFiltroDNI.Text.Trim();
+            string filtroUsuario = txtFiltroUsuario.Text.Trim().ToLower();
+            string filtroRol = ddlFiltroRol.SelectedValue;
+            string filtroEstado = ddlFiltroEstado.SelectedValue;
+
+            var filtrado = lista.AsEnumerable();
+
+            if (!string.IsNullOrEmpty(filtroNombre))
+            {
+                filtrado = filtrado.Where(x =>
+                    (x.nombre + " " + x.apePaterno).ToLower().Contains(filtroNombre));
+            }
+
+            if (!string.IsNullOrEmpty(filtroDNI))
+            {
+                filtrado = filtrado.Where(x => x.dni.Contains(filtroDNI));
+            }
+
+            if (!string.IsNullOrEmpty(filtroUsuario))
+            {
+                filtrado = filtrado.Where(x => x.nombreUsuario.ToLower().Contains(filtroUsuario));
+            }
+
+            if (!string.IsNullOrEmpty(filtroRol))
+            {
+                filtrado = filtrado.Where(x => x.tipoUsuario != null && x.tipoUsuario.nombre == filtroRol);
+            }
+
+            if (!string.IsNullOrEmpty(filtroEstado))
+            {
+                bool estado = filtroEstado == "true";
+                filtrado = filtrado.Where(x => x.activo == estado);
+            }
+
+            // APLICAR ORDEN
+            if (!string.IsNullOrEmpty(SortField))
+            {
+                if (SortDirection == "ASC")
+                    filtrado = filtrado.OrderBy(x => ObtenerValorOrden(x, SortField));
+                else
+                    filtrado = filtrado.OrderByDescending(x => ObtenerValorOrden(x, SortField));
+            }
+
+            gvUsuarios.DataSource = filtrado.ToList();
+            gvUsuarios.DataBind();
+
         }
 
         //  Guardar (insertar o modificar)
@@ -320,6 +387,50 @@ namespace KawkiWeb
         private void RestaurarPassword(string clave)
         {
             txtClave.Attributes["value"] = clave;
+        }
+
+        private string SortField
+        {
+            get => ViewState["SortField"]?.ToString() ?? "";
+            set => ViewState["SortField"] = value;
+        }
+
+        private string SortDirection
+        {
+            get => ViewState["SortDirection"]?.ToString() ?? "ASC";
+            set => ViewState["SortDirection"] = value;
+        }
+
+        private object ObtenerValorOrden(object obj, string campo)
+        {
+            try
+            {
+                if (campo.Contains("."))
+                {
+                    var partes = campo.Split('.');
+                    var valor = obj.GetType().GetProperty(partes[0]).GetValue(obj, null);
+
+                    if (valor == null) return "";
+
+                    return valor.GetType().GetProperty(partes[1]).GetValue(valor, null);
+                }
+                else
+                {
+                    return obj.GetType().GetProperty(campo).GetValue(obj, null);
+                }
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        protected void ActualizarOrden(object sender, EventArgs e)
+        {
+            SortField = ddlOrdenarPor.SelectedValue;
+            SortDirection = ddlDireccion.SelectedValue;
+
+            AplicarFiltros(null, null); // se vuelve a filtrar y ordenar
         }
 
     }
