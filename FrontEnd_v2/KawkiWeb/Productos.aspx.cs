@@ -146,7 +146,7 @@ namespace KawkiWeb
             try
             {
                 // Obtener TODOS los productos
-                IList<productosDTO> productos = productosBO.ListarTodos();
+                IList<productosDTO> productos = productosBO.ListarTodosProducto();
 
                 if (productos == null || productos.Count == 0)
                 {

@@ -63,7 +63,7 @@ namespace KawkiWeb
         {
             try
             {
-                var productos = productosBO.ListarTodos();
+                var productos = productosBO.ListarTodosProducto();
 
                 // Crear lista personalizada para el GridView
                 var productosGrid = productos.Select(p => new
@@ -117,7 +117,7 @@ namespace KawkiWeb
                 string descripcion = txtDescripcion.Text.Trim();
                 int categoriaId = Convert.ToInt32(ddlCategoria.SelectedValue);
                 int estiloId = Convert.ToInt32(ddlEstilo.SelectedValue);
-                double precio = Convert.ToDouble(txtPrecio.Text.Trim());
+                double precio_Venta = Convert.ToDouble(txtPrecio.Text.Trim());
 
                 // === VALIDACIONES ===
                 if (string.IsNullOrEmpty(descripcion))
@@ -141,7 +141,7 @@ namespace KawkiWeb
                     return;
                 }
 
-                if (precio <= 0)
+                if (precio_Venta <= 0)
                 {
                     lblMensaje.Text = "⚠ El precio debe ser mayor a 0.";
                     MantenerModalAbierto(esEdicion);
@@ -157,21 +157,28 @@ namespace KawkiWeb
                     return;
                 }
 
-                var categoria = categoriasBO.ObtenerPorIdCategoria(categoriaId);
-                var estilo = estilosBO.ObtenerPorIdEstilos(estiloId);
+                // Mapea explicitamente al DTO que espera el servicio de Productos
+                var usuarioProductos = new KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO
+                {
+                    usuarioId = usuario.usuarioId,
+                    usuarioIdSpecified = true
+                };
+
+                var categoriaProducto = categoriasBO.ObtenerPorIdCategoria(categoriaId);
+                var estiloProducto = estilosBO.ObtenerPorIdEstilos(estiloId);
                 // === DTOs ===
                 // Convertir categoría al tipo que espera ProductosBO
-                var categoriaProducto = new KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO
+                var categoria = new KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO
                 {
-                    categoria_id = categoria.categoria_id,
-                    nombre = categoria.nombre
+                    categoria_id = categoriaProducto.categoria_id,
+                    nombre = categoriaProducto.nombre
                 };
 
                 // Convertir estilo también si es necesario
-                var estiloProducto = new KawkiWebBusiness.KawkiWebWSProductos.estilosDTO
+                var estilo = new KawkiWebBusiness.KawkiWebWSProductos.estilosDTO
                 {
-                    estilo_id = estilo.estilo_id,
-                    nombre = estilo.nombre
+                    estilo_id = estiloProducto.estilo_id,
+                    nombre = estiloProducto.nombre
                 };
 
                 if (esEdicion)
@@ -179,14 +186,14 @@ namespace KawkiWeb
                     // === EDITAR ===
                     int productoId = Convert.ToInt32(hfProductoId.Value);
 
-                    // ✅ CAPTURAR Y VERIFICAR EL RESULTADO
-                    int? resultado = productosBO.Modificar(
+                    // CAPTURAR Y VERIFICAR EL RESULTADO
+                    int? resultado = productosBO.ModificarProducto(
                         productoId,
                         descripcion,
-                        categoriaProducto,
-                        estiloProducto,
-                        precio,
-                        usuario
+                        categoria,
+                        estilo,
+                        precio_Venta,
+                        usuarioProductos
                     );
 
                     if (resultado == null || resultado <= 0)
@@ -203,11 +210,11 @@ namespace KawkiWeb
                 else
                 {
                     // CAPTURAR Y VERIFICAR EL RESULTADO
-                    int? resultado = productosBO.Insertar(
+                    int? resultado = productosBO.InsertarProducto(
                         descripcion,
-                        categoriaProducto,
-                        estiloProducto,
-                        precio,
+                        categoria,
+                        estilo,
+                        precio_Venta,
                         usuario
                     );
 
@@ -279,7 +286,7 @@ namespace KawkiWeb
         {
             try
             {
-                var producto = productosBO.ObtenerPorId(productoId);
+                var producto = productosBO.ObtenerPorIdProducto(productoId);
                 if (producto != null)
                 {
                     hfProductoId.Value = producto.producto_id.ToString();

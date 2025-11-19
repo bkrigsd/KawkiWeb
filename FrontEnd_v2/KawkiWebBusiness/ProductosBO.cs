@@ -19,26 +19,46 @@ namespace KawkiWebBusiness
         }
 
         /// Inserta un nuevo producto en la base de datos
-        public int Insertar(string descripcion, categoriasDTO categoria, estilosDTO estilo, 
-            double precioVenta, usuariosDTO usuario)
+        public int InsertarProducto(string descripcion, categoriasDTO categoria, estilosDTO estilo, 
+            double precio_Venta, usuariosDTO usuario)
         {
-            return this.clienteSOAP.insertarProducto(descripcion, categoria, estilo, precioVenta, usuario);
+            //return this.clienteSOAP.insertarProducto(descripcion, categoria, estilo, precioVenta, usuario);
+            try
+            {
+                int resultado = this.clienteSOAP.insertarProducto(descripcion, categoria, estilo, precio_Venta, usuario);
+
+                System.Diagnostics.Debug.WriteLine($"✅ Respuesta del servidor: {resultado}");
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"❌ EXCEPCIÓN en InsertarProducto: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
+
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                }
+
+                return 0;
+            }
         }
 
         /// Obtiene un producto por su ID
-        public productosDTO ObtenerPorId(int productoId)
+        public productosDTO ObtenerPorIdProducto(int productoId)
         {
             return this.clienteSOAP.obtenerPorIdProducto(productoId);
         }
 
         /// Lista todos los productos (con sus variantes)
-        public IList<productosDTO> ListarTodos()
+        public IList<productosDTO> ListarTodosProducto()
         {
             return this.clienteSOAP.listarTodosProducto();
         }
 
         /// Modifica un producto existente
-        public int Modificar(int productoId, string descripcion, categoriasDTO categoria, estilosDTO estilo, double precioVenta, usuariosDTO usuario)
+        public int ModificarProducto(int productoId, string descripcion, categoriasDTO categoria, estilosDTO estilo, double precioVenta, usuariosDTO usuario)
         {
             return this.clienteSOAP.modificarProducto(productoId, descripcion, categoria, estilo, precioVenta, usuario);
         }
@@ -73,19 +93,19 @@ namespace KawkiWebBusiness
         //}
 
         /// Verifica si un producto tiene stock disponible en alguna de sus variantes
-        public bool TieneStockDisponible(int productoId)
+        public bool TieneStockDisponibleProducto(int productoId)
         {
             return this.clienteSOAP.tieneStockDisponibleProducto(productoId);
         }
 
         /// Calcula el stock total de un producto sumando todas sus variantes
-        public int CalcularStockTotal(int productoId)
+        public int CalcularStockTotalProducto(int productoId)
         {
             return this.clienteSOAP.calcularStockTotalProducto(productoId);
         }
 
         /// Lista productos por categoría
-        public IList<productosDTO> ListarPorCategoria(int categoriaId)
+        public IList<productosDTO> ListarPorCategoriaProducto(int categoriaId)
         {
             try
             {
@@ -106,7 +126,7 @@ namespace KawkiWebBusiness
         }
 
         /// Lista productos por estilo
-        public IList<productosDTO> ListarPorEstilo(int estiloId)
+        public IList<productosDTO> ListarPorEstiloProducto(int estiloId)
         {
             try
             {
@@ -127,7 +147,7 @@ namespace KawkiWebBusiness
         }
 
         /// Lista productos con stock bajo (tienen variantes con alerta de stock activada)
-        public IList<productosDTO> ListarConStockBajo()
+        public IList<productosDTO> ListarConStockBajoProducto()
         {
             try
             {
