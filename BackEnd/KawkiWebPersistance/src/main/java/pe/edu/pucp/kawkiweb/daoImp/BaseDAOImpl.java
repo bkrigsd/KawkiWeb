@@ -4,11 +4,13 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import pe.edu.pucp.kawkiWeb.db.DBManager;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
+import pe.edu.pucp.kawkiweb.daoImp.util.ResultadoSP;
 import pe.edu.pucp.kawkiweb.daoImp.util.Tipo_Operacion;
 
 public abstract class BaseDAOImpl {
@@ -311,6 +313,19 @@ public abstract class BaseDAOImpl {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    /**
+     * Método template para instanciar objetos cuando los datos vienen de un
+     * JOIN. Por defecto, usa instanciarObjetoDelResultSet() como fallback para
+     * mantener retrocompatibilidad con DAOs que no tienen implementación
+     * optimizada.
+     *
+     * @throws SQLException Si hay error al procesar el ResultSet
+     */
+    protected void instanciarObjetoDelResultSetDesdeJoin() throws SQLException {
+        // Por defecto, usa el método estándar de instanciación
+        this.instanciarObjetoDelResultSet();
+    }
+
     protected void limpiarObjetoDelResultSet() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -351,6 +366,22 @@ public abstract class BaseDAOImpl {
 
     protected void agregarObjetoALaLista(List lista) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    /**
+     * Método template que los DAOs hijos pueden sobreescribir para agregar
+     * objetos a la lista cuando los datos vienen de un JOIN (stored procedure).
+     *
+     * Por defecto, usa el método estándar agregarObjetoALaLista(), pero los
+     * DAOs pueden implementar su propia lógica para manejar los campos
+     * adicionales que vienen del JOIN.
+     *
+     * @param lista Lista donde se agregarán los objetos
+     * @throws SQLException Si hay error al procesar el ResultSet
+     */
+    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
+        // Por defecto, usa el método estándar de instanciación
+        this.agregarObjetoALaLista(lista);
     }
 
     /// MÉTODOS PARA PROCEDIMIENTOS ALMACENADOS
@@ -396,32 +427,11 @@ public abstract class BaseDAOImpl {
     }
 
     /**
-     * Método template que los DAOs hijos pueden sobreescribir para agregar
-     * objetos a la lista cuando los datos vienen de un JOIN (stored procedure).
-     *
-     * Por defecto, usa el método estándar agregarObjetoALaLista(), pero los
-     * DAOs pueden implementar su propia lógica para manejar los campos
-     * adicionales que vienen del JOIN.
-     *
-     * @param lista Lista donde se agregarán los objetos
-     * @throws SQLException Si hay error al procesar el ResultSet
-     */
-    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
-        // Por defecto, usa el método estándar de instanciación
-        this.agregarObjetoALaLista(lista);
-    }
-
-    /**
      * Ejecuta un procedimiento almacenado que retorna UN solo registro. Útil
      * para búsquedas personalizadas más allá del CRUD básico.
      *
-     * @param nombreProcedimiento Nombre del procedimiento (sin CALL ni
-     * paréntesis)
-     * @param cantidadParametros Número de parámetros que acepta el
-     * procedimiento
-     * @param incluirParametros Consumer para setear los parámetros en el
-     * statement
-     * @param parametros Objeto con los datos necesarios para los parámetros
+     * VERSIÓN ESTÁNDAR (sin JOINs): Usa instanciarObjetoDelResultSet() Para SPs
+     * con JOINs, usar ejecutarConsultaProcedimientoConJoin()
      */
     protected void ejecutarConsultaProcedimiento(
             String nombreProcedimiento,
@@ -461,13 +471,52 @@ public abstract class BaseDAOImpl {
     }
 
     /**
+     * Ejecuta un procedimiento almacenado que retorna UN solo registro CON
+     * JOINs. Útil para búsquedas personalizadas que traen datos relacionados.
+     *
+     * VERSIÓN OPTIMIZADA (con JOINs): Usa
+     * instanciarObjetoDelResultSetDesdeJoin() Para SPs sin JOINs, usar
+     * ejecutarConsultaProcedimiento()
+     */
+    protected void ejecutarConsultaProcedimientoConJoin(
+            String nombreProcedimiento,
+            Integer cantidadParametros,
+            Consumer incluirParametros,
+            Object parametros) {
+
+        try {
+            this.abrirConexion();
+            String sql = generarLlamadaSP(nombreProcedimiento, cantidadParametros);
+            this.colocarSQLEnStatement(sql);
+
+            if (incluirParametros != null) {
+                incluirParametros.accept(parametros);
+            }
+
+            this.ejecutarSelectEnDB();
+
+            if (this.resultSet.next()) {
+                // CLAVE: Usa el método OPTIMIZADO para JOINs
+                this.instanciarObjetoDelResultSetDesdeJoin();
+            } else {
+                this.limpiarObjetoDelResultSet();
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Error al ejecutar consulta con procedimiento (JOIN): " + ex);
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+    }
+
+    /**
      * Ejecuta un procedimiento almacenado que retorna MÚLTIPLES registros. Útil
      * para listados personalizados con filtros complejos.
      *
-     * @param nombreProcedimiento Nombre del procedimiento
-     * @param cantidadParametros Número de parámetros
-     * @param incluirParametros Consumer para setear los parámetros
-     * @param parametros Objeto con los datos necesarios
      * @return Lista de objetos
      */
     protected List ejecutarConsultaProcedimientoLista(
@@ -480,9 +529,7 @@ public abstract class BaseDAOImpl {
 
         try {
             this.abrirConexion();
-
             String sql = generarLlamadaSP(nombreProcedimiento, cantidadParametros);
-
             this.colocarSQLEnStatement(sql);
 
             if (incluirParametros != null) {
@@ -492,7 +539,8 @@ public abstract class BaseDAOImpl {
             this.ejecutarSelectEnDB();
 
             while (this.resultSet.next()) {
-                this.agregarObjetoALaLista(lista);
+                // OPTIMIZACIÓN: Ahora usa el método optimizado para JOINs
+                this.agregarObjetoALaListaDesdeJoin(lista);
             }
 
         } catch (SQLException ex) {
@@ -506,6 +554,247 @@ public abstract class BaseDAOImpl {
         }
 
         return lista;
+    }
+
+    /**
+     * Ejecuta un SP que retorna UN ÚNICO parámetro OUT de tipo Boolean/TINYINT.
+     *
+     * @return Boolean resultado del parámetro OUT
+     */
+    protected Boolean ejecutarSPConOutBoolean(
+            String nombreProcedimiento,
+            Integer cantidadParametrosIN,
+            Consumer incluirParametrosIN,
+            Object parametrosIN,
+            Boolean valorPorDefecto) {
+
+        Boolean resultado = valorPorDefecto;
+        try {
+            this.abrirConexion();
+
+            // Generar SQL: {CALL nombre_procedimiento(?, ?, ?)}
+            // Cantidad total = IN + 1 OUT
+            String sql = generarLlamadaSP(nombreProcedimiento, cantidadParametrosIN + 1);
+            this.colocarSQLEnStatement(sql);
+
+            // Setear parámetros IN
+            if (incluirParametrosIN != null) {
+                incluirParametrosIN.accept(parametrosIN);
+            }
+
+            // Registrar parámetro OUT (último parámetro)
+            this.statement.registerOutParameter(cantidadParametrosIN + 1, Types.TINYINT);
+
+            // Ejecutar
+            this.statement.execute();
+
+            // Obtener resultado
+            int valorOut = this.statement.getInt(cantidadParametrosIN + 1);
+            resultado = (valorOut == 1);
+
+        } catch (SQLException ex) {
+            System.err.println("Error al ejecutar " + nombreProcedimiento + ": " + ex);
+            resultado = valorPorDefecto;
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+        return resultado;
+    }
+
+    /**
+     * Ejecuta un SP que retorna UN ÚNICO parámetro OUT de tipo Integer.
+     *
+     * @return Integer resultado del parámetro OUT
+     */
+    protected Integer ejecutarSPConOutInteger(
+            String nombreProcedimiento,
+            Integer cantidadParametrosIN,
+            Consumer incluirParametrosIN,
+            Object parametrosIN,
+            Integer valorPorDefecto) {
+
+        Integer resultado = valorPorDefecto;
+        try {
+            this.abrirConexion();
+            String sql = generarLlamadaSP(nombreProcedimiento, cantidadParametrosIN + 1);
+            this.colocarSQLEnStatement(sql);
+
+            if (incluirParametrosIN != null) {
+                incluirParametrosIN.accept(parametrosIN);
+            }
+
+            this.statement.registerOutParameter(cantidadParametrosIN + 1, Types.INTEGER);
+            this.statement.execute();
+            resultado = this.statement.getInt(cantidadParametrosIN + 1);
+
+        } catch (SQLException ex) {
+            System.err.println("Error al ejecutar " + nombreProcedimiento + ": " + ex);
+            resultado = valorPorDefecto;
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+        return resultado;
+    }
+
+    /**
+     * Ejecuta un SP que retorna UN ÚNICO parámetro OUT de tipo String.
+     *
+     * @return String resultado del parámetro OUT
+     */
+    protected String ejecutarSPConOutString(
+            String nombreProcedimiento,
+            Integer cantidadParametrosIN,
+            Consumer incluirParametrosIN,
+            Object parametrosIN,
+            String valorPorDefecto) {
+
+        String resultado = valorPorDefecto;
+        try {
+            this.abrirConexion();
+            String sql = generarLlamadaSP(nombreProcedimiento, cantidadParametrosIN + 1);
+            this.colocarSQLEnStatement(sql);
+
+            if (incluirParametrosIN != null) {
+                incluirParametrosIN.accept(parametrosIN);
+            }
+
+            this.statement.registerOutParameter(cantidadParametrosIN + 1, Types.VARCHAR);
+            this.statement.execute();
+            resultado = this.statement.getString(cantidadParametrosIN + 1);
+
+        } catch (SQLException ex) {
+            System.err.println("Error al ejecutar " + nombreProcedimiento + ": " + ex);
+            resultado = valorPorDefecto;
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+        return resultado;
+    }
+
+    // En BaseDAOImpl.java - AGREGAR ESTE MÉTODO
+    /**
+     * Ejecuta un SP con N parámetros IN y M parámetros OUT de tipo BOOLEAN.
+     * Retorna un array con los valores booleanos.
+     */
+    protected boolean[] ejecutarSPConMultiplesBooleanOUT(
+            String nombreProcedimiento,
+            Integer cantidadParametrosIN,
+            Integer cantidadParametrosOUT,
+            Consumer<Object> incluirParametrosIN,
+            Object parametrosIN) {
+
+        boolean[] resultado = new boolean[cantidadParametrosOUT];
+
+        try {
+            this.abrirConexion();
+
+            // Total de parámetros = IN + OUT
+            String sql = generarLlamadaSP(nombreProcedimiento,
+                    cantidadParametrosIN + cantidadParametrosOUT);
+            this.colocarSQLEnStatement(sql);
+
+            // Setear parámetros IN
+            if (incluirParametrosIN != null) {
+                incluirParametrosIN.accept(parametrosIN);
+            }
+
+            // Registrar parámetros OUT (después de los IN)
+            for (int i = 0; i < cantidadParametrosOUT; i++) {
+                this.statement.registerOutParameter(cantidadParametrosIN + 1 + i, Types.BOOLEAN);
+            }
+
+            // Ejecutar
+            this.statement.execute();
+
+            // Extraer resultados OUT
+            for (int i = 0; i < cantidadParametrosOUT; i++) {
+                resultado[i] = this.statement.getBoolean(cantidadParametrosIN + 1 + i);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Error al ejecutar " + nombreProcedimiento + ": " + ex);
+            // En caso de error, retornar false en todos
+            for (int i = 0; i < cantidadParametrosOUT; i++) {
+                resultado[i] = false;
+            }
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Ejecuta un SP con parámetros IN y retorna un resultado con código y
+     * mensaje. Diseñado para SPs que siguen el patrón estándar de respuesta
+     * (código INTEGER + mensaje VARCHAR).
+     *
+     * @param nombreProcedimiento Nombre del SP
+     * @param cantidadParametrosIN Cantidad de parámetros de entrada
+     * @param incluirParametrosIN Consumer para setear parámetros IN
+     * @param parametrosIN Objeto con los parámetros IN
+     * @return ResultadoSP con código y mensaje
+     */
+    protected ResultadoSP ejecutarSPConResultadoEstandar(
+            String nombreProcedimiento,
+            Integer cantidadParametrosIN,
+            Consumer<Object> incluirParametrosIN,
+            Object parametrosIN) {
+
+        Integer codigo = -1;
+        String mensaje = "Error desconocido";
+
+        try {
+            this.abrirConexion();
+
+            // Total de parámetros = IN + 2 OUT (código, mensaje)
+            String sql = generarLlamadaSP(nombreProcedimiento, cantidadParametrosIN + 2);
+            this.colocarSQLEnStatement(sql);
+
+            // Setear parámetros IN
+            if (incluirParametrosIN != null) {
+                incluirParametrosIN.accept(parametrosIN);
+            }
+
+            // Registrar parámetros OUT
+            this.statement.registerOutParameter(cantidadParametrosIN + 1, Types.INTEGER); // código
+            this.statement.registerOutParameter(cantidadParametrosIN + 2, Types.VARCHAR); // mensaje
+
+            // Ejecutar
+            this.statement.execute();
+
+            // Extraer resultados
+            codigo = this.statement.getInt(cantidadParametrosIN + 1);
+            mensaje = this.statement.getString(cantidadParametrosIN + 2);
+
+        } catch (SQLException ex) {
+            System.err.println("Error al ejecutar " + nombreProcedimiento + ": " + ex);
+            mensaje = "Error en la base de datos: " + ex.getMessage();
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+
+        return new ResultadoSP(codigo, mensaje);
     }
 
     /**
