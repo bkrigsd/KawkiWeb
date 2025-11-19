@@ -108,42 +108,62 @@ namespace KawkiWeb
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            lblErrorDescripcion.Text = "";
+            lblErrorCategoria.Text = "";
+            lblErrorEstilo.Text = "";
+            lblErrorPrecio.Text = "";
             lblMensaje.Text = "";
             lblMensaje.CssClass = "text-danger d-block mb-2";
 
             try
             {
                 bool esEdicion = hfProductoId.Value != "0";
+                bool hayErrores = false;
                 string descripcion = txtDescripcion.Text.Trim();
-                int categoriaId = Convert.ToInt32(ddlCategoria.SelectedValue);
-                int estiloId = Convert.ToInt32(ddlEstilo.SelectedValue);
-                double precio_Venta = Convert.ToDouble(txtPrecio.Text.Trim());
 
-                // === VALIDACIONES ===
                 if (string.IsNullOrEmpty(descripcion))
                 {
-                    lblMensaje.Text = "⚠ La descripción del producto es obligatoria.";
-                    MantenerModalAbierto(esEdicion);
-                    return;
+                    lblErrorDescripcion.Text = "La descripción es obligatoria";
+                    hayErrores = true;
                 }
+
+                int categoriaId = Convert.ToInt32(ddlCategoria.SelectedValue);
 
                 if (categoriaId == 0)
                 {
-                    lblMensaje.Text = "⚠ Debe seleccionar una categoría.";
+                    lblMensaje.Text = "Debe seleccionar una categoría.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
 
+                int estiloId = Convert.ToInt32(ddlEstilo.SelectedValue);
                 if (estiloId == 0)
                 {
-                    lblMensaje.Text = "⚠ Debe seleccionar un estilo.";
+                    lblMensaje.Text = "Debe seleccionar un estilo.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
 
-                if (precio_Venta <= 0)
+                double precio_Venta;
+                if (!double.TryParse(txtPrecio.Text.Trim(), out precio_Venta) || precio_Venta <= 0)
                 {
-                    lblMensaje.Text = "⚠ El precio debe ser mayor a 0.";
+                    lblErrorPrecio.Text = "Ingrese un precio válido mayor a 0";
+                    hayErrores = true;
+                }
+
+                // Si hay errores, mantener modal abierto
+                if (hayErrores)
+                {
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
+
+                // VALIDAR PRODUCTO DUPLICADO
+                int productoIdActual = esEdicion ? Convert.ToInt32(hfProductoId.Value) : 0;
+                if (ExisteProductoDuplicado(categoriaId, estiloId, productoIdActual))
+                {
+                    lblMensaje.CssClass = "text-warning d-block mb-2";
+                    lblMensaje.Text = "<i class='fas fa-exclamation-triangle'></i> Ya existe un producto con esta categoría y estilo. Use 'Editar Variantes' para agregar más colores o tallas.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
@@ -152,7 +172,8 @@ namespace KawkiWeb
 
                 if (usuario == null || usuario.usuarioId <= 0)
                 {
-                    lblMensaje.Text = "⚠ Error: No hay sesión de usuario válida.";
+                    lblMensaje.CssClass = "text-warning d-block mb-2";
+                    lblMensaje.Text = "Error: No hay sesión de usuario válida.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
@@ -181,6 +202,12 @@ namespace KawkiWeb
                     nombre = estiloProducto.nombre
                 };
 
+                //Asegurar que se pasen los ids:
+                categoria.categoria_idSpecified = true;
+                estilo.estilo_idSpecified = true;
+                usuario.usuarioIdSpecified = true;
+                usuarioProductos.usuarioIdSpecified = true;
+
                 if (esEdicion)
                 {
                     // === EDITAR ===
@@ -198,14 +225,16 @@ namespace KawkiWeb
 
                     if (resultado == null || resultado <= 0)
                     {
-                        lblMensaje.CssClass = "text-danger d-block mb-2";
-                        lblMensaje.Text = "❌ No se pudo actualizar el producto. Verifique que los datos sean válidos.";
+                        lblMensaje.CssClass = "text-warning d-block mb-2";
+                        lblMensaje.Text = "No se pudo actualizar el producto. Verifique que los datos sean válidos.";
                         MantenerModalAbierto(esEdicion);
                         return;
                     }
 
+                    LimpiarFormulario();
+                    CargarProductos();
                     lblMensaje.CssClass = "text-success d-block mb-2";
-                    lblMensaje.Text = "✓ Producto actualizado correctamente.";
+                    lblMensaje.Text = "Producto actualizado correctamente.";
                 }
                 else
                 {
@@ -215,13 +244,13 @@ namespace KawkiWeb
                         categoria,
                         estilo,
                         precio_Venta,
-                        usuario
+                        usuarioProductos
                     );
 
                     if (resultado == null || resultado <= 0)
                     {
                         lblMensaje.CssClass = "text-danger d-block mb-2";
-                        lblMensaje.Text = "❌ No se pudo registrar el producto. Verifique que los datos sean válidos.";
+                        lblMensaje.Text = "No se pudo registrar el producto. Verifique que los datos sean válidos.";
                         MantenerModalAbierto(esEdicion);
                         return;
                     }
@@ -244,14 +273,32 @@ namespace KawkiWeb
             catch (Exception ex)
             {
                 lblMensaje.CssClass = "text-danger d-block mb-2";
-                lblMensaje.Text = "❌ Error: " + ex.Message;
+                lblMensaje.Text = "Error: " + ex.Message;
                 MantenerModalAbierto(hfProductoId.Value != "0");
             }
         }
 
+        private bool ExisteProductoDuplicado(int categoriaId, int estiloId, int productoIdActual = 0)
+        {
+            try
+            {
+                var todosProductos = productosBO.ListarTodosProducto();
+
+                return todosProductos.Any(p =>
+                    p.producto_id != productoIdActual && // Excluir el producto actual si es edición
+                    p.categoria.categoria_id == categoriaId &&
+                    p.estilo.estilo_id == estiloId
+                );
+            }
+            catch
+            {
+                return false;
+            }
+        }
         private void MantenerModalAbierto(bool esEdicion)
         {
-            string script = esEdicion ? "abrirModalEditar();" : "abrirModalRegistro();";
+            // ⭐ Usar funciones que NO limpian
+            string script = esEdicion ? "reabrirModalEditar();" : "reabrirModalRegistro();";
             ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModal", script, true);
         }
 
@@ -267,7 +314,6 @@ namespace KawkiWeb
                 switch (e.CommandName)
                 {
                     case "VerVariantes":
-                        // Redirigir a página de gestión de variantes
                         Response.Redirect($"GestionVariantes.aspx?productoId={productoId}");
                         break;
 

@@ -26,26 +26,13 @@
   <xs:element name="tieneStockDisponibleProductoResponse" type="tns:tieneStockDisponibleProductoResponse" />
   <xs:element name="tiposUsuarioDTO" type="tns:tiposUsuarioDTO" />
   <xs:element name="usuariosDTO" type="tns:usuariosDTO" />
-  <xs:complexType name="listarPorEstiloProducto">
+  <xs:complexType name="insertarProducto">
     <xs:sequence>
-      <xs:element minOccurs="0" name="estilo_id" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="listarPorEstiloProductoResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosDTO" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="productosDTO">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="producto_id" type="xs:int" />
       <xs:element minOccurs="0" name="descripcion" type="xs:string" />
       <xs:element minOccurs="0" name="categoria" type="tns:categoriasDTO" />
       <xs:element minOccurs="0" name="estilo" type="tns:estilosDTO" />
       <xs:element minOccurs="0" name="precio_venta" type="xs:double" />
-      <xs:element minOccurs="0" name="fecha_hora_creacion" type="xs:string" />
       <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="variantes" nillable="true" type="tns:productosVariantesDTO" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="categoriasDTO">
@@ -81,6 +68,33 @@
       <xs:element minOccurs="0" name="nombre" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="insertarProductoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorEstiloProducto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="estilo_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorEstiloProductoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="productosDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="producto_id" type="xs:int" />
+      <xs:element minOccurs="0" name="descripcion" type="xs:string" />
+      <xs:element minOccurs="0" name="categoria" type="tns:categoriasDTO" />
+      <xs:element minOccurs="0" name="estilo" type="tns:estilosDTO" />
+      <xs:element minOccurs="0" name="precio_venta" type="xs:double" />
+      <xs:element minOccurs="0" name="fecha_hora_creacion" type="xs:string" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="variantes" nillable="true" type="tns:productosVariantesDTO" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="productosVariantesDTO">
     <xs:sequence>
       <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
@@ -109,20 +123,6 @@
       <xs:element minOccurs="0" name="numero" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="insertarProducto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="descripcion" type="xs:string" />
-      <xs:element minOccurs="0" name="categoria" type="tns:categoriasDTO" />
-      <xs:element minOccurs="0" name="estilo" type="tns:estilosDTO" />
-      <xs:element minOccurs="0" name="precio_venta" type="xs:double" />
-      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="insertarProductoResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="listarTodosProducto">
     <xs:sequence />
   </xs:complexType>
@@ -139,16 +139,6 @@
       <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosDTO" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="listarPorCategoriaProducto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="categoria_id" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="listarPorCategoriaProductoResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosDTO" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="tieneStockDisponibleProducto">
     <xs:sequence>
       <xs:element minOccurs="0" name="producto_id" type="xs:int" />
@@ -157,6 +147,16 @@
   <xs:complexType name="tieneStockDisponibleProductoResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorCategoriaProducto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="categoria_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorCategoriaProductoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosDTO" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="modificarProducto">
