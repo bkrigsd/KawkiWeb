@@ -193,6 +193,8 @@ namespace KawkiWeb
                         usuario
                     );
 
+                    System.Diagnostics.Debug.WriteLine($"Resultado de Insertar: {resultado}");
+
                     if (resultado == null || resultado <= 0)
                     {
                         lblMensaje.CssClass = "text-danger d-block mb-2";

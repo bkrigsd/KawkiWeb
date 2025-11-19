@@ -61,7 +61,7 @@
                                 <asp:LinkButton runat="server" 
                                     CommandName="VerVariantes" 
                                     CommandArgument='<%# Eval("ProductoId") %>'
-                                    CssClass="btn-variantes-sm"
+                                    CssClass="btn-kawki-primary btn-sm"
                                     CausesValidation="false">
                                     <i class="fas fa-palette"></i> Variantes
                                 </asp:LinkButton>

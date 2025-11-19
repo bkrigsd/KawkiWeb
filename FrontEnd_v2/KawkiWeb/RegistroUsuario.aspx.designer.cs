@@ -42,22 +42,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
-        /// Control lblErrorNombre.
+        /// Control rfvNombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorNombre;
-
-        /// <summary>
-        /// Control RequiredFieldValidator5.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombre;
 
         /// <summary>
         /// Control txtApellidoPaterno.
@@ -69,22 +60,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.TextBox txtApellidoPaterno;
 
         /// <summary>
-        /// Control lblErrorApellido.
+        /// Control rfvApellido.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorApellido;
-
-        /// <summary>
-        /// Control RequiredFieldValidator6.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvApellido;
 
         /// <summary>
         /// Control txtDNI.
@@ -96,22 +78,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.TextBox txtDNI;
 
         /// <summary>
-        /// Control lblErrorDNI.
+        /// Control rfvDNI.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorDNI;
-
-        /// <summary>
-        /// Control RequiredFieldValidator3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDNI;
 
         /// <summary>
         /// Control revDNI.
@@ -132,22 +105,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.TextBox txtUsuario;
 
         /// <summary>
-        /// Control lblErrorUsuario.
+        /// Control rfvUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorUsuario;
-
-        /// <summary>
-        /// Control RequiredFieldValidator4.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvUsuario;
 
         /// <summary>
         /// Control txtEmail.
@@ -159,22 +123,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
-        /// Control lblErrorEmail.
+        /// Control rfvEmail.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorEmail;
-
-        /// <summary>
-        /// Control RequiredFieldValidator2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEmail;
 
         /// <summary>
         /// Control revEmail.
@@ -195,31 +150,22 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.TextBox txtTelefono;
 
         /// <summary>
-        /// Control lblErrorTelefono.
+        /// Control rfvTelefono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorTelefono;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTelefono;
 
         /// <summary>
-        /// Control RequiredFieldValidator1.
+        /// Control revTelefono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-
-        /// <summary>
-        /// Control RegularExpressionValidator1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revTelefono;
 
         /// <summary>
         /// Control txtClave.
@@ -267,15 +213,6 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvRol;
 
         /// <summary>
-        /// Control chkActivo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkActivo;
-
-        /// <summary>
         /// Control lblMensaje.
         /// </summary>
         /// <remarks>
@@ -301,5 +238,14 @@ namespace KawkiWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfIdEliminar;
+
+        /// <summary>
+        /// Control btnConfirmarEliminar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConfirmarEliminar;
     }
 }
