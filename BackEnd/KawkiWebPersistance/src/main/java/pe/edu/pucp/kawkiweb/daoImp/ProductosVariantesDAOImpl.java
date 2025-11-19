@@ -287,31 +287,18 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
      */
     @Override
     public ArrayList<ProductosVariantesDTO> listarPorColor(Integer colorId) {
-        List lista = new ArrayList<>();
-
-        try {
-            this.abrirConexion();
-
-            String sql = "{CALL SP_LISTAR_VARIANTES_POR_COLOR(?)}";
-            this.colocarSQLEnStatement(sql);
-            this.statement.setInt(1, colorId);
-            this.ejecutarSelectEnDB();
-
-            while (this.resultSet.next()) {
-                this.agregarObjetoALaListaDesdeJoin(lista);
-            }
-
-        } catch (SQLException ex) {
-            System.err.println("Error al listar variantes por color: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return (ArrayList<ProductosVariantesDTO>) lista;
+        return (ArrayList<ProductosVariantesDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_VARIANTES_POR_COLOR",
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro colorId: " + ex);
+                    }
+                },
+                colorId
+        );
     }
 
     /**
@@ -319,31 +306,18 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
      */
     @Override
     public ArrayList<ProductosVariantesDTO> listarPorTalla(Integer tallaId) {
-        List lista = new ArrayList<>();
-
-        try {
-            this.abrirConexion();
-
-            String sql = "{CALL SP_LISTAR_VARIANTES_POR_TALLA(?)}";
-            this.colocarSQLEnStatement(sql);
-            this.statement.setInt(1, tallaId);
-            this.ejecutarSelectEnDB();
-
-            while (this.resultSet.next()) {
-                this.agregarObjetoALaListaDesdeJoin(lista);
-            }
-
-        } catch (SQLException ex) {
-            System.err.println("Error al listar variantes por talla: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return (ArrayList<ProductosVariantesDTO>) lista;
+        return (ArrayList<ProductosVariantesDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_VARIANTES_POR_TALLA",
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro tallaId: " + ex);
+                    }
+                },
+                tallaId
+        );
     }
 
     /**
@@ -351,30 +325,12 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
      */
     @Override
     public ArrayList<ProductosVariantesDTO> listarConStockBajo() {
-        List lista = new ArrayList<>();
-
-        try {
-            this.abrirConexion();
-
-            String sql = "{CALL SP_LISTAR_VARIANTES_STOCK_BAJO()}";
-            this.colocarSQLEnStatement(sql);
-            this.ejecutarSelectEnDB();
-
-            while (this.resultSet.next()) {
-                this.agregarObjetoALaListaDesdeJoin(lista);
-            }
-
-        } catch (SQLException ex) {
-            System.err.println("Error al listar variantes con stock bajo: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return (ArrayList<ProductosVariantesDTO>) lista;
+        return (ArrayList<ProductosVariantesDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_VARIANTES_STOCK_BAJO",
+                0, // Sin parámetros
+                null, // Sin consumer de parámetros
+                null // Sin objeto de parámetros
+        );
     }
 
     /**

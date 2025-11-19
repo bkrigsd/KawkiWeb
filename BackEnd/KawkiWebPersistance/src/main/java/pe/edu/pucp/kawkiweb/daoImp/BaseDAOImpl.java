@@ -311,6 +311,19 @@ public abstract class BaseDAOImpl {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    /**
+     * Método template para instanciar objetos cuando los datos vienen de un
+     * JOIN. Por defecto, usa instanciarObjetoDelResultSet() como fallback para
+     * mantener retrocompatibilidad con DAOs que no tienen implementación
+     * optimizada.
+     *
+     * @throws SQLException Si hay error al procesar el ResultSet
+     */
+    protected void instanciarObjetoDelResultSetDesdeJoin() throws SQLException {
+        // Por defecto, usa el método estándar de instanciación
+        this.instanciarObjetoDelResultSet();
+    }
+
     protected void limpiarObjetoDelResultSet() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -351,6 +364,22 @@ public abstract class BaseDAOImpl {
 
     protected void agregarObjetoALaLista(List lista) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    /**
+     * Método template que los DAOs hijos pueden sobreescribir para agregar
+     * objetos a la lista cuando los datos vienen de un JOIN (stored procedure).
+     *
+     * Por defecto, usa el método estándar agregarObjetoALaLista(), pero los
+     * DAOs pueden implementar su propia lógica para manejar los campos
+     * adicionales que vienen del JOIN.
+     *
+     * @param lista Lista donde se agregarán los objetos
+     * @throws SQLException Si hay error al procesar el ResultSet
+     */
+    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
+        // Por defecto, usa el método estándar de instanciación
+        this.agregarObjetoALaLista(lista);
     }
 
     /// MÉTODOS PARA PROCEDIMIENTOS ALMACENADOS
@@ -396,31 +425,15 @@ public abstract class BaseDAOImpl {
     }
 
     /**
-     * Método template que los DAOs hijos pueden sobreescribir para agregar
-     * objetos a la lista cuando los datos vienen de un JOIN (stored procedure).
+     * Ejecuta un procedimiento almacenado que retorna UN solo registro.
+     * Útil para búsquedas personalizadas más allá del CRUD básico.
+     * 
+     * VERSIÓN ESTÁNDAR (sin JOINs): Usa instanciarObjetoDelResultSet()
+     * Para SPs con JOINs, usar ejecutarConsultaProcedimientoConJoin()
      *
-     * Por defecto, usa el método estándar agregarObjetoALaLista(), pero los
-     * DAOs pueden implementar su propia lógica para manejar los campos
-     * adicionales que vienen del JOIN.
-     *
-     * @param lista Lista donde se agregarán los objetos
-     * @throws SQLException Si hay error al procesar el ResultSet
-     */
-    protected void agregarObjetoALaListaDesdeJoin(List lista) throws SQLException {
-        // Por defecto, usa el método estándar de instanciación
-        this.agregarObjetoALaLista(lista);
-    }
-
-    /**
-     * Ejecuta un procedimiento almacenado que retorna UN solo registro. Útil
-     * para búsquedas personalizadas más allá del CRUD básico.
-     *
-     * @param nombreProcedimiento Nombre del procedimiento (sin CALL ni
-     * paréntesis)
-     * @param cantidadParametros Número de parámetros que acepta el
-     * procedimiento
-     * @param incluirParametros Consumer para setear los parámetros en el
-     * statement
+     * @param nombreProcedimiento Nombre del procedimiento (sin CALL ni paréntesis)
+     * @param cantidadParametros Número de parámetros que acepta el procedimiento
+     * @param incluirParametros Consumer para setear los parámetros en el statement
      * @param parametros Objeto con los datos necesarios para los parámetros
      */
     protected void ejecutarConsultaProcedimiento(
@@ -461,8 +474,57 @@ public abstract class BaseDAOImpl {
     }
 
     /**
-     * Ejecuta un procedimiento almacenado que retorna MÚLTIPLES registros. Útil
-     * para listados personalizados con filtros complejos.
+     * Ejecuta un procedimiento almacenado que retorna UN solo registro CON JOINs.
+     * Útil para búsquedas personalizadas que traen datos relacionados.
+     * 
+     * VERSIÓN OPTIMIZADA (con JOINs): Usa instanciarObjetoDelResultSetDesdeJoin()
+     * Para SPs sin JOINs, usar ejecutarConsultaProcedimiento()
+     *
+     * @param nombreProcedimiento Nombre del procedimiento (sin CALL ni paréntesis)
+     * @param cantidadParametros Número de parámetros que acepta el procedimiento
+     * @param incluirParametros Consumer para setear los parámetros en el statement
+     * @param parametros Objeto con los datos necesarios para los parámetros
+     */
+    protected void ejecutarConsultaProcedimientoConJoin(
+            String nombreProcedimiento,
+            Integer cantidadParametros,
+            Consumer incluirParametros,
+            Object parametros) {
+
+        try {
+            this.abrirConexion();
+            String sql = generarLlamadaSP(nombreProcedimiento, cantidadParametros);
+            this.colocarSQLEnStatement(sql);
+
+            if (incluirParametros != null) {
+                incluirParametros.accept(parametros);
+            }
+
+            this.ejecutarSelectEnDB();
+
+            if (this.resultSet.next()) {
+                // CLAVE: Usa el método OPTIMIZADO para JOINs
+                this.instanciarObjetoDelResultSetDesdeJoin();
+            } else {
+                this.limpiarObjetoDelResultSet();
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Error al ejecutar consulta con procedimiento (JOIN): " + ex);
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión: " + ex);
+            }
+        }
+    }
+    
+    /**
+     * Ejecuta un procedimiento almacenado que retorna MÚLTIPLES registros.
+     * Útil para listados personalizados con filtros complejos.
+     * 
+     * OPTIMIZACIÓN: Usa agregarObjetoALaListaDesdeJoin() para SPs con JOINs
      *
      * @param nombreProcedimiento Nombre del procedimiento
      * @param cantidadParametros Número de parámetros
@@ -480,9 +542,7 @@ public abstract class BaseDAOImpl {
 
         try {
             this.abrirConexion();
-
             String sql = generarLlamadaSP(nombreProcedimiento, cantidadParametros);
-
             this.colocarSQLEnStatement(sql);
 
             if (incluirParametros != null) {
@@ -492,7 +552,8 @@ public abstract class BaseDAOImpl {
             this.ejecutarSelectEnDB();
 
             while (this.resultSet.next()) {
-                this.agregarObjetoALaLista(lista);
+                // OPTIMIZACIÓN: Ahora usa el método optimizado para JOINs
+                this.agregarObjetoALaListaDesdeJoin(lista);
             }
 
         } catch (SQLException ex) {

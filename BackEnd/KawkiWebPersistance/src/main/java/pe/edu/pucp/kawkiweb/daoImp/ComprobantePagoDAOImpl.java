@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.ComprobantesPagoDTO;
 import pe.edu.pucp.kawkiweb.model.utilPago.TiposComprobanteDTO;
@@ -312,37 +311,25 @@ public class ComprobantePagoDAOImpl extends BaseDAOImpl implements ComprobantesP
     /// BÚSQUEDAS AVANZADAS
     
     /**
- * Obtiene el comprobante de pago asociado a una venta usando SP optimizado
- * El SP trae todos los datos con JOINs, sin necesidad de queries adicionales
- */
-@Override
+    * Obtiene el comprobante de pago asociado a una venta usando SP optimizado
+    * El SP trae todos los datos con JOINs, sin necesidad de queries adicionales
+    */
+   @Override
     public ComprobantesPagoDTO obtenerPorVentaId(Integer ventaId) {
-        this.comprobante = null;
+        this.comprobante = new ComprobantesPagoDTO();
 
-        try {
-            this.abrirConexion();
-
-            String sql = "{CALL SP_OBTENER_COMPROBANTE_POR_VENTA(?)}";
-            this.colocarSQLEnStatement(sql);
-            this.statement.setInt(1, ventaId);
-            this.ejecutarSelectEnDB();
-
-            if (this.resultSet.next()) {
-                // Usar el método optimizado que NO hace queries adicionales
-                this.instanciarObjetoDelResultSetDesdeJoin();
-            } else {
-                this.limpiarObjetoDelResultSet();
-            }
-
-        } catch (SQLException ex) {
-            System.err.println("Error al obtener comprobante por venta: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
+        super.ejecutarConsultaProcedimientoConJoin(
+                "SP_OBTENER_COMPROBANTE_POR_VENTA",
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro ventaId: " + ex);
+                    }
+                },
+                ventaId
+        );
 
         return this.comprobante;
     }

@@ -219,31 +219,12 @@ public class DescuentosDAOImpl extends BaseDAOImpl implements DescuentosDAO {
      */
     @Override
     public ArrayList<DescuentosDTO> listarActivas() {
-        List lista = new ArrayList<>();
-
-        try {
-            this.abrirConexion();
-
-            String sql = "{CALL SP_LISTAR_DESCUENTOS_ACTIVOS()}";
-            this.colocarSQLEnStatement(sql);
-            this.ejecutarSelectEnDB();
-
-            while (this.resultSet.next()) {
-                // Usar el método optimizado que NO hace queries adicionales
-                this.agregarObjetoALaListaDesdeJoin(lista);
-            }
-
-        } catch (SQLException ex) {
-            System.err.println("Error al listar descuentos activos: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return (ArrayList<DescuentosDTO>) lista;
+        return (ArrayList<DescuentosDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_DESCUENTOS_ACTIVOS",
+                0, // Sin parámetros
+                null, // Sin consumer de parámetros
+                null // Sin objeto de parámetros
+        );
     }
 
     /**
@@ -252,30 +233,11 @@ public class DescuentosDAOImpl extends BaseDAOImpl implements DescuentosDAO {
      */
     @Override
     public ArrayList<DescuentosDTO> listarVigentes() {
-        List lista = new ArrayList<>();
-
-        try {
-            this.abrirConexion();
-
-            String sql = "{CALL SP_LISTAR_DESCUENTOS_VIGENTES()}";
-            this.colocarSQLEnStatement(sql);
-            this.ejecutarSelectEnDB();
-
-            while (this.resultSet.next()) {
-                // Usar el método optimizado que NO hace queries adicionales
-                this.agregarObjetoALaListaDesdeJoin(lista);
-            }
-
-        } catch (SQLException ex) {
-            System.err.println("Error al listar descuentos vigentes: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return (ArrayList<DescuentosDTO>) lista;
+        return (ArrayList<DescuentosDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_DESCUENTOS_VIGENTES",
+                0, // Sin parámetros
+                null, // Sin consumer de parámetros
+                null // Sin objeto de parámetros
+        );
     }
 }

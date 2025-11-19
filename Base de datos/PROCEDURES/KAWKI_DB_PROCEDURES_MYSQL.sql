@@ -1096,3 +1096,208 @@ END$$
 
 DELIMITER ;
 
+-- =====================================================
+-- STORED PROCEDURES PARA MOVIMIENTOS_INVENTARIO - MySQL
+-- Búsquedas avanzadas optimizadas con JOINs
+-- =====================================================
+
+USE KAWKI_DB;
+DELIMITER $$
+
+-- =====================================================
+-- SP_LISTAR_MOVIMIENTOS_POR_PRODUCTO_VARIANTE
+-- Lista movimientos filtrados por producto variante
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_MOVIMIENTOS_POR_PRODUCTO_VARIANTE$$
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_POR_PRODUCTO_VARIANTE(
+    IN p_prod_variante_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN)
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    WHERE mi.PROD_VARIANTE_ID = p_prod_variante_id
+    ORDER BY mi.FECHA_HORA_MOV DESC;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_MOVIMIENTOS_POR_TIPO_MOVIMIENTO
+-- Lista movimientos filtrados por tipo de movimiento
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_MOVIMIENTOS_POR_TIPO_MOVIMIENTO$$
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_POR_TIPO_MOVIMIENTO(
+    IN p_tipo_movimiento_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN)
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    WHERE mi.TIPO_MOVIMIENTO_ID = p_tipo_movimiento_id
+    ORDER BY mi.FECHA_HORA_MOV DESC;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_MOVIMIENTOS_POR_USUARIO
+-- Lista movimientos filtrados por usuario
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_MOVIMIENTOS_POR_USUARIO$$
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_POR_USUARIO(
+    IN p_usuario_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN)
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    WHERE mi.USUARIO_ID = p_usuario_id
+    ORDER BY mi.FECHA_HORA_MOV DESC;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_MOVIMIENTOS_POR_RANGO_FECHAS
+-- Lista movimientos en un rango de fechas
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_MOVIMIENTOS_POR_RANGO_FECHAS$$
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_POR_RANGO_FECHAS(
+    IN p_fecha_inicio DATETIME,
+    IN p_fecha_fin DATETIME
+)
+BEGIN
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN)
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    WHERE mi.FECHA_HORA_MOV BETWEEN p_fecha_inicio AND p_fecha_fin
+    ORDER BY mi.FECHA_HORA_MOV DESC;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_MOVIMIENTOS_RECIENTES
+-- Lista los últimos N movimientos
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_MOVIMIENTOS_RECIENTES$$
+
+CREATE PROCEDURE SP_LISTAR_MOVIMIENTOS_RECIENTES(
+    IN p_limite INT
+)
+BEGIN
+    SELECT 
+        -- Campos del movimiento de inventario
+        mi.MOV_INVENTARIO_ID,
+        mi.CANTIDAD,
+        mi.FECHA_HORA_MOV,
+        mi.OBSERVACION,
+        
+        -- Tipo de movimiento completo (JOIN)
+        tm.TIPO_MOVIMIENTO_ID,
+        tm.NOMBRE AS TIPO_MOVIMIENTO_NOMBRE,
+        
+        -- Producto Variante (JOIN) - ID, SKU Y STOCK
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        
+        -- Usuario (JOIN) - ID, NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM MOVIMIENTOS_INVENTARIO mi
+    INNER JOIN TIPOS_MOVIMIENTO tm ON mi.TIPO_MOVIMIENTO_ID = tm.TIPO_MOVIMIENTO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON mi.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+    INNER JOIN USUARIOS u ON mi.USUARIO_ID = u.USUARIO_ID
+    ORDER BY mi.FECHA_HORA_MOV DESC
+    LIMIT p_limite;
+END$$
+
+DELIMITER ;

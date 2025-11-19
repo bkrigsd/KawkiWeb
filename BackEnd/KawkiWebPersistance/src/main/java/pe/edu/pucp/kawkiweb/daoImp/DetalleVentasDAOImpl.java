@@ -3,7 +3,6 @@ package pe.edu.pucp.kawkiweb.daoImp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
@@ -198,31 +197,17 @@ public class DetalleVentasDAOImpl extends BaseDAOImpl implements DetalleVentasDA
      */
     @Override
     public ArrayList<DetalleVentasDTO> listarPorVentaId(Integer ventaId) {
-        List lista = new ArrayList<>();
-
-        try {
-            this.abrirConexion();
-
-            String sql = "{CALL SP_LISTAR_DETALLES_POR_VENTA(?)}";
-            this.colocarSQLEnStatement(sql);
-            this.statement.setInt(1, ventaId);
-            this.ejecutarSelectEnDB();
-
-            while (this.resultSet.next()) {
-                // Usar el método optimizado que NO hace queries adicionales
-                this.agregarObjetoALaListaDesdeJoin(lista);
-            }
-
-        } catch (SQLException ex) {
-            System.err.println("Error al listar detalles por venta: " + ex);
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar la conexión: " + ex);
-            }
-        }
-
-        return (ArrayList<DetalleVentasDTO>) lista;
+        return (ArrayList<DetalleVentasDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_DETALLES_POR_VENTA",
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro ventaId: " + ex);
+                    }
+                },
+                ventaId
+        );
     }
 }
