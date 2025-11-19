@@ -41,7 +41,6 @@ namespace KawkiWebBusiness
             );
         }
 
-        // Si decides habilitar eliminarVenta en tu servicio Java:
         // public int EliminarVenta(int ventaId)
         // {
         //     return this.clienteSOAP.eliminarVenta(ventaId);
