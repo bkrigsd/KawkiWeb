@@ -34,7 +34,7 @@ namespace KawkiWeb
 
         private void CargarCategorias()
         {
-            var lista = categoriasBO.ListarTodosCategoria(); 
+            var lista = categoriasBO.ListarTodosCategoria();
 
             ddlCategoria.DataSource = lista;
             ddlCategoria.DataTextField = "Nombre";   // lo que verá el usuario
@@ -71,9 +71,7 @@ namespace KawkiWeb
                     Categoria = p.categoria?.nombre ?? "Sin categoría",
                     Estilo = p.estilo?.nombre ?? "Sin estilo",
                     Precio = p.precio_venta,
-                    StockTotal = productosBO.CalcularStockTotal(p.producto_id),
-                    TieneStock = productosBO.TieneStockDisponible(p.producto_id),
-                    CantidadVariantes = p.variantes?.Length ?? 0,
+                    CantidadVariantes = p.variantes?.GroupBy(v => v.color).Count() ?? 0,
 
                     IdCategoria = p.categoria.categoria_id,
                     IdEstilo = p.estilo.estilo_id
@@ -88,9 +86,6 @@ namespace KawkiWeb
             }
         }
 
-        // =====================================================
-        // 🔹 Guardar producto (nuevo o editar)
-        // =====================================================
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             lblMensaje.Text = "";
@@ -99,7 +94,6 @@ namespace KawkiWeb
             try
             {
                 bool esEdicion = hfProductoId.Value != "0";
-
                 string descripcion = txtDescripcion.Text.Trim();
                 int categoriaId = Convert.ToInt32(ddlCategoria.SelectedValue);
                 int estiloId = Convert.ToInt32(ddlEstilo.SelectedValue);
@@ -108,32 +102,42 @@ namespace KawkiWeb
                 // === VALIDACIONES ===
                 if (string.IsNullOrEmpty(descripcion))
                 {
-                    lblMensaje.Text = "La descripción del producto es obligatoria.";
+                    lblMensaje.Text = "⚠ La descripción del producto es obligatoria.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
+
                 if (categoriaId == 0)
                 {
-                    lblMensaje.Text = "Debe seleccionar una categoría.";
+                    lblMensaje.Text = "⚠ Debe seleccionar una categoría.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
+
                 if (estiloId == 0)
                 {
-                    lblMensaje.Text = "Debe seleccionar un estilo.";
+                    lblMensaje.Text = "⚠ Debe seleccionar un estilo.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
+
                 if (precio <= 0)
                 {
-                    lblMensaje.Text = "El precio debe ser mayor a 0.";
+                    lblMensaje.Text = "⚠ El precio debe ser mayor a 0.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
 
                 var usuario = ObtenerUsuarioSesion();
 
-                // === AQUÍ VAN LOS DTO CORRECTOS ===
+                if (usuario == null || usuario.usuarioId <= 0)
+                {
+                    lblMensaje.Text = "⚠ Error: No hay sesión de usuario válida.";
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
+
+                // === DTOs ===
                 var categoria = new categoriasDTO { categoria_id = categoriaId };
                 var estilo = new estilosDTO { estilo_id = estiloId };
 
@@ -142,7 +146,8 @@ namespace KawkiWeb
                     // === EDITAR ===
                     int productoId = Convert.ToInt32(hfProductoId.Value);
 
-                    productosBO.Modificar(
+                    // ✅ CAPTURAR Y VERIFICAR EL RESULTADO
+                    int? resultado = productosBO.Modificar(
                         productoId,
                         descripcion,
                         categoria,
@@ -151,19 +156,36 @@ namespace KawkiWeb
                         usuario
                     );
 
+                    if (resultado == null || resultado <= 0)
+                    {
+                        lblMensaje.CssClass = "text-danger d-block mb-2";
+                        lblMensaje.Text = "❌ No se pudo actualizar el producto. Verifique que los datos sean válidos.";
+                        MantenerModalAbierto(esEdicion);
+                        return;
+                    }
+
                     lblMensaje.CssClass = "text-success d-block mb-2";
                     lblMensaje.Text = "✓ Producto actualizado correctamente.";
                 }
                 else
                 {
                     // === NUEVO ===
-                    productosBO.Insertar(
+                    // ✅ CAPTURAR Y VERIFICAR EL RESULTADO
+                    int? resultado = productosBO.Insertar(
                         descripcion,
                         categoria,
                         estilo,
                         precio,
                         usuario
                     );
+
+                    if (resultado == null || resultado <= 0)
+                    {
+                        lblMensaje.CssClass = "text-danger d-block mb-2";
+                        lblMensaje.Text = "❌ No se pudo registrar el producto. Verifique que los datos sean válidos.";
+                        MantenerModalAbierto(esEdicion);
+                        return;
+                    }
 
                     lblMensaje.CssClass = "text-success d-block mb-2";
                     lblMensaje.Text = "✓ Producto registrado correctamente.";
@@ -182,11 +204,11 @@ namespace KawkiWeb
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error: " + ex.Message;
+                lblMensaje.CssClass = "text-danger d-block mb-2";
+                lblMensaje.Text = "❌ Error: " + ex.Message;
                 MantenerModalAbierto(hfProductoId.Value != "0");
             }
         }
-
 
         private void MantenerModalAbierto(bool esEdicion)
         {
@@ -258,10 +280,10 @@ namespace KawkiWeb
 
         private usuariosDTO ObtenerUsuarioSesion()
         {
-                return new usuariosDTO
-                {
-                    usuarioId = Convert.ToInt32(Session["UsuarioId"])
-                };
+            return new usuariosDTO
+            {
+                usuarioId = Convert.ToInt32(Session["UsuarioId"])
+            };
 
         }
 
@@ -271,57 +293,6 @@ namespace KawkiWeb
                 $"mostrarMensajeError('{mensaje.Replace("'", "\\'")}');", true);
         }
 
-        // =====================================================
-        // 🔹 Filtros (opcionales)
-        // =====================================================
-        //protected void btnFiltrar_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        int categoriaId = Convert.ToInt32(ddlFiltroCategoria.SelectedValue);
-        //        int estiloId = Convert.ToInt32(ddlFiltroEstilo.SelectedValue);
-
-        //        IList<productosDTO> productos;
-
-        //        if (categoriaId > 0)
-        //        {
-        //            productos = productosBO.ListarPorCategoria(categoriaId);
-        //        }
-        //        else if (estiloId > 0)
-        //        {
-        //            productos = productosBO.ListarPorEstilo(estiloId);
-        //        }
-        //        else
-        //        {
-        //            productos = productosBO.ListarTodos();
-        //        }
-
-        //        var productosGrid = productos.Select(p => new
-        //        {
-        //            ProductoId = p.productoId,
-        //            Descripcion = p.descripcion ?? "",
-        //            Categoria = p.categoria?.nombre ?? "Sin categoría",
-        //            Estilo = p.estilo?.nombre ?? "Sin estilo",
-        //            Precio = p.precioVenta,
-        //            StockTotal = productosBO.CalcularStockTotal(p.productoId),
-        //            TieneStock = productosBO.TieneStockDisponible(p.productoId),
-        //            CantidadVariantes = p.variantes?.Length ?? 0
-        //        }).ToList();
-
-        //        gvProductos.DataSource = productosGrid;
-        //        gvProductos.DataBind();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MostrarError("Error al filtrar: " + ex.Message);
-        //    }
-        //}
-
-        //protected void btnLimpiarFiltro_Click(object sender, EventArgs e)
-        //{
-        //    ddlFiltroCategoria.SelectedIndex = 0;
-        //    ddlFiltroEstilo.SelectedIndex = 0;
-        //    CargarProductos();
-        //}
     }
 }
+

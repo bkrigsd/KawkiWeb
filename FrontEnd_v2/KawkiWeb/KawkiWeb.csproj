@@ -2194,6 +2194,7 @@
     <Content Include="Content\Stylo\registrouser.css" />
     <Content Include="Content\Stylo\registroventa.css" />
     <Content Include="DetalleProducto.aspx" />
+    <Content Include="GestionVariantes.aspx" />
     <Content Include="RegistroUsuario.aspx" />
     <Content Include="GestionProductos.aspx" />
     <Content Include="Global.asax" />
@@ -2250,6 +2251,13 @@
     </Compile>
     <Compile Include="DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionVariantes.aspx.cs">
+      <DependentUpon>GestionVariantes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionVariantes.aspx.designer.cs">
+      <DependentUpon>GestionVariantes.aspx</DependentUpon>
     </Compile>
     <Compile Include="RegistroUsuario.aspx.cs">
       <DependentUpon>RegistroUsuario.aspx</DependentUpon>
