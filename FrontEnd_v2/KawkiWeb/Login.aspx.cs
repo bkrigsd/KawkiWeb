@@ -11,16 +11,16 @@ namespace KawkiWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                var rol = (Session["Rol"] as string) ?? string.Empty;
+            //if (!IsPostBack)
+            //{
+            //    var rol = (Session["Rol"] as string) ?? string.Empty;
 
-                if (rol.Equals("admin", StringComparison.OrdinalIgnoreCase) ||
-                    rol.Equals("vendedor", StringComparison.OrdinalIgnoreCase))
-                {
-                    Response.Redirect("Productos.aspx");
-                }
-            }
+            //    if (rol.Equals("admin", StringComparison.OrdinalIgnoreCase) ||
+            //        rol.Equals("vendedor", StringComparison.OrdinalIgnoreCase))
+            //    {
+            //        Response.Redirect("Productos.aspx");
+            //    }
+            //}
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)

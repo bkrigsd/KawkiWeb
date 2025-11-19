@@ -1,247 +1,269 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using KawkiWebBusiness;
+using KawkiWebBusiness.KawkiWebWSVentas;
 
 namespace KawkiWeb
 {
     public partial class HistorialVentasAdmin : Page
     {
+        private VentasBO ventasBO = new VentasBO();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            // ==========================================================
+            // ANTI-CACHE (igual que RegistroUsuario)
+            // ==========================================================
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+
+            // ==========================================================
+            // SOLO EJECUTAR EN FIRST LOAD
+            // ==========================================================
             if (!IsPostBack)
             {
-                // Verificar que el usuario sea administrador
-                if (Session["Rol"] == null || Session["Rol"].ToString() != "admin")
+                string rol = Session["Rol"] as string;
+
+                // ==========================================================
+                // VALIDACIÓN DE SESIÓN (misma lógica que RegistroUsuario)
+                // ==========================================================
+                if (string.IsNullOrEmpty(rol))
                 {
-                    Response.Redirect("Login.aspx");
+                    Response.Redirect("Error404.aspx", false);
                     return;
                 }
 
-                CargarVendedores();
-                CargarVentas();
-                ActualizarEstadisticas();
+                // Si no es admin → redirigir
+                if (rol.ToLower() == "vendedor")
+                {
+                    Response.Redirect("Productos.aspx", false);
+                    return;
+                }
+
+                // En este punto SÍ es admin → cargar datos
+                try
+                {
+                    CargarVendedores();
+                    CargarVentas();
+                    ActualizarEstadisticas();
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.CssClass = "text-danger d-block mb-2";
+                    lblMensaje.Text = "Error al cargar la página: " + ex.Message;
+                }
             }
         }
 
-        /// <summary>
-        /// Carga la lista de vendedores en el dropdown
-        /// </summary>
+        // ==========================================================
+        // Cargar lista de vendedores reales
+        // ==========================================================
         private void CargarVendedores()
         {
-            // TODO: Reemplazar con consulta real a la base de datos
-            // Ejemplo de datos simulados
-            ddlVendedor.Items.Clear();
-            ddlVendedor.Items.Add(new ListItem("Todos los vendedores", ""));
-            ddlVendedor.Items.Add(new ListItem("Juan Pérez", "1"));
-            ddlVendedor.Items.Add(new ListItem("María García", "2"));
-            ddlVendedor.Items.Add(new ListItem("Carlos López", "3"));
+            try
+            {
+                var ventas = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
+
+                var vendedores = ventas
+                    .Where(v => v.usuario != null)
+                    .Select(v => v.usuario.nombreUsuario)
+                    .Distinct()
+                    .OrderBy(x => x)
+                    .ToList();
+
+                ddlVendedor.Items.Clear();
+                ddlVendedor.Items.Add(new ListItem("Todos los vendedores", ""));
+
+                foreach (var ven in vendedores)
+                    ddlVendedor.Items.Add(new ListItem(ven, ven));
+            }
+            catch
+            {
+                ddlVendedor.Items.Clear();
+                ddlVendedor.Items.Add(new ListItem("Todos los vendedores", ""));
+            }
         }
 
-        /// <summary>
-        /// Carga las ventas según los filtros aplicados
-        /// </summary>
+        // ==========================================================
+        // Cargar ventas reales (usando objetos, NO DataTables)
+        // ==========================================================
         private void CargarVentas()
         {
             try
             {
-                // TODO: Reemplazar con consulta real a la base de datos
-                DataTable dt = ObtenerVentasSimuladas();
+                var lista = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
 
-                // Aplicar filtros si existen
-                DateTime fechaInicio, fechaFin;
-                if (DateTime.TryParse(txtFechaInicio.Text, out fechaInicio))
+                // ----------------------------------
+                // Filtro por fecha inicio
+                // ----------------------------------
+                if (DateTime.TryParse(txtFechaInicio.Text, out DateTime inicio))
                 {
-                    dt = dt.AsEnumerable()
-                        .Where(row => row.Field<DateTime>("Fecha") >= fechaInicio)
-                        .CopyToDataTable();
+                    lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) >= inicio).ToList();
                 }
 
-                if (DateTime.TryParse(txtFechaFin.Text, out fechaFin))
+                // ----------------------------------
+                // Filtro por fecha fin
+                // ----------------------------------
+                if (DateTime.TryParse(txtFechaFin.Text, out DateTime fin))
                 {
-                    fechaFin = fechaFin.AddDays(1).AddSeconds(-1); // Incluir todo el día
-                    dt = dt.AsEnumerable()
-                        .Where(row => row.Field<DateTime>("Fecha") <= fechaFin)
-                        .CopyToDataTable();
+                    fin = fin.AddDays(1).AddSeconds(-1);
+                    lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) <= fin).ToList();
                 }
 
+                // ----------------------------------
+                // Filtro por vendedor
+                // ----------------------------------
                 if (!string.IsNullOrEmpty(ddlVendedor.SelectedValue))
                 {
-                    string vendedor = ddlVendedor.SelectedItem.Text;
-                    dt = dt.AsEnumerable()
-                        .Where(row => row.Field<string>("Vendedor") == vendedor)
-                        .CopyToDataTable();
+                    string vendedor = ddlVendedor.SelectedValue;
+                    lista = lista.Where(v => v.usuario?.nombreUsuario == vendedor).ToList();
                 }
 
-                gvVentas.DataSource = dt;
+                // ----------------------------------
+                // Transformar a modelo para GridView
+                // ----------------------------------
+                var gvLista = lista.Select(v => new
+                {
+                    IdVenta = v.venta_id,
+                    Fecha = DateTime.Parse(v.fecha_hora_creacion),
+
+                    // VENDEDOR = nombreUsuario (login)
+                    Vendedor = v.usuario?.nombreUsuario ?? "N/A",
+
+                    Canal = v.redSocial?.nombre,
+
+                    // NUEVAS COLUMNAS
+                    //Descuento = v.descuento?.descripcion,
+                    //EsValida = v.esValida ? "Sí" : "No",
+
+                    MontoTotal = v.total
+                }).ToList();
+
+                gvVentas.DataSource = gvLista;
                 gvVentas.DataBind();
 
-                lblContador.Text = $"{dt.Rows.Count} ventas encontradas";
+                lblContador.Text = $"{gvLista.Count} ventas encontradas";
+                lblMensaje.Text = "";
             }
             catch (Exception ex)
             {
-                lblMensaje.CssClass = "text-danger mb-2 d-block";
-                lblMensaje.Text = $"Error al cargar ventas: {ex.Message}";
+                MostrarError("Error al cargar ventas: " + ex.Message);
             }
         }
 
-        /// <summary>
-        /// Actualiza las estadísticas generales
-        /// </summary>
+        // ==========================================================
+        // Estadísticas
+        // ==========================================================
         private void ActualizarEstadisticas()
         {
             try
             {
-                // TODO: Reemplazar con consulta real a la base de datos
-                DataTable dt = ObtenerVentasSimuladas();
+                var ventas = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
 
-                int totalVentas = dt.Rows.Count;
-                decimal montoTotal = 0m;
-
-                foreach (DataRow row in dt.Rows)
+                if (!ventas.Any())
                 {
-                    montoTotal += row.Field<decimal>("MontoTotal");
+                    lblTotalVentas.Text = "0";
+                    lblMontoTotal.Text = "S/ 0.00";
+                    lblPromedio.Text = "S/ 0.00";
+                    return;
                 }
 
-                decimal promedio = totalVentas > 0 ? montoTotal / totalVentas : 0m;
+                decimal montoTotal = ventas.Sum(v => Convert.ToDecimal(v.total));
+                int cantidad = ventas.Count;
 
-                lblTotalVentas.Text = totalVentas.ToString();
-                lblMontoTotal.Text = $"S/ {montoTotal:0.00}";
-                lblPromedio.Text = $"S/ {promedio:0.00}";
+                lblTotalVentas.Text = cantidad.ToString();
+                lblMontoTotal.Text = $"S/ {montoTotal:N2}";
+                lblPromedio.Text = $"S/ {(montoTotal / cantidad):N2}";
             }
             catch (Exception ex)
             {
-                lblMensaje.CssClass = "text-danger mb-2 d-block";
-                lblMensaje.Text = $"Error al calcular estadísticas: {ex.Message}";
+                MostrarError("Error en estadísticas: " + ex.Message);
             }
         }
 
-        /// <summary>
-        /// Datos simulados de ventas (reemplazar con consulta real)
-        /// </summary>
-        private DataTable ObtenerVentasSimuladas()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("IdVenta", typeof(int));
-            dt.Columns.Add("Fecha", typeof(DateTime));
-            dt.Columns.Add("Cliente", typeof(string));
-            dt.Columns.Add("Vendedor", typeof(string));
-            dt.Columns.Add("Canal", typeof(string));
-            dt.Columns.Add("CantidadProductos", typeof(int));
-            dt.Columns.Add("MontoTotal", typeof(decimal));
-
-            // Datos de ejemplo
-            dt.Rows.Add(1, DateTime.Now.AddDays(-5), "Ana Torres", "Juan Pérez", "Instagram", 3, 150.50m);
-            dt.Rows.Add(2, DateTime.Now.AddDays(-4), "Luis Ramos", "María García", "WhatsApp", 2, 89.90m);
-            dt.Rows.Add(3, DateTime.Now.AddDays(-3), "Carmen Soto", "Juan Pérez", "Facebook", 5, 275.00m);
-            dt.Rows.Add(4, DateTime.Now.AddDays(-2), "Pedro Vega", "Carlos López", "TikTok", 1, 45.00m);
-            dt.Rows.Add(5, DateTime.Now.AddDays(-1), "Rosa Díaz", "María García", "Instagram", 4, 320.75m);
-            dt.Rows.Add(6, DateTime.Now, "Miguel Ruiz", "Juan Pérez", "WhatsApp", 2, 120.00m);
-
-            return dt;
-        }
-
-        /// <summary>
-        /// Obtiene el detalle de productos de una venta (simulado)
-        /// </summary>
-        private DataTable ObtenerDetalleVenta(int idVenta)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Producto", typeof(string));
-            dt.Columns.Add("Cantidad", typeof(int));
-            dt.Columns.Add("PrecioUnitario", typeof(decimal));
-            dt.Columns.Add("Subtotal", typeof(decimal));
-
-            // Datos de ejemplo según el ID
-            if (idVenta == 1)
-            {
-                dt.Rows.Add("Producto A", 2, 50.25m, 100.50m);
-                dt.Rows.Add("Producto B", 1, 50.00m, 50.00m);
-            }
-            else if (idVenta == 2)
-            {
-                dt.Rows.Add("Producto C", 1, 45.90m, 45.90m);
-                dt.Rows.Add("Producto D", 1, 44.00m, 44.00m);
-            }
-            else
-            {
-                dt.Rows.Add("Producto X", 1, 100.00m, 100.00m);
-            }
-
-            return dt;
-        }
-
+        // ==========================================================
+        // Botones
+        // ==========================================================
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             CargarVentas();
-            ActualizarEstadisticas();
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
-            txtFechaInicio.Text = string.Empty;
-            txtFechaFin.Text = string.Empty;
+            txtFechaInicio.Text = "";
+            txtFechaFin.Text = "";
             ddlVendedor.SelectedIndex = 0;
+
             CargarVentas();
             ActualizarEstadisticas();
-            lblMensaje.Text = string.Empty;
         }
 
+        // ==========================================================
+        // Ver detalle
+        // ==========================================================
         protected void gvVentas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "VerDetalle")
             {
-                int idVenta = Convert.ToInt32(e.CommandArgument);
-                MostrarDetalle(idVenta);
+                int id = Convert.ToInt32(e.CommandArgument);
+                MostrarDetalle(id);
             }
         }
 
-        /// <summary>
-        /// Muestra el detalle de una venta específica
-        /// </summary>
         private void MostrarDetalle(int idVenta)
         {
             try
             {
-                // TODO: Reemplazar con consulta real a la base de datos
-                DataTable ventas = ObtenerVentasSimuladas();
-                DataRow venta = ventas.AsEnumerable()
-                    .FirstOrDefault(row => row.Field<int>("IdVenta") == idVenta);
+                var venta = ventasBO.ObtenerPorIdVenta(idVenta);
 
-                if (venta != null)
-                {
-                    lblIdVentaDetalle.Text = idVenta.ToString();
-                    lblClienteDetalle.Text = venta["Cliente"].ToString();
-                    lblVendedorDetalle.Text = venta["Vendedor"].ToString();
-                    lblFechaDetalle.Text = Convert.ToDateTime(venta["Fecha"]).ToString("dd/MM/yyyy HH:mm");
-                    lblCanalDetalle.Text = venta["Canal"].ToString();
-                    lblTotalDetalle.Text = $"S/ {venta["MontoTotal"]:0.00}";
+                lblIdVentaDetalle.Text = venta.venta_id.ToString();
+                //lblClienteDetalle.Text = $"{venta.usuario?.nombre} {venta.usuario?.apePaterno}";
+                lblVendedorDetalle.Text = venta.usuario?.nombreUsuario;
+                lblFechaDetalle.Text = DateTime.Parse(venta.fecha_hora_creacion).ToString("dd/MM/yyyy HH:mm");
+                lblCanalDetalle.Text = venta.redSocial?.nombre;
+                lblTotalDetalle.Text = $"S/ {venta.total:N2}";
 
-                    // Cargar detalle de productos
-                    DataTable detalle = ObtenerDetalleVenta(idVenta);
-                    gvDetalleProductos.DataSource = detalle;
-                    gvDetalleProductos.DataBind();
+                //var lista = venta.detalles.Select(d => new
+                //{
+                //    Producto = d.prodVariante?.nombre ?? "N/D",
+                //    Cantidad = d.cantidad,
+                //    PrecioUnitario = d.precio_unitario,
+                //    Subtotal = d.subtotal
+                //}).ToList();
 
-                    pnlDetalle.Visible = true;
+                //gvDetalleProductos.DataSource = lista;
+                //gvDetalleProductos.DataBind();
 
-                    // Scroll automático al detalle
-                    ScriptManager.RegisterStartupScript(this, GetType(), "ScrollToDetail",
-                        "$('html, body').animate({ scrollTop: $('#" + pnlDetalle.ClientID + "').offset().top - 100 }, 500);", true);
-                }
+                //pnlDetalle.Visible = true;
             }
             catch (Exception ex)
             {
-                lblMensaje.CssClass = "text-danger mb-2 d-block";
-                lblMensaje.Text = $"Error al cargar detalle: {ex.Message}";
+                MostrarError("Error al cargar detalle: " + ex.Message);
             }
         }
 
         protected void btnCerrarDetalle_Click(object sender, EventArgs e)
         {
             pnlDetalle.Visible = false;
+        }
+
+        // ==========================================================
+        // Utilidad
+        // ==========================================================
+        private void MostrarError(string msg)
+        {
+            lblMensaje.CssClass = "text-danger d-block mb-2";
+            lblMensaje.Text = msg;
         }
     }
 }

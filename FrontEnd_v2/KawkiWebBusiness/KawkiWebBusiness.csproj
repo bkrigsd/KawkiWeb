@@ -63,8 +63,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\KawkiWebWSVentas\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsuariosBO.cs" />
+    <Compile Include="VentasBO.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -195,12 +201,32 @@
     <None Include="Connected Services\KawkiWebWSUsuarios\UsuariosService.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\KawkiWebWSVentas\KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSVentas\KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSVentas\KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSVentas\KawkiWebBusiness.KawkiWebWSVentas.obtenerPorIdVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSVentas\KawkiWebBusiness.KawkiWebWSVentas.ventasDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSVentas\VentasService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSVentas\VentasService.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSColores\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSProductosVariantes\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSProductos\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSUsuarios\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSVentas\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\KawkiWebWSProductos\configuration91.svcinfo" />
@@ -246,6 +272,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\KawkiWebWSUsuarios\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSVentas\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSVentas\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSVentas\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

@@ -103,10 +103,10 @@
                     <Columns>
                         <asp:BoundField DataField="IdVenta" HeaderText="ID" />
                         <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
-                        <asp:BoundField DataField="Cliente" HeaderText="Cliente" />
                         <asp:BoundField DataField="Vendedor" HeaderText="Vendedor" />
                         <asp:BoundField DataField="Canal" HeaderText="Canal" />
-                        <asp:BoundField DataField="CantidadProductos" HeaderText="Cant. Productos" />
+                        <%--<asp:BoundField DataField="Descuento" HeaderText="Descuento" />--%>
+                        <%--<asp:BoundField DataField="EsValida" HeaderText="Válida" />--%>
                         <asp:TemplateField HeaderText="Monto Total">
                             <ItemTemplate>
                                 <span class="badge badge-monto">
@@ -144,9 +144,9 @@
             </div>
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-md-6">
+                    <%--<div class="col-md-6">
                         <strong>Cliente:</strong> <asp:Label ID="lblClienteDetalle" runat="server" />
-                    </div>
+                    </div>--%>
                     <div class="col-md-6">
                         <strong>Vendedor:</strong> <asp:Label ID="lblVendedorDetalle" runat="server" />
                     </div>
