@@ -55,16 +55,30 @@
                                     Display="Dynamic" 
                                     ValidationExpression="^\d{9}$" />
                             </div>
-                            <div class="col-md-3">
-                                <label class="form-label" for="<%= txtEmail.ClientID %>">Email (opcional)</label>
-                                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"
-                                    placeholder="cliente@mail.com" />
-                                <asp:RegularExpressionValidator ID="revEmail" runat="server"
-                                    ControlToValidate="txtEmail"
-                                    ErrorMessage="Email inválido" CssClass="text-danger"
-                                    Display="Dynamic"
-                                    ValidationExpression="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" />
+                            <!-- DNI -->
+                            <div id="grupoDNI" runat="server" class="col-md-3" visible="false">
+                                <label class="form-label">DNI</label>
+                                <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" MaxLength="8"></asp:TextBox>
                             </div>
+
+                            <!-- RUC -->
+                            <div id="grupoRUC" runat="server" class="col-md-3" visible="false">
+                                <label class="form-label">RUC</label>
+                                <asp:TextBox ID="txtRUC" runat="server" CssClass="form-control" MaxLength="11"></asp:TextBox>
+                            </div>
+
+                            <!-- Razón Social -->
+                            <div id="grupoRazonSocial" runat="server" class="col-md-6" visible="false">
+                                <label class="form-label">Razón Social</label>
+                                <asp:TextBox ID="txtRazonSocial" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+
+                            <!-- Dirección Fiscal -->
+                            <div id="grupoDireccionFiscal" runat="server" class="col-md-6" visible="false">
+                                <label class="form-label">Dirección Fiscal</label>
+                                <asp:TextBox ID="txtDireccionFiscal" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+
 
                             <div class="col-md-4">
                                 <label class="form-label" for="<%= ddlCanal.ClientID %>">Canal de venta</label>
@@ -75,18 +89,6 @@
                                     <asp:ListItem Text="TikTok" Value="TikTok" />
                                     <asp:ListItem Text="Otro" Value="Otro" />
                                 </asp:DropDownList>
-                            </div>
-
-                            <div class="col-md-8">
-                                <label class="form-label" for="<%= txtDireccion.ClientID %>">
-                                    Dirección / Referencia <span class="text-danger">*</span>
-                                </label>
-                                <asp:TextBox ID="txtDireccion" runat="server" CssClass="form-control"
-                                    placeholder="Dirección de entrega o referencia" />
-                                <asp:RequiredFieldValidator ID="rfvDireccion" runat="server"
-                                    ControlToValidate="txtDireccion"
-                                    ErrorMessage="Campo requerido" CssClass="text-danger"
-                                    Display="Dynamic" />
                             </div>
                         </div>
                     </div>
@@ -102,11 +104,7 @@
                     <div class="card-body">
                         <!-- Fila para agregar un producto -->
                         <div class="row g-2 align-items-end mb-3">
-                            <%--<div class="col-md-5">
-                                <label class="form-label" for="<%= txtProducto.ClientID %>">Producto</label>
-                                <asp:TextBox ID="txtProducto" runat="server" CssClass="form-control"
-                                    placeholder="Nombre del producto" />
-                            </div>--%>
+                            
                             <div class="col-md-5">
                                 <label class="form-label" for="<%= ddlProducto.ClientID %>">Producto</label>
                                 <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-select"
@@ -173,10 +171,10 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label" for="<%= ddlComprobante.ClientID %>">Tipo de comprobante</label>
-                            <asp:DropDownList ID="ddlComprobante" runat="server" CssClass="form-select">
-                                <asp:ListItem Text="Boleta" Value="Boleta" />
-                                <asp:ListItem Text="Factura" Value="Factura" />
-                                <asp:ListItem Text="Sin comprobante" Value="Sin comprobante" />
+                            <asp:DropDownList ID="ddlComprobante" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlComprobante_SelectedIndexChanged">
+                                <asp:ListItem Text="Boleta Simple" Value="boleta-simple" />
+                                <asp:ListItem Text="Boleta con DNI" Value="boleta-dni" />
+                                <asp:ListItem Text="Factura" Value="factura" />
                             </asp:DropDownList>
                         </div>
 
@@ -186,8 +184,6 @@
                                 <asp:ListItem Text="Yape" Value="Yape" />
                                 <asp:ListItem Text="Plin" Value="Plin" />
                                 <asp:ListItem Text="Transferencia" Value="Transferencia" />
-                                <asp:ListItem Text="Efectivo" Value="Efectivo" />
-                                <asp:ListItem Text="Otro" Value="Otro" />
                             </asp:DropDownList>
                         </div>
 

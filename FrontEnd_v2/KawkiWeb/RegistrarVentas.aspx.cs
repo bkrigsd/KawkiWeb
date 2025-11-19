@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KawkiWebBusiness.KawkiWebWSVentas;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -194,34 +195,6 @@ namespace KawkiWeb
         }
 
         /// <summary>
-        /// Valida que el nombre del producto sea válido
-        /// </summary>
-        private bool ValidarProducto(string producto, out string mensajeError)
-        {
-            mensajeError = string.Empty;
-
-            if (string.IsNullOrWhiteSpace(producto))
-            {
-                mensajeError = "El nombre del producto es obligatorio.";
-                return false;
-            }
-
-            if (producto.Length < 3)
-            {
-                mensajeError = "El nombre del producto debe tener al menos 3 caracteres.";
-                return false;
-            }
-
-            if (producto.Length > 100)
-            {
-                mensajeError = "El nombre del producto es demasiado largo (máximo 100 caracteres).";
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
         /// Valida que la cantidad sea un número positivo
         /// </summary>
         private bool ValidarCantidad(string cantidadTexto, out int cantidad, out string mensajeError)
@@ -241,9 +214,9 @@ namespace KawkiWeb
                 return false;
             }
 
-            if (cantidad > 1000)
+            if (cantidad > 100)
             {
-                mensajeError = "La cantidad no puede ser mayor a 1000 unidades.";
+                mensajeError = "La cantidad no puede ser mayor a 100 unidades.";
                 return false;
             }
 
@@ -333,17 +306,67 @@ namespace KawkiWeb
             {
                 return false;
             }
+            string tipo = ddlComprobante.SelectedValue;
 
-            // Validar email (opcional)
-            if (!ValidarEmail(txtEmail.Text.Trim(), out mensajeError))
+            // BOLETA SIMPLE
+            if (tipo == "boleta-simple")
             {
-                return false;
+                if (!ValidarNombre(txtNombreCliente.Text.Trim(), out mensajeError))
+                    return false;
+
+                // Teléfono es opcional → no validar si está vacío
+                if (!string.IsNullOrWhiteSpace(txtTelefono.Text))
+                {
+                    if (!ValidarTelefono(txtTelefono.Text.Trim(), out mensajeError))
+                        return false;
+                }
+
+                return true;
             }
 
-            // Validar dirección
-            if (!ValidarDireccion(txtDireccion.Text.Trim(), out mensajeError))
+            // BOLETA CON DNI
+            if (tipo == "boleta-dni")
             {
-                return false;
+                if (!ValidarNombre(txtNombreCliente.Text.Trim(), out mensajeError))
+                    return false;
+
+                if (string.IsNullOrWhiteSpace(txtDNI.Text) || txtDNI.Text.Length != 8)
+                {
+                    mensajeError = "El DNI debe tener 8 dígitos.";
+                    return false;
+                }
+
+                if (!string.IsNullOrWhiteSpace(txtTelefono.Text))
+                {
+                    if (!ValidarTelefono(txtTelefono.Text.Trim(), out mensajeError))
+                        return false;
+                }
+
+                return true;
+            }
+
+            // FACTURA
+            if (tipo == "factura")
+            {
+                if (string.IsNullOrWhiteSpace(txtRUC.Text) || txtRUC.Text.Length != 11)
+                {
+                    mensajeError = "El RUC debe tener 11 dígitos.";
+                    return false;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtRazonSocial.Text))
+                {
+                    mensajeError = "La razón social es obligatoria.";
+                    return false;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtDireccionFiscal.Text))
+                {
+                    mensajeError = "La dirección fiscal es obligatoria.";
+                    return false;
+                }
+
+                return true;
             }
 
             return true;
@@ -410,71 +433,6 @@ namespace KawkiWeb
             lblMensaje.CssClass = "text-success";
         }
 
-        //protected void btnAgregarProducto_Click(object sender, EventArgs e)
-        //{
-        //    lblMensaje.Text = string.Empty;
-        //    lblMensaje.CssClass = "text-danger mb-2 d-block";
-
-        //    string producto = txtProducto.Text.Trim();
-        //    string mensajeError;
-
-        //    // Validar producto
-        //    if (!ValidarProducto(producto, out mensajeError))
-        //    {
-        //        lblMensaje.Text = mensajeError;
-        //        return;
-        //    }
-
-        //    // Validar cantidad
-        //    int cantidad;
-        //    if (!ValidarCantidad(txtCantidad.Text, out cantidad, out mensajeError))
-        //    {
-        //        lblMensaje.Text = mensajeError;
-        //        return;
-        //    }
-
-        //    // Validar precio
-        //    decimal precio;
-        //    if (!ValidarPrecio(txtPrecioUnitario.Text, out precio, out mensajeError))
-        //    {
-        //        lblMensaje.Text = mensajeError;
-        //        return;
-        //    }
-
-        //    // Validar que el producto no esté duplicado
-        //    var dt = DetalleVentas;
-        //    foreach (DataRow row in dt.Rows)
-        //    {
-        //        if (row["Producto"].ToString().Equals(producto, StringComparison.OrdinalIgnoreCase))
-        //        {
-        //            lblMensaje.Text = "Este producto ya está en la lista. Elimínalo si deseas agregarlo nuevamente.";
-        //            return;
-        //        }
-        //    }
-
-        //    // Agregar producto
-        //    var newRow = dt.NewRow();
-        //    newRow["Producto"] = producto;
-        //    newRow["Cantidad"] = cantidad;
-        //    newRow["PrecioUnitario"] = precio;
-        //    newRow["Subtotal"] = cantidad * precio;
-        //    dt.Rows.Add(newRow);
-        //    DetalleVentas = dt;
-
-        //    gvDetalle.DataSource = dt;
-        //    gvDetalle.DataBind();
-
-        //    // Limpiar campos
-        //    txtProducto.Text = string.Empty;
-        //    txtCantidad.Text = "1";
-        //    txtPrecioUnitario.Text = string.Empty;
-
-        //    ActualizarTotales();
-
-        //    // Mensaje de éxito
-        //    lblMensaje.CssClass = "text-success mb-2 d-block";
-        //    lblMensaje.Text = "Producto agregado correctamente.";
-        //}
         protected void ddlProducto_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(ddlProducto.SelectedValue))
@@ -485,6 +443,46 @@ namespace KawkiWeb
             else
             {
                 txtPrecioUnitario.Text = string.Empty;
+            }
+        }
+        protected void ddlComprobante_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string tipo = ddlComprobante.SelectedValue;
+
+            // Ocultar todo por defecto
+            grupoDNI.Visible = false;
+            grupoRUC.Visible = false;
+            grupoRazonSocial.Visible = false;
+            grupoDireccionFiscal.Visible = false;
+            txtTelefono.Visible = true;
+            txtNombreCliente.Visible = true;
+
+            // Limpiar campos específicos
+            txtDNI.Text = "";
+            txtRUC.Text = "";
+            txtRazonSocial.Text = "";
+            txtDireccionFiscal.Text = "";
+
+            switch (tipo)
+            {
+                case "boleta-simple":
+                    txtTelefono.Visible = true;
+                    break;
+
+                case "boleta-dni":
+                    grupoDNI.Visible = true;
+                    txtTelefono.Visible = true;
+                    break;
+
+                case "factura":
+                    // Para factura no se pide nombre personal
+                    txtNombreCliente.Visible = false;
+                    txtTelefono.Visible = false;
+
+                    grupoRUC.Visible = true;
+                    grupoRazonSocial.Visible = true;
+                    grupoDireccionFiscal.Visible = true;
+                    break;
             }
         }
 
@@ -575,17 +573,22 @@ namespace KawkiWeb
 
             try
             {
-                // TODO: Aquí iría la lógica real de guardado en BD
-                // Ejemplo:
-                // string nombreCliente = txtNombreCliente.Text.Trim();
-                // string telefono = txtTelefono.Text.Trim();
-                // string email = txtEmail.Text.Trim();
-                // string direccion = txtDireccion.Text.Trim();
-                // string canal = ddlCanal.SelectedValue;
-                // string comprobante = ddlComprobante.SelectedValue;
-                // string metodoPago = ddlMetodoPago.SelectedValue;
-                // string notas = txtNotas.Text.Trim();
+                // lógica real de guardado en BD
+                // 1. Recoger datos
+                string nombreCliente = txtNombreCliente.Text.Trim();
+                string telefono = txtTelefono.Text.Trim();
+                string canal = ddlCanal.SelectedValue;
+                string comprobante = ddlComprobante.SelectedValue;
+                string metodoPago = ddlMetodoPago.SelectedValue;
+                string notas = txtNotas.Text.Trim();
 
+                //string ruc = txtRuc.Text.Trim();
+                //string razonSocial = txtRazonSocial.Text.Trim();
+                //string direccion = txtDireccion.Text.Trim();
+                //string dni = txtDni.Text.Trim();
+
+                ventasDTO ventasDTO = new ventasDTO();
+                
                 // VentasDAO.RegistrarVenta(nombreCliente, telefono, email, direccion, 
                 //                         canal, comprobante, metodoPago, notas, 
                 //                         DetalleVentas, total);
@@ -611,8 +614,8 @@ namespace KawkiWeb
             // Limpiar datos del cliente
             txtNombreCliente.Text = string.Empty;
             txtTelefono.Text = string.Empty;
-            txtEmail.Text = string.Empty;
-            txtDireccion.Text = string.Empty;
+            //txtEmail.Text = string.Empty;
+            //txtDireccion.Text = string.Empty;
             ddlCanal.SelectedIndex = 0;
 
             // Limpiar productos
