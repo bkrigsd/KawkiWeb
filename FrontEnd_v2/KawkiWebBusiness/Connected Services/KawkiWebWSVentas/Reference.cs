@@ -25,15 +25,6 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse> listarTodosVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
@@ -50,6 +41,15 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.modificarVentaResponse> modificarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.modificarVentaRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request);
     }
     
     /// <remarks/>
@@ -1471,57 +1471,6 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarVentaRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public double total;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial;
-        
-        public insertarVentaRequest() {
-        }
-        
-        public insertarVentaRequest(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial) {
-            this.usuario = usuario;
-            this.total = total;
-            this.descuento = descuento;
-            this.redSocial = redSocial;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarVentaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarVentaResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public insertarVentaResponse() {
-        }
-        
-        public insertarVentaResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class obtenerPorIdVentaRequest {
         
@@ -1616,6 +1565,57 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarVenta", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarVentaRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public double total;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial;
+        
+        public insertarVentaRequest() {
+        }
+        
+        public insertarVentaRequest(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial) {
+            this.usuario = usuario;
+            this.total = total;
+            this.descuento = descuento;
+            this.redSocial = redSocial;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarVentaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarVentaResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public insertarVentaResponse() {
+        }
+        
+        public insertarVentaResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface VentasChannel : KawkiWebBusiness.KawkiWebWSVentas.Ventas, System.ServiceModel.IClientChannel {
     }
@@ -1662,35 +1662,6 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
         public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaResponse> listarTodosVentaAsync() {
             KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.listarTodosVentaRequest();
             return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).listarTodosVentaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse KawkiWebBusiness.KawkiWebWSVentas.Ventas.insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request) {
-            return base.Channel.insertarVenta(request);
-        }
-        
-        public int insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial) {
-            KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest();
-            inValue.usuario = usuario;
-            inValue.total = total;
-            inValue.descuento = descuento;
-            inValue.redSocial = redSocial;
-            KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse retVal = ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).insertarVenta(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> KawkiWebBusiness.KawkiWebWSVentas.Ventas.insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request) {
-            return base.Channel.insertarVentaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial) {
-            KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest();
-            inValue.usuario = usuario;
-            inValue.total = total;
-            inValue.descuento = descuento;
-            inValue.redSocial = redSocial;
-            return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).insertarVentaAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1747,6 +1718,35 @@ namespace KawkiWebBusiness.KawkiWebWSVentas {
             inValue.redSocial = redSocial;
             inValue.esValida = esValida;
             return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).modificarVentaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse KawkiWebBusiness.KawkiWebWSVentas.Ventas.insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request) {
+            return base.Channel.insertarVenta(request);
+        }
+        
+        public int insertarVenta(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial) {
+            KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest();
+            inValue.usuario = usuario;
+            inValue.total = total;
+            inValue.descuento = descuento;
+            inValue.redSocial = redSocial;
+            KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse retVal = ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).insertarVenta(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> KawkiWebBusiness.KawkiWebWSVentas.Ventas.insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest request) {
+            return base.Channel.insertarVentaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSVentas.insertarVentaResponse> insertarVentaAsync(KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO usuario, double total, KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento, KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO redSocial) {
+            KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest inValue = new KawkiWebBusiness.KawkiWebWSVentas.insertarVentaRequest();
+            inValue.usuario = usuario;
+            inValue.total = total;
+            inValue.descuento = descuento;
+            inValue.redSocial = redSocial;
+            return ((KawkiWebBusiness.KawkiWebWSVentas.Ventas)(this)).insertarVentaAsync(inValue);
         }
     }
 }

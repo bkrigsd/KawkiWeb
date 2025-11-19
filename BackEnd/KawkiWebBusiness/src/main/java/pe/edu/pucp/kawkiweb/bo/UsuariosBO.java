@@ -8,7 +8,7 @@ import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
-import pe.edu.pucp.kawkiweb.dao.UsuariosDAO.ResultadoCambioContrasenha;
+import pe.edu.pucp.kawkiweb.daoImp.util.ResultadoSP;
 
 public class UsuariosBO {
 
@@ -48,16 +48,19 @@ public class UsuariosBO {
             );
 
             // unicidad = [correoExiste, usuarioExiste, dniExiste]
-            if (unicidad[0]) {  // correo
-                throw new Exception("CORREO_EXISTE");
+            if (unicidad[0]) {
+                System.err.println("Error: El correo ya está registrado");
+                return null;
             }
 
-            if (unicidad[1]) {  // usuario
-                throw new Exception("USUARIO_EXISTE");
+            if (unicidad[1]) {
+                System.err.println("Error: El nombre de usuario ya está registrado");
+                return null;
             }
 
-            if (unicidad[2]) {  // dni
-                throw new Exception("DNI_EXISTE");
+            if (unicidad[2]) {
+                System.err.println("Error: El DNI ya está registrado");
+                return null;
             }
 
             UsuariosDTO usuarioDTO = new UsuariosDTO();
@@ -195,7 +198,6 @@ public class UsuariosBO {
 //            return null;
 //        }
 //    }
-    
     /**
      * Valida los datos básicos de un usuario
      *
@@ -299,8 +301,7 @@ public class UsuariosBO {
                 return false;
             }
 
-            // Llamar al stored procedure que valida TODO
-            ResultadoCambioContrasenha resultado = this.usuarioDAO.cambiarContrasenha(
+            ResultadoSP resultado = this.usuarioDAO.cambiarContrasenha(
                     usuarioId,
                     contrasenhaActual,
                     contrasenhaNueva
@@ -347,10 +348,8 @@ public class UsuariosBO {
             return null;
         }
     }
-    
-    public boolean[] verificarUnicidad(String correo, String nombreUsuario, String dni, Integer usuarioIdExcluir){
+
+    public boolean[] verificarUnicidad(String correo, String nombreUsuario, String dni, Integer usuarioIdExcluir) {
         return this.usuarioDAO.verificarUnicidad(correo, nombreUsuario, dni, usuarioIdExcluir);
     }
-    
-    
 }

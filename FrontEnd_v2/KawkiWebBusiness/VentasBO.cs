@@ -15,7 +15,7 @@ namespace KawkiWebBusiness
         {
             this.clienteSOAP = new VentasClient();
         }
-
+        //insertar venta debe tener la lista de productos de la venta
         public int InsertarVenta(KawkiWebWSVentas.usuariosDTO usuario, double total,
                                  descuentosDTO descuento, redesSocialesDTO redSocial)
         {

@@ -43,7 +43,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriasBO.cs" />
+    <Compile Include="ColoresBO.cs" />
+    <Compile Include="Connected Services\KawkiWebWSCategorias\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\KawkiWebWSColores\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSDescuentos\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSDetalleVentas\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSEstilos\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSMetodosPago\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSMovimientosInventario\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -58,6 +90,41 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\KawkiWebWSRedesSociales\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSTallas\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSTiposBeneficio\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSTiposComprobante\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSTiposCondicion\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSTiposMovimiento\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\KawkiWebWSTiposUsuario\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\KawkiWebWSUsuarios\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -68,7 +135,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="DetalleVentasBO.cs" />
+    <Compile Include="EstilosBO.cs" />
+    <Compile Include="ProductosBO.cs" />
+    <Compile Include="ProductosVariantesBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TallasBO.cs" />
     <Compile Include="UsuariosBO.cs" />
     <Compile Include="VentasBO.cs" />
   </ItemGroup>
@@ -77,6 +149,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Connected Services\KawkiWebWSCategorias\CategoriasService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSCategorias\CategoriasService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSCategorias\KawkiWebBusiness.KawkiWebWSCategorias.categoriasDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSCategorias\KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSCategorias\KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSCategorias\KawkiWebBusiness.KawkiWebWSCategorias.modificarCategoriaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSCategorias\KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\KawkiWebWSColores\ColoresService.wsdl" />
     <None Include="Connected Services\KawkiWebWSColores\ColoresService.xsd">
       <SubType>Designer</SubType>
@@ -96,10 +187,141 @@
     <None Include="Connected Services\KawkiWebWSColores\KawkiWebBusiness.KawkiWebWSColores.obtenerPorIdColorResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\KawkiWebWSProductosVariantes\KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse.datasource">
+    <None Include="Connected Services\KawkiWebWSDescuentos\DescuentosService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSDescuentos\DescuentosService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.activarDescuentoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\KawkiWebWSProductosVariantes\KawkiWebBusiness.KawkiWebWSProductosVariantes.eliminarProdVarianteResponse.datasource">
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.calcularDescuentoDescuentoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.listarTodosDescuentoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.listarVigentesDescuentoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDescuentos\KawkiWebBusiness.KawkiWebWSDescuentos.obtenerPorIdDescuentoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\DetalleVentasService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\DetalleVentasService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\KawkiWebBusiness.KawkiWebWSDetalleVentas.detalleVentasDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\KawkiWebBusiness.KawkiWebWSDetalleVentas.insertarDetalleVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\KawkiWebBusiness.KawkiWebWSDetalleVentas.listarPorVentaIdDetalleVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\KawkiWebBusiness.KawkiWebWSDetalleVentas.listarTodosDetalleVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\KawkiWebBusiness.KawkiWebWSDetalleVentas.modificarDetalleVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\KawkiWebBusiness.KawkiWebWSDetalleVentas.obtenerPorIdDetalleVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSEstilos\EstilosService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSEstilos\EstilosService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSEstilos\KawkiWebBusiness.KawkiWebWSEstilos.estilosDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSEstilos\KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSEstilos\KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSEstilos\KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSEstilos\KawkiWebBusiness.KawkiWebWSEstilos.obtenerPorIdEstiloResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMetodosPago\KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMetodosPago\KawkiWebBusiness.KawkiWebWSMetodosPago.metodosPagoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMetodosPago\KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMetodosPago\MetodosPagoService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSMetodosPago\MetodosPagoService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.crearAjusteInventarioMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.insertarMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarMovimientosRecientesMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorProductoVarianteMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorRangoFechasMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorUsuarioMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.modificarMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.registrarIngresoMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\KawkiWebBusiness.KawkiWebWSMovimientosInventario.registrarSalidaMovInventarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\MovimientosInventarioService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\MovimientosInventarioService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSProductosVariantes\KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\KawkiWebWSProductosVariantes\KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse.datasource">
@@ -139,9 +361,6 @@
     <None Include="Connected Services\KawkiWebWSProductos\KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\KawkiWebWSProductos\KawkiWebBusiness.KawkiWebWSProductos.eliminarProductoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\KawkiWebWSProductos\KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -171,6 +390,103 @@
     </None>
     <None Include="Connected Services\KawkiWebWSProductos\ProductosService.wsdl" />
     <None Include="Connected Services\KawkiWebWSProductos\ProductosService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSRedesSociales\KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSRedesSociales\KawkiWebBusiness.KawkiWebWSRedesSociales.obtenerPorIdRedSocialResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSRedesSociales\KawkiWebBusiness.KawkiWebWSRedesSociales.redesSocialesDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSRedesSociales\RedesSocialesService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSRedesSociales\RedesSocialesService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTallas\KawkiWebBusiness.KawkiWebWSTallas.insertarTallaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTallas\KawkiWebBusiness.KawkiWebWSTallas.listarTodosTallaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTallas\KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTallas\KawkiWebBusiness.KawkiWebWSTallas.obtenerPorIdTallaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTallas\KawkiWebBusiness.KawkiWebWSTallas.tallasDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTallas\TallasService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSTallas\TallasService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposBeneficio\KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposBeneficio\KawkiWebBusiness.KawkiWebWSTiposBeneficio.obtenerPorIdTipoBeneficioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposBeneficio\KawkiWebBusiness.KawkiWebWSTiposBeneficio.tiposBeneficioDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposBeneficio\TiposBeneficioService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSTiposBeneficio\TiposBeneficioService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposComprobante\KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposComprobante\KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposComprobante\KawkiWebBusiness.KawkiWebWSTiposComprobante.tiposComprobanteDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposComprobante\TiposComprobanteService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSTiposComprobante\TiposComprobanteService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposCondicion\KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposCondicion\KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposCondicion\KawkiWebBusiness.KawkiWebWSTiposCondicion.tiposCondicionDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposCondicion\TiposCondicionService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSTiposCondicion\TiposCondicionService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposMovimiento\KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposMovimiento\KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposMovimiento\KawkiWebBusiness.KawkiWebWSTiposMovimiento.tiposMovimientoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposMovimiento\TiposMovimientoService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSTiposMovimiento\TiposMovimientoService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposUsuario\KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposUsuario\KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposUsuario\KawkiWebBusiness.KawkiWebWSTiposUsuario.tiposUsuarioDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSTiposUsuario\TiposUsuarioService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSTiposUsuario\TiposUsuarioService.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse.datasource">
@@ -222,9 +538,22 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSCategorias\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSColores\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSDescuentos\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSDetalleVentas\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSEstilos\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSMetodosPago\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSMovimientosInventario\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSProductosVariantes\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSProductos\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSRedesSociales\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSTallas\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSTiposBeneficio\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSTiposComprobante\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSTiposCondicion\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSTiposMovimiento\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSTiposUsuario\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSUsuarios\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSVentas\" />
   </ItemGroup>
@@ -284,6 +613,162 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\KawkiWebWSVentas\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSDetalleVentas\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSDescuentos\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSDescuentos\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSDescuentos\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSMovimientosInventario\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSRedesSociales\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSRedesSociales\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSRedesSociales\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposMovimiento\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposMovimiento\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposMovimiento\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposCondicion\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposCondicion\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposCondicion\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposComprobante\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposComprobante\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposComprobante\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposBeneficio\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposBeneficio\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposBeneficio\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposUsuario\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposUsuario\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTiposUsuario\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSMetodosPago\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSMetodosPago\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSMetodosPago\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSEstilos\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSEstilos\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSEstilos\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSCategorias\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSCategorias\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSCategorias\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTallas\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTallas\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSTallas\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

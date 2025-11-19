@@ -1,59 +1,111 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using KawkiWebBusiness;
+using KawkiWebBusiness.KawkiWebWSCategorias;
+using KawkiWebBusiness.KawkiWebWSEstilos;
+using KawkiWebBusiness.KawkiWebWSProductos;
+using KawkiWebBusiness.KawkiWebWSProductosVariantes;
+using usuariosDTO = KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO;
 
 namespace KawkiWeb
 {
     public partial class GestionProductos : Page
     {
-        private static DataTable productosMemoria = null;
+        private ProductosBO productosBO;
+        private ProductosVariantesBO variantesBO;
+        private CategoriasBO categoriasBO;
+        private EstilosBO estilosBO;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            productosBO = new ProductosBO();
+            variantesBO = new ProductosVariantesBO();
+            estilosBO = new EstilosBO();
+            categoriasBO = new CategoriasBO();
+
             if (!IsPostBack)
             {
+                CargarCategorias();
+                CargarEstilos();
                 CargarProductos();
             }
         }
 
-        // =====================================================
-        // 🔹 Inicializar lista de productos (simulada)
-        // =====================================================
+        private void CargarCategorias()
+        {
+            var lista = categoriasBO.ListarTodosCategoria();
+
+            ddlCategoria.DataSource = lista;
+            ddlCategoria.DataTextField = "Nombre";   // lo que verá el usuario
+            ddlCategoria.DataValueField = "categoria_Id";      // el ID real de la BD
+            ddlCategoria.DataBind();
+
+            ddlCategoria.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
+        }
+
+        private void CargarEstilos()
+        {
+            var lista = estilosBO.ListarTodosEstilo();
+
+            ddlEstilo.DataSource = lista;
+            ddlEstilo.DataTextField = "Nombre";
+            ddlEstilo.DataValueField = "estilo_Id";
+            ddlEstilo.DataBind();
+
+            ddlEstilo.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
+        }
+
+
         private void CargarProductos()
         {
-            gvProductos.DataSource = ObtenerProductosSimulados();
-            gvProductos.DataBind();
-        }
-
-        private DataTable ObtenerProductosSimulados()
-        {
-            if (productosMemoria == null)
+            try
             {
-                productosMemoria = new DataTable();
-                productosMemoria.Columns.Add("Codigo", typeof(string));
-                productosMemoria.Columns.Add("Nombre", typeof(string));
-                productosMemoria.Columns.Add("Categoria", typeof(string));
-                productosMemoria.Columns.Add("Color", typeof(string));
-                productosMemoria.Columns.Add("Precio", typeof(decimal));
-                productosMemoria.Columns.Add("Stock", typeof(int));
-                productosMemoria.Columns.Add("Descripcion", typeof(string));
-                productosMemoria.Columns.Add("Activo", typeof(bool));
+                var productos = productosBO.ListarTodosProducto();
 
-                // Productos iniciales
-                productosMemoria.Rows.Add("#0001", "Oxford Clásico", "Oxford", "Negro", 289.90m, 15, "Zapato de cuero clásico", true);
-                productosMemoria.Rows.Add("#0002", "Derby Elegante", "Derby", "Marrón", 259.90m, 5, "Zapato marrón formal", true);
+                // Crear lista personalizada para el GridView
+                var productosGrid = productos.Select(p => new
+                {
+                    ProductoId = p.producto_id,
+                    Descripcion = p.descripcion ?? "",
+                    Categoria = p.categoria?.nombre ?? "Sin categoría",
+                    Estilo = p.estilo?.nombre ?? "Sin estilo",
+                    Precio = p.precio_venta,
+                    CantidadVariantes = ObtenerCantidadVariantes(p.producto_id),
+
+                    IdCategoria = p.categoria.categoria_id,
+                    IdEstilo = p.estilo.estilo_id
+                }).ToList();
+
+                gvProductos.DataSource = productosGrid;
+                gvProductos.DataBind();
             }
-
-            return productosMemoria;
+            catch (Exception ex)
+            {
+                MostrarError("Error al cargar productos: " + ex.Message);
+            }
         }
 
-        // =====================================================
-        // 🔹 Guardar producto (nuevo o editar)
-        // =====================================================
+        // Método auxiliar para contar variantes (colores únicos)
+        private int ObtenerCantidadVariantes(int productoId)
+        {
+            try
+            {
+                var variantes = variantesBO.ListarPorProducto(productoId);
+
+                // Contar colores únicos
+                return variantes
+                    .GroupBy(v => v.color?.color_id ?? 0)
+                    .Count();
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             lblMensaje.Text = "";
@@ -61,66 +113,95 @@ namespace KawkiWeb
 
             try
             {
-                bool esEdicion = hfCodigo.Value != "0";
-
-                string nombre = txtNombre.Text.Trim();
-                string categoria = ddlCategoria.SelectedValue;
-                string color = txtColor.Text.Trim();
-                string precioTexto = txtPrecio.Text.Trim();
-                string stockTexto = txtStock.Text.Trim();
+                bool esEdicion = hfProductoId.Value != "0";
                 string descripcion = txtDescripcion.Text.Trim();
+                int categoriaId = Convert.ToInt32(ddlCategoria.SelectedValue);
+                int estiloId = Convert.ToInt32(ddlEstilo.SelectedValue);
+                double precio_Venta = Convert.ToDouble(txtPrecio.Text.Trim());
 
                 // === VALIDACIONES ===
-                if (string.IsNullOrEmpty(nombre))
+                if (string.IsNullOrEmpty(descripcion))
                 {
-                    lblMensaje.Text = "El nombre del producto es obligatorio.";
-                    MantenerModalAbierto(esEdicion);
-                    return;
-                }
-                if (string.IsNullOrEmpty(categoria))
-                {
-                    lblMensaje.Text = "Debe seleccionar una categoría.";
-                    MantenerModalAbierto(esEdicion);
-                    return;
-                }
-                if (string.IsNullOrEmpty(color))
-                {
-                    lblMensaje.Text = "Debe ingresar un color.";
+                    lblMensaje.Text = "⚠ La descripción del producto es obligatoria.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
 
-                if (!Regex.IsMatch(precioTexto, @"^\d+(\.\d{1,2})?$"))
+                if (categoriaId == 0)
                 {
-                    lblMensaje.Text = "Ingrese un precio válido (número o decimal).";
-                    MantenerModalAbierto(esEdicion);
-                    return;
-                }
-                if (!Regex.IsMatch(stockTexto, @"^\d+$"))
-                {
-                    lblMensaje.Text = "El stock debe ser un número entero.";
+                    lblMensaje.Text = "⚠ Debe seleccionar una categoría.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
 
-                decimal precio = decimal.Parse(precioTexto);
-                int stock = int.Parse(stockTexto);
+                if (estiloId == 0)
+                {
+                    lblMensaje.Text = "⚠ Debe seleccionar un estilo.";
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
 
-                DataTable dt = ObtenerProductosSimulados();
+                if (precio_Venta <= 0)
+                {
+                    lblMensaje.Text = "⚠ El precio debe ser mayor a 0.";
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
+
+                var usuario = ObtenerUsuarioSesion();
+
+                if (usuario == null || usuario.usuarioId <= 0)
+                {
+                    lblMensaje.Text = "⚠ Error: No hay sesión de usuario válida.";
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
+
+                // Mapea explicitamente al DTO que espera el servicio de Productos
+                var usuarioProductos = new KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO
+                {
+                    usuarioId = usuario.usuarioId,
+                    usuarioIdSpecified = true
+                };
+
+                var categoriaProducto = categoriasBO.ObtenerPorIdCategoria(categoriaId);
+                var estiloProducto = estilosBO.ObtenerPorIdEstilos(estiloId);
+                // === DTOs ===
+                // Convertir categoría al tipo que espera ProductosBO
+                var categoria = new KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO
+                {
+                    categoria_id = categoriaProducto.categoria_id,
+                    nombre = categoriaProducto.nombre
+                };
+
+                // Convertir estilo también si es necesario
+                var estilo = new KawkiWebBusiness.KawkiWebWSProductos.estilosDTO
+                {
+                    estilo_id = estiloProducto.estilo_id,
+                    nombre = estiloProducto.nombre
+                };
 
                 if (esEdicion)
                 {
                     // === EDITAR ===
-                    string codigo = hfCodigo.Value;
-                    DataRow fila = dt.AsEnumerable().FirstOrDefault(r => r.Field<string>("Codigo") == codigo);
-                    if (fila != null)
+                    int productoId = Convert.ToInt32(hfProductoId.Value);
+
+                    // CAPTURAR Y VERIFICAR EL RESULTADO
+                    int? resultado = productosBO.ModificarProducto(
+                        productoId,
+                        descripcion,
+                        categoria,
+                        estilo,
+                        precio_Venta,
+                        usuarioProductos
+                    );
+
+                    if (resultado == null || resultado <= 0)
                     {
-                        fila["Nombre"] = nombre;
-                        fila["Categoria"] = categoria;
-                        fila["Color"] = color;
-                        fila["Precio"] = precio;
-                        fila["Stock"] = stock;
-                        fila["Descripcion"] = descripcion;
+                        lblMensaje.CssClass = "text-danger d-block mb-2";
+                        lblMensaje.Text = "❌ No se pudo actualizar el producto. Verifique que los datos sean válidos.";
+                        MantenerModalAbierto(esEdicion);
+                        return;
                     }
 
                     lblMensaje.CssClass = "text-success d-block mb-2";
@@ -128,9 +209,22 @@ namespace KawkiWeb
                 }
                 else
                 {
-                    // === NUEVO ===
-                    string nuevoCodigo = "#" + (dt.Rows.Count + 1).ToString("0000");
-                    dt.Rows.Add(nuevoCodigo, nombre, categoria, color, precio, stock, descripcion, true);
+                    // CAPTURAR Y VERIFICAR EL RESULTADO
+                    int? resultado = productosBO.InsertarProducto(
+                        descripcion,
+                        categoria,
+                        estilo,
+                        precio_Venta,
+                        usuario
+                    );
+
+                    if (resultado == null || resultado <= 0)
+                    {
+                        lblMensaje.CssClass = "text-danger d-block mb-2";
+                        lblMensaje.Text = "❌ No se pudo registrar el producto. Verifique que los datos sean válidos.";
+                        MantenerModalAbierto(esEdicion);
+                        return;
+                    }
 
                     lblMensaje.CssClass = "text-success d-block mb-2";
                     lblMensaje.Text = "✓ Producto registrado correctamente.";
@@ -138,11 +232,20 @@ namespace KawkiWeb
 
                 LimpiarFormulario();
                 CargarProductos();
-                ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModal", "cerrarModal(); mostrarMensajeExito('Operación exitosa');", true);
+
+                ScriptManager.RegisterStartupScript(
+                    this,
+                    GetType(),
+                    "CerrarModal",
+                    "cerrarModal(); mostrarMensajeExito('Operación exitosa');",
+                    true
+                );
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error: " + ex.Message;
+                lblMensaje.CssClass = "text-danger d-block mb-2";
+                lblMensaje.Text = "❌ Error: " + ex.Message;
+                MantenerModalAbierto(hfProductoId.Value != "0");
             }
         }
 
@@ -153,64 +256,52 @@ namespace KawkiWeb
         }
 
         // =====================================================
-        // 🔹 Confirmar eliminación
+        // 🔹 Manejo de comandos del GridView
         // =====================================================
-        protected void btnConfirmarEliminar_Click(object sender, EventArgs e)
+        protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
             {
-                string codigo = hfCodigoEliminar.Value;
-                EliminarProducto(codigo);
-                CargarProductos();
+                int productoId = Convert.ToInt32(e.CommandArgument);
 
-                ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalEliminar",
-                    "cerrarModalConfirmacion(); mostrarMensajeExito('Producto eliminado correctamente');", true);
+                switch (e.CommandName)
+                {
+                    case "VerVariantes":
+                        // Redirigir a página de gestión de variantes
+                        Response.Redirect($"GestionVariantes.aspx?productoId={productoId}");
+                        break;
+
+                    case "Editar":
+                        CargarProductoParaEdicion(productoId);
+                        break;
+                }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "ErrorEliminar",
-                    $"cerrarModalConfirmacion(); mostrarMensajeError('Error al eliminar: {ex.Message.Replace("'", "\\'")}');", true);
+                MostrarError("Error: " + ex.Message);
             }
         }
 
-        protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
+        private void CargarProductoParaEdicion(int productoId)
         {
-            string codigo = e.CommandArgument.ToString();
-            DataTable dt = ObtenerProductosSimulados();
-            DataRow fila = dt.AsEnumerable().FirstOrDefault(r => r.Field<string>("Codigo") == codigo);
-
-            if (fila == null) return;
-
-            switch (e.CommandName)
+            try
             {
-                case "Abastecer":
-                    fila["Stock"] = Convert.ToInt32(fila["Stock"]) + 10;
-                    CargarProductos();
-                    ScriptManager.RegisterStartupScript(this, GetType(), "msgAbastecer", "mostrarMensajeExito('Stock aumentado en 10 unidades');", true);
-                    break;
+                var producto = productosBO.ObtenerPorIdProducto(productoId);
+                if (producto != null)
+                {
+                    hfProductoId.Value = producto.producto_id.ToString();
+                    txtDescripcion.Text = producto.descripcion;
+                    ddlCategoria.SelectedValue = producto.categoria.categoria_id.ToString();
+                    ddlEstilo.SelectedValue = producto.estilo.estilo_id.ToString();
+                    txtPrecio.Text = producto.precio_venta.ToString("F2");
 
-                case "CambiarEstado":
-                    bool activo = Convert.ToBoolean(fila["Activo"]);
-                    fila["Activo"] = !activo;
-                    CargarProductos();
-                    string estado = (bool)fila["Activo"] ? "activado" : "inactivado";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "msgEstado", $"mostrarMensajeExito('Producto {estado} correctamente');", true);
-                    break;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "AbrirEditar",
+                        "abrirModalEditar();", true);
+                }
             }
-        }
-
-
-        private void EliminarProducto(string codigo)
-        {
-            DataTable dt = ObtenerProductosSimulados();
-            DataRow fila = dt.AsEnumerable().FirstOrDefault(r => r.Field<string>("Codigo") == codigo);
-            if (fila != null)
+            catch (Exception ex)
             {
-                dt.Rows.Remove(fila);
-            }
-            else
-            {
-                throw new Exception("No se encontró el producto con código: " + codigo);
+                MostrarError("Error al cargar producto: " + ex.Message);
             }
         }
 
@@ -219,13 +310,27 @@ namespace KawkiWeb
         // =====================================================
         private void LimpiarFormulario()
         {
-            hfCodigo.Value = "0";
-            txtNombre.Text = "";
+            hfProductoId.Value = "0";
+            txtDescripcion.Text = "";
             txtPrecio.Text = "";
             ddlCategoria.SelectedIndex = 0;
-            txtColor.Text = "";
-            txtStock.Text = "";
-            txtDescripcion.Text = "";
+            ddlEstilo.SelectedIndex = 0;
         }
+
+        private usuariosDTO ObtenerUsuarioSesion()
+        {
+            return new usuariosDTO
+            {
+                usuarioId = Convert.ToInt32(Session["UsuarioId"])
+            };
+
+        }
+
+        private void MostrarError(string mensaje)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "Error",
+                $"mostrarMensajeError('{mensaje.Replace("'", "\\'")}');", true);
+        }
+
     }
 }

@@ -4,9 +4,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
-import pe.edu.pucp.kawkiWeb.db.DBManager;
-import pe.edu.pucp.kawkiWeb.db.DBManagerMySQL;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.MovimientosInventarioDTO;
 import pe.edu.pucp.kawkiweb.model.ProductosVariantesDTO;
@@ -215,81 +212,73 @@ public class MovimientosInventarioDAOImpl extends BaseDAOImpl implements Movimie
     // BÚSQUEDAS AVANZADAS
     // =====================================================
     /**
-     * Lista movimientos filtrados por producto variante usando SELECT directo
+     * Lista movimientos filtrados por producto variante usando SP optimizado.
+     * Retorna movimientos con todos los datos completos mediante JOINs.
      */
     @Override
     public ArrayList<MovimientosInventarioDTO> listarPorProductoVariante(Integer prodVarianteId) {
-        String sql = "SELECT MOV_INVENTARIO_ID, CANTIDAD, FECHA_HORA_MOV, OBSERVACION, "
-                + "TIPO_MOVIMIENTO_ID, PROD_VARIANTE_ID, USUARIO_ID "
-                + "FROM MOVIMIENTOS_INVENTARIO WHERE PROD_VARIANTE_ID = ? "
-                + "ORDER BY FECHA_HORA_MOV DESC";
-
-        Consumer<Integer> incluirParametros = (id) -> {
-            try {
-                this.statement.setInt(1, id);
-            } catch (SQLException ex) {
-                System.err.println("Error al establecer parámetro prodVarianteId: " + ex);
-            }
-        };
-
-        return (ArrayList<MovimientosInventarioDTO>) super.listarTodos(sql, incluirParametros, prodVarianteId);
+        return (ArrayList<MovimientosInventarioDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_MOVIMIENTOS_POR_PRODUCTO_VARIANTE",
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro prodVarianteId: " + ex);
+                    }
+                },
+                prodVarianteId
+        );
     }
 
     /**
-     * Lista movimientos filtrados por tipo de movimiento usando SELECT directo
+     * Lista movimientos filtrados por tipo de movimiento usando SP optimizado.
+     * Retorna movimientos con todos los datos completos mediante JOINs.
      */
     @Override
     public ArrayList<MovimientosInventarioDTO> listarPorTipoMovimiento(Integer tipoMovimientoId) {
-        String sql = "SELECT MOV_INVENTARIO_ID, CANTIDAD, FECHA_HORA_MOV, OBSERVACION, "
-                + "TIPO_MOVIMIENTO_ID, PROD_VARIANTE_ID, USUARIO_ID "
-                + "FROM MOVIMIENTOS_INVENTARIO WHERE TIPO_MOVIMIENTO_ID = ? "
-                + "ORDER BY FECHA_HORA_MOV DESC";
-
-        Consumer<Integer> incluirParametros = (id) -> {
-            try {
-                this.statement.setInt(1, id);
-            } catch (SQLException ex) {
-                System.err.println("Error al establecer parámetro tipoMovimientoId: " + ex);
-            }
-        };
-
-        return (ArrayList<MovimientosInventarioDTO>) super.listarTodos(sql, incluirParametros, tipoMovimientoId);
+        return (ArrayList<MovimientosInventarioDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_MOVIMIENTOS_POR_TIPO_MOVIMIENTO",
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro tipoMovimientoId: " + ex);
+                    }
+                },
+                tipoMovimientoId
+        );
     }
 
     /**
-     * Lista movimientos filtrados por usuario usando SELECT directo
+     * Lista movimientos filtrados por usuario usando SP optimizado. Retorna
+     * movimientos con todos los datos completos mediante JOINs.
      */
     @Override
     public ArrayList<MovimientosInventarioDTO> listarPorUsuario(Integer usuarioId) {
-        String sql = "SELECT MOV_INVENTARIO_ID, CANTIDAD, FECHA_HORA_MOV, OBSERVACION, "
-                + "TIPO_MOVIMIENTO_ID, PROD_VARIANTE_ID, USUARIO_ID "
-                + "FROM MOVIMIENTOS_INVENTARIO WHERE USUARIO_ID = ? "
-                + "ORDER BY FECHA_HORA_MOV DESC";
-
-        Consumer<Integer> incluirParametros = (id) -> {
-            try {
-                this.statement.setInt(1, id);
-            } catch (SQLException ex) {
-                System.err.println("Error al establecer parámetro usuarioId: " + ex);
-            }
-        };
-
-        return (ArrayList<MovimientosInventarioDTO>) super.listarTodos(sql, incluirParametros, usuarioId);
+        return (ArrayList<MovimientosInventarioDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_MOVIMIENTOS_POR_USUARIO",
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro usuarioId: " + ex);
+                    }
+                },
+                usuarioId
+        );
     }
 
     /**
-     * Lista movimientos en un rango de fechas usando SELECT directo
+     * Lista movimientos en un rango de fechas usando SP optimizado. Retorna
+     * movimientos con todos los datos completos mediante JOINs.
      */
     @Override
     public ArrayList<MovimientosInventarioDTO> listarPorRangoFechas(
             LocalDateTime fechaInicio,
             LocalDateTime fechaFin) {
-
-        String sql = "SELECT MOV_INVENTARIO_ID, CANTIDAD, FECHA_HORA_MOV, OBSERVACION, "
-                + "TIPO_MOVIMIENTO_ID, PROD_VARIANTE_ID, USUARIO_ID "
-                + "FROM MOVIMIENTOS_INVENTARIO "
-                + "WHERE FECHA_HORA_MOV BETWEEN ? AND ? "
-                + "ORDER BY FECHA_HORA_MOV DESC";
 
         // Clase auxiliar para pasar ambas fechas
         class FechasParametro {
@@ -305,49 +294,39 @@ public class MovimientosInventarioDAOImpl extends BaseDAOImpl implements Movimie
 
         FechasParametro fechas = new FechasParametro(fechaInicio, fechaFin);
 
-        Consumer<FechasParametro> incluirParametros = (f) -> {
-            try {
-                this.statement.setTimestamp(1, java.sql.Timestamp.valueOf(f.inicio));
-                this.statement.setTimestamp(2, java.sql.Timestamp.valueOf(f.fin));
-            } catch (SQLException ex) {
-                System.err.println("Error al establecer parámetros de fechas: " + ex);
-            }
-        };
-
-        return (ArrayList<MovimientosInventarioDTO>) super.listarTodos(sql, incluirParametros, fechas);
+        return (ArrayList<MovimientosInventarioDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_MOVIMIENTOS_POR_RANGO_FECHAS",
+                2,
+                (params) -> {
+                    try {
+                        FechasParametro f = (FechasParametro) params;
+                        this.statement.setTimestamp(1, java.sql.Timestamp.valueOf(f.inicio));
+                        this.statement.setTimestamp(2, java.sql.Timestamp.valueOf(f.fin));
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetros de fechas: " + ex);
+                    }
+                },
+                fechas
+        );
     }
 
     /**
-     * Lista los últimos N movimientos usando SELECT directo con LIMIT/TOP
+     * Lista los últimos N movimientos usando SP optimizado. Retorna movimientos
+     * con todos los datos completos mediante JOINs.
      */
     @Override
     public ArrayList<MovimientosInventarioDTO> listarMovimientosRecientes(Integer limite) {
-        String sql;
-
-        // Usar el DBManager que ya sabe qué motor estás usando
-        if (DBManager.getInstance() instanceof DBManagerMySQL) {
-            // MySQL syntax
-            sql = "SELECT MOV_INVENTARIO_ID, CANTIDAD, FECHA_HORA_MOV, OBSERVACION, "
-                    + "TIPO_MOVIMIENTO_ID, PROD_VARIANTE_ID, USUARIO_ID "
-                    + "FROM MOVIMIENTOS_INVENTARIO "
-                    + "ORDER BY FECHA_HORA_MOV DESC "
-                    + "LIMIT ?";
-        } else {
-            // MS SQL Server syntax
-            sql = "SELECT TOP (?) MOV_INVENTARIO_ID, CANTIDAD, FECHA_HORA_MOV, OBSERVACION, "
-                    + "TIPO_MOVIMIENTO_ID, PROD_VARIANTE_ID, USUARIO_ID "
-                    + "FROM MOVIMIENTOS_INVENTARIO "
-                    + "ORDER BY FECHA_HORA_MOV DESC";
-        }
-
-        Consumer<Integer> incluirParametros = (lim) -> {
-            try {
-                this.statement.setInt(1, lim);
-            } catch (SQLException ex) {
-                System.err.println("Error al establecer parámetro límite: " + ex);
-            }
-        };
-
-        return (ArrayList<MovimientosInventarioDTO>) super.listarTodos(sql, incluirParametros, limite);
+        return (ArrayList<MovimientosInventarioDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_MOVIMIENTOS_RECIENTES",
+                1,
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro límite: " + ex);
+                    }
+                },
+                limite
+        );
     }
 }

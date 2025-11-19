@@ -2189,13 +2189,12 @@
     <Content Include="Content\Stylo\gestionproductos.css" />
     <Content Include="Content\Stylo\historialventaadmin.css" />
     <Content Include="Content\Stylo\historialventavendedor.css" />
-    <Content Include="Content\Stylo\kawki-modern.css" />
-    <Content Include="Content\Stylo\Master.css" />
     <Content Include="Content\Stylo\producto.css" />
     <Content Include="Content\Stylo\registrouser.css" />
     <Content Include="Content\Stylo\registroventa.css" />
     <Content Include="DetalleProducto.aspx" />
     <Content Include="Error404.aspx" />
+    <Content Include="GestionVariantes.aspx" />
     <Content Include="RegistroUsuario.aspx" />
     <Content Include="GestionProductos.aspx" />
     <Content Include="Global.asax" />
@@ -2259,6 +2258,13 @@
     </Compile>
     <Compile Include="Error404.aspx.designer.cs">
       <DependentUpon>Error404.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionVariantes.aspx.cs">
+      <DependentUpon>GestionVariantes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionVariantes.aspx.designer.cs">
+      <DependentUpon>GestionVariantes.aspx</DependentUpon>
     </Compile>
     <Compile Include="RegistroUsuario.aspx.cs">
       <DependentUpon>RegistroUsuario.aspx</DependentUpon>
@@ -2400,9 +2406,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KawkiWebBusiness\KawkiWebBusiness.csproj">

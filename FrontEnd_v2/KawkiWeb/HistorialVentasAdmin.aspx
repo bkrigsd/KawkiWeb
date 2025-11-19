@@ -114,7 +114,7 @@
                                 </span>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Acciones">
+                        <%--<asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
                                 <asp:Button runat="server" 
                                     CommandName="VerDetalle" 
@@ -123,7 +123,7 @@
                                     CssClass="btn btn-detalle"
                                     CausesValidation="false" />
                             </ItemTemplate>
-                        </asp:TemplateField>
+                        </asp:TemplateField>--%>
                     </Columns>
                     <EmptyDataTemplate>
                         <div class="text-center py-4">

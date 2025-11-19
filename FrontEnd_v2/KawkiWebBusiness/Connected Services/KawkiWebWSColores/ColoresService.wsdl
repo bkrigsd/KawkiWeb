@@ -5,17 +5,17 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/ColoresService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="modificarColor">
-    <part name="parameters" element="tns:modificarColor" />
-  </message>
-  <message name="modificarColorResponse">
-    <part name="parameters" element="tns:modificarColorResponse" />
-  </message>
   <message name="listarTodosColor">
     <part name="parameters" element="tns:listarTodosColor" />
   </message>
   <message name="listarTodosColorResponse">
     <part name="parameters" element="tns:listarTodosColorResponse" />
+  </message>
+  <message name="modificarColor">
+    <part name="parameters" element="tns:modificarColor" />
+  </message>
+  <message name="modificarColorResponse">
+    <part name="parameters" element="tns:modificarColorResponse" />
   </message>
   <message name="insertarColor">
     <part name="parameters" element="tns:insertarColor" />
@@ -30,13 +30,13 @@
     <part name="parameters" element="tns:obtenerPorIdColorResponse" />
   </message>
   <portType name="Colores">
-    <operation name="modificarColor">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorRequest" message="tns:modificarColor" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorResponse" message="tns:modificarColorResponse" />
-    </operation>
     <operation name="listarTodosColor">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/listarTodosColorRequest" message="tns:listarTodosColor" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/listarTodosColorResponse" message="tns:listarTodosColorResponse" />
+    </operation>
+    <operation name="modificarColor">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorRequest" message="tns:modificarColor" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorResponse" message="tns:modificarColorResponse" />
     </operation>
     <operation name="insertarColor">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/insertarColorRequest" message="tns:insertarColor" />
@@ -49,7 +49,7 @@
   </portType>
   <binding name="ColoresPortBinding" type="tns:Colores">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="modificarColor">
+    <operation name="listarTodosColor">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -58,7 +58,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarTodosColor">
+    <operation name="modificarColor">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

@@ -424,7 +424,7 @@
                 </h1>
 
                 <div class="producto-precio-grande">
-                    S/ <asp:Label ID="lblPrecio" runat="server"></asp:Label>
+                    <asp:Label ID="lblPrecio" runat="server"></asp:Label>
                 </div>
 
                 <p class="producto-descripcion-completa">

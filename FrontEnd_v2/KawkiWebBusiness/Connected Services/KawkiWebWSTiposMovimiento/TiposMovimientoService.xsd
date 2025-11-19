@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="listarTodosTipoMovimiento" type="tns:listarTodosTipoMovimiento" />
+  <xs:element name="listarTodosTipoMovimientoResponse" type="tns:listarTodosTipoMovimientoResponse" />
+  <xs:element name="obtenerPorIdTipoMovimiento" type="tns:obtenerPorIdTipoMovimiento" />
+  <xs:element name="obtenerPorIdTipoMovimientoResponse" type="tns:obtenerPorIdTipoMovimientoResponse" />
+  <xs:element name="tiposMovimientoDTO" type="tns:tiposMovimientoDTO" />
+  <xs:complexType name="obtenerPorIdTipoMovimiento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipoMovimientoId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdTipoMovimientoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:tiposMovimientoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tiposMovimientoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipoMovimientoId" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarTodosTipoMovimiento">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarTodosTipoMovimientoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:tiposMovimientoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -88,7 +88,17 @@
                 <ItemTemplate>
                     <asp:LinkButton ID="lnkProducto" runat="server" 
                         CssClass="producto-link"
-                        CommandArgument='<%# Eval("ProductoId") %>'
+                        CommandArgument='<%# string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}", 
+                            Eval("ProductoId"), 
+                            Eval("Color"), 
+                            Eval("TallasDisponibles"), 
+                            Eval("Stock"),
+                            Eval("StockMinimo"),
+                            Eval("ImagenUrl"),
+                            Eval("Nombre"),
+                            Eval("Precio"),
+                            Eval("Descripcion"),
+                            Eval("Categoria")) %>'
                         OnClick="lnkProducto_Click">
                         
                         <div class="producto-card">
@@ -107,9 +117,12 @@
                                     <span><i class="fas fa-shoe-prints"></i> Tallas:</span>
                                     <%# MostrarTallas(Eval("TallasDisponibles").ToString()) %>
                                 </div>
-                                
+
                                 <!-- Alerta de stock bajo por tallas -->
-                                <%# MostrarAlertaStockBajo(Eval("TallasDisponibles").ToString(), Eval("Stock").ToString()) %>
+                                <%# MostrarAlertaStockBajo(
+                                    Eval("TallasDisponibles").ToString(), 
+                                    Eval("Stock").ToString(),
+                                    Eval("StockMinimo").ToString()) %>
 
                                 <div class="producto-precio">S/ <%# Eval("Precio", "{0:N2}") %></div>
                             </div>

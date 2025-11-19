@@ -18,10 +18,10 @@
   <xs:element name="verificarUnicidadResponse" type="tns:verificarUnicidadResponse" />
   <xs:complexType name="verificarUnicidad">
     <xs:sequence>
-      <xs:element minOccurs="0" name="arg0" type="xs:string" />
-      <xs:element minOccurs="0" name="arg1" type="xs:string" />
-      <xs:element minOccurs="0" name="arg2" type="xs:string" />
-      <xs:element minOccurs="0" name="arg3" type="xs:int" />
+      <xs:element minOccurs="0" name="correo" type="xs:string" />
+      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
+      <xs:element minOccurs="0" name="dni" type="xs:string" />
+      <xs:element minOccurs="0" name="usuarioIdExcluir" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="verificarUnicidadResponse">

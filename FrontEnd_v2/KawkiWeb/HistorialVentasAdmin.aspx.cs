@@ -75,7 +75,7 @@ namespace KawkiWeb
 
                 var vendedores = ventas
                     .Where(v => v.usuario != null)
-                    .Select(v => v.usuario.nombreUsuario)
+                    .Select(v => $"{v.usuario?.nombre} {v.usuario?.apePaterno}")
                     .Distinct()
                     .OrderBy(x => x)
                     .ToList();
@@ -124,8 +124,14 @@ namespace KawkiWeb
                 // ----------------------------------
                 if (!string.IsNullOrEmpty(ddlVendedor.SelectedValue))
                 {
-                    string vendedor = ddlVendedor.SelectedValue;
-                    lista = lista.Where(v => v.usuario?.nombreUsuario == vendedor).ToList();
+                    if (!string.IsNullOrEmpty(ddlVendedor.SelectedValue))
+                    {
+                        string vendedor = ddlVendedor.SelectedValue;
+
+                        lista = lista.Where(v =>
+                            $"{v.usuario?.nombre} {v.usuario?.apePaterno}" == vendedor
+                        ).ToList();
+                    }
                 }
 
                 // ----------------------------------
@@ -136,8 +142,7 @@ namespace KawkiWeb
                     IdVenta = v.venta_id,
                     Fecha = DateTime.Parse(v.fecha_hora_creacion),
 
-                    // VENDEDOR = nombreUsuario (login)
-                    Vendedor = v.usuario?.nombreUsuario ?? "N/A",
+                    Vendedor = $"{v.usuario?.nombre} {v.usuario?.apePaterno}",
 
                     Canal = v.redSocial?.nombre,
 

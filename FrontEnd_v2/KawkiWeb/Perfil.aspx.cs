@@ -46,10 +46,10 @@ namespace KawkiWeb
                 lblEmail.Text = email;
 
                 // Inicial del nombre
-                lblInicial.Text = nombreCompleto.Length > 0 ? nombreCompleto.Substring(0, 1).ToUpper() : "?";
+                lblInicial.Text = nombreCompleto.Length > 0 ? nombreCompleto.Substring(0, 1).ToUpper(): "?";
 
 
-                bool esCliente = rol.Equals("cliente", StringComparison.OrdinalIgnoreCase);
+                bool esCliente = rol.Equals("cliente",StringComparison.OrdinalIgnoreCase);
                 bool esVendedor = rol.Equals("Vendedor", StringComparison.OrdinalIgnoreCase);
 
                 var historialDiv = FindControlRecursive(this, "historialDeComprasDiv");
@@ -66,9 +66,9 @@ namespace KawkiWeb
         {
             if (root.ID == id) return root;
             foreach (Control c in root.Controls)
-            {
+            { 
                 Control found = FindControlRecursive(c, id);
-                if (found != null) return found;
+                if(found != null) return found;
             }
             return null;
         }
