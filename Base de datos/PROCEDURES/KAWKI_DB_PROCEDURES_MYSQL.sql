@@ -228,6 +228,10 @@ END$$
 -- 2. SP_LISTAR_USUARIOS_POR_TIPO
 -- Lista usuarios filtrados por tipo de usuario
 -- =====================================================
+USE KAWKI_DB;
+
+DELIMITER $$
+
 DROP PROCEDURE IF EXISTS SP_LISTAR_USUARIOS_POR_TIPO$$
 
 CREATE PROCEDURE SP_LISTAR_USUARIOS_POR_TIPO(
@@ -235,20 +239,26 @@ CREATE PROCEDURE SP_LISTAR_USUARIOS_POR_TIPO(
 )
 BEGIN
     SELECT 
-        U.USUARIO_ID,
-        U.NOMBRE,
-        U.APE_PATERNO,
-        U.DNI,
-        U.TELEFONO,
-        U.CORREO,
-        U.NOMBRE_USUARIO,
-        U.CONTRASENHA,
-        U.FECHA_HORA_CREACION,
-        U.TIPO_USUARIO_ID,
-        U.ACTIVO
-    FROM USUARIOS U
-    WHERE U.TIPO_USUARIO_ID = p_tipo_usuario_id
-    ORDER BY U.NOMBRE, U.APE_PATERNO;
+        -- Campos del usuario
+        u.USUARIO_ID,
+        u.NOMBRE,
+        u.APE_PATERNO,
+        u.DNI,
+        u.TELEFONO,
+        u.CORREO,
+        u.NOMBRE_USUARIO,
+        u.CONTRASENHA,
+        u.FECHA_HORA_CREACION,
+        u.ACTIVO,
+        
+        -- Tipo de usuario completo (JOIN) - TODOS LOS CAMPOS (id y nombre)
+        tu.TIPO_USUARIO_ID,
+        tu.NOMBRE AS TIPO_USUARIO_NOMBRE
+        
+    FROM USUARIOS u
+    INNER JOIN TIPOS_USUARIO tu ON u.TIPO_USUARIO_ID = tu.TIPO_USUARIO_ID
+    WHERE u.TIPO_USUARIO_ID = p_tipo_usuario_id
+    ORDER BY u.NOMBRE, u.APE_PATERNO;
 END$$
 
 
@@ -317,6 +327,10 @@ END$$
 -- Autentica un usuario por nombre de usuario o correo
 -- Retorna los datos del usuario si las credenciales son válidas
 -- =====================================================
+USE KAWKI_DB;
+
+DELIMITER $$
+
 DROP PROCEDURE IF EXISTS SP_AUTENTICAR_USUARIO$$
 
 CREATE PROCEDURE SP_AUTENTICAR_USUARIO(
@@ -325,22 +339,28 @@ CREATE PROCEDURE SP_AUTENTICAR_USUARIO(
 )
 BEGIN
     SELECT 
-        U.USUARIO_ID,
-        U.NOMBRE,
-        U.APE_PATERNO,
-        U.DNI,
-        U.TELEFONO,
-        U.CORREO,
-        U.NOMBRE_USUARIO,
-        U.CONTRASENHA,
-        U.FECHA_HORA_CREACION,
-        U.TIPO_USUARIO_ID,
-        U.ACTIVO
-    FROM USUARIOS U
-    WHERE (U.NOMBRE_USUARIO = p_nombre_usuario_o_correo 
-           OR U.CORREO = p_nombre_usuario_o_correo)
-    AND U.CONTRASENHA = p_contrasenha
-    AND U.ACTIVO = 1
+        -- Campos del usuario
+        u.USUARIO_ID,
+        u.NOMBRE,
+        u.APE_PATERNO,
+        u.DNI,
+        u.TELEFONO,
+        u.CORREO,
+        u.NOMBRE_USUARIO,
+        u.CONTRASENHA,
+        u.FECHA_HORA_CREACION,
+        u.ACTIVO,
+        
+        -- Tipo de usuario completo (JOIN) - TODOS LOS CAMPOS (id y nombre)
+        tu.TIPO_USUARIO_ID,
+        tu.NOMBRE AS TIPO_USUARIO_NOMBRE
+        
+    FROM USUARIOS u
+    INNER JOIN TIPOS_USUARIO tu ON u.TIPO_USUARIO_ID = tu.TIPO_USUARIO_ID
+    WHERE (u.NOMBRE_USUARIO = p_nombre_usuario_o_correo 
+           OR u.CORREO = p_nombre_usuario_o_correo)
+    AND u.CONTRASENHA = p_contrasenha
+    AND u.ACTIVO = 1
     LIMIT 1;
 END$$
 
@@ -510,25 +530,124 @@ BEGIN
 END$$
 
 -- =====================================================
--- SP_LISTAR_PRODUCTOS_STOCK_BAJO
--- Lista productos que tienen al menos una variante con alerta de stock
+-- STORED PROCEDURES PARA PRODUCTOS - BÚSQUEDAS AVANZADAS (MySQL)
+-- =====================================================
+
+USE KAWKI_DB;
+DELIMITER $$
+
+-- =====================================================
+-- SP_LISTAR_PRODUCTOS_POR_CATEGORIA
+-- Lista productos filtrados por categoría con JOINs completos
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_PRODUCTOS_POR_CATEGORIA$$
+
+CREATE PROCEDURE SP_LISTAR_PRODUCTOS_POR_CATEGORIA(
+    IN p_categoria_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos del producto
+        p.PRODUCTO_ID,
+        p.DESCRIPCION,
+        p.PRECIO_VENTA,
+        p.FECHA_HORA_CREACION,
+        
+        -- Categoría completa (JOIN)
+        c.CATEGORIA_ID,
+        c.NOMBRE AS CATEGORIA_NOMBRE,
+        
+        -- Estilo completo (JOIN)
+        e.ESTILO_ID,
+        e.NOMBRE AS ESTILO_NOMBRE,
+        
+        -- Usuario completo (JOIN) - NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS p
+    INNER JOIN CATEGORIAS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
+    INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
+    INNER JOIN USUARIOS u ON p.USUARIO_ID = u.USUARIO_ID
+    WHERE p.CATEGORIA_ID = p_categoria_id
+    ORDER BY p.PRODUCTO_ID;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_PRODUCTOS_POR_ESTILO
+-- Lista productos filtrados por estilo con JOINs completos
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_LISTAR_PRODUCTOS_POR_ESTILO$$
+
+CREATE PROCEDURE SP_LISTAR_PRODUCTOS_POR_ESTILO(
+    IN p_estilo_id INT
+)
+BEGIN
+    SELECT 
+        -- Campos del producto
+        p.PRODUCTO_ID,
+        p.DESCRIPCION,
+        p.PRECIO_VENTA,
+        p.FECHA_HORA_CREACION,
+        
+        -- Categoría completa (JOIN)
+        c.CATEGORIA_ID,
+        c.NOMBRE AS CATEGORIA_NOMBRE,
+        
+        -- Estilo completo (JOIN)
+        e.ESTILO_ID,
+        e.NOMBRE AS ESTILO_NOMBRE,
+        
+        -- Usuario completo (JOIN) - NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS p
+    INNER JOIN CATEGORIAS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
+    INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
+    INNER JOIN USUARIOS u ON p.USUARIO_ID = u.USUARIO_ID
+    WHERE p.ESTILO_ID = p_estilo_id
+    ORDER BY p.PRODUCTO_ID;
+END$$
+
+-- =====================================================
+-- SP_LISTAR_PRODUCTOS_STOCK_BAJO (OPTIMIZADO CON JOINS)
+-- Lista productos con al menos una variante con alerta de stock
+-- Ahora retorna datos completos mediante JOINs
 -- =====================================================
 DROP PROCEDURE IF EXISTS SP_LISTAR_PRODUCTOS_STOCK_BAJO$$
 
 CREATE PROCEDURE SP_LISTAR_PRODUCTOS_STOCK_BAJO()
 BEGIN
     SELECT DISTINCT 
-        P.PRODUCTO_ID,
-        P.DESCRIPCION,
-        P.CATEGORIA_ID,
-        P.ESTILO_ID,
-        P.PRECIO_VENTA,
-        P.FECHA_HORA_CREACION,
-        P.USUARIO_ID
-    FROM PRODUCTOS P
-    INNER JOIN PRODUCTOS_VARIANTES PV ON P.PRODUCTO_ID = PV.PRODUCTO_ID
-    WHERE PV.ALERTA_STOCK = 1
-    ORDER BY P.PRODUCTO_ID;
+        -- Campos del producto
+        p.PRODUCTO_ID,
+        p.DESCRIPCION,
+        p.PRECIO_VENTA,
+        p.FECHA_HORA_CREACION,
+        
+        -- Categoría completa (JOIN)
+        c.CATEGORIA_ID,
+        c.NOMBRE AS CATEGORIA_NOMBRE,
+        
+        -- Estilo completo (JOIN)
+        e.ESTILO_ID,
+        e.NOMBRE AS ESTILO_NOMBRE,
+        
+        -- Usuario completo (JOIN) - NOMBRE Y APE_PATERNO
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS p
+    INNER JOIN CATEGORIAS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
+    INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
+    INNER JOIN USUARIOS u ON p.USUARIO_ID = u.USUARIO_ID
+    INNER JOIN PRODUCTOS_VARIANTES pv ON p.PRODUCTO_ID = pv.PRODUCTO_ID
+    WHERE pv.ALERTA_STOCK = 1
+    ORDER BY p.PRODUCTO_ID;
 END$$
 
 DELIMITER ;

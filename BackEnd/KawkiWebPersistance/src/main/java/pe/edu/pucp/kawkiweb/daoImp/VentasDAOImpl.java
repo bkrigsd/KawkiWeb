@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
-import pe.edu.pucp.kawkiweb.model.DetalleVentasDTO;
 import pe.edu.pucp.kawkiweb.model.VentasDTO;
 import pe.edu.pucp.kawkiweb.model.DescuentosDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;

@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import pe.edu.pucp.kawkiweb.daoImp.util.Columna;
 import pe.edu.pucp.kawkiweb.model.ProductosDTO;
 import pe.edu.pucp.kawkiweb.model.utilProducto.CategoriasDTO;
@@ -277,52 +276,59 @@ public class ProductosDAOImpl extends BaseDAOImpl implements ProductosDAO {
         return stockTotal;
     }
 
+    /**
+     * Lista productos filtrados por categoría usando SP optimizado con JOINs.
+     * Retorna productos completos (categoría, estilo, usuario) sin queries
+     * adicionales.
+     */
     @Override
     public ArrayList<ProductosDTO> listarPorCategoria(Integer categoriaId) {
-        // SQL directo con WHERE para filtrar por categoría
-        String sql = "SELECT PRODUCTO_ID, DESCRIPCION, CATEGORIA_ID, ESTILO_ID, "
-                + "PRECIO_VENTA, FECHA_HORA_CREACION, USUARIO_ID "
-                + "FROM PRODUCTOS WHERE CATEGORIA_ID = ?";
-
-        // Consumer para setear el parámetro
-        Consumer<Integer> incluirParametros = (id) -> {
-            try {
-                this.statement.setInt(1, id);
-            } catch (SQLException e) {
-                System.err.println("Error al establecer parámetro categoría: " + e);
-            }
-        };
-
-        return (ArrayList<ProductosDTO>) super.listarTodos(sql, incluirParametros, categoriaId);
+        return (ArrayList<ProductosDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_PRODUCTOS_POR_CATEGORIA",
+                1, // Cantidad de parámetros
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro categoriaId: " + ex);
+                    }
+                },
+                categoriaId
+        );
     }
 
+    /**
+     * Lista productos filtrados por estilo usando SP optimizado con JOINs.
+     * Retorna productos completos (categoría, estilo, usuario) sin queries
+     * adicionales.
+     */
     @Override
     public ArrayList<ProductosDTO> listarPorEstilo(Integer estiloId) {
-        // SQL directo con WHERE para filtrar por estilo
-        String sql = "SELECT PRODUCTO_ID, DESCRIPCION, CATEGORIA_ID, ESTILO_ID, "
-                + "PRECIO_VENTA, FECHA_HORA_CREACION, USUARIO_ID "
-                + "FROM PRODUCTOS WHERE ESTILO_ID = ?";
-
-        // Consumer para setear el parámetro
-        Consumer<Integer> incluirParametros = (id) -> {
-            try {
-                this.statement.setInt(1, id);
-            } catch (SQLException e) {
-                System.err.println("Error al establecer parámetro estilo: " + e);
-            }
-        };
-
-        return (ArrayList<ProductosDTO>) super.listarTodos(sql, incluirParametros, estiloId);
+        return (ArrayList<ProductosDTO>) super.ejecutarConsultaProcedimientoLista(
+                "SP_LISTAR_PRODUCTOS_POR_ESTILO",
+                1, // Cantidad de parámetros
+                (params) -> {
+                    try {
+                        this.statement.setInt(1, (Integer) params);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetro estiloId: " + ex);
+                    }
+                },
+                estiloId
+        );
     }
 
+    /**
+     * Lista productos con stock bajo usando SP optimizado con JOINs. Retorna
+     * productos completos (categoría, estilo, usuario) sin queries adicionales.
+     */
     @Override
     public ArrayList<ProductosDTO> listarConStockBajo() {
-        // Usar el método de BaseDAOImpl para ejecutar SP que retorna lista
         return (ArrayList<ProductosDTO>) super.ejecutarConsultaProcedimientoLista(
                 "SP_LISTAR_PRODUCTOS_STOCK_BAJO",
                 0, // Sin parámetros
-                null,
-                null
+                null, // Sin consumer de parámetros
+                null // Sin objeto de parámetros
         );
     }
 }

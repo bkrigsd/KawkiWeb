@@ -253,21 +253,18 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
      */
     @Override
     public ArrayList<UsuariosDTO> listarPorTipo(Integer tipoUsuarioId) {
-        // Usar el método base ejecutarConsultaProcedimientoLista
-        List<UsuariosDTO> lista = this.ejecutarConsultaProcedimientoLista(
+        return (ArrayList<UsuariosDTO>) super.ejecutarConsultaProcedimientoLista(
                 "SP_LISTAR_USUARIOS_POR_TIPO",
-                1,
-                params -> {
+                1, // Cantidad de parámetros
+                (params) -> {
                     try {
-                        this.statement.setInt(1, tipoUsuarioId);
+                        this.statement.setInt(1, (Integer) params);
                     } catch (SQLException ex) {
-                        System.err.println("Error al setear parámetro: " + ex);
+                        System.err.println("Error al establecer parámetro tipoUsuarioId: " + ex);
                     }
                 },
                 tipoUsuarioId
         );
-
-        return (ArrayList<UsuariosDTO>) lista;
     }
 
     /**
@@ -321,41 +318,30 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
      */
     @Override
     public UsuariosDTO autenticar(String nombreUsuarioOCorreo, String contrasenha) {
-        // Crear objeto temporal para almacenar el resultado
-        UsuariosDTO usuarioAutenticado = null;
-        UsuariosDTO temp = this.usuario; // Guardar referencia actual
+        // Guardar referencia actual para no perderla
+        UsuariosDTO temp = this.usuario;
 
-        try {
-            this.abrirConexion();
+        // Ejecutar el procedimiento usando el método base optimizado
+        super.ejecutarConsultaProcedimientoConJoin(
+                "SP_AUTENTICAR_USUARIO",
+                2, // Cantidad de parámetros
+                (params) -> {
+                    try {
+                        Object[] parametros = (Object[]) params;
+                        this.statement.setString(1, (String) parametros[0]);
+                        this.statement.setString(2, (String) parametros[1]);
+                    } catch (SQLException ex) {
+                        System.err.println("Error al establecer parámetros de autenticación: " + ex);
+                    }
+                },
+                new Object[]{nombreUsuarioOCorreo, contrasenha}
+        );
 
-            // Preparar llamada al stored procedure
-            String sql = "{CALL SP_AUTENTICAR_USUARIO(?, ?)}";
-            this.colocarSQLEnStatement(sql);
+        // Guardar el resultado
+        UsuariosDTO usuarioAutenticado = this.usuario;
 
-            // Parámetros IN
-            this.statement.setString(1, nombreUsuarioOCorreo);
-            this.statement.setString(2, contrasenha);
-
-            // Ejecutar
-            this.ejecutarSelectEnDB();
-
-            // Si hay resultado, instanciar el usuario
-            if (this.resultSet.next()) {
-                this.instanciarObjetoDelResultSet();
-                usuarioAutenticado = this.usuario;
-            }
-
-        } catch (SQLException ex) {
-            System.err.println("Error al autenticar usuario: " + ex);
-            usuarioAutenticado = null;
-        } finally {
-            try {
-                this.cerrarConexion();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar conexión: " + ex);
-            }
-            this.usuario = temp; // Restaurar referencia original
-        }
+        // Restaurar referencia original
+        this.usuario = temp;
 
         return usuarioAutenticado;
     }
