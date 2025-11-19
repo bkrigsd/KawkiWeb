@@ -5,17 +5,23 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/UsuariosService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
+  <message name="cambiarContrasenhaUsuario">
+    <part name="parameters" element="tns:cambiarContrasenhaUsuario" />
+  </message>
+  <message name="cambiarContrasenhaUsuarioResponse">
+    <part name="parameters" element="tns:cambiarContrasenhaUsuarioResponse" />
+  </message>
   <message name="obtenerPorIdUsuario">
     <part name="parameters" element="tns:obtenerPorIdUsuario" />
   </message>
   <message name="obtenerPorIdUsuarioResponse">
     <part name="parameters" element="tns:obtenerPorIdUsuarioResponse" />
   </message>
-  <message name="cambiarContrasenhaUsuario">
-    <part name="parameters" element="tns:cambiarContrasenhaUsuario" />
+  <message name="insertarUsuario">
+    <part name="parameters" element="tns:insertarUsuario" />
   </message>
-  <message name="cambiarContrasenhaUsuarioResponse">
-    <part name="parameters" element="tns:cambiarContrasenhaUsuarioResponse" />
+  <message name="insertarUsuarioResponse">
+    <part name="parameters" element="tns:insertarUsuarioResponse" />
   </message>
   <message name="autenticarUsuario">
     <part name="parameters" element="tns:autenticarUsuario" />
@@ -35,20 +41,18 @@
   <message name="modificarUsuarioResponse">
     <part name="parameters" element="tns:modificarUsuarioResponse" />
   </message>
-  <message name="insertarUsuario">
-    <part name="parameters" element="tns:insertarUsuario" />
-  </message>
-  <message name="insertarUsuarioResponse">
-    <part name="parameters" element="tns:insertarUsuarioResponse" />
-  </message>
   <portType name="Usuarios">
+    <operation name="cambiarContrasenhaUsuario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuarioRequest" message="tns:cambiarContrasenhaUsuario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuarioResponse" message="tns:cambiarContrasenhaUsuarioResponse" />
+    </operation>
     <operation name="obtenerPorIdUsuario">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioRequest" message="tns:obtenerPorIdUsuario" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioResponse" message="tns:obtenerPorIdUsuarioResponse" />
     </operation>
-    <operation name="cambiarContrasenhaUsuario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuarioRequest" message="tns:cambiarContrasenhaUsuario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuarioResponse" message="tns:cambiarContrasenhaUsuarioResponse" />
+    <operation name="insertarUsuario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioRequest" message="tns:insertarUsuario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioResponse" message="tns:insertarUsuarioResponse" />
     </operation>
     <operation name="autenticarUsuario">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRequest" message="tns:autenticarUsuario" />
@@ -62,13 +66,18 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/modificarUsuarioRequest" message="tns:modificarUsuario" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/modificarUsuarioResponse" message="tns:modificarUsuarioResponse" />
     </operation>
-    <operation name="insertarUsuario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioRequest" message="tns:insertarUsuario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioResponse" message="tns:insertarUsuarioResponse" />
-    </operation>
   </portType>
   <binding name="UsuariosPortBinding" type="tns:Usuarios">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="cambiarContrasenhaUsuario">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="obtenerPorIdUsuario">
       <soap:operation soapAction="" />
       <input>
@@ -78,7 +87,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="cambiarContrasenhaUsuario">
+    <operation name="insertarUsuario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -106,15 +115,6 @@
       </output>
     </operation>
     <operation name="modificarUsuario">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="insertarUsuario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="Gestión de Productos" Language="C#" MasterPageFile="~/KawkiWeb.master"
     AutoEventWireup="true" CodeBehind="GestionProductos.aspx.cs" Inherits="KawkiWeb.GestionProductos" %>
-
 <asp:Content ID="HeadExtra" ContentPlaceHolderID="HeadContent" runat="server">
     <link href="Content/Stylo/registrouser.css" rel="stylesheet" />
 </asp:Content>
@@ -61,7 +60,7 @@
                                 <asp:LinkButton runat="server" 
                                     CommandName="VerVariantes" 
                                     CommandArgument='<%# Eval("ProductoId") %>'
-                                    CssClass="btn-kawki-primary btn-sm"
+                                    CssClass="btn-variantes-sm"
                                     CausesValidation="false">
                                     <i class="fas fa-palette"></i> Variantes
                                 </asp:LinkButton>

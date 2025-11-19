@@ -8,6 +8,7 @@
   <xs:element name="modificarTallaResponse" type="tns:modificarTallaResponse" />
   <xs:element name="obtenerPorIdTalla" type="tns:obtenerPorIdTalla" />
   <xs:element name="obtenerPorIdTallaResponse" type="tns:obtenerPorIdTallaResponse" />
+  <xs:element name="tallasDTO" type="tns:tallasDTO" />
   <xs:complexType name="insertarTalla">
     <xs:sequence>
       <xs:element minOccurs="0" name="numeroTalla" type="xs:int" />
@@ -39,8 +40,8 @@
   </xs:complexType>
   <xs:complexType name="tallasDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" name="numero" type="xs:int" />
       <xs:element minOccurs="0" name="talla_id" type="xs:int" />
+      <xs:element minOccurs="0" name="numero" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="obtenerPorIdTalla">

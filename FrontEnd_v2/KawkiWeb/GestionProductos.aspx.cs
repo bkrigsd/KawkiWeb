@@ -73,7 +73,7 @@ namespace KawkiWeb
                     Categoria = p.categoria?.nombre ?? "Sin categoría",
                     Estilo = p.estilo?.nombre ?? "Sin estilo",
                     Precio = p.precio_venta,
-                    CantidadVariantes = p.variantes?.GroupBy(v => v.color).Count() ?? 0,
+                    CantidadVariantes = ObtenerCantidadVariantes(p.producto_id),
 
                     IdCategoria = p.categoria.categoria_id,
                     IdEstilo = p.estilo.estilo_id
@@ -85,6 +85,24 @@ namespace KawkiWeb
             catch (Exception ex)
             {
                 MostrarError("Error al cargar productos: " + ex.Message);
+            }
+        }
+
+        // Método auxiliar para contar variantes (colores únicos)
+        private int ObtenerCantidadVariantes(int productoId)
+        {
+            try
+            {
+                var variantes = variantesBO.ListarPorProducto(productoId);
+
+                // Contar colores únicos
+                return variantes
+                    .GroupBy(v => v.color?.color_id ?? 0)
+                    .Count();
+            }
+            catch
+            {
+                return 0;
             }
         }
 
@@ -192,8 +210,6 @@ namespace KawkiWeb
                         precio,
                         usuario
                     );
-
-                    System.Diagnostics.Debug.WriteLine($"Resultado de Insertar: {resultado}");
 
                     if (resultado == null || resultado <= 0)
                     {
@@ -311,4 +327,3 @@ namespace KawkiWeb
 
     }
 }
-

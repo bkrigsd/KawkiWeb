@@ -5,11 +5,11 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/ColoresService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="insertarColor">
-    <part name="parameters" element="tns:insertarColor" />
+  <message name="modificarColor">
+    <part name="parameters" element="tns:modificarColor" />
   </message>
-  <message name="insertarColorResponse">
-    <part name="parameters" element="tns:insertarColorResponse" />
+  <message name="modificarColorResponse">
+    <part name="parameters" element="tns:modificarColorResponse" />
   </message>
   <message name="obtenerPorIdColor">
     <part name="parameters" element="tns:obtenerPorIdColor" />
@@ -23,16 +23,16 @@
   <message name="listarTodosColorResponse">
     <part name="parameters" element="tns:listarTodosColorResponse" />
   </message>
-  <message name="modificarColor">
-    <part name="parameters" element="tns:modificarColor" />
+  <message name="insertarColor">
+    <part name="parameters" element="tns:insertarColor" />
   </message>
-  <message name="modificarColorResponse">
-    <part name="parameters" element="tns:modificarColorResponse" />
+  <message name="insertarColorResponse">
+    <part name="parameters" element="tns:insertarColorResponse" />
   </message>
   <portType name="Colores">
-    <operation name="insertarColor">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/insertarColorRequest" message="tns:insertarColor" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/insertarColorResponse" message="tns:insertarColorResponse" />
+    <operation name="modificarColor">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorRequest" message="tns:modificarColor" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorResponse" message="tns:modificarColorResponse" />
     </operation>
     <operation name="obtenerPorIdColor">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/obtenerPorIdColorRequest" message="tns:obtenerPorIdColor" />
@@ -42,14 +42,14 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/listarTodosColorRequest" message="tns:listarTodosColor" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/listarTodosColorResponse" message="tns:listarTodosColorResponse" />
     </operation>
-    <operation name="modificarColor">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorRequest" message="tns:modificarColor" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorResponse" message="tns:modificarColorResponse" />
+    <operation name="insertarColor">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/insertarColorRequest" message="tns:insertarColor" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/insertarColorResponse" message="tns:insertarColorResponse" />
     </operation>
   </portType>
   <binding name="ColoresPortBinding" type="tns:Colores">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="insertarColor">
+    <operation name="modificarColor">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -76,7 +76,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="modificarColor">
+    <operation name="insertarColor">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

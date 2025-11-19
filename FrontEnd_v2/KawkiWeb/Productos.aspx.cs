@@ -6,11 +6,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using KawkiWebBusiness;
+using KawkiWebBusiness.KawkiWebWSCategorias;
+using KawkiWebBusiness.KawkiWebWSEstilos;
 using KawkiWebBusiness.KawkiWebWSProductos;
-using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO;
-using coloresDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO;
-using tallasDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO;
 using KawkiWebBusiness.KawkiWebWSProductosVariantes;
+using coloresDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO;
+using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO;
+using tallasDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO;
 
 namespace KawkiWeb
 {
@@ -69,7 +71,7 @@ namespace KawkiWeb
             string color = datos[1];
             string tallas = datos[2];
             string stocks = datos[3];
-            string stocksMinimos = datos[4]; 
+            string stocksMinimos = datos[4];
             string imagen = datos[5];
             string nombre = datos[6];
             string precio = datos[7];
@@ -138,12 +140,12 @@ namespace KawkiWeb
             return html;
         }
 
-        
+
         private void CargarProductos()
         {
             try
             {
-                // Obtener TODOS los productos inicialmente
+                // Obtener TODOS los productos
                 IList<productosDTO> productos = productosBO.ListarTodos();
 
                 if (productos == null || productos.Count == 0)
@@ -152,24 +154,118 @@ namespace KawkiWeb
                     return;
                 }
 
-                // 2. Para cada producto, obtener sus variantes usando el método específico
+                // Obtener valores de los filtros
+                string categoriaValue = ddlCategoria.SelectedValue;
+                string estiloValue = ddlEstilo.SelectedValue;
+                string colorValue = ddlColor.SelectedValue;
+                string tallaValue = ddlTalla.SelectedValue;
+                string busqueda = txtBuscar.Text.Trim();
+
+                // Verificar si hay algún filtro activo
+                bool hayFiltros = !string.IsNullOrEmpty(categoriaValue) ||
+                                  !string.IsNullOrEmpty(estiloValue) ||
+                                  !string.IsNullOrEmpty(colorValue) ||
+                                  !string.IsNullOrEmpty(tallaValue) ||
+                                  !string.IsNullOrEmpty(busqueda);
+
+                System.Diagnostics.Debug.WriteLine($"¿Hay filtros activos? {hayFiltros}");
+
                 var productosConVariantes = new Dictionary<productosDTO, List<productosVariantesDTO>>();
 
                 foreach (var producto in productos)
                 {
-                    // Llamada eficiente: solo las variantes de ESTE producto
+                    // Si hay filtros, aplicarlos
+                    if (hayFiltros)
+                    {
+                        // FILTRO 1: Categoría
+                        if (!string.IsNullOrEmpty(categoriaValue))
+                        {
+                            if (producto.categoria == null ||
+                                producto.categoria.nombre == null ||
+                                !producto.categoria.nombre.Equals(categoriaValue, StringComparison.OrdinalIgnoreCase))
+                            {
+                                continue; // Saltar este producto
+                            }
+                        }
+
+                        // FILTRO 2: Estilo
+                        if (!string.IsNullOrEmpty(estiloValue))
+                        {
+                            if (producto.estilo == null ||
+                                producto.estilo.nombre == null ||
+                                !producto.estilo.nombre.Equals(estiloValue, StringComparison.OrdinalIgnoreCase))
+                            {
+                                continue; // Saltar este producto
+                            }
+                        }
+                    }
+
+                    // Obtener variantes del producto
                     var variantes = variantesBO.ListarPorProducto(producto.producto_id);
 
-                    if (variantes != null && variantes.Count > 0)
+                    if (variantes == null || variantes.Count == 0)
                     {
-                        var variantesDisponibles = variantes
-                        .Where(v => v.disponible == true) // <--- AJUSTA EL NOMBRE DEL CAMPO
-                        .ToList();
-                        productosConVariantes[producto] = variantesDisponibles.ToList();
+                        continue; // Producto sin variantes, saltar
+                    }
+
+                    // Si hay filtros, aplicar filtros a las variantes
+                    if (hayFiltros)
+                    {
+                        List<productosVariantesDTO> variantesFiltradas = variantes.ToList();
+
+                        // FILTRO 3: Color
+                        if (!string.IsNullOrEmpty(colorValue))
+                        {
+                            variantesFiltradas = variantesFiltradas
+                                .Where(v => v.color != null &&
+                                           v.color.nombre != null &&
+                                           v.color.nombre.Equals(colorValue, StringComparison.OrdinalIgnoreCase))
+                                .ToList();
+                        }
+
+                        // FILTRO 4: Talla
+                        if (!string.IsNullOrEmpty(tallaValue))
+                        {
+                            int numeroTalla;
+                            if (int.TryParse(tallaValue, out numeroTalla))
+                            {
+                                variantesFiltradas = variantesFiltradas
+                                    .Where(v => v.talla != null && v.talla.numero == numeroTalla)
+                                    .ToList();
+                            }
+                        }
+
+                        // FILTRO 5: Búsqueda por texto (busca en nombre completo: categoría + estilo + color)
+                        if (!string.IsNullOrEmpty(busqueda))
+                        {
+                            variantesFiltradas = variantesFiltradas
+                                .Where(v =>
+                                {
+                                    string nombreCompleto = $"{producto.categoria?.nombre} {producto.estilo?.nombre} {v.color?.nombre}";
+                                    return nombreCompleto.ToLower().Contains(busqueda.ToLower());
+                                })
+                                .ToList();
+                        }
+
+                        // Si después de filtrar variantes aún quedan, agregar
+                        if (variantesFiltradas.Count > 0)
+                        {
+                            productosConVariantes[producto] = variantesFiltradas;
+                        }
+                    }
+                    else
+                    {
+                        // Sin filtros, agregar todas las variantes
+                        productosConVariantes[producto] = variantes.ToList();
                     }
                 }
 
+                System.Diagnostics.Debug.WriteLine($"Productos con variantes: {productosConVariantes.Count}");
+
+                // Convertir a DataTable
                 DataTable dtProductos = ConvertirProductosADataTable(productosConVariantes);
+
+                System.Diagnostics.Debug.WriteLine($"Filas en DataTable: {dtProductos.Rows.Count}");
 
                 if (dtProductos.Rows.Count > 0)
                 {
@@ -182,141 +278,6 @@ namespace KawkiWeb
                 {
                     MostrarSinProductos();
                 }
-
-                // Obtener TODOS los productos
-                //IList<productosDTO> productos = productosBO.ListarTodos();
-
-                //if (productos == null || productos.Count == 0)
-                //{
-                //    MostrarSinProductos();
-                //    return;
-                //}
-
-                //// Obtener valores de los filtros
-                //string categoriaValue = ddlCategoria.SelectedValue;
-                //string estiloValue = ddlEstilo.SelectedValue;
-                //string colorValue = ddlColor.SelectedValue;
-                //string tallaValue = ddlTalla.SelectedValue;
-                //string busqueda = txtBuscar.Text.Trim();
-
-                //// Verificar si hay algún filtro activo
-                //bool hayFiltros = !string.IsNullOrEmpty(categoriaValue) ||
-                //                  !string.IsNullOrEmpty(estiloValue) ||
-                //                  !string.IsNullOrEmpty(colorValue) ||
-                //                  !string.IsNullOrEmpty(tallaValue) ||
-                //                  !string.IsNullOrEmpty(busqueda);
-
-                //System.Diagnostics.Debug.WriteLine($"¿Hay filtros activos? {hayFiltros}");
-
-                //var productosConVariantes = new Dictionary<productosDTO, List<productosVariantesDTO>>();
-
-                //foreach (var producto in productos)
-                //{
-                //    // Si hay filtros, aplicarlos
-                //    if (hayFiltros)
-                //    {
-                //        // FILTRO 1: Categoría
-                //        if (!string.IsNullOrEmpty(categoriaValue))
-                //        {
-                //            if (producto.categoria == null ||
-                //                producto.categoria.nombre == null ||
-                //                !producto.categoria.nombre.Equals(categoriaValue, StringComparison.OrdinalIgnoreCase))
-                //            {
-                //                continue; // Saltar este producto
-                //            }
-                //        }
-
-                //        // FILTRO 2: Estilo
-                //        if (!string.IsNullOrEmpty(estiloValue))
-                //        {
-                //            if (producto.estilo == null ||
-                //                producto.estilo.nombre == null ||
-                //                !producto.estilo.nombre.Equals(estiloValue, StringComparison.OrdinalIgnoreCase))
-                //            {
-                //                continue; // Saltar este producto
-                //            }
-                //        }
-                //    }
-
-                //    // Obtener variantes del producto
-                //    var variantes = variantesBO.ListarPorProducto(producto.producto_id);
-
-                //    if (variantes == null || variantes.Count == 0)
-                //    {
-                //        continue; // Producto sin variantes, saltar
-                //    }
-
-                //    // Si hay filtros, aplicar filtros a las variantes
-                //    if (hayFiltros)
-                //    {
-                //        List<productosVariantesDTO> variantesFiltradas = variantes.ToList();
-
-                //        // FILTRO 3: Color
-                //        if (!string.IsNullOrEmpty(colorValue))
-                //        {
-                //            variantesFiltradas = variantesFiltradas
-                //                .Where(v => v.color != null &&
-                //                           v.color.nombre != null &&
-                //                           v.color.nombre.Equals(colorValue, StringComparison.OrdinalIgnoreCase))
-                //                .ToList();
-                //        }
-
-                //        // FILTRO 4: Talla
-                //        if (!string.IsNullOrEmpty(tallaValue))
-                //        {
-                //            int numeroTalla;
-                //            if (int.TryParse(tallaValue, out numeroTalla))
-                //            {
-                //                variantesFiltradas = variantesFiltradas
-                //                    .Where(v => v.talla != null && v.talla.numero == numeroTalla)
-                //                    .ToList();
-                //            }
-                //        }
-
-                //        // FILTRO 5: Búsqueda por texto (busca en nombre completo: categoría + estilo + color)
-                //        if (!string.IsNullOrEmpty(busqueda))
-                //        {
-                //            variantesFiltradas = variantesFiltradas
-                //                .Where(v =>
-                //                {
-                //                    string nombreCompleto = $"{producto.categoria?.nombre} {producto.estilo?.nombre} {v.color?.nombre}";
-                //                    return nombreCompleto.ToLower().Contains(busqueda.ToLower());
-                //                })
-                //                .ToList();
-                //        }
-
-                //        // Si después de filtrar variantes aún quedan, agregar
-                //        if (variantesFiltradas.Count > 0)
-                //        {
-                //            productosConVariantes[producto] = variantesFiltradas;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        // Sin filtros, agregar todas las variantes
-                //        productosConVariantes[producto] = variantes.ToList();
-                //    }
-                //}
-
-                //System.Diagnostics.Debug.WriteLine($"Productos con variantes: {productosConVariantes.Count}");
-
-                //// Convertir a DataTable
-                //DataTable dtProductos = ConvertirProductosADataTable(productosConVariantes);
-
-                //System.Diagnostics.Debug.WriteLine($"Filas en DataTable: {dtProductos.Rows.Count}");
-
-                //if (dtProductos.Rows.Count > 0)
-                //{
-                //    rptProductos.DataSource = dtProductos;
-                //    rptProductos.DataBind();
-                //    lblResultados.Text = $"{dtProductos.Rows.Count} producto(s) encontrado(s)";
-                //    pnlSinProductos.Visible = false;
-                //}
-                //else
-                //{
-                //    MostrarSinProductos();
-                //}
-
             }
             catch (Exception ex)
             {
@@ -324,7 +285,7 @@ namespace KawkiWeb
                 System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
                 MostrarSinProductos();
             }
-        } 
+        }
 
         private DataTable ConvertirProductosADataTable(Dictionary<productosDTO, List<productosVariantesDTO>> productosConVariantes)
         {
@@ -459,7 +420,7 @@ namespace KawkiWeb
                     {
                         tallasAgotadas.Add(tallas[i]);
                     }
-                    else if (stock <= stockMinimo) 
+                    else if (stock <= stockMinimo)
                     {
                         tallasStockBajo.Add($"{tallas[i]} ({stock})");
                     }
@@ -489,4 +450,4 @@ namespace KawkiWeb
             return html;
         }
     }
-} 
+}
