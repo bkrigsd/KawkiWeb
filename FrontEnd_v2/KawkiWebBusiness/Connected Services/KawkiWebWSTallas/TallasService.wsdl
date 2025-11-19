@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="TallasService" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/TallasService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
+    </xsd:schema>
+  </types>
+  <message name="insertarTalla">
+    <part name="parameters" element="tns:insertarTalla" />
+  </message>
+  <message name="insertarTallaResponse">
+    <part name="parameters" element="tns:insertarTallaResponse" />
+  </message>
+  <message name="obtenerPorIdTalla">
+    <part name="parameters" element="tns:obtenerPorIdTalla" />
+  </message>
+  <message name="obtenerPorIdTallaResponse">
+    <part name="parameters" element="tns:obtenerPorIdTallaResponse" />
+  </message>
+  <message name="listarTodosTalla">
+    <part name="parameters" element="tns:listarTodosTalla" />
+  </message>
+  <message name="listarTodosTallaResponse">
+    <part name="parameters" element="tns:listarTodosTallaResponse" />
+  </message>
+  <message name="modificarTalla">
+    <part name="parameters" element="tns:modificarTalla" />
+  </message>
+  <message name="modificarTallaResponse">
+    <part name="parameters" element="tns:modificarTallaResponse" />
+  </message>
+  <portType name="Tallas">
+    <operation name="insertarTalla">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/insertarTallaRequest" message="tns:insertarTalla" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/insertarTallaResponse" message="tns:insertarTallaResponse" />
+    </operation>
+    <operation name="obtenerPorIdTalla">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/obtenerPorIdTallaRequest" message="tns:obtenerPorIdTalla" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/obtenerPorIdTallaResponse" message="tns:obtenerPorIdTallaResponse" />
+    </operation>
+    <operation name="listarTodosTalla">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/listarTodosTallaRequest" message="tns:listarTodosTalla" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/listarTodosTallaResponse" message="tns:listarTodosTallaResponse" />
+    </operation>
+    <operation name="modificarTalla">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaRequest" message="tns:modificarTalla" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaResponse" message="tns:modificarTallaResponse" />
+    </operation>
+  </portType>
+  <binding name="TallasPortBinding" type="tns:Tallas">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="insertarTalla">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="obtenerPorIdTalla">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarTodosTalla">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="modificarTalla">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="TallasService">
+    <port name="TallasPort" binding="tns:TallasPortBinding">
+      <soap:address location="http://localhost:8080/KawkiWebWS/TallasService" />
+    </port>
+  </service>
+</definitions>

@@ -121,8 +121,12 @@ END
 GO
 
 -- =====================================================
--- LISTAR VARIANTES DE PRODUCTO POR PRODUCTO_ID
+-- SP_LISTAR_VARIANTES_POR_PRODUCTO - MS SQL (ACTUALIZADO CON JOINS)
+-- Lista variantes de un producto específico con datos completos
 -- =====================================================
+USE KAWKI_DB;
+GO
+
 IF OBJECT_ID('SP_LISTAR_VARIANTES_POR_PRODUCTO', 'P') IS NOT NULL
     DROP PROCEDURE SP_LISTAR_VARIANTES_POR_PRODUCTO;
 GO
@@ -134,20 +138,36 @@ BEGIN
     SET NOCOUNT ON;
     
     SELECT 
-        PROD_VARIANTE_ID,
-        SKU,
-        STOCK,
-        STOCK_MINIMO,
-        ALERTA_STOCK,
-        PRODUCTO_ID,
-        COLOR_ID,
-        TALLA_ID,
-        URL_IMAGEN,
-        FECHA_HORA_CREACION,
-        DISPONIBLE,
-        USUARIO_ID
-    FROM PRODUCTOS_VARIANTES
-    WHERE PRODUCTO_ID = @p_producto_id;
+        -- Campos de la variante de producto
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        pv.STOCK_MINIMO,
+        pv.ALERTA_STOCK,
+        pv.PRODUCTO_ID,
+        pv.URL_IMAGEN,
+        pv.FECHA_HORA_CREACION,
+        pv.DISPONIBLE,
+        
+        -- Color completo (JOIN)
+        c.COLOR_ID,
+        c.NOMBRE AS COLOR_NOMBRE,
+        
+        -- Talla completa (JOIN)
+        t.TALLA_ID,
+        t.NUMERO AS TALLA_NUMERO,
+        
+        -- Usuario de la variante (JOIN)
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS_VARIANTES pv
+    INNER JOIN COLORES c ON pv.COLOR_ID = c.COLOR_ID
+    INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+    INNER JOIN USUARIOS u ON pv.USUARIO_ID = u.USUARIO_ID
+    WHERE pv.PRODUCTO_ID = @p_producto_id
+    ORDER BY pv.PROD_VARIANTE_ID;
 END
 GO
 
