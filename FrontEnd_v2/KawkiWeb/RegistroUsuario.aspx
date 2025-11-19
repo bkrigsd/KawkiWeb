@@ -49,6 +49,9 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
+                        <%-- Nuevo: Columna para Activo --%>
+                        <asp:CheckBoxField DataField="activo" HeaderText="Activo" ReadOnly="true" />
+
                         <%-- Acciones --%>
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
@@ -67,15 +70,14 @@
                                         + Eval("contrasenha") + "\")" %>'>
                                     Editar
                                 </button>
-                                <button type="button" class="btn-eliminar" 
+                                <%--<button type="button" class="btn-eliminar" 
                                     onclick='<%# "abrirModalConfirmacion(" + Eval("usuarioId") + ")" %>'>
                                     Eliminar
-                                </button>
+                                </button>--%>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
-
             </div>
         </div>
 
@@ -92,14 +94,12 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Nombre *</label>
                         <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ControlToValidate="txtNombre"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
+                        <asp:Label ID="lblErrorNombre" runat="server" CssClass="text-danger" />
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Apellido Paterno *</label>
                         <asp:TextBox ID="txtApellidoPaterno" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="rfvApellido" runat="server" ControlToValidate="txtApellidoPaterno"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
+                        <asp:Label ID="lblErrorApellido" runat="server" CssClass="text-danger" />
                     </div>
                 </div>
 
@@ -107,38 +107,34 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">DNI *</label>
                         <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" MaxLength="8" />
-                        <asp:RequiredFieldValidator ID="rfvDNI" runat="server" ControlToValidate="txtDNI"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
-                        <asp:RegularExpressionValidator ID="revDNI" runat="server" ControlToValidate="txtDNI"
+                        <asp:Label ID="lblErrorDNI" runat="server" CssClass="text-danger" />
+                        <%--<asp:RegularExpressionValidator ID="revDNI" runat="server" ControlToValidate="txtDNI"
                             ValidationExpression="^\d{8}$" ErrorMessage="Debe tener 8 dígitos"
-                            CssClass="text-danger" Display="Dynamic" />
+                            CssClass="text-danger" Display="Dynamic" />--%>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Usuario *</label>
                         <asp:TextBox ID="txtUsuario" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="rfvUsuario" runat="server" ControlToValidate="txtUsuario"
-                            ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
+                        <asp:Label ID="lblErrorUsuario" runat="server" CssClass="text-danger" />
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Email *</label>
                     <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" />
-                    <asp:RequiredFieldValidator ID="rfvEmail" runat="server" ControlToValidate="txtEmail"
-                        ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
-                    <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail"
+                    <asp:Label ID="lblErrorEmail" runat="server" CssClass="text-danger" />
+                    <%--<asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail"
                         ValidationExpression="^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$"
-                        ErrorMessage="Correo inválido" CssClass="text-danger" Display="Dynamic" />
+                        ErrorMessage="Correo inválido" CssClass="text-danger" Display="Dynamic" />--%>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Teléfono *</label>
                     <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" MaxLength="9" />
-                    <asp:RequiredFieldValidator ID="rfvTelefono" runat="server" ControlToValidate="txtTelefono"
-                        ErrorMessage="Campo requerido" CssClass="text-danger" Display="Dynamic" />
-                    <asp:RegularExpressionValidator ID="revTelefono" runat="server" ControlToValidate="txtTelefono"
+                    <asp:Label ID="lblErrorTelefono" runat="server" CssClass="text-danger" />
+                    <%--<asp:RegularExpressionValidator ID="revTelefono" runat="server" ControlToValidate="txtTelefono"
                         ValidationExpression="^\d{9}$" ErrorMessage="Debe tener 9 dígitos"
-                        CssClass="text-danger" Display="Dynamic" />
+                        CssClass="text-danger" Display="Dynamic" />--%>
                 </div>
 
                 <div class="mb-3 position-relative">
@@ -180,12 +176,16 @@
                         InitialValue="" ErrorMessage="Seleccione un rol" CssClass="text-danger" Display="Dynamic" />
                 </div>
 
-                <!-- Campo solo lectura visible en edición -->
+                <!-- Nuevo: Checkbox para Activo -->
+                <div class="mb-3">
+                    <asp:CheckBox ID="chkActivo" runat="server" Text="Usuario activo" Checked="true" />
+                </div>
+
+                <%--<!-- Campo solo lectura visible en edición -->
                 <div id="grupoRolTexto" class="mb-3 d-none">
                     <label class="form-label">Rol</label>
                     <input type="text" id="txtRolLectura" class="form-control" readonly />
-                </div>
-
+                </div>--%>
 
                 <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mb-3" />
 
@@ -208,8 +208,8 @@
                 <asp:HiddenField ID="hfIdEliminar" runat="server" Value="0" />
                 <div>
                     <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModalConfirmacion()">Cancelar</button>
-                    <asp:Button ID="btnConfirmarEliminar" runat="server" CssClass="btn-kawki-primary" style="background-color: #dc3545;"
-                        Text="Eliminar" OnClick="btnConfirmarEliminar_Click" CausesValidation="false" UseSubmitBehavior="true" />
+                    <%--<asp:Button ID="btnConfirmarEliminar" runat="server" CssClass="btn-kawki-primary" style="background-color: #dc3545;"
+                        Text="Eliminar" OnClick="btnConfirmarEliminar_Click" CausesValidation="false" UseSubmitBehavior="true" />--%>
                 </div>
             </div>
         </div>
@@ -324,4 +324,40 @@
         }
 
     </script>
+<<<<<<< HEAD
+
+    <script>
+        function validarCampoUnico(campo, valor, labelErrorId) {
+            var idActual = document.getElementById("<%= hfIdUsuario.ClientID %>").value;
+
+            if (valor.trim() === "") {
+                document.getElementById(labelErrorId).innerText = "";
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "RegistroUsuario.aspx/ValidarUnicoAjax",
+                data: JSON.stringify({ campo: campo, valor: valor, idActual: parseInt(idActual) }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var esUnico = response.d;
+                    if (!esUnico) {
+                        document.getElementById(labelErrorId).innerText = campo + " ya existe.";
+                    } else {
+                        document.getElementById(labelErrorId).innerText = "";
+                    }
+                }
+            });
+        }
+    </script>
+
+<<<<<<< HEAD
 </asp:Content>
+=======
+</asp:Content>
+>>>>>>> parent of 0c7614b (guardar)
+=======
+</asp:Content>
+>>>>>>> parent of 33b2d43 (Merge remote-tracking branch 'origin/Fabio' into Angelina)

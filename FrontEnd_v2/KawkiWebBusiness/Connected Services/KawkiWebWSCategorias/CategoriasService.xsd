@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="categoriasDTO" type="tns:categoriasDTO" />
   <xs:element name="insertarCategoria" type="tns:insertarCategoria" />
   <xs:element name="insertarCategoriaResponse" type="tns:insertarCategoriaResponse" />
   <xs:element name="listarTodosCategoria" type="tns:listarTodosCategoria" />

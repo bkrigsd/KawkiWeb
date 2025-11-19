@@ -16,19 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSCategorias {
     public interface Categorias {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaRe" +
-            "quest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaRe" +
-            "sponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaResponse listarTodosCategoria(KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaRe" +
-            "quest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaRe" +
-            "sponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaResponse> listarTodosCategoriaAsync(KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/obtenerPorIdCategoriaR" +
             "equest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/obtenerPorIdCategoriaR" +
             "esponse")]
@@ -42,17 +29,17 @@ namespace KawkiWebBusiness.KawkiWebWSCategorias {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaResponse> obtenerPorIdCategoriaAsync(KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/modificarCategoriaRequ" +
-            "est", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/modificarCategoriaResp" +
-            "onse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaRe" +
+            "quest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaRe" +
+            "sponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSCategorias.modificarCategoriaResponse modificarCategoria(KawkiWebBusiness.KawkiWebWSCategorias.modificarCategoriaRequest request);
+        KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaResponse listarTodosCategoria(KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/modificarCategoriaRequ" +
-            "est", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/modificarCategoriaResp" +
-            "onse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.modificarCategoriaResponse> modificarCategoriaAsync(KawkiWebBusiness.KawkiWebWSCategorias.modificarCategoriaRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaRe" +
+            "quest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/listarTodosCategoriaRe" +
+            "sponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaResponse> listarTodosCategoriaAsync(KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/insertarCategoriaReque" +
@@ -66,6 +53,19 @@ namespace KawkiWebBusiness.KawkiWebWSCategorias {
             "st", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/insertarCategoriaRespo" +
             "nse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaResponse> insertarCategoriaAsync(KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/modificarCategoriaRequ" +
+            "est", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/modificarCategoriaResp" +
+            "onse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSCategorias.modificarCategoriaResponse modificarCategoria(KawkiWebBusiness.KawkiWebWSCategorias.modificarCategoriaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/modificarCategoriaRequ" +
+            "est", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Categorias/modificarCategoriaResp" +
+            "onse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.modificarCategoriaResponse> modificarCategoriaAsync(KawkiWebBusiness.KawkiWebWSCategorias.modificarCategoriaRequest request);
     }
     
     /// <remarks/>
@@ -131,34 +131,6 @@ namespace KawkiWebBusiness.KawkiWebWSCategorias {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosCategoria", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosCategoriaRequest {
-        
-        public listarTodosCategoriaRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosCategoriaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosCategoriaResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSCategorias.categoriasDTO[] @return;
-        
-        public listarTodosCategoriaResponse() {
-        }
-        
-        public listarTodosCategoriaResponse(KawkiWebBusiness.KawkiWebWSCategorias.categoriasDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdCategoria", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class obtenerPorIdCategoriaRequest {
         
@@ -188,6 +160,70 @@ namespace KawkiWebBusiness.KawkiWebWSCategorias {
         }
         
         public obtenerPorIdCategoriaResponse(KawkiWebBusiness.KawkiWebWSCategorias.categoriasDTO @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosCategoria", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosCategoriaRequest {
+        
+        public listarTodosCategoriaRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosCategoriaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosCategoriaResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSCategorias.categoriasDTO[] @return;
+        
+        public listarTodosCategoriaResponse() {
+        }
+        
+        public listarTodosCategoriaResponse(KawkiWebBusiness.KawkiWebWSCategorias.categoriasDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarCategoria", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarCategoriaRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string nombreCategoria;
+        
+        public insertarCategoriaRequest() {
+        }
+        
+        public insertarCategoriaRequest(string nombreCategoria) {
+            this.nombreCategoria = nombreCategoria;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarCategoriaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarCategoriaResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public insertarCategoriaResponse() {
+        }
+        
+        public insertarCategoriaResponse(int @return) {
             this.@return = @return;
         }
     }
@@ -233,42 +269,6 @@ namespace KawkiWebBusiness.KawkiWebWSCategorias {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarCategoria", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarCategoriaRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string nombreCategoria;
-        
-        public insertarCategoriaRequest() {
-        }
-        
-        public insertarCategoriaRequest(string nombreCategoria) {
-            this.nombreCategoria = nombreCategoria;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarCategoriaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarCategoriaResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public insertarCategoriaResponse() {
-        }
-        
-        public insertarCategoriaResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface CategoriasChannel : KawkiWebBusiness.KawkiWebWSCategorias.Categorias, System.ServiceModel.IClientChannel {
     }
@@ -297,6 +297,29 @@ namespace KawkiWebBusiness.KawkiWebWSCategorias {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaResponse KawkiWebBusiness.KawkiWebWSCategorias.Categorias.obtenerPorIdCategoria(KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest request) {
+            return base.Channel.obtenerPorIdCategoria(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSCategorias.categoriasDTO obtenerPorIdCategoria(int categoriaId) {
+            KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest inValue = new KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest();
+            inValue.categoriaId = categoriaId;
+            KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaResponse retVal = ((KawkiWebBusiness.KawkiWebWSCategorias.Categorias)(this)).obtenerPorIdCategoria(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaResponse> KawkiWebBusiness.KawkiWebWSCategorias.Categorias.obtenerPorIdCategoriaAsync(KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest request) {
+            return base.Channel.obtenerPorIdCategoriaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaResponse> obtenerPorIdCategoriaAsync(int categoriaId) {
+            KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest inValue = new KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest();
+            inValue.categoriaId = categoriaId;
+            return ((KawkiWebBusiness.KawkiWebWSCategorias.Categorias)(this)).obtenerPorIdCategoriaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaResponse KawkiWebBusiness.KawkiWebWSCategorias.Categorias.listarTodosCategoria(KawkiWebBusiness.KawkiWebWSCategorias.listarTodosCategoriaRequest request) {
             return base.Channel.listarTodosCategoria(request);
         }
@@ -318,26 +341,26 @@ namespace KawkiWebBusiness.KawkiWebWSCategorias {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaResponse KawkiWebBusiness.KawkiWebWSCategorias.Categorias.obtenerPorIdCategoria(KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest request) {
-            return base.Channel.obtenerPorIdCategoria(request);
+        KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaResponse KawkiWebBusiness.KawkiWebWSCategorias.Categorias.insertarCategoria(KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest request) {
+            return base.Channel.insertarCategoria(request);
         }
         
-        public KawkiWebBusiness.KawkiWebWSCategorias.categoriasDTO obtenerPorIdCategoria(int categoriaId) {
-            KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest inValue = new KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest();
-            inValue.categoriaId = categoriaId;
-            KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaResponse retVal = ((KawkiWebBusiness.KawkiWebWSCategorias.Categorias)(this)).obtenerPorIdCategoria(inValue);
+        public int insertarCategoria(string nombreCategoria) {
+            KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest inValue = new KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest();
+            inValue.nombreCategoria = nombreCategoria;
+            KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaResponse retVal = ((KawkiWebBusiness.KawkiWebWSCategorias.Categorias)(this)).insertarCategoria(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaResponse> KawkiWebBusiness.KawkiWebWSCategorias.Categorias.obtenerPorIdCategoriaAsync(KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest request) {
-            return base.Channel.obtenerPorIdCategoriaAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaResponse> KawkiWebBusiness.KawkiWebWSCategorias.Categorias.insertarCategoriaAsync(KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest request) {
+            return base.Channel.insertarCategoriaAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaResponse> obtenerPorIdCategoriaAsync(int categoriaId) {
-            KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest inValue = new KawkiWebBusiness.KawkiWebWSCategorias.obtenerPorIdCategoriaRequest();
-            inValue.categoriaId = categoriaId;
-            return ((KawkiWebBusiness.KawkiWebWSCategorias.Categorias)(this)).obtenerPorIdCategoriaAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaResponse> insertarCategoriaAsync(string nombreCategoria) {
+            KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest inValue = new KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest();
+            inValue.nombreCategoria = nombreCategoria;
+            return ((KawkiWebBusiness.KawkiWebWSCategorias.Categorias)(this)).insertarCategoriaAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -363,29 +386,6 @@ namespace KawkiWebBusiness.KawkiWebWSCategorias {
             inValue.categoriaId = categoriaId;
             inValue.nombreCategoria = nombreCategoria;
             return ((KawkiWebBusiness.KawkiWebWSCategorias.Categorias)(this)).modificarCategoriaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaResponse KawkiWebBusiness.KawkiWebWSCategorias.Categorias.insertarCategoria(KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest request) {
-            return base.Channel.insertarCategoria(request);
-        }
-        
-        public int insertarCategoria(string nombreCategoria) {
-            KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest inValue = new KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest();
-            inValue.nombreCategoria = nombreCategoria;
-            KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaResponse retVal = ((KawkiWebBusiness.KawkiWebWSCategorias.Categorias)(this)).insertarCategoria(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaResponse> KawkiWebBusiness.KawkiWebWSCategorias.Categorias.insertarCategoriaAsync(KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest request) {
-            return base.Channel.insertarCategoriaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaResponse> insertarCategoriaAsync(string nombreCategoria) {
-            KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest inValue = new KawkiWebBusiness.KawkiWebWSCategorias.insertarCategoriaRequest();
-            inValue.nombreCategoria = nombreCategoria;
-            return ((KawkiWebBusiness.KawkiWebWSCategorias.Categorias)(this)).insertarCategoriaAsync(inValue);
         }
     }
 }

@@ -5,35 +5,11 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/DetalleVentasService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="listarPorVentaIdDetalleVenta">
-    <part name="parameters" element="tns:listarPorVentaIdDetalleVenta" />
-  </message>
-  <message name="listarPorVentaIdDetalleVentaResponse">
-    <part name="parameters" element="tns:listarPorVentaIdDetalleVentaResponse" />
-  </message>
   <message name="modificarDetalleVenta">
     <part name="parameters" element="tns:modificarDetalleVenta" />
   </message>
   <message name="modificarDetalleVentaResponse">
     <part name="parameters" element="tns:modificarDetalleVentaResponse" />
-  </message>
-  <message name="listarTodosDetalleVenta">
-    <part name="parameters" element="tns:listarTodosDetalleVenta" />
-  </message>
-  <message name="listarTodosDetalleVentaResponse">
-    <part name="parameters" element="tns:listarTodosDetalleVentaResponse" />
-  </message>
-  <message name="insertarDetalleVenta">
-    <part name="parameters" element="tns:insertarDetalleVenta" />
-  </message>
-  <message name="insertarDetalleVentaResponse">
-    <part name="parameters" element="tns:insertarDetalleVentaResponse" />
-  </message>
-  <message name="eliminarDetalleVenta">
-    <part name="parameters" element="tns:eliminarDetalleVenta" />
-  </message>
-  <message name="eliminarDetalleVentaResponse">
-    <part name="parameters" element="tns:eliminarDetalleVentaResponse" />
   </message>
   <message name="obtenerPorIdDetalleVenta">
     <part name="parameters" element="tns:obtenerPorIdDetalleVenta" />
@@ -41,43 +17,48 @@
   <message name="obtenerPorIdDetalleVentaResponse">
     <part name="parameters" element="tns:obtenerPorIdDetalleVentaResponse" />
   </message>
+  <message name="insertarDetalleVenta">
+    <part name="parameters" element="tns:insertarDetalleVenta" />
+  </message>
+  <message name="insertarDetalleVentaResponse">
+    <part name="parameters" element="tns:insertarDetalleVentaResponse" />
+  </message>
+  <message name="listarTodosDetalleVenta">
+    <part name="parameters" element="tns:listarTodosDetalleVenta" />
+  </message>
+  <message name="listarTodosDetalleVentaResponse">
+    <part name="parameters" element="tns:listarTodosDetalleVentaResponse" />
+  </message>
+  <message name="listarPorVentaIdDetalleVenta">
+    <part name="parameters" element="tns:listarPorVentaIdDetalleVenta" />
+  </message>
+  <message name="listarPorVentaIdDetalleVentaResponse">
+    <part name="parameters" element="tns:listarPorVentaIdDetalleVentaResponse" />
+  </message>
   <portType name="DetalleVentas">
-    <operation name="listarPorVentaIdDetalleVenta">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/listarPorVentaIdDetalleVentaRequest" message="tns:listarPorVentaIdDetalleVenta" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/listarPorVentaIdDetalleVentaResponse" message="tns:listarPorVentaIdDetalleVentaResponse" />
-    </operation>
     <operation name="modificarDetalleVenta">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/modificarDetalleVentaRequest" message="tns:modificarDetalleVenta" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/modificarDetalleVentaResponse" message="tns:modificarDetalleVentaResponse" />
-    </operation>
-    <operation name="listarTodosDetalleVenta">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/listarTodosDetalleVentaRequest" message="tns:listarTodosDetalleVenta" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/listarTodosDetalleVentaResponse" message="tns:listarTodosDetalleVentaResponse" />
-    </operation>
-    <operation name="insertarDetalleVenta">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/insertarDetalleVentaRequest" message="tns:insertarDetalleVenta" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/insertarDetalleVentaResponse" message="tns:insertarDetalleVentaResponse" />
-    </operation>
-    <operation name="eliminarDetalleVenta">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/eliminarDetalleVentaRequest" message="tns:eliminarDetalleVenta" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/eliminarDetalleVentaResponse" message="tns:eliminarDetalleVentaResponse" />
     </operation>
     <operation name="obtenerPorIdDetalleVenta">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/obtenerPorIdDetalleVentaRequest" message="tns:obtenerPorIdDetalleVenta" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/obtenerPorIdDetalleVentaResponse" message="tns:obtenerPorIdDetalleVentaResponse" />
     </operation>
+    <operation name="insertarDetalleVenta">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/insertarDetalleVentaRequest" message="tns:insertarDetalleVenta" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/insertarDetalleVentaResponse" message="tns:insertarDetalleVentaResponse" />
+    </operation>
+    <operation name="listarTodosDetalleVenta">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/listarTodosDetalleVentaRequest" message="tns:listarTodosDetalleVenta" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/listarTodosDetalleVentaResponse" message="tns:listarTodosDetalleVentaResponse" />
+    </operation>
+    <operation name="listarPorVentaIdDetalleVenta">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/listarPorVentaIdDetalleVentaRequest" message="tns:listarPorVentaIdDetalleVenta" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/listarPorVentaIdDetalleVentaResponse" message="tns:listarPorVentaIdDetalleVentaResponse" />
+    </operation>
   </portType>
   <binding name="DetalleVentasPortBinding" type="tns:DetalleVentas">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="listarPorVentaIdDetalleVenta">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
     <operation name="modificarDetalleVenta">
       <soap:operation soapAction="" />
       <input>
@@ -87,7 +68,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarTodosDetalleVenta">
+    <operation name="obtenerPorIdDetalleVenta">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -105,7 +86,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="eliminarDetalleVenta">
+    <operation name="listarTodosDetalleVenta">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -114,7 +95,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerPorIdDetalleVenta">
+    <operation name="listarPorVentaIdDetalleVenta">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

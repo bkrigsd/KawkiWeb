@@ -25,6 +25,15 @@ namespace KawkiWebBusiness.KawkiWebWSTallas {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTallas.insertarTallaResponse> insertarTallaAsync(KawkiWebBusiness.KawkiWebWSTallas.insertarTallaRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse modificarTalla(KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse> modificarTallaAsync(KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/obtenerPorIdTallaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/obtenerPorIdTallaResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
@@ -41,15 +50,6 @@ namespace KawkiWebBusiness.KawkiWebWSTallas {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/listarTodosTallaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/listarTodosTallaResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTallas.listarTodosTallaResponse> listarTodosTallaAsync(KawkiWebBusiness.KawkiWebWSTallas.listarTodosTallaRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse modificarTalla(KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse> modificarTallaAsync(KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -88,6 +88,47 @@ namespace KawkiWebBusiness.KawkiWebWSTallas {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarTalla", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarTallaRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int tallaId;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int numeroTalla;
+        
+        public modificarTallaRequest() {
+        }
+        
+        public modificarTallaRequest(int tallaId, int numeroTalla) {
+            this.tallaId = tallaId;
+            this.numeroTalla = numeroTalla;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarTallaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarTallaResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public modificarTallaResponse() {
+        }
+        
+        public modificarTallaResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
@@ -96,40 +137,16 @@ namespace KawkiWebBusiness.KawkiWebWSTallas {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
     public partial class tallasDTO : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private int numeroField;
-        
-        private bool numeroFieldSpecified;
-        
         private int talla_idField;
         
         private bool talla_idFieldSpecified;
         
+        private int numeroField;
+        
+        private bool numeroFieldSpecified;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int numero {
-            get {
-                return this.numeroField;
-            }
-            set {
-                this.numeroField = value;
-                this.RaisePropertyChanged("numero");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool numeroSpecified {
-            get {
-                return this.numeroFieldSpecified;
-            }
-            set {
-                this.numeroFieldSpecified = value;
-                this.RaisePropertyChanged("numeroSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public int talla_id {
             get {
                 return this.talla_idField;
@@ -149,6 +166,30 @@ namespace KawkiWebBusiness.KawkiWebWSTallas {
             set {
                 this.talla_idFieldSpecified = value;
                 this.RaisePropertyChanged("talla_idSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public int numero {
+            get {
+                return this.numeroField;
+            }
+            set {
+                this.numeroField = value;
+                this.RaisePropertyChanged("numero");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool numeroSpecified {
+            get {
+                return this.numeroFieldSpecified;
+            }
+            set {
+                this.numeroFieldSpecified = value;
+                this.RaisePropertyChanged("numeroSpecified");
             }
         }
         
@@ -226,47 +267,6 @@ namespace KawkiWebBusiness.KawkiWebWSTallas {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarTalla", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarTallaRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int tallaId;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int numeroTalla;
-        
-        public modificarTallaRequest() {
-        }
-        
-        public modificarTallaRequest(int tallaId, int numeroTalla) {
-            this.tallaId = tallaId;
-            this.numeroTalla = numeroTalla;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarTallaResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarTallaResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public modificarTallaResponse() {
-        }
-        
-        public modificarTallaResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface TallasChannel : KawkiWebBusiness.KawkiWebWSTallas.Tallas, System.ServiceModel.IClientChannel {
     }
@@ -318,6 +318,31 @@ namespace KawkiWebBusiness.KawkiWebWSTallas {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse KawkiWebBusiness.KawkiWebWSTallas.Tallas.modificarTalla(KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest request) {
+            return base.Channel.modificarTalla(request);
+        }
+        
+        public int modificarTalla(int tallaId, int numeroTalla) {
+            KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest inValue = new KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest();
+            inValue.tallaId = tallaId;
+            inValue.numeroTalla = numeroTalla;
+            KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse retVal = ((KawkiWebBusiness.KawkiWebWSTallas.Tallas)(this)).modificarTalla(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse> KawkiWebBusiness.KawkiWebWSTallas.Tallas.modificarTallaAsync(KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest request) {
+            return base.Channel.modificarTallaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse> modificarTallaAsync(int tallaId, int numeroTalla) {
+            KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest inValue = new KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest();
+            inValue.tallaId = tallaId;
+            inValue.numeroTalla = numeroTalla;
+            return ((KawkiWebBusiness.KawkiWebWSTallas.Tallas)(this)).modificarTallaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSTallas.obtenerPorIdTallaResponse KawkiWebBusiness.KawkiWebWSTallas.Tallas.obtenerPorIdTalla(KawkiWebBusiness.KawkiWebWSTallas.obtenerPorIdTallaRequest request) {
             return base.Channel.obtenerPorIdTalla(request);
         }
@@ -359,31 +384,6 @@ namespace KawkiWebBusiness.KawkiWebWSTallas {
         public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTallas.listarTodosTallaResponse> listarTodosTallaAsync() {
             KawkiWebBusiness.KawkiWebWSTallas.listarTodosTallaRequest inValue = new KawkiWebBusiness.KawkiWebWSTallas.listarTodosTallaRequest();
             return ((KawkiWebBusiness.KawkiWebWSTallas.Tallas)(this)).listarTodosTallaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse KawkiWebBusiness.KawkiWebWSTallas.Tallas.modificarTalla(KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest request) {
-            return base.Channel.modificarTalla(request);
-        }
-        
-        public int modificarTalla(int tallaId, int numeroTalla) {
-            KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest inValue = new KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest();
-            inValue.tallaId = tallaId;
-            inValue.numeroTalla = numeroTalla;
-            KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse retVal = ((KawkiWebBusiness.KawkiWebWSTallas.Tallas)(this)).modificarTalla(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse> KawkiWebBusiness.KawkiWebWSTallas.Tallas.modificarTallaAsync(KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest request) {
-            return base.Channel.modificarTallaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTallas.modificarTallaResponse> modificarTallaAsync(int tallaId, int numeroTalla) {
-            KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest inValue = new KawkiWebBusiness.KawkiWebWSTallas.modificarTallaRequest();
-            inValue.tallaId = tallaId;
-            inValue.numeroTalla = numeroTalla;
-            return ((KawkiWebBusiness.KawkiWebWSTallas.Tallas)(this)).modificarTallaAsync(inValue);
         }
     }
 }

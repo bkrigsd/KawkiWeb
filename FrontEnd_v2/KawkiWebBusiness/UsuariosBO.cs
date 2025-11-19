@@ -1,6 +1,8 @@
-﻿using System;
+﻿using KawkiWebBusiness.KawkiWebWSUsuarios;
+using System;
 using System.Collections.Generic;
-using KawkiWebBusiness.KawkiWebWSUsuarios;
+using System.Net;
+using System.Xml.Linq;
 
 namespace KawkiWebBusiness
 {
@@ -12,27 +14,27 @@ namespace KawkiWebBusiness
         {
             this.clienteSOAP = new UsuariosClient();
         }
+
         public int InsertarUsuario(string nombre, string apePaterno, string dni,
-                                           string telefono, string correo, string nombreUsuario,
-                                           string contrasenha, tiposUsuarioDTO tipoUsuario)
+                                   string telefono, string correo, string nombreUsuario,
+                                   string contrasenha, tiposUsuarioDTO tipoUsuario, bool activo)
         {
             return this.clienteSOAP.insertarUsuario(nombre, apePaterno, dni, telefono, correo,
-                                                    nombreUsuario, contrasenha, tipoUsuario);
+                                                    nombreUsuario, contrasenha, tipoUsuario, activo);
         }
-
 
         public int ModificarUsuario(int usuarioId, string nombre, string apePaterno, string dni,
                                     string telefono, string correo, string nombreUsuario,
-                                    string contrasenha, tiposUsuarioDTO tipoUsuario)
+                                    string contrasenha, tiposUsuarioDTO tipoUsuario, bool activo)
         {
             return this.clienteSOAP.modificarUsuario(usuarioId, nombre, apePaterno, dni, telefono,
-                                                     correo, nombreUsuario, contrasenha, tipoUsuario);
+                                                     correo, nombreUsuario, contrasenha, tipoUsuario, activo);
         }
 
-        public int EliminarUsuario(int usuarioId)
-        {
-            return this.clienteSOAP.eliminarUsuario(usuarioId);
-        }
+        // public int EliminarUsuario(int usuarioId)
+        // {
+        //     return this.clienteSOAP.eliminarUsuario(usuarioId);
+        // }
 
         public usuariosDTO ObtenerPorIdUsuario(int usuarioId)
         {
@@ -44,10 +46,10 @@ namespace KawkiWebBusiness
             return this.clienteSOAP.listarTodosUsuario();
         }
 
-        public IList<usuariosDTO> ListarPorTipoUsuario(int tipoUsuarioId)
-        {
-            return this.clienteSOAP.listarPorTipoUsuario(tipoUsuarioId);
-        }
+        // public IList<usuariosDTO> ListarPorTipoUsuario(int tipoUsuarioId)
+        // {
+        //     return this.clienteSOAP.listarPorTipoUsuario(tipoUsuarioId);
+        // }
 
         public bool CambiarContrasenhaUsuario(int usuarioId, string contrasenhaActual, string contrasenhaNueva)
         {
@@ -58,5 +60,30 @@ namespace KawkiWebBusiness
         {
             return this.clienteSOAP.autenticarUsuario(nombreUsuario, contrasenha);
         }
+
+        // public String validarNombre(string nombre) {
+        //     return this.clienteSOAP.validarNombre(nombre);
+        // }
+
+        // public String validarApellidoPaterno(string apePaterno) {
+        //     return this.clienteSOAP.validarApellidoPaterno(apePaterno);
+        // }
+
+        // public String validarNombreUsuario(string nombreUsuario) {
+        //     return this.clienteSOAP.validarNombreUsuario(nombreUsuario);
+        // }
+
+        // public String validarDni(string dni) {
+        //     return this.clienteSOAP.validarDni(dni);
+        // }
+
+        // public String validarCorreo(string correo) {
+        //     return this.clienteSOAP.validarCorreo(correo);
+        // }
+
+        // public String validarTelefono(string telefono)
+        // {
+        //     return this.clienteSOAP.validarTelefono(telefono);
+        // }
     }
 }

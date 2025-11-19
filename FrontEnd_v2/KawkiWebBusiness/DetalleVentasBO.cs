@@ -1,31 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using KawkiWebBusiness.KawkiWebWSDetalleVentas;
 
-namespace KawkiWebBusiness
+namespace KawkiWebBusiness.BO
 {
     public class DetalleVentasBO
     {
-        private DetalleVentasClient clienteSOAP;
+        private DetalleVentasClient cliente;
 
         public DetalleVentasBO()
         {
-            this.clienteSOAP = new DetalleVentasClient();
+            cliente = new DetalleVentasClient();
         }
 
-        public int InsertarDetalleVenta(productosVariantesDTO productoVAR, int ventaId, int cantidad, double precioUnitario, double subtotal)
+        public int InsertarDetalleVenta(productosVariantesDTO productoVar, int ventaId, int cantidad,
+            double precioUnitario, double subtotal)
         {
-            return this.clienteSOAP.insertarDetalleVenta(productoVAR, ventaId, cantidad, precioUnitario, subtotal);
+            return cliente.insertarDetalleVenta(productoVar,ventaId, cantidad, precioUnitario,subtotal);
         }
-        
-        public int ModificarDetalleVenta(int detalleVentaId,productosVariantesDTO productoVAR, int ventaId, int cantidad, double precioUnitario, double subtotal)
+
+        public detalleVentasDTO ObtenerPorId(int detalleId)
         {
-            return this.clienteSOAP.modificarDetalleVenta(detalleVentaId, productoVAR, ventaId, cantidad, precioUnitario, subtotal);
+            return cliente.obtenerPorIdDetalleVenta(detalleId);
         }
 
+        public List<detalleVentasDTO> ListarTodos()
+        {
+            var lista = cliente.listarTodosDetalleVenta();
+            return new List<detalleVentasDTO>(lista);
+        }
 
+        public List<detalleVentasDTO> ListarPorVentaId(int ventaId)
+        {
+            var lista = cliente.listarPorVentaIdDetalleVenta(ventaId);
+            return new List<detalleVentasDTO>(lista);
+        }
+
+        public int ModificarDetalleVenta(int detalleId, productosVariantesDTO productoVar,int ventaId,int cantidad,
+            double precioUnitario,double subtotal)
+        {
+            return cliente.modificarDetalleVenta(detalleId, productoVar,ventaId, cantidad, precioUnitario,subtotal);
+        }
     }
 }
+
