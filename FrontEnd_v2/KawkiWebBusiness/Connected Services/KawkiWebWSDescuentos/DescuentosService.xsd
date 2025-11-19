@@ -68,14 +68,6 @@
       <xs:element name="return" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="listarTodosDescuento">
-    <xs:sequence />
-  </xs:complexType>
-  <xs:complexType name="listarTodosDescuentoResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:descuentosDTO" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="desactivarDescuento">
     <xs:sequence>
       <xs:element minOccurs="0" name="descuentoId" type="xs:int" />
@@ -84,6 +76,14 @@
   <xs:complexType name="desactivarDescuentoResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarTodosDescuento">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarTodosDescuentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:descuentosDTO" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="obtenerPorIdDescuento">

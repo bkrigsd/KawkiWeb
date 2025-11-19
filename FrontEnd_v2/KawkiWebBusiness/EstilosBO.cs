@@ -15,7 +15,6 @@ namespace KawkiWebBusiness
         {
             this.clienteSOAP = new EstilosClient();
         }
-
         public int InsertarEstilo(string nombre)
         {
             return this.clienteSOAP.insertarEstilo(nombre);

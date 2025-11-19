@@ -123,5 +123,20 @@
             });
         });
     </script>
+
+    <script>
+        // Evitar que vuelva con Back después del logout
+        window.history.forward();
+
+        function noBack() {
+            window.history.forward();
+        }
+
+        window.onload = noBack;
+        window.onpageshow = function (evt) {
+            if (evt.persisted) noBack();
+        };
+    </script>
+
 </body>
 </html>

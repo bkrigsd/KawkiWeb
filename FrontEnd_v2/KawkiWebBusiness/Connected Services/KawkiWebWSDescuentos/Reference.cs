@@ -16,6 +16,19 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
     public interface Descuentos {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/desactivarDescuentoReq" +
+            "uest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/desactivarDescuentoRes" +
+            "ponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse desactivarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/desactivarDescuentoReq" +
+            "uest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/desactivarDescuentoRes" +
+            "ponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse> desactivarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarTodosDescuentoRe" +
             "quest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarTodosDescuentoRe" +
             "sponse")]
@@ -40,6 +53,45 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
             "oRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarVigentesDescuent" +
             "oResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.listarVigentesDescuentoResponse> listarVigentesDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.listarVigentesDescuentoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoReque" +
+            "st", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoRespo" +
+            "nse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse insertarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoReque" +
+            "st", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoRespo" +
+            "nse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse> insertarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/modificarDescuentoRequ" +
+            "est", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/modificarDescuentoResp" +
+            "onse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse modificarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/modificarDescuentoRequ" +
+            "est", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/modificarDescuentoResp" +
+            "onse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse> modificarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoRe" +
+            "quest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoRe" +
+            "sponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse esAplicableDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoRe" +
+            "quest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoRe" +
+            "sponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse> esAplicableDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/calcularDescuentoDescu" +
@@ -68,58 +120,6 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.obtenerPorIdDescuentoResponse> obtenerPorIdDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.obtenerPorIdDescuentoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoRe" +
-            "quest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoRe" +
-            "sponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse esAplicableDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoRe" +
-            "quest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoRe" +
-            "sponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse> esAplicableDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/desactivarDescuentoReq" +
-            "uest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/desactivarDescuentoRes" +
-            "ponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse desactivarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/desactivarDescuentoReq" +
-            "uest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/desactivarDescuentoRes" +
-            "ponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse> desactivarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarActivasDescuento" +
-            "Request", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarActivasDescuento" +
-            "Response")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse listarActivasDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarActivasDescuento" +
-            "Request", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarActivasDescuento" +
-            "Response")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse> listarActivasDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/modificarDescuentoRequ" +
-            "est", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/modificarDescuentoResp" +
-            "onse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse modificarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/modificarDescuentoRequ" +
-            "est", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/modificarDescuentoResp" +
-            "onse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse> modificarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/activarDescuentoReques" +
             "t", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/activarDescuentoRespon" +
             "se")]
@@ -133,21 +133,57 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.activarDescuentoResponse> activarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.activarDescuentoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoReque" +
-            "st", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoRespo" +
-            "nse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarActivasDescuento" +
+            "Request", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarActivasDescuento" +
+            "Response")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse insertarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest request);
+        KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse listarActivasDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoReque" +
-            "st", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoRespo" +
-            "nse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse> insertarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarActivasDescuento" +
+            "Request", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarActivasDescuento" +
+            "Response")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse> listarActivasDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="desactivarDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class desactivarDescuentoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int descuentoId;
+        
+        public desactivarDescuentoRequest() {
+        }
+        
+        public desactivarDescuentoRequest(int descuentoId) {
+            this.descuentoId = descuentoId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="desactivarDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class desactivarDescuentoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool @return;
+        
+        public desactivarDescuentoResponse() {
+        }
+        
+        public desactivarDescuentoResponse(bool @return) {
+            this.@return = @return;
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -347,7 +383,7 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -407,7 +443,7 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -525,186 +561,70 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="calcularDescuentoDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class calcularDescuentoDescuentoRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarDescuentoRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int descuentoId;
+        public string descripcion;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public double montoTotal;
-        
-        public calcularDescuentoDescuentoRequest() {
-        }
-        
-        public calcularDescuentoDescuentoRequest(int descuentoId, double montoTotal) {
-            this.descuentoId = descuentoId;
-            this.montoTotal = montoTotal;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="calcularDescuentoDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class calcularDescuentoDescuentoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public double @return;
-        
-        public calcularDescuentoDescuentoResponse() {
-        }
-        
-        public calcularDescuentoDescuentoResponse(double @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdDescuentoRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int descuentoId;
-        
-        public obtenerPorIdDescuentoRequest() {
-        }
-        
-        public obtenerPorIdDescuentoRequest(int descuentoId) {
-            this.descuentoId = descuentoId;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdDescuentoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO @return;
-        
-        public obtenerPorIdDescuentoResponse() {
-        }
-        
-        public obtenerPorIdDescuentoResponse(KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="esAplicableDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class esAplicableDescuentoRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int descuentoId;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int cantidadProductos;
+        public KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public double montoTotal;
+        public int valor_condicion;
         
-        public esAplicableDescuentoRequest() {
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int valor_beneficio;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string fecha_inicio;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string fecha_fin;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=7)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool activo;
+        
+        public insertarDescuentoRequest() {
         }
         
-        public esAplicableDescuentoRequest(int descuentoId, int cantidadProductos, double montoTotal) {
-            this.descuentoId = descuentoId;
-            this.cantidadProductos = cantidadProductos;
-            this.montoTotal = montoTotal;
+        public insertarDescuentoRequest(string descripcion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion, int valor_condicion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio, int valor_beneficio, string fecha_inicio, string fecha_fin, bool activo) {
+            this.descripcion = descripcion;
+            this.tipo_condicion = tipo_condicion;
+            this.valor_condicion = valor_condicion;
+            this.tipo_beneficio = tipo_beneficio;
+            this.valor_beneficio = valor_beneficio;
+            this.fecha_inicio = fecha_inicio;
+            this.fecha_fin = fecha_fin;
+            this.activo = activo;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="esAplicableDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class esAplicableDescuentoResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarDescuentoResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool @return;
+        public int @return;
         
-        public esAplicableDescuentoResponse() {
+        public insertarDescuentoResponse() {
         }
         
-        public esAplicableDescuentoResponse(bool @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="desactivarDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class desactivarDescuentoRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int descuentoId;
-        
-        public desactivarDescuentoRequest() {
-        }
-        
-        public desactivarDescuentoRequest(int descuentoId) {
-            this.descuentoId = descuentoId;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="desactivarDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class desactivarDescuentoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool @return;
-        
-        public desactivarDescuentoResponse() {
-        }
-        
-        public desactivarDescuentoResponse(bool @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarActivasDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarActivasDescuentoRequest {
-        
-        public listarActivasDescuentoRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarActivasDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarActivasDescuentoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO[] @return;
-        
-        public listarActivasDescuentoResponse() {
-        }
-        
-        public listarActivasDescuentoResponse(KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO[] @return) {
+        public insertarDescuentoResponse(int @return) {
             this.@return = @return;
         }
     }
@@ -788,6 +708,129 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="esAplicableDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class esAplicableDescuentoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int descuentoId;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int cantidadProductos;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public double montoTotal;
+        
+        public esAplicableDescuentoRequest() {
+        }
+        
+        public esAplicableDescuentoRequest(int descuentoId, int cantidadProductos, double montoTotal) {
+            this.descuentoId = descuentoId;
+            this.cantidadProductos = cantidadProductos;
+            this.montoTotal = montoTotal;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="esAplicableDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class esAplicableDescuentoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool @return;
+        
+        public esAplicableDescuentoResponse() {
+        }
+        
+        public esAplicableDescuentoResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="calcularDescuentoDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class calcularDescuentoDescuentoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int descuentoId;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public double montoTotal;
+        
+        public calcularDescuentoDescuentoRequest() {
+        }
+        
+        public calcularDescuentoDescuentoRequest(int descuentoId, double montoTotal) {
+            this.descuentoId = descuentoId;
+            this.montoTotal = montoTotal;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="calcularDescuentoDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class calcularDescuentoDescuentoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public double @return;
+        
+        public calcularDescuentoDescuentoResponse() {
+        }
+        
+        public calcularDescuentoDescuentoResponse(double @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdDescuentoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int descuentoId;
+        
+        public obtenerPorIdDescuentoRequest() {
+        }
+        
+        public obtenerPorIdDescuentoRequest(int descuentoId) {
+            this.descuentoId = descuentoId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdDescuentoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO @return;
+        
+        public obtenerPorIdDescuentoResponse() {
+        }
+        
+        public obtenerPorIdDescuentoResponse(KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="activarDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class activarDescuentoRequest {
         
@@ -824,70 +867,27 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarDescuentoRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarActivasDescuento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarActivasDescuentoRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string descripcion;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int valor_condicion;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int valor_beneficio;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string fecha_inicio;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=6)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string fecha_fin;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=7)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool activo;
-        
-        public insertarDescuentoRequest() {
-        }
-        
-        public insertarDescuentoRequest(string descripcion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion, int valor_condicion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio, int valor_beneficio, string fecha_inicio, string fecha_fin, bool activo) {
-            this.descripcion = descripcion;
-            this.tipo_condicion = tipo_condicion;
-            this.valor_condicion = valor_condicion;
-            this.tipo_beneficio = tipo_beneficio;
-            this.valor_beneficio = valor_beneficio;
-            this.fecha_inicio = fecha_inicio;
-            this.fecha_fin = fecha_fin;
-            this.activo = activo;
+        public listarActivasDescuentoRequest() {
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarDescuentoResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarActivasDescuentoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarActivasDescuentoResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO[] @return;
         
-        public insertarDescuentoResponse() {
+        public listarActivasDescuentoResponse() {
         }
         
-        public insertarDescuentoResponse(int @return) {
+        public listarActivasDescuentoResponse(KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO[] @return) {
             this.@return = @return;
         }
     }
@@ -917,6 +917,29 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
         
         public DescuentosClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.desactivarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest request) {
+            return base.Channel.desactivarDescuento(request);
+        }
+        
+        public bool desactivarDescuento(int descuentoId) {
+            KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest();
+            inValue.descuentoId = descuentoId;
+            KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse retVal = ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).desactivarDescuento(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse> KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.desactivarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest request) {
+            return base.Channel.desactivarDescuentoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse> desactivarDescuentoAsync(int descuentoId) {
+            KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest();
+            inValue.descuentoId = descuentoId;
+            return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).desactivarDescuentoAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -959,6 +982,109 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
         public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.listarVigentesDescuentoResponse> listarVigentesDescuentoAsync() {
             KawkiWebBusiness.KawkiWebWSDescuentos.listarVigentesDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.listarVigentesDescuentoRequest();
             return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).listarVigentesDescuentoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.insertarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest request) {
+            return base.Channel.insertarDescuento(request);
+        }
+        
+        public int insertarDescuento(string descripcion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion, int valor_condicion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio, int valor_beneficio, string fecha_inicio, string fecha_fin, bool activo) {
+            KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest();
+            inValue.descripcion = descripcion;
+            inValue.tipo_condicion = tipo_condicion;
+            inValue.valor_condicion = valor_condicion;
+            inValue.tipo_beneficio = tipo_beneficio;
+            inValue.valor_beneficio = valor_beneficio;
+            inValue.fecha_inicio = fecha_inicio;
+            inValue.fecha_fin = fecha_fin;
+            inValue.activo = activo;
+            KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse retVal = ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).insertarDescuento(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse> KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.insertarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest request) {
+            return base.Channel.insertarDescuentoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse> insertarDescuentoAsync(string descripcion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion, int valor_condicion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio, int valor_beneficio, string fecha_inicio, string fecha_fin, bool activo) {
+            KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest();
+            inValue.descripcion = descripcion;
+            inValue.tipo_condicion = tipo_condicion;
+            inValue.valor_condicion = valor_condicion;
+            inValue.tipo_beneficio = tipo_beneficio;
+            inValue.valor_beneficio = valor_beneficio;
+            inValue.fecha_inicio = fecha_inicio;
+            inValue.fecha_fin = fecha_fin;
+            inValue.activo = activo;
+            return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).insertarDescuentoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.modificarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest request) {
+            return base.Channel.modificarDescuento(request);
+        }
+        
+        public int modificarDescuento(int descuentoId, string descripcion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion, int valor_condicion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio, int valor_beneficio, string fecha_inicio, string fecha_fin, bool activo) {
+            KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest();
+            inValue.descuentoId = descuentoId;
+            inValue.descripcion = descripcion;
+            inValue.tipo_condicion = tipo_condicion;
+            inValue.valor_condicion = valor_condicion;
+            inValue.tipo_beneficio = tipo_beneficio;
+            inValue.valor_beneficio = valor_beneficio;
+            inValue.fecha_inicio = fecha_inicio;
+            inValue.fecha_fin = fecha_fin;
+            inValue.activo = activo;
+            KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse retVal = ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).modificarDescuento(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse> KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.modificarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest request) {
+            return base.Channel.modificarDescuentoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse> modificarDescuentoAsync(int descuentoId, string descripcion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion, int valor_condicion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio, int valor_beneficio, string fecha_inicio, string fecha_fin, bool activo) {
+            KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest();
+            inValue.descuentoId = descuentoId;
+            inValue.descripcion = descripcion;
+            inValue.tipo_condicion = tipo_condicion;
+            inValue.valor_condicion = valor_condicion;
+            inValue.tipo_beneficio = tipo_beneficio;
+            inValue.valor_beneficio = valor_beneficio;
+            inValue.fecha_inicio = fecha_inicio;
+            inValue.fecha_fin = fecha_fin;
+            inValue.activo = activo;
+            return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).modificarDescuentoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.esAplicableDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest request) {
+            return base.Channel.esAplicableDescuento(request);
+        }
+        
+        public bool esAplicableDescuento(int descuentoId, int cantidadProductos, double montoTotal) {
+            KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest();
+            inValue.descuentoId = descuentoId;
+            inValue.cantidadProductos = cantidadProductos;
+            inValue.montoTotal = montoTotal;
+            KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse retVal = ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).esAplicableDescuento(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse> KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.esAplicableDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest request) {
+            return base.Channel.esAplicableDescuentoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse> esAplicableDescuentoAsync(int descuentoId, int cantidadProductos, double montoTotal) {
+            KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest();
+            inValue.descuentoId = descuentoId;
+            inValue.cantidadProductos = cantidadProductos;
+            inValue.montoTotal = montoTotal;
+            return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).esAplicableDescuentoAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1010,116 +1136,6 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.esAplicableDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest request) {
-            return base.Channel.esAplicableDescuento(request);
-        }
-        
-        public bool esAplicableDescuento(int descuentoId, int cantidadProductos, double montoTotal) {
-            KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest();
-            inValue.descuentoId = descuentoId;
-            inValue.cantidadProductos = cantidadProductos;
-            inValue.montoTotal = montoTotal;
-            KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse retVal = ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).esAplicableDescuento(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse> KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.esAplicableDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest request) {
-            return base.Channel.esAplicableDescuentoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoResponse> esAplicableDescuentoAsync(int descuentoId, int cantidadProductos, double montoTotal) {
-            KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.esAplicableDescuentoRequest();
-            inValue.descuentoId = descuentoId;
-            inValue.cantidadProductos = cantidadProductos;
-            inValue.montoTotal = montoTotal;
-            return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).esAplicableDescuentoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.desactivarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest request) {
-            return base.Channel.desactivarDescuento(request);
-        }
-        
-        public bool desactivarDescuento(int descuentoId) {
-            KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest();
-            inValue.descuentoId = descuentoId;
-            KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse retVal = ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).desactivarDescuento(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse> KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.desactivarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest request) {
-            return base.Channel.desactivarDescuentoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoResponse> desactivarDescuentoAsync(int descuentoId) {
-            KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.desactivarDescuentoRequest();
-            inValue.descuentoId = descuentoId;
-            return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).desactivarDescuentoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.listarActivasDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest request) {
-            return base.Channel.listarActivasDescuento(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO[] listarActivasDescuento() {
-            KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest();
-            KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse retVal = ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).listarActivasDescuento(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse> KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.listarActivasDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest request) {
-            return base.Channel.listarActivasDescuentoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse> listarActivasDescuentoAsync() {
-            KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest();
-            return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).listarActivasDescuentoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.modificarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest request) {
-            return base.Channel.modificarDescuento(request);
-        }
-        
-        public int modificarDescuento(int descuentoId, string descripcion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion, int valor_condicion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio, int valor_beneficio, string fecha_inicio, string fecha_fin, bool activo) {
-            KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest();
-            inValue.descuentoId = descuentoId;
-            inValue.descripcion = descripcion;
-            inValue.tipo_condicion = tipo_condicion;
-            inValue.valor_condicion = valor_condicion;
-            inValue.tipo_beneficio = tipo_beneficio;
-            inValue.valor_beneficio = valor_beneficio;
-            inValue.fecha_inicio = fecha_inicio;
-            inValue.fecha_fin = fecha_fin;
-            inValue.activo = activo;
-            KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse retVal = ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).modificarDescuento(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse> KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.modificarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest request) {
-            return base.Channel.modificarDescuentoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoResponse> modificarDescuentoAsync(int descuentoId, string descripcion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion, int valor_condicion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio, int valor_beneficio, string fecha_inicio, string fecha_fin, bool activo) {
-            KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.modificarDescuentoRequest();
-            inValue.descuentoId = descuentoId;
-            inValue.descripcion = descripcion;
-            inValue.tipo_condicion = tipo_condicion;
-            inValue.valor_condicion = valor_condicion;
-            inValue.tipo_beneficio = tipo_beneficio;
-            inValue.valor_beneficio = valor_beneficio;
-            inValue.fecha_inicio = fecha_inicio;
-            inValue.fecha_fin = fecha_fin;
-            inValue.activo = activo;
-            return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).modificarDescuentoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSDescuentos.activarDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.activarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.activarDescuentoRequest request) {
             return base.Channel.activarDescuento(request);
         }
@@ -1143,40 +1159,24 @@ namespace KawkiWebBusiness.KawkiWebWSDescuentos {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.insertarDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest request) {
-            return base.Channel.insertarDescuento(request);
+        KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.listarActivasDescuento(KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest request) {
+            return base.Channel.listarActivasDescuento(request);
         }
         
-        public int insertarDescuento(string descripcion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion, int valor_condicion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio, int valor_beneficio, string fecha_inicio, string fecha_fin, bool activo) {
-            KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest();
-            inValue.descripcion = descripcion;
-            inValue.tipo_condicion = tipo_condicion;
-            inValue.valor_condicion = valor_condicion;
-            inValue.tipo_beneficio = tipo_beneficio;
-            inValue.valor_beneficio = valor_beneficio;
-            inValue.fecha_inicio = fecha_inicio;
-            inValue.fecha_fin = fecha_fin;
-            inValue.activo = activo;
-            KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse retVal = ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).insertarDescuento(inValue);
+        public KawkiWebBusiness.KawkiWebWSDescuentos.descuentosDTO[] listarActivasDescuento() {
+            KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest();
+            KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse retVal = ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).listarActivasDescuento(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse> KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.insertarDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest request) {
-            return base.Channel.insertarDescuentoAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse> KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos.listarActivasDescuentoAsync(KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest request) {
+            return base.Channel.listarActivasDescuentoAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoResponse> insertarDescuentoAsync(string descripcion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO tipo_condicion, int valor_condicion, KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO tipo_beneficio, int valor_beneficio, string fecha_inicio, string fecha_fin, bool activo) {
-            KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.insertarDescuentoRequest();
-            inValue.descripcion = descripcion;
-            inValue.tipo_condicion = tipo_condicion;
-            inValue.valor_condicion = valor_condicion;
-            inValue.tipo_beneficio = tipo_beneficio;
-            inValue.valor_beneficio = valor_beneficio;
-            inValue.fecha_inicio = fecha_inicio;
-            inValue.fecha_fin = fecha_fin;
-            inValue.activo = activo;
-            return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).insertarDescuentoAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoResponse> listarActivasDescuentoAsync() {
+            KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest inValue = new KawkiWebBusiness.KawkiWebWSDescuentos.listarActivasDescuentoRequest();
+            return ((KawkiWebBusiness.KawkiWebWSDescuentos.Descuentos)(this)).listarActivasDescuentoAsync(inValue);
         }
     }
 }

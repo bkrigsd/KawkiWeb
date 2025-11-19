@@ -16,7 +16,6 @@ namespace KawkiWebBusiness
         {
             this.clienteSOAP = new CategoriasClient();
         }
-
         public int InsertarCategoria(string nombre)
         {
             return this.clienteSOAP.insertarCategoria(nombre);

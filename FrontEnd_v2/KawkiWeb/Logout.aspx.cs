@@ -15,20 +15,25 @@ namespace KawkiWeb
             Session.Clear();
             Session.Abandon();
 
-            // Deshabilitar cache agresivamente
+            // Invalidar cookie de sesión
+            if (Request.Cookies["ASP.NET_SessionId"] != null)
+            {
+                Response.Cookies["ASP.NET_SessionId"].Expires = DateTime.Now.AddDays(-1);
+            }
+
+            // BLOQUEO TOTAL DE CACHE
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
             Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
             Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
             Response.Cache.SetAllowResponseInBrowserHistory(false);
 
-            // Agregar headers HTTP adicionales para forzar no-cache
             Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             Response.AddHeader("Pragma", "no-cache");
             Response.AddHeader("Expires", "0");
 
-            // Redirigir al login sin cachear
-            Response.Redirect("Login.aspx", false);
+            // Redirección sin posibilidad de volver atrás
+            Response.Redirect("Login.aspx", true); // << TRUE corta la ejecución y evita volver atrás
         }
     }
 }
