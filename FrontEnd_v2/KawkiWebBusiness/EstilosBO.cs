@@ -26,7 +26,7 @@ namespace KawkiWebBusiness
             return this.clienteSOAP.modificarEstilo(estiloId, nombreCategoria);
         }
 
-        public estilosDTO ObtenerPorIdCategoria(int estiloId)
+        public estilosDTO ObtenerPorIdEstilos(int estiloId)
         {
             return this.clienteSOAP.obtenerPorIdEstilo(estiloId);
         }

@@ -147,7 +147,7 @@
                         Cancelar
                     </button>
                     <asp:Button ID="btnGuardar" runat="server" CssClass="btn-kawki-primary"
-                        Text="Registrar producto" OnClick="btnGuardar_Click" />
+                        Text="Registrar producto" OnClick="btnGuardar_Click" CausesValidation="false" />
                 </div>
             </div>
         </div>

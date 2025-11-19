@@ -19,7 +19,7 @@ namespace KawkiWebBusiness
         }
 
         /// Inserta un nuevo producto en la base de datos
-        public int? Insertar(string descripcion, categoriasDTO categoria, estilosDTO estilo, 
+        public int Insertar(string descripcion, categoriasDTO categoria, estilosDTO estilo, 
             double precioVenta, usuariosDTO usuario)
         {
             return this.clienteSOAP.insertarProducto(descripcion, categoria, estilo, precioVenta, usuario);
@@ -38,7 +38,7 @@ namespace KawkiWebBusiness
         }
 
         /// Modifica un producto existente
-        public int? Modificar(int productoId, string descripcion, categoriasDTO categoria, estilosDTO estilo, double precioVenta, usuariosDTO usuario)
+        public int Modificar(int productoId, string descripcion, categoriasDTO categoria, estilosDTO estilo, double precioVenta, usuariosDTO usuario)
         {
             return this.clienteSOAP.modificarProducto(productoId, descripcion, categoria, estilo, precioVenta, usuario);
         }

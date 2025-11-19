@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using KawkiWebBusiness;
+using KawkiWebBusiness.KawkiWebWSCategorias;
+using KawkiWebBusiness.KawkiWebWSEstilos;
 using KawkiWebBusiness.KawkiWebWSProductos;
 using KawkiWebBusiness.KawkiWebWSProductosVariantes;
 using usuariosDTO = KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO;
@@ -137,9 +139,22 @@ namespace KawkiWeb
                     return;
                 }
 
+                var categoria = categoriasBO.ObtenerPorIdCategoria(categoriaId);
+                var estilo = estilosBO.ObtenerPorIdEstilos(estiloId);
                 // === DTOs ===
-                var categoria = new categoriasDTO { categoria_id = categoriaId };
-                var estilo = new estilosDTO { estilo_id = estiloId };
+                // Convertir categoría al tipo que espera ProductosBO
+                var categoriaProducto = new KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO
+                {
+                    categoria_id = categoria.categoria_id,
+                    nombre = categoria.nombre
+                };
+
+                // Convertir estilo también si es necesario
+                var estiloProducto = new KawkiWebBusiness.KawkiWebWSProductos.estilosDTO
+                {
+                    estilo_id = estilo.estilo_id,
+                    nombre = estilo.nombre
+                };
 
                 if (esEdicion)
                 {
@@ -150,8 +165,8 @@ namespace KawkiWeb
                     int? resultado = productosBO.Modificar(
                         productoId,
                         descripcion,
-                        categoria,
-                        estilo,
+                        categoriaProducto,
+                        estiloProducto,
                         precio,
                         usuario
                     );
@@ -169,15 +184,16 @@ namespace KawkiWeb
                 }
                 else
                 {
-                    // === NUEVO ===
-                    // ✅ CAPTURAR Y VERIFICAR EL RESULTADO
+                    // CAPTURAR Y VERIFICAR EL RESULTADO
                     int? resultado = productosBO.Insertar(
                         descripcion,
-                        categoria,
-                        estilo,
+                        categoriaProducto,
+                        estiloProducto,
                         precio,
                         usuario
                     );
+
+                    System.Diagnostics.Debug.WriteLine($"Resultado de Insertar: {resultado}");
 
                     if (resultado == null || resultado <= 0)
                     {

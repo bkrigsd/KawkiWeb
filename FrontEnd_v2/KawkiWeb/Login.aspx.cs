@@ -62,6 +62,7 @@ namespace KawkiWeb
 
                     // Guardar sesión
                     Session["Usuario"] = usuarioDTO.nombreUsuario;
+                    Session["UsuarioId"] = usuarioDTO.usuarioId;
                     Session["Rol"] = rol;
                     Session["UsuarioNombreCompleto"] = usuarioDTO.nombre + " " + usuarioDTO.apePaterno;
 

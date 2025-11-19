@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using KawkiWebBusiness;
+using KawkiWebBusiness.KawkiWebWSCategorias;
 using KawkiWebBusiness.KawkiWebWSProductosVariantes;
 using coloresDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO;
 using tallasDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO;
@@ -188,7 +189,14 @@ namespace KawkiWeb
                     return;
                 }
 
-                var color = new coloresDTO { color_id = colorId };
+                var color = coloresBO.ObtenerPorIdColor(colorId);
+                // Convertir categoría al tipo que espera ProductosBO
+                var coloresProducto = new KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO
+                {
+                    color_id = color.color_id,
+                    nombre = color.nombre
+                };
+
                 string urlCompleta = "/Images/Productos/" + urlImagen;
 
                 int insertadas = 0;
@@ -217,12 +225,12 @@ namespace KawkiWeb
 
                     var talla = new tallasDTO { talla_id = tallaId };
 
-                    // ✅ IGUAL QUE EN USUARIOS: Capturar y verificar el resultado
+                    // Capturar y verificar el resultado
                     int? resultado = variantesBO.Insertar(
                         stock,
                         stockMinimo,
                         productoId,
-                        color,
+                        coloresProducto,
                         talla,
                         urlCompleta,
                         disponible,
@@ -340,7 +348,7 @@ namespace KawkiWeb
                     return;
                 }
 
-                // ✅ IGUAL QUE EN USUARIOS: Capturar y verificar el resultado
+                // Capturar y verificar el resultado
                 int? resultado = variantesBO.Modificar(
                     varianteId,
                     nuevoStock,
