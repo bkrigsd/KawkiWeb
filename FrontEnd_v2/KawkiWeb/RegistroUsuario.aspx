@@ -50,24 +50,36 @@
                         </asp:TemplateField>
 
                         <%-- Nuevo: Columna para Activo --%>
-                        <asp:CheckBoxField DataField="activo" HeaderText="Activo" ReadOnly="true" />
+                        <asp:TemplateField HeaderText="Activo">
+                            <%--<ItemStyle HorizontalAlign="Center" />--%>
+                            <ItemTemplate>
+                                <%# Convert.ToBoolean(Eval("activo")) 
+                                    ? "<i class='fas fa-check-circle' style='color: #2ecc71; font-size:20px;'></i>" 
+                                    : "<i class='fas fa-times-circle' style='color: #e74c3c; font-size:20px;'></i>" %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
 
                         <%-- Acciones --%>
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
                                 <button type="button" class="btn-editar"
                                     onclick='<%# "editarUsuario(" 
-                                        + Eval("usuarioId") + ", \"" 
-                                        + Eval("nombre") + "\", \"" 
-                                        + Eval("apePaterno") + "\", \"" 
-                                        + Eval("dni") + "\", \"" 
-                                        + Eval("nombreUsuario") + "\", \"" 
-                                        + Eval("correo") + "\", \"" 
-                                        + Eval("telefono") + "\", \"" 
-                                        + ((Eval("tipoUsuario") != null) 
-                                            ? ((KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO)Eval("tipoUsuario")).nombre 
-                                            : "") + "\", \"" 
-                                        + Eval("contrasenha") + "\")" %>'>
+                                            + Eval("usuarioId") + ", \"" 
+                                            + Eval("nombre") + "\", \"" 
+                                            + Eval("apePaterno") + "\", \"" 
+                                            + Eval("dni") + "\", \"" 
+                                            + Eval("nombreUsuario") + "\", \"" 
+                                            + Eval("correo") + "\", \"" 
+                                            + Eval("telefono") + "\", \"" 
+                                            + (
+                                                (Eval("tipoUsuario") != null)
+                                                    ? (((KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO)Eval("tipoUsuario")).nombre == "Administrador" ? "admin" : "vendedor")
+                                                    : ""
+                                              )
+                                            + "\", \"" 
+                                            + Eval("contrasenha") + "\", " 
+                                            + Eval("activo").ToString().ToLower() 
+                                            + ")" %>'>
                                     Editar
                                 </button>
                                 <%--<button type="button" class="btn-eliminar" 
@@ -95,46 +107,89 @@
                         <label class="form-label">Nombre *</label>
                         <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
                         <asp:Label ID="lblErrorNombre" runat="server" CssClass="text-danger" />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server"
+                            ControlToValidate="txtNombre"
+                            ErrorMessage="Campo requerido"
+                            CssClass="text-danger"
+                            Display="Dynamic" />
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Apellido Paterno *</label>
                         <asp:TextBox ID="txtApellidoPaterno" runat="server" CssClass="form-control" />
                         <asp:Label ID="lblErrorApellido" runat="server" CssClass="text-danger" />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server"
+                            ControlToValidate="txtApellidoPaterno"
+                            ErrorMessage="Campo requerido"
+                            CssClass="text-danger"
+                            Display="Dynamic" />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">DNI *</label>
-                        <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" MaxLength="8" />
+                        <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" MaxLength="8"
+                            onkeypress="return soloNumeros(event);"
+                            onkeyup="if(this.value.length==8){ validarCampoUnico('DNI', this.value, '<%= lblErrorDNI.ClientID %>'); }" />
                         <asp:Label ID="lblErrorDNI" runat="server" CssClass="text-danger" />
-                        <%--<asp:RegularExpressionValidator ID="revDNI" runat="server" ControlToValidate="txtDNI"
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
+                            ControlToValidate="txtDNI"
+                            ErrorMessage="Campo requerido"
+                            CssClass="text-danger"
+                            Display="Dynamic" />
+                        <asp:RegularExpressionValidator ID="revDNI" runat="server" ControlToValidate="txtDNI"
                             ValidationExpression="^\d{8}$" ErrorMessage="Debe tener 8 dígitos"
-                            CssClass="text-danger" Display="Dynamic" />--%>
+                            CssClass="text-danger" Display="Dynamic" />
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Usuario *</label>
-                        <asp:TextBox ID="txtUsuario" runat="server" CssClass="form-control" />
+                        <asp:TextBox ID="txtUsuario" runat="server" CssClass="form-control"
+                            onblur="validarCampoUnico('NOMBRE_USUARIO', this.value, '<%= lblErrorUsuario.ClientID %>')" />
                         <asp:Label ID="lblErrorUsuario" runat="server" CssClass="text-danger" />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server"
+                            ControlToValidate="txtUsuario"
+                            ErrorMessage="Campo requerido"
+                            CssClass="text-danger"
+                            Display="Dynamic" />
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Email *</label>
-                    <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" />
+                    <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"
+                        onblur="validarCampoUnico('CORREO', this.value, '<%= lblErrorEmail.ClientID %>')" />
                     <asp:Label ID="lblErrorEmail" runat="server" CssClass="text-danger" />
-                    <%--<asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail"
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
+                        ControlToValidate="txtEmail"
+                        ErrorMessage="Campo requerido"
+                        CssClass="text-danger"
+                        Display="Dynamic" />
+                    <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail"
                         ValidationExpression="^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$"
-                        ErrorMessage="Correo inválido" CssClass="text-danger" Display="Dynamic" />--%>
+                        ErrorMessage="Correo inválido" CssClass="text-danger" Display="Dynamic" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Teléfono *</label>
-                    <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" MaxLength="9" />
+                    <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"
+                        MaxLength="9"
+                        onkeypress="return soloNumeros(event);"
+                        onkeyup="if(this.value.length==9){ validarCampoUnico('TELEFONO', this.value, '<%= lblErrorTelefono.ClientID %>'); }" />
+    
                     <asp:Label ID="lblErrorTelefono" runat="server" CssClass="text-danger" />
-                    <%--<asp:RegularExpressionValidator ID="revTelefono" runat="server" ControlToValidate="txtTelefono"
-                        ValidationExpression="^\d{9}$" ErrorMessage="Debe tener 9 dígitos"
-                        CssClass="text-danger" Display="Dynamic" />--%>
+
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                        ControlToValidate="txtTelefono"
+                        ErrorMessage="Campo requerido"
+                        CssClass="text-danger"
+                        Display="Dynamic" />
+
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"
+                        ControlToValidate="txtTelefono"
+                        ValidationExpression="^9\d{8}$"
+                        ErrorMessage="Debe iniciar en 9 y tener 9 dígitos"
+                        CssClass="text-danger"
+                        Display="Dynamic" />
                 </div>
 
                 <div class="mb-3 position-relative">
@@ -190,7 +245,7 @@
                 <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mb-3" />
 
                 <div class="text-end">
-                    <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModal()">Cancelar</button>
+                    <button type="button" class="btn-kawki-outline me-2" onclick="cancelarUsuario()">Cancelar</button>
                     <asp:Button ID="btnGuardar" runat="server" CssClass="btn-kawki-primary"
                         Text="Registrar usuario" OnClick="btnGuardar_Click" />
                 </div>
@@ -216,6 +271,15 @@
     </div>
 
     <script>
+
+        function abrirModalRegistroSinLimpiar() {
+            document.getElementById("modalUsuario").classList.add("show");
+            document.getElementById("tituloModal").innerHTML =
+                '<i class="fas fa-user-plus me-2"></i>Registrar nuevo usuario';
+            document.getElementById("<%= btnGuardar.ClientID %>").value = "Registrar usuario";
+            document.getElementById("lblInfoClave").classList.add("d-none");
+        }
+
         function abrirModalRegistro() {
             document.getElementById("modalUsuario").classList.add("show");
             document.getElementById("tituloModal").innerHTML = '<i class="fas fa-user-plus me-2"></i>Registrar nuevo usuario';
@@ -231,7 +295,7 @@
             document.getElementById("lblInfoClave").classList.remove("d-none");
         }
 
-        function editarUsuario(id, nombre, apellido, dni, usuario, email, telefono, rol, clave) {
+        function editarUsuario(id, nombre, apellido, dni, usuario, email, telefono, rol, clave, activo) {
             document.getElementById("<%= hfIdUsuario.ClientID %>").value = id;
             document.getElementById("<%= txtNombre.ClientID %>").value = nombre;
             document.getElementById("<%= txtApellidoPaterno.ClientID %>").value = apellido;
@@ -242,13 +306,30 @@
             document.getElementById("<%= ddlRol.ClientID %>").value = rol;
             document.getElementById("<%= txtClave.ClientID %>").value = clave;
             document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
-            
+            document.getElementById("<%= chkActivo.ClientID %>").checked = (activo === true || activo === "true");
+
             abrirModalEditar();
         }
 
         function cerrarModal() {
             document.getElementById("modalUsuario").classList.remove("show");
-            limpiarFormulario();
+        }
+
+        function cerrarModalYLimpiar() {
+            cerrarModal();
+            limpiarFormulario(); // ✔️ aquí sí se limpia
+        }
+
+        function soloNumeros(e) {
+            var charCode = e.which ? e.which : e.keyCode;
+
+            // permitir backspace, delete, flechas
+            if (charCode === 8 || charCode === 46 || charCode === 37 || charCode === 39) return true;
+
+            // permitir solo números 0–9
+            if (charCode < 48 || charCode > 57) return false;
+
+            return true;
         }
 
         function limpiarFormulario() {
@@ -262,6 +343,20 @@
             document.getElementById("<%= txtClave.ClientID %>").value = "";
             document.getElementById("<%= ddlRol.ClientID %>").selectedIndex = 0;
             document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
+
+            document.getElementById("<%= lblErrorDNI.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorEmail.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorTelefono.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorUsuario.ClientID %>").innerText = "";
+            document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
+
+        }
+
+        function cancelarUsuario() {
+            // Cierra el modal
+            cerrarModal();
+            // Hace un REFRESH limpio sin POST ni datos previos
+            window.location.href = "RegistroUsuario.aspx";
         }
 
         function abrirModalConfirmacion(idUsuario) {
@@ -322,6 +417,33 @@
                 icono.classList.add("fa-eye");
             }
         }
-
     </script>
+
+    <script>
+        function validarCampoUnico(campo, valor, labelErrorId) {
+            var idActual = document.getElementById("<%= hfIdUsuario.ClientID %>").value;
+
+            if (valor.trim() === "") {
+                document.getElementById(labelErrorId).innerText = "";
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "RegistroUsuario.aspx/ValidarUnicoAjax",
+                data: JSON.stringify({ campo: campo, valor: valor, idActual: parseInt(idActual) }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var esUnico = response.d;
+                    if (!esUnico) {
+                        document.getElementById(labelErrorId).innerText = campo + " ya existe.";
+                    } else {
+                        document.getElementById(labelErrorId).innerText = "";
+                    }
+                }
+            });
+        }
+    </script>
+
 </asp:Content>

@@ -1,6 +1,7 @@
 ﻿using KawkiWebBusiness.KawkiWebWSUsuarios;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Xml.Linq;
 
@@ -61,29 +62,33 @@ namespace KawkiWebBusiness
             return this.clienteSOAP.autenticarUsuario(nombreUsuario, contrasenha);
         }
 
-        // public String validarNombre(string nombre) {
-        //     return this.clienteSOAP.validarNombre(nombre);
-        // }
+        public bool[] VerificarUnicidad(string correo, string nombreUsuario, string dni, int? usuarioIdExcluir)
+        {
+            try
+            {
+                UsuariosClient ws = new UsuariosClient();
+                int idExclusion = usuarioIdExcluir ?? -1;
 
-        // public String validarApellidoPaterno(string apePaterno) {
-        //     return this.clienteSOAP.validarApellidoPaterno(apePaterno);
-        // }
+                // Llamada al WebService → devuelve bool?[]
+                bool?[] respuestaNullable = ws.verificarUnicidad(
+                    correo,
+                    nombreUsuario,
+                    dni,
+                    idExclusion
+                );
 
-        // public String validarNombreUsuario(string nombreUsuario) {
-        //     return this.clienteSOAP.validarNombreUsuario(nombreUsuario);
-        // }
+                // Convertir nullable a no-nullable
+                bool[] respuesta = respuestaNullable
+                    .Select(v => v.HasValue ? v.Value : false)
+                    .ToArray();
 
-        // public String validarDni(string dni) {
-        //     return this.clienteSOAP.validarDni(dni);
-        // }
+                return respuesta;
+            }
+            catch
+            {
+                return new bool[] { false, false, false };
+            }
+        }
 
-        // public String validarCorreo(string correo) {
-        //     return this.clienteSOAP.validarCorreo(correo);
-        // }
-
-        // public String validarTelefono(string telefono)
-        // {
-        //     return this.clienteSOAP.validarTelefono(telefono);
-        // }
     }
 }

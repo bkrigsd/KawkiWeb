@@ -188,6 +188,9 @@
     <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\KawkiWebWSUsuarios\KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\KawkiWebWSUsuarios\UsuariosService.wsdl" />
     <None Include="Connected Services\KawkiWebWSUsuarios\UsuariosService.xsd">
       <SubType>Designer</SubType>

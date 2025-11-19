@@ -14,7 +14,7 @@ namespace KawkiWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Deshabilitar cache agresivamente
+            // Anti-cache
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
             Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
@@ -25,18 +25,28 @@ namespace KawkiWeb
 
             if (!IsPostBack)
             {
+                if (Session["MantenerModal"] != null)
+                {
+                    string modo = Session["MantenerModal"].ToString();
+                    Session["MantenerModal"] = null;
+
+                    if (modo == "editar")
+                        ScriptManager.RegisterStartupScript(this, GetType(), "AbrirEditar", "abrirModalEditar();", true);
+                    else
+                        ScriptManager.RegisterStartupScript(this, GetType(), "AbrirRegistrar", "abrirModalRegistroSinLimpiar();", true);
+                }
+
                 var rol = Session["Rol"] as string;
+
+                // Verificación de sesión
                 if (string.IsNullOrEmpty(rol))
                 {
-                    //Response.Redirect("Login.aspx", false);  // Sin cachear
-                    // Redirigir a página de error en lugar de 404 manual
                     Response.Redirect("Error404.aspx", false);
                     return;
                 }
 
                 if (rol == "vendedor")
                 {
-                    // Un vendedor no debe ver el registro de usuarios
                     Response.Redirect("Productos.aspx", false);
                     return;
                 }
@@ -65,6 +75,12 @@ namespace KawkiWeb
         //  Guardar (insertar o modificar)
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            // Limpiar mensajes antiguos
+            lblErrorDNI.Text = "";
+            lblErrorEmail.Text = "";
+            lblErrorTelefono.Text = "";
+            lblErrorUsuario.Text = "";
+            lblMensaje.Text = "";
             try
             {
                 bool esEdicion = hfIdUsuario.Value != "0";
@@ -123,6 +139,50 @@ namespace KawkiWeb
                     return;
                 }
 
+                // VERIFICACIÓN DE UNICIDAD
+
+                int idActual = esEdicion ? Convert.ToInt32(hfIdUsuario.Value) : 0;
+
+                // Llamar a tu método de negocio (NO directamente al WS)
+                bool[] unicidad = usuarioBO.VerificarUnicidad(
+                    email.Trim().ToLower(),
+                    usuario.Trim().ToLower(),
+                    dni.Trim(),
+                    idActual
+                );
+
+                // resultado: [correoExiste, usuarioExiste, dniExiste]
+                bool correoExiste = unicidad[0];
+                bool usuarioExiste = unicidad[1];
+                bool dniExiste = unicidad[2];
+                bool hayError = false;
+
+                if (correoExiste)
+                {
+                    lblErrorEmail.Text = "❌ El correo ya está registrado.";
+                    hayError = true;
+                }
+
+                if (usuarioExiste)
+                {
+                    lblErrorUsuario.Text = "❌ El nombre de usuario ya está registrado.";
+                    hayError = true;
+                }
+
+                if (dniExiste)
+                {
+                    lblErrorDNI.Text = "❌ El DNI ya está registrado.";
+                    hayError = true;
+                }
+
+                if (hayError)
+                {
+                    RestaurarPassword(clave);
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
+
+
                 // Crear objeto tipoUsuario
                 var tipoUsuario = new tiposUsuarioDTO();
                 string rolSeleccionado = ddlRol.SelectedValue.Trim().ToLower();
@@ -146,16 +206,8 @@ namespace KawkiWeb
                 tipoUsuario.tipoUsuarioIdSpecified = true;
 
                 // Determinar 'activo'
-                bool activo = true; // Por defecto para nuevos usuarios
-                if (esEdicion)
-                {
-                    // Para ediciones, obtener el valor actual (puedes cambiarlo si agregas un checkbox en ASPX)
-                    var usuarioExistente = usuarioBO.ObtenerPorIdUsuario(Convert.ToInt32(hfIdUsuario.Value));
-                    if (usuarioExistente != null)
-                    {
-                        activo = usuarioExistente.activo; // Asume que 'activo' es un bool en usuariosDTO
-                    }
-                }
+                // Obtener estado del checkbox
+                bool activo = chkActivo.Checked;
 
                 // Guardar
                 if (esEdicion)
@@ -176,7 +228,7 @@ namespace KawkiWeb
                     {
                         lblMensaje.CssClass = "text-danger d-block mb-2";
                         lblMensaje.Text = "❌ No se pudo actualizar el usuario.";
-                        MantenerModalAbierto(true);
+                        Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
                         return;
                     }
 
@@ -192,7 +244,7 @@ namespace KawkiWeb
                     {
                         lblMensaje.CssClass = "text-danger d-block mb-2";
                         lblMensaje.Text = "❌ Error: No se pudo registrar el usuario.";
-                        MantenerModalAbierto(false);
+                        Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
                         return;
                     }
 
@@ -205,7 +257,33 @@ namespace KawkiWeb
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error al guardar: " + ex.Message;
+                string error = ex.Message.ToUpper();
+
+                bool esEdicion = hfIdUsuario.Value != "0";
+
+                if (error.Contains("CORREO_EXISTE"))
+                {
+                    lblErrorEmail.Text = "❌ El correo ya está registrado.";
+                    Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
+                    return;
+                }
+
+                if (error.Contains("USUARIO_EXISTE"))
+                {
+                    lblErrorUsuario.Text = "❌ El nombre de usuario ya está registrado.";
+                    Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
+                    return;
+                }
+
+                if (error.Contains("DNI_EXISTE"))
+                {
+                    lblErrorDNI.Text = "❌ El DNI ya está registrado.";
+                    Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
+                    return;
+                }
+
+                lblMensaje.Text = "❌ Error inesperado: " + ex.Message;
+                MantenerModalAbierto(esEdicion);
             }
         }
 
@@ -235,8 +313,14 @@ namespace KawkiWeb
         // =====================================================
         private void MantenerModalAbierto(bool esEdicion)
         {
-            string script = esEdicion ? "abrirModalEditar();" : "abrirModalRegistro();";
+            string script = esEdicion ? "abrirModalEditar();" : "abrirModalRegistroSinLimpiar();";
             ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModal", script, true);
         }
+
+        private void RestaurarPassword(string clave)
+        {
+            txtClave.Attributes["value"] = clave;
+        }
+
     }
 }
