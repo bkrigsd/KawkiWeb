@@ -576,43 +576,40 @@ namespace KawkiWeb
 
             try
             {
-                // 1️⃣ Recoger datos del formulario
+                // 1. Validar sesión y obtener el usuario del backend
+                if (Session["UsuarioId"] == null)
+                {
+                    lblMensaje.Text = "La sesión expiró. Inicie sesión nuevamente.";
+                    return;
+                }
+
+                int usuarioId = Convert.ToInt32(Session["UsuarioId"]);
+
+                // 2. Crear el usuariosDTO del WSDL de Ventas
+                var usuarioVendedor = new KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO()
+                {
+                    usuarioId = usuarioId
+                };
+
+                // 3. Obtener datos del formulario
                 string nombreCliente = txtNombreCliente.Text.Trim();
                 string telefono = txtTelefono.Text.Trim();
                 string canal = ddlCanal.SelectedValue;
-                string comprobante = ddlComprobante.SelectedValue;
-                string metodoPago = ddlMetodoPago.SelectedValue;
                 string notas = txtNotas.Text.Trim();
 
-                string ruc = txtRUC.Text.Trim();
-                string razonSocial = txtRazonSocial.Text.Trim();
-                string direccion = txtDireccionFiscal.Text.Trim();
-                string dni = txtDNI.Text.Trim();
-
-                // 2️ CREAR OBJETOS DTO PARA EL WS
-                // Usuario
-                var usuario = new KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO
+                // Red social
+                var redSocial = new KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO
                 {
-                    nombre = nombreCliente,
-                    telefono = telefono,
-                    dni = dni,
+                    redSocialId = Convert.ToInt32(ddlCanal.SelectedValue),
+                    nombre = ddlCanal.SelectedItem.Text
                 };
 
-                // Descuento (aún no usas, enviamos null)
-                descuentosDTO descuento = null;
+                // Descuento aún no se usa
+                KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento = null;
 
-                // Canal = red social
-                var redSocial = new redesSocialesDTO
-                {
-                    nombre = canal
-                };
-
-
-                // 3️⃣ INSERTAR VENTA Y OBTENER EL ID NUEVO
-
+                // 4. Insertar venta
                 VentasBO ventasBO = new VentasBO();
-
-                int ventaId = ventasBO.InsertarVenta(usuario, (double)total, descuento, redSocial);
+                int ventaId = ventasBO.InsertarVenta(usuarioVendedor, (double)total, descuento, redSocial);
 
                 if (ventaId <= 0)
                 {
@@ -620,8 +617,7 @@ namespace KawkiWeb
                     return;
                 }
 
-                // 4️ REGISTRAR DETALLES DE VENTA
-
+                // 5. Registrar detalles de venta
                 DetalleVentasBO detalleBO = new DetalleVentasBO();
 
                 foreach (GridViewRow row in DetalleVentas.Rows)
@@ -631,7 +627,7 @@ namespace KawkiWeb
                     double precio = Convert.ToDouble(row.Cells[3].Text);
                     double subtotal = Convert.ToDouble(row.Cells[4].Text);
 
-                    // Crear objeto productosVariantesDTO
+                    // Crear objeto productosVariantesDTO para DetalleVentasService
                     var productoVar = new KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO
                     {
                         prod_variante_id = prodVarId
@@ -640,8 +636,7 @@ namespace KawkiWeb
                     detalleBO.InsertarDetalleVenta(productoVar, ventaId, cantidad, precio, subtotal);
                 }
 
-                // 5 TODO OK → MENSAJE
-
+                // 6. Todo OK
                 lblMensaje.CssClass = "text-success mb-2 d-block";
                 lblMensaje.Text = "✓ Venta registrada correctamente.";
 
@@ -653,6 +648,7 @@ namespace KawkiWeb
                 lblMensaje.Text = $"Error al registrar la venta: {ex.Message}";
             }
         }
+
 
         /// <summary>
         /// Limpia todos los campos del formulario

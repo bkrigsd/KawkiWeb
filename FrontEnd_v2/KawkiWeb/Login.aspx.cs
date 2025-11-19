@@ -37,7 +37,7 @@ namespace KawkiWeb
 
             try
             {
-                var usuarioBO = new UsuarioBO();
+                //var usuarioBO = new UsuarioBO();
                 var usuarioDTO = usuarioBO.AutenticarUsuario(usuario, clave);
 
                 if (usuarioDTO != null)
