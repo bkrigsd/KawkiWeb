@@ -65,6 +65,7 @@ namespace KawkiWeb
                     Session["UsuarioId"] = usuarioDTO.usuarioId;
                     Session["Rol"] = rol;
                     Session["UsuarioNombreCompleto"] = usuarioDTO.nombre + " " + usuarioDTO.apePaterno;
+                    Session["Email"] = usuarioDTO.correo ?? "";
 
                     // Redirección según el rol
                     if (rol == "admin")
