@@ -184,7 +184,7 @@ namespace KawkiWeb
                     CargarDescuentos();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Manejo de error
                 CargarDescuentos();

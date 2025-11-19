@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="277be1a4-6d4b-433e-9963-d019bc9bd6ab" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="12b7fe5b-1e2c-417c-b188-a3f537462c16" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,11 +19,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8080/KawkiWebWS/UsuariosService?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8080/KawkiWebWS/DetalleVentasService?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="UsuariosService.wsdl" MetadataType="Wsdl" ID="1dedd275-f227-4f65-bd6d-f90f60cbe341" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/UsuariosService?wsdl" />
-    <MetadataFile FileName="UsuariosService.xsd" MetadataType="Schema" ID="ea2bcf35-c38f-4951-a538-9abae060d0b7" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/UsuariosService?xsd=1" />
+    <MetadataFile FileName="DetalleVentasService.xsd" MetadataType="Schema" ID="2825f773-c292-4eb9-b234-cd0d19e19f9a" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/DetalleVentasService?xsd=1" />
+    <MetadataFile FileName="DetalleVentasService.wsdl" MetadataType="Wsdl" ID="9a2f72fe-0037-4a9a-a901-374de4419ef8" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/DetalleVentasService?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
