@@ -135,12 +135,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="DescuentosBO.cs" />
     <Compile Include="DetalleVentasBO.cs" />
     <Compile Include="EstilosBO.cs" />
     <Compile Include="ProductosBO.cs" />
     <Compile Include="ProductosVariantesBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TallasBO.cs" />
+    <Compile Include="TiposCondicionBO.cs" />
     <Compile Include="UsuariosBO.cs" />
     <Compile Include="VentasBO.cs" />
   </ItemGroup>
