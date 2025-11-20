@@ -224,6 +224,7 @@
                     <label class="form-label">Color *</label>
                     <asp:DropDownList ID="ddlColor" runat="server" CssClass="form-select">
                     </asp:DropDownList>
+                    <asp:Label ID="lblErrorColor" runat="server" CssClass="text-danger small d-block mt-1" />
                 </div>
 
                 <div class="row">
@@ -231,11 +232,13 @@
                         <label class="form-label">Tallas (separadas por comas) *</label>
                         <asp:TextBox ID="txtTallas" runat="server" CssClass="form-control" 
                             placeholder="35,36,37,38,39" />
+                        <asp:Label ID="lblErrorTallas" runat="server" CssClass="text-danger small d-block mt-1" />
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Stocks (separados por comas) *</label>
                         <asp:TextBox ID="txtStocks" runat="server" CssClass="form-control" 
                             placeholder="50,40,35,30,25" />
+                        <asp:Label ID="lblErrorStocks" runat="server" CssClass="text-danger small d-block mt-1" />
                     </div>
                 </div>
 
@@ -243,6 +246,7 @@
                     <label class="form-label">Stock Mínimo (separados por comas)</label>
                     <asp:TextBox ID="txtStocksMinimos" runat="server" CssClass="form-control" 
                         placeholder="5,5,5,5,5 (opcional, por defecto: 5)" />
+                    <asp:Label ID="lblErrorStocksMinimos" runat="server" CssClass="text-danger small d-block mt-1" />
                     <small class="text-muted">Si dejas vacío, usará 5 como valor por defecto</small>
                 </div>
 
@@ -293,11 +297,13 @@
                 <div class="control-stock">
                     <label>Stock Actual *</label>
                     <asp:TextBox ID="txtStockEditar" runat="server" CssClass="form-control" TextMode="Number" placeholder="0" />
+                    <asp:Label ID="lblErrorStockEditar" runat="server" CssClass="text-danger small d-block mt-1" />
                 </div>
 
                 <div class="control-stock">
                     <label>Stock Mínimo *</label>
                     <asp:TextBox ID="txtStockMinimoEditar" runat="server" CssClass="form-control" TextMode="Number" placeholder="5" />
+                    <asp:Label ID="lblErrorStockMinimoEditar" runat="server" CssClass="text-danger small d-block mt-1" />
                 </div>
 
                 <asp:Label ID="lblMensajeStock" runat="server" CssClass="d-block mb-3" />
@@ -325,6 +331,7 @@
                     <label class="form-label">Talla *</label>
                     <asp:DropDownList ID="ddlTalla" runat="server" CssClass="form-select">
                     </asp:DropDownList>
+                    <asp:Label ID="lblErrorTallaSelect" runat="server" CssClass="text-danger small d-block mt-1" />
                 </div>
 
                 <div class="row">
@@ -332,11 +339,13 @@
                         <label class="form-label">Stock Inicial *</label>
                         <asp:TextBox ID="txtStockTalla" runat="server" CssClass="form-control" 
                             TextMode="Number" placeholder="0"/>
+                        <asp:Label ID="lblErrorStockTalla" runat="server" CssClass="text-danger small d-block mt-1" />
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Stock Mínimo *</label>
                         <asp:TextBox ID="txtStockMinimoTalla" runat="server" CssClass="form-control" 
                             TextMode="Number" placeholder="5"/>
+                        <asp:Label ID="lblErrorStockMinimoTalla" runat="server" CssClass="text-danger small d-block mt-1" />
                     </div>
                 </div>
 
