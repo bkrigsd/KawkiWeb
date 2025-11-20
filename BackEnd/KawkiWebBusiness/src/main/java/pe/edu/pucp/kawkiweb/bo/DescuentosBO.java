@@ -167,7 +167,7 @@ public class DescuentosBO {
         }
 
         // Validar valor de beneficio
-        if (valor_beneficio == null || valor_beneficio <= 0) {
+        if (valor_beneficio == null || valor_beneficio < 0) {
             System.err.println("Validación: El valor de beneficio debe ser mayor a 0");
             return false;
         }
