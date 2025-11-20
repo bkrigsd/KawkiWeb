@@ -350,7 +350,7 @@
         </div>
 
         <!-- Modal de confirmación de eliminación -->
-        <div id="modalConfirmacion" class="modal-confirmacion">
+        <%--<div id="modalConfirmacion" class="modal-confirmacion">
             <div class="modal-content-kawki">
                 <div class="modal-icon">
                     <i class="fas fa-exclamation-triangle"></i>
@@ -362,9 +362,9 @@
                     <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModalConfirmacion()">Cancelar</button>
                     <%--<asp:Button ID="btnConfirmarEliminar" runat="server" CssClass="btn-kawki-primary" style="background-color: #dc3545;"
                         Text="Eliminar" OnClick="btnConfirmarEliminar_Click" CausesValidation="false" UseSubmitBehavior="true" />--%>
-                </div>
+                <%--</div>
             </div>
-        </div>
+        </div>--%>
     </div>
 
     <script>
@@ -414,7 +414,7 @@
 
         function cerrarModalYLimpiar() {
             cerrarModal();
-            limpiarFormulario(); // ✔️ aquí sí se limpia
+            limpiarFormulario();
         }
 
         function soloNumeros(e) {
@@ -456,10 +456,10 @@
             window.location.href = "RegistroUsuario.aspx";
         }
 
-        function abrirModalConfirmacion(idUsuario) {
+        <%--function abrirModalConfirmacion(idUsuario) {
             document.getElementById("<%= hfIdEliminar.ClientID %>").value = idUsuario;
             document.getElementById("modalConfirmacion").classList.add("show");
-        }
+        }--%>
 
         function cerrarModalConfirmacion() {
             document.getElementById("modalConfirmacion").classList.remove("show");

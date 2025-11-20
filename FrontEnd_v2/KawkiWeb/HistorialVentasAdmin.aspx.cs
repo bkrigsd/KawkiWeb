@@ -15,9 +15,7 @@ namespace KawkiWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // ==========================================================
-            // ANTI-CACHE (igual que RegistroUsuario)
-            // ==========================================================
+            // AntiCaché
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
             Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
@@ -26,16 +24,11 @@ namespace KawkiWeb
             Response.AddHeader("Pragma", "no-cache");
             Response.AddHeader("Expires", "0");
 
-            // ==========================================================
-            // SOLO EJECUTAR EN FIRST LOAD
-            // ==========================================================
             if (!IsPostBack)
             {
                 string rol = Session["Rol"] as string;
 
-                // ==========================================================
-                // VALIDACIÓN DE SESIÓN (misma lógica que RegistroUsuario)
-                // ==========================================================
+                // VALIDACIÓN DE SESIÓN
                 if (string.IsNullOrEmpty(rol))
                 {
                     Response.Redirect("Error404.aspx", false);
@@ -64,9 +57,7 @@ namespace KawkiWeb
             }
         }
 
-        // ==========================================================
         // Cargar lista de vendedores reales
-        // ==========================================================
         private void CargarVendedores()
         {
             try
@@ -93,35 +84,27 @@ namespace KawkiWeb
             }
         }
 
-        // ==========================================================
         // Cargar ventas reales (usando objetos, NO DataTables)
-        // ==========================================================
         private void CargarVentas()
         {
             try
             {
                 var lista = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
 
-                // ----------------------------------
                 // Filtro por fecha inicio
-                // ----------------------------------
                 if (DateTime.TryParse(txtFechaInicio.Text, out DateTime inicio))
                 {
                     lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) >= inicio).ToList();
                 }
 
-                // ----------------------------------
                 // Filtro por fecha fin
-                // ----------------------------------
                 if (DateTime.TryParse(txtFechaFin.Text, out DateTime fin))
                 {
                     fin = fin.AddDays(1).AddSeconds(-1);
                     lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) <= fin).ToList();
                 }
 
-                // ----------------------------------
                 // Filtro por vendedor
-                // ----------------------------------
                 if (!string.IsNullOrEmpty(ddlVendedor.SelectedValue))
                 {
                     if (!string.IsNullOrEmpty(ddlVendedor.SelectedValue))
@@ -134,9 +117,7 @@ namespace KawkiWeb
                     }
                 }
 
-                // ----------------------------------
                 // Transformar a modelo para GridView
-                // ----------------------------------
                 var gvLista = lista.Select(v => new
                 {
                     IdVenta = v.venta_id,
@@ -178,9 +159,7 @@ namespace KawkiWeb
             }
         }
 
-        // ==========================================================
         // Estadísticas
-        // ==========================================================
         private void ActualizarEstadisticas()
         {
             try
@@ -216,9 +195,7 @@ namespace KawkiWeb
             }
         }
 
-        // ==========================================================
         // Botones
-        // ==========================================================
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             lblErrorFiltros.Visible = false;  // limpiamos antes de validar
@@ -250,9 +227,7 @@ namespace KawkiWeb
             ActualizarEstadisticas();
         }
 
-        // ==========================================================
         // Ver detalle
-        // ==========================================================
         protected void gvVentas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "VerDetalle")
@@ -299,9 +274,7 @@ namespace KawkiWeb
             pnlDetalle.Visible = false;
         }
 
-        // ==========================================================
         // Utilidad
-        // ==========================================================
         private void MostrarError(string msg)
         {
             lblMensaje.CssClass = "text-danger d-block mb-2";

@@ -142,6 +142,7 @@
     <Compile Include="ProductosVariantesBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TallasBO.cs" />
+    <Compile Include="TiposBeneficioBO.cs" />
     <Compile Include="TiposCondicionBO.cs" />
     <Compile Include="UsuariosBO.cs" />
     <Compile Include="VentasBO.cs" />

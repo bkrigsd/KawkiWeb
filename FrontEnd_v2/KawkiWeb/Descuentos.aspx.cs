@@ -1,7 +1,18 @@
-﻿using System;
-using System.Data;
+﻿using KawkiWebBusiness;
+using KawkiWebBusiness.KawkiWebWSDescuentos;
+
+// Alias obligatorios para evitar conflictos de nombres entre DTOs
+using DTOCond = KawkiWebBusiness.KawkiWebWSTiposCondicion.tiposCondicionDTO;
+using DTOBenef = KawkiWebBusiness.KawkiWebWSTiposBeneficio.tiposBeneficioDTO;
+
+// BO reales
+using KawkiWebBusiness.KawkiWebWSTiposCondicion;
+using KawkiWebBusiness.KawkiWebWSTiposBeneficio;
+
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -9,186 +20,345 @@ namespace KawkiWeb
 {
     public partial class Descuentos : Page
     {
-        private static DataTable descuentosMemoria = null;
+        private DescuentosBO descuentosBO = new DescuentosBO();
+        private TiposCondicionBO tiposCondicionBO = new TiposCondicionBO();
+        private TiposBeneficioBO tiposBeneficioBO = new TiposBeneficioBO();
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Anti-cache
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+
             if (!IsPostBack)
             {
-                CargarDescuentos();
+                // Restaurar modal si venimos de un PostBack (mismo patrón que RegistroUsuario)
+                if (Session["MantenerModal"] != null)
+                {
+                    string modo = Session["MantenerModal"].ToString();
+                    Session["MantenerModal"] = null;
+
+                    if (modo == "editar")
+                        ScriptManager.RegisterStartupScript(this, GetType(), "AbrirEditar", "abrirModalEditar();", true);
+                    else
+                        ScriptManager.RegisterStartupScript(this, GetType(), "AbrirRegistrar", "abrirModalRegistroSinLimpiar();", true);
+                }
+
+                // Validación de sesión / rol
+                string rol = Session["Rol"] as string;
+
+                if (string.IsNullOrEmpty(rol))
+                {
+                    Response.Redirect("Error404.aspx", false);
+                    return;
+                }
+
+                if (rol.ToLower() == "vendedor")
+                {
+                    Response.Redirect("Productos.aspx", false);
+                    return;
+                }
+
+                try
+                {
+                    CargarCombosTipos();
+                    CargarDescuentos();
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.CssClass = "text-danger d-block mb-2";
+                    lblMensaje.Text = "Error al cargar descuentos: " + ex.Message;
+                }
             }
         }
 
+        private void CargarCombosTipos()
+        {
+            try
+            {
+                var listaCond = tiposCondicionBO.listarTodosTipoCondicion() ?? new List<DTOCond>();
+                ddlTipoCondicion.DataSource = listaCond;
+                ddlTipoCondicion.DataTextField = "nombre";
+                ddlTipoCondicion.DataValueField = "tipo_condicion_id";
+                ddlTipoCondicion.DataBind();
+                ddlTipoCondicion.Items.Insert(0, new ListItem("-- Seleccione --", ""));
+
+                var listaBenef = tiposBeneficioBO.listarTodosTipoBeneficio() ?? new List<DTOBenef>();
+                ddlTipoBeneficio.DataSource = listaBenef;
+                ddlTipoBeneficio.DataTextField = "nombre";
+                ddlTipoBeneficio.DataValueField = "tipo_beneficio_id";
+                ddlTipoBeneficio.DataBind();
+                ddlTipoBeneficio.Items.Insert(0, new ListItem("-- Seleccione --", ""));
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.CssClass = "text-danger d-block mb-2";
+                lblMensaje.Text = "Error al cargar tipos: " + ex.Message;
+            }
+        }
+
+        // ===========================================================
+        // CARGAR LISTA DESDE EL WS
+        // ===========================================================
         private void CargarDescuentos()
         {
-            gvDescuentos.DataSource = ObtenerDescuentosSimulados();
+            var listaWS = descuentosBO.listarTodosDescuento() ?? new List<descuentosDTO>();
+
+            var listaGrid = listaWS.Select(x => new
+            {
+                IdDescuento = x.descuento_id,
+                Descripcion = x.descripcion,
+
+                TipoCondicion = x.tipo_condicion?.nombre,
+                TipoCondicionId = x.tipo_condicion?.tipo_condicion_id,
+
+                ValorCondicion = x.valor_condicion,
+
+                TipoBeneficio = x.tipo_beneficio?.nombre,
+                TipoBeneficioId = x.tipo_beneficio?.tipo_beneficio_id,
+
+                ValorBeneficio = x.valor_beneficio,
+
+                FechaInicio = DateTime.Parse(x.fecha_inicio),
+                FechaFin = DateTime.Parse(x.fecha_fin),
+                Activo = x.activo
+            }).ToList();
+
+            gvDescuentos.DataSource = listaGrid;
             gvDescuentos.DataBind();
         }
 
-        private DataTable ObtenerDescuentosSimulados()
-        {
-            if (descuentosMemoria == null)
-            {
-                descuentosMemoria = new DataTable();
-                descuentosMemoria.Columns.Add("IdDescuento", typeof(int));
-                descuentosMemoria.Columns.Add("Nombre", typeof(string));
-                descuentosMemoria.Columns.Add("Porcentaje", typeof(decimal));
-                descuentosMemoria.Columns.Add("FechaInicio", typeof(DateTime));
-                descuentosMemoria.Columns.Add("FechaFin", typeof(DateTime));
-                descuentosMemoria.Columns.Add("Descripcion", typeof(string));
-                descuentosMemoria.Columns.Add("Activo", typeof(bool));
-
-                descuentosMemoria.Rows.Add(1, "Descuento Verano", 10.0m, DateTime.Now.AddDays(-2), DateTime.Now.AddDays(10), "Promoción especial de verano.", true);
-                descuentosMemoria.Rows.Add(2, "Liquidación Derby", 25.5m, DateTime.Now.AddDays(-5), DateTime.Now.AddDays(3), "Descuento por liquidación.", false);
-            }
-
-            return descuentosMemoria;
-        }
-
+        // ===========================================================
+        // GUARDAR (INSERTAR / ACTUALIZAR)
+        // ===========================================================
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             lblMensaje.Text = "";
-            lblMensaje.CssClass = "text-danger d-block mb-2";
+            bool esEdicion = hfIdDescuento.Value != "0";
 
             try
             {
-                bool esEdicion = hfIdDescuento.Value != "0";
-                string nombre = txtNombre.Text.Trim();
-                string porcentajeTxt = txtPorcentaje.Text.Trim();
-                string inicioTxt = txtFechaInicio.Text.Trim();
-                string finTxt = txtFechaFin.Text.Trim();
+                //string nombre = txtNombre.Text.Trim();
                 string descripcion = txtDescripcion.Text.Trim();
+                string txtValorCond = txtValorCondicion.Text.Trim();
+                string txtPorc = txtPorcentaje.Text.Trim();
+                string fechaInicioStr = txtFechaInicio.Text.Trim();
+                string fechaFinStr = txtFechaFin.Text.Trim();
 
-                // Validaciones
-                if (string.IsNullOrEmpty(nombre))
+                // Validaciones básicas adicionales (sobre los Required/Regex ya del front)
+                if (!int.TryParse(txtValorCond, out int valorCondicion))
                 {
-                    lblMensaje.Text = "El nombre es obligatorio.";
+                    lblMensaje.CssClass = "text-danger d-block mb-2";
+                    lblMensaje.Text = "El valor de condición debe ser numérico.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
-                if (!decimal.TryParse(porcentajeTxt, out decimal porcentaje) || porcentaje < 0 || porcentaje > 100)
+
+                if (!int.TryParse(txtPorc, out int valorBeneficio))
                 {
-                    lblMensaje.Text = "Ingrese un porcentaje válido (0-100).";
+                    lblMensaje.CssClass = "text-danger d-block mb-2";
+                    lblMensaje.Text = "El porcentaje debe ser numérico.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
-                if (!DateTime.TryParse(inicioTxt, out DateTime fechaInicio))
+
+                if (!DateTime.TryParse(fechaInicioStr, out DateTime fechaInicio))
                 {
-                    lblMensaje.Text = "Ingrese una fecha de inicio válida.";
+                    lblMensaje.CssClass = "text-danger d-block mb-2";
+                    lblMensaje.Text = "Fecha de inicio inválida.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
-                if (!DateTime.TryParse(finTxt, out DateTime fechaFin))
+
+                if (!DateTime.TryParse(fechaFinStr, out DateTime fechaFin))
                 {
-                    lblMensaje.Text = "Ingrese una fecha de fin válida.";
+                    lblMensaje.CssClass = "text-danger d-block mb-2";
+                    lblMensaje.Text = "Fecha de fin inválida.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
+
                 if (fechaFin < fechaInicio)
                 {
+                    lblMensaje.CssClass = "text-danger d-block mb-2";
                     lblMensaje.Text = "La fecha fin no puede ser anterior a la fecha inicio.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
 
-                DataTable dt = ObtenerDescuentosSimulados();
-
-                if (esEdicion)
+                if (string.IsNullOrEmpty(ddlTipoCondicion.SelectedValue) ||
+                    string.IsNullOrEmpty(ddlTipoBeneficio.SelectedValue))
                 {
-                    int idEditar = Convert.ToInt32(hfIdDescuento.Value);
-                    DataRow fila = dt.AsEnumerable().FirstOrDefault(r => r.Field<int>("IdDescuento") == idEditar);
-                    if (fila != null)
-                    {
-                        fila["Nombre"] = nombre;
-                        fila["Porcentaje"] = porcentaje;
-                        fila["FechaInicio"] = fechaInicio;
-                        fila["FechaFin"] = fechaFin;
-                        fila["Descripcion"] = descripcion;
-                    }
+                    lblMensaje.CssClass = "text-danger d-block mb-2";
+                    lblMensaje.Text = "Seleccione tipo de condición y tipo de beneficio.";
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
+
+                int tipoCondId = int.Parse(ddlTipoCondicion.SelectedValue);
+                int tipoBenefId = int.Parse(ddlTipoBeneficio.SelectedValue);
+
+                bool activo = chkActivo.Checked;
+
+                // DTOs de tipos
+                // Convertirlo al tipo QUE PIDE insertarDescuento:
+                // 1. Obtener el DTO original desde el WS TiposCondicion
+                var dtoCondWS = tiposCondicionBO.obtenerPorIdTipoCondicion(Convert.ToInt32(ddlTipoCondicion.SelectedValue));
+
+                // 2. Convertirlo al tipo correcto que EXIGE el WS Descuentos
+                var tipoCondicion = new KawkiWebBusiness.KawkiWebWSDescuentos.tiposCondicionDTO
+                {
+                    tipo_condicion_id = dtoCondWS.tipo_condicion_id,
+                    tipo_condicion_idSpecified = true,
+                    nombre = dtoCondWS.nombre
+                };
+
+                var dtoBenWS = tiposBeneficioBO.obtenerPorIdTipoBeneficio(Convert.ToInt32(ddlTipoBeneficio.SelectedValue));
+
+                var tipoBeneficio = new KawkiWebBusiness.KawkiWebWSDescuentos.tiposBeneficioDTO
+                {
+                    tipo_beneficio_id = dtoBenWS.tipo_beneficio_id,
+                    tipo_beneficio_idSpecified = true,
+                    nombre = dtoBenWS.nombre
+                };
+
+                // El backend solo tiene un campo "descripcion" → usamos nombre o descripción larga
+                string descripcionFinal = descripcion;
+
+                if (!esEdicion)
+                {
+                    descuentosBO.insertarDescuento(
+                        descripcionFinal,
+                        tipoCondicion,
+                        valorCondicion,
+                        tipoBeneficio,
+                        valorBeneficio,
+                        fechaInicio,
+                        fechaFin,
+                        activo
+                    );
+
+                    lblMensaje.CssClass = "text-success d-block mb-2";
+                    lblMensaje.Text = "✓ Descuento registrado correctamente.";
+                }
+                else
+                {
+                    int id = Convert.ToInt32(hfIdDescuento.Value);
+
+                    descuentosBO.modificarDescuento(
+                        id,
+                        descripcionFinal,
+                        tipoCondicion,
+                        valorCondicion,
+                        tipoBeneficio,
+                        valorBeneficio,
+                        fechaInicio,
+                        fechaFin,
+                        activo
+                    );
 
                     lblMensaje.CssClass = "text-success d-block mb-2";
                     lblMensaje.Text = "✓ Descuento actualizado correctamente.";
                 }
-                else
-                {
-                    int nuevoId = dt.AsEnumerable().Select(r => r.Field<int>("IdDescuento")).DefaultIfEmpty(0).Max() + 1;
-                    dt.Rows.Add(nuevoId, nombre, porcentaje, fechaInicio, fechaFin, descripcion, true);
-                    lblMensaje.CssClass = "text-success d-block mb-2";
-                    lblMensaje.Text = "✓ Descuento registrado correctamente.";
-                }
 
-                LimpiarFormulario();
                 CargarDescuentos();
-                ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModal", "cerrarModal();", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "Cerrar", "cerrarModal();", true);
             }
             catch (Exception ex)
             {
+                lblMensaje.CssClass = "text-danger d-block mb-2";
                 lblMensaje.Text = "Error: " + ex.Message;
-            }
-        }
 
-        protected void btnConfirmarEliminar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int id = Convert.ToInt32(hfIdEliminar.Value);
-                DataTable dt = ObtenerDescuentosSimulados();
-                DataRow fila = dt.AsEnumerable().FirstOrDefault(r => r.Field<int>("IdDescuento") == id);
-
-                if (fila != null)
-                    dt.Rows.Remove(fila);
-
-                CargarDescuentos();
-                ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalEliminar",
-                    "cerrarModalConfirmacion(); mostrarMensajeExito('Descuento eliminado correctamente');", true);
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, GetType(), "ErrorEliminar",
-                    $"cerrarModalConfirmacion(); mostrarMensajeError('Error: {ex.Message.Replace("'", "\\'")}');", true);
+                Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
+                MantenerModalAbierto(esEdicion);
             }
         }
 
         private void MantenerModalAbierto(bool esEdicion)
         {
-            string script = esEdicion ? "abrirModalEditar();" : "abrirModalRegistro();";
-            ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModal", script, true);
+            string script = esEdicion ? "abrirModalEditar();" : "abrirModalRegistroSinLimpiar();";
+            ScriptManager.RegisterStartupScript(this, GetType(), "Mantener", script, true);
         }
 
-        private void LimpiarFormulario()
+        // ===========================================================
+        // EDITAR (desde el Grid)
+        // ===========================================================
+        protected void gvDescuentos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            hfIdDescuento.Value = "0";
-            txtNombre.Text = "";
-            txtPorcentaje.Text = "";
-            txtFechaInicio.Text = "";
-            txtFechaFin.Text = "";
-            txtDescripcion.Text = "";
+            if (e.CommandName == "EditarDescuento")
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+
+                // Aseguramos combos cargados
+                CargarCombosTipos();
+
+                var d = descuentosBO.obtenerPorIdDescuento(id);
+
+                hfIdDescuento.Value = id.ToString();
+
+                txtDescripcion.Text = d.descripcion; // puedes dejarlo así o diferenciar luego
+
+                // Valor condición
+                txtValorCondicion.Text = d.valor_condicion.ToString();
+                // Tipo condición
+                if (d.tipo_condicion != null)
+                {
+                    string valCond = d.tipo_condicion.tipo_condicion_id.ToString();
+                    if (ddlTipoCondicion.Items.FindByValue(valCond) != null)
+                        ddlTipoCondicion.SelectedValue = valCond;
+                }
+
+                // Porcentaje (valor_beneficio)
+                txtPorcentaje.Text = d.valor_beneficio.ToString();
+                // Tipo beneficio
+                if (d.tipo_beneficio != null)
+                {
+                    string valBen = d.tipo_beneficio.tipo_beneficio_id.ToString();
+                    if (ddlTipoBeneficio.Items.FindByValue(valBen) != null)
+                        ddlTipoBeneficio.SelectedValue = valBen;
+                }
+
+                // Fechas
+                txtFechaInicio.Text = DateTime.Parse(d.fecha_inicio).ToString("yyyy-MM-dd");
+                txtFechaFin.Text = DateTime.Parse(d.fecha_fin).ToString("yyyy-MM-dd");
+
+                // Activo
+                chkActivo.Checked = d.activo;
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "AbrirEditar", "abrirModalEditar();", true);
+            }
         }
 
+        // ===========================================================
+        // ACTIVAR / DESACTIVAR (switch)
+        // ===========================================================
         protected void lnkCambiarEstado_Command(object sender, CommandEventArgs e)
         {
             try
             {
                 int id = Convert.ToInt32(e.CommandArgument);
-                DataTable dt = ObtenerDescuentosSimulados();
-                DataRow fila = dt.AsEnumerable().FirstOrDefault(r => r.Field<int>("IdDescuento") == id);
+                var dto = descuentosBO.obtenerPorIdDescuento(id);
 
-                if (fila != null)
-                {
-                    bool estadoActual = Convert.ToBoolean(fila["Activo"]);
-                    fila["Activo"] = !estadoActual;
+                if (dto.activo)
+                    descuentosBO.desactivarDescuento(id);
+                else
+                    descuentosBO.activarDescuento(id);
 
-                    // AQUÍ conectarás con tu backend/business cuando lo tengas:
-                    // DescuentoBusiness.ActualizarEstado(id, !estadoActual);
-
-                    CargarDescuentos();
-                }
-            }
-            catch (Exception)
-            {
-                // Manejo de error
                 CargarDescuentos();
             }
+            catch (Exception ex)
+            {
+                lblMensaje.CssClass = "text-danger d-block mb-2";
+                lblMensaje.Text = "Error al cambiar estado: " + ex.Message;
+            }
         }
+
+        // Si en el futuro agregas eliminar en backend, aquí iría btnConfirmarEliminar_Click
+        // por ahora el botón está comentado en el .aspx
     }
 }
