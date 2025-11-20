@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using KawkiWebBusiness;
@@ -131,17 +132,15 @@ namespace KawkiWeb
 
                 if (categoriaId == 0)
                 {
-                    lblMensaje.Text = "Debe seleccionar una categoría.";
-                    MantenerModalAbierto(esEdicion);
-                    return;
+                    lblErrorCategoria.Text = "Debe seleccionar una categoría.";
+                    hayErrores = true;
                 }
 
                 int estiloId = Convert.ToInt32(ddlEstilo.SelectedValue);
                 if (estiloId == 0)
                 {
-                    lblMensaje.Text = "Debe seleccionar un estilo.";
-                    MantenerModalAbierto(esEdicion);
-                    return;
+                    lblErrorEstilo.Text = "Debe seleccionar un estilo.";
+                    hayErrores = true;
                 }
 
                 double precio_Venta;
@@ -231,8 +230,13 @@ namespace KawkiWeb
 
                     LimpiarFormulario();
                     CargarProductos();
-                    lblMensaje.CssClass = "text-success d-block mb-2";
-                    lblMensaje.Text = "Producto actualizado correctamente.";
+                    ScriptManager.RegisterStartupScript(
+                        this,
+                        GetType(),
+                        "SuccessVariante",
+                        "cerrarModal(); mostrarMensajeExito('Producto actualizado correctamente.');",
+                        true
+                    );
                 }
                 else
                 {
@@ -253,20 +257,18 @@ namespace KawkiWeb
                         return;
                     }
 
-                    lblMensaje.CssClass = "text-success d-block mb-2";
-                    lblMensaje.Text = "Producto registrado correctamente.";
+                    LimpiarFormulario();
+                    CargarProductos();
+
+                    ScriptManager.RegisterStartupScript(
+                        this,
+                        GetType(),
+                        "CerrarModal",
+                        "cerrarModal(); mostrarMensajeExito('Producto registrado correctamente');",
+                        true
+                    );
                 }
 
-                LimpiarFormulario();
-                CargarProductos();
-
-                ScriptManager.RegisterStartupScript(
-                    this,
-                    GetType(),
-                    "CerrarModal",
-                    "cerrarModal(); mostrarMensajeExito('Operación exitosa');",
-                    true
-                );
             }
             catch (Exception ex)
             {

@@ -274,13 +274,6 @@ namespace KawkiWeb
                     hayErrores = true;
                 }
 
-                // Si hay errores básicos, detener aquí
-                if (hayErrores)
-                {
-                    MantenerModalAbierto();
-                    return;
-                }
-
                 // VALIDACIÓN COMPLETA DE TALLAS Y STOCKS
                 var resultadoValidacion = ValidarTallasYStocks(tallasText, stocksText, stocksMinimoText);
 
@@ -290,21 +283,32 @@ namespace KawkiWeb
                     if (resultadoValidacion.TallasInvalidas.Count > 0)
                     {
                         lblErrorTallas.Text = $"Talla(s) no válida(s): {string.Join(", ", resultadoValidacion.TallasInvalidas)}";
+                        hayErrores = true;
                     }
 
                     if (resultadoValidacion.StocksInvalidos.Count > 0)
                     {
                         lblErrorStocks.Text = $"Stock(s) no válido(s): {string.Join(", ", resultadoValidacion.StocksInvalidos)}";
+                        hayErrores = true;
                     }
 
                     if (resultadoValidacion.StocksMinimoInvalidos.Count > 0)
                     {
                         lblErrorStocksMinimos.Text = $"Stock(s) mínimo(s) no válido(s): {string.Join(", ", resultadoValidacion.StocksMinimoInvalidos)}";
+                        hayErrores = true;
                     }
 
+                    //MantenerModalAbierto();
+                    //return;
+                }
+
+                // Si hay errores básicos, detener aquí
+                if (hayErrores)
+                {
                     MantenerModalAbierto();
                     return;
                 }
+
                 var tallasStocks = resultadoValidacion.TallasStocks;
 
                 var coloresProducto = coloresBO.ObtenerPorIdColor(colorId);
@@ -351,44 +355,24 @@ namespace KawkiWeb
 
                     if (resultado == null || resultado <= 0)
                     {
-                        fallidas++;
-                        errores.Add($"Talla {tallaVariante.numero}: No se pudo insertar (puede que ya exista)");
-                    }
-                    else
-                    {
-                        insertadas++;
+                        lblMensaje.CssClass = "text-danger d-block mb-2";
+                        lblMensaje.Text = "No se pudo crear la variante.<br/>" +
+                                        string.Join("<br/>", errores);
+                        MantenerModalAbierto();
+                        return;
                     }
                 }
 
-                // Mostrar resultado
-                if (insertadas > 0 && fallidas == 0)
-                {
-                    LimpiarFormulario();
-                    CargarVariantes();
+                LimpiarFormulario();
+                CargarVariantes();
 
-                    ScriptManager.RegisterStartupScript(
-                        this,
-                        GetType(),
-                        "SuccessVariante",
-                        "cerrarModal(); mostrarMensajeExito('✓ " + insertadas + " variante(s) creada(s) correctamente');",
-                        true
-                    );
-                }
-                else if (insertadas > 0 && fallidas > 0)
-                {
-                    lblMensaje.CssClass = "text-warning d-block mb-2";
-                    lblMensaje.Text = $"Se insertaron {insertadas} de {tallasStocks.Count} variantes.<br/>" +
-                                    string.Join("<br/>", errores);
-                    CargarVariantes();
-                    MantenerModalAbierto();
-                }
-                else
-                {
-                    lblMensaje.CssClass = "text-danger d-block mb-2";
-                    lblMensaje.Text = "No se pudo crear ninguna variante.<br/>" +
-                                    string.Join("<br/>", errores);
-                    MantenerModalAbierto();
-                }
+                ScriptManager.RegisterStartupScript(
+                    this,
+                    GetType(),
+                    "SuccessVariante",
+                    "cerrarModal(); mostrarMensajeExito('✓ " + insertadas + " variante(s) creada(s) correctamente');",
+                    true
+                );
             }
             catch (Exception ex)
             {
@@ -756,7 +740,14 @@ namespace KawkiWeb
             if (tallas.Length != stocks.Length)
             {
                 resultado.EsValido = false;
-                resultado.StocksInvalidos.Add($"cantidad no coincide (tallas: {tallas.Length}, stocks: {stocks.Length})");
+                if (tallas.Length > stocks.Length)
+                {
+                    resultado.TallasInvalidas.Add($"cantidad no coincide (tallas: {tallas.Length}, stocks: {stocks.Length})");
+                }
+                else
+                {
+                    resultado.StocksInvalidos.Add($"cantidad no coincide (tallas: {tallas.Length}, stocks: {stocks.Length})");
+                }
                 return resultado;
             }
 
@@ -854,12 +845,6 @@ namespace KawkiWeb
             if (resultado.TallasInvalidas.Count > 0 || resultado.StocksInvalidos.Count > 0 || resultado.StocksMinimoInvalidos.Count > 0)
             {
                 resultado.EsValido = false;
-            }
-
-            if (resultado.TallasStocks.Count == 0 && resultado.EsValido)
-            {
-                resultado.EsValido = false;
-                resultado.TallasInvalidas.Add("No se encontraron tallas válidas");
             }
 
             return resultado;

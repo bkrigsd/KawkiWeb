@@ -108,7 +108,7 @@
                 <div class="col-md-4 mb-3">
                     <label class="form-label">Precio (S/.) *</label>
                     <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" 
-                        placeholder="0.00" type="number" min="0.01" step="0.01"/>
+                        placeholder="0.00" type="number" step="0.01"/>
                     <asp:Label ID="lblErrorPrecio" runat="server" CssClass="text-danger small d-block mt-1" />
                 </div>
             </div>

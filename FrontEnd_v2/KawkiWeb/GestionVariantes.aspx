@@ -187,7 +187,7 @@
                                     <th style="width: 100px;">Stock Mín.</th>
                                     <th style="width: 100px;">Alerta</th>
                                     <th style="width: 120px;">Disponible</th>
-                                    <th style="width: 200px;">Acciones</th>
+                                    <th style="width: 200px;">Modificaciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -247,7 +247,6 @@
                     <asp:TextBox ID="txtStocksMinimos" runat="server" CssClass="form-control" 
                         placeholder="5,5,5,5,5 (opcional, por defecto: 5)" />
                     <asp:Label ID="lblErrorStocksMinimos" runat="server" CssClass="text-danger small d-block mt-1" />
-                    <small class="text-muted">Si dejas vacío, usará 5 como valor por defecto</small>
                 </div>
 
                 <div class="mb-3">
