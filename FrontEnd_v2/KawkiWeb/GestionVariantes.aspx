@@ -138,6 +138,7 @@
     .btn-editar:hover {
         background: #0056b3;
     }
+
     </style>
 </asp:Content>
 
@@ -223,7 +224,6 @@
                     <label class="form-label">Color *</label>
                     <asp:DropDownList ID="ddlColor" runat="server" CssClass="form-select">
                     </asp:DropDownList>
-                    <span id="errorColor" class="error-validation" style="display: none;">⚠ Debe seleccionar un color</span>
                 </div>
 
                 <div class="row">
@@ -231,13 +231,11 @@
                         <label class="form-label">Tallas (separadas por comas) *</label>
                         <asp:TextBox ID="txtTallas" runat="server" CssClass="form-control" 
                             placeholder="35,36,37,38,39" />
-                        <span id="errorTallas" class="error-validation" style="display: none;">⚠ Debe ingresar al menos una talla</span>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Stocks (separados por comas) *</label>
                         <asp:TextBox ID="txtStocks" runat="server" CssClass="form-control" 
                             placeholder="50,40,35,30,25" />
-                        <span id="errorStocks" class="error-validation" style="display: none;">⚠ Debe ingresar los stocks</span>
                     </div>
                 </div>
 
@@ -294,14 +292,12 @@
 
                 <div class="control-stock">
                     <label>Stock Actual *</label>
-                    <asp:TextBox ID="txtStockEditar" runat="server" CssClass="form-control" TextMode="Number" min="0" placeholder="0" />
-                    <span id="errorStockEditar" class="error-validation" style="display: none;">⚠ El stock no puede ser negativo</span>
+                    <asp:TextBox ID="txtStockEditar" runat="server" CssClass="form-control" TextMode="Number" placeholder="0" />
                 </div>
 
                 <div class="control-stock">
                     <label>Stock Mínimo *</label>
-                    <asp:TextBox ID="txtStockMinimoEditar" runat="server" CssClass="form-control" TextMode="Number" min="0" placeholder="5" />
-                    <span id="errorStockMinimoEditar" class="error-validation" style="display: none;">⚠ El stock mínimo no puede ser negativo</span>
+                    <asp:TextBox ID="txtStockMinimoEditar" runat="server" CssClass="form-control" TextMode="Number" placeholder="5" />
                 </div>
 
                 <asp:Label ID="lblMensajeStock" runat="server" CssClass="d-block mb-3" />
@@ -335,12 +331,12 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Stock Inicial *</label>
                         <asp:TextBox ID="txtStockTalla" runat="server" CssClass="form-control" 
-                            TextMode="Number" placeholder="0" min="0" />
+                            TextMode="Number" placeholder="0"/>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Stock Mínimo *</label>
                         <asp:TextBox ID="txtStockMinimoTalla" runat="server" CssClass="form-control" 
-                            TextMode="Number" placeholder="5" min="0" />
+                            TextMode="Number" placeholder="5"/>
                     </div>
                 </div>
 

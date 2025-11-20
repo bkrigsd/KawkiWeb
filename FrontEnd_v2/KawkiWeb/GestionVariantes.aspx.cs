@@ -621,7 +621,7 @@ namespace KawkiWeb
                     this,
                     GetType(),
                     "SuccessTalla",
-                    "cerrarModalTalla(); mostrarMensajeExito('✓ Talla agregada correctamente');",
+                    "cerrarModalTalla(); mostrarMensajeExito('Talla agregada correctamente');",
                     true
                 );
             }
