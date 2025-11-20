@@ -187,7 +187,7 @@
                                     <th style="width: 100px;">Stock Mín.</th>
                                     <th style="width: 100px;">Alerta</th>
                                     <th style="width: 120px;">Disponible</th>
-                                    <th style="width: 200px;">Modificaciones</th>
+                                    <th style="width: 200px;">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -310,7 +310,7 @@
                     <div class="form-group">
                         <label>Stock Actual</label>
                         <asp:TextBox ID="txtStockEditar" runat="server" CssClass="form-control" 
-                            placeholder="Ej: 50" TextMode="Number"></asp:TextBox>
+                            TextMode="Number"></asp:TextBox>
                         <asp:Label ID="lblErrorStockEditar" runat="server" CssClass="text-danger small"></asp:Label>
                     </div>
 
@@ -318,7 +318,7 @@
                     <div class="form-group">
                         <label>Stock Mínimo</label>
                         <asp:TextBox ID="txtStockMinimoEditar" runat="server" CssClass="form-control" 
-                            placeholder="Ej: 5" TextMode="Number"></asp:TextBox>
+                            TextMode="Number"></asp:TextBox>
                         <asp:Label ID="lblErrorStockMinimoEditar" runat="server" CssClass="text-danger small"></asp:Label>
                     </div>
 
@@ -473,8 +473,8 @@
             document.getElementById("hdnDisponible").value = valor;
         }
 
-        function abrirModalModificaciones(varianteId, colorNombre, tallaNombre, tallaId, urlImagen) {
-
+        // FUNCIÓN 1: Para abrir el modal la primera vez (carga datos de BD)
+        function abrirModalModificaciones(varianteId, colorNombre, tallaNombre, tallaId, urlImagen, stock, stockMinimo) {
             document.getElementById('<%= hfVarianteId.ClientID %>').value = varianteId;
             document.getElementById('<%= lblVarianteInfo.ClientID %>').textContent =
                 `Color: ${colorNombre} | Talla: ${tallaNombre}`;
@@ -483,12 +483,28 @@
             if (ddlTallaModificaciones && tallaId) {
                 ddlTallaModificaciones.value = tallaId;
             }
+
+            // CARGAR valores de BD
+            document.getElementById('<%= txtStockEditar.ClientID %>').value = stock || '';
+            document.getElementById('<%= txtStockMinimoEditar.ClientID %>').value = stockMinimo || '';
+    
+            let nombreArchivo = '';
+            if (urlImagen) {
+                nombreArchivo = urlImagen.replace('/Images/Productos/', '');
+            }
+            document.getElementById('<%= txtUrlImagenModif.ClientID %>').value = nombreArchivo;
+    
             // Limpiar mensajes
             document.getElementById('<%= lblMensajeModificaciones.ClientID %>').textContent = '';
             document.getElementById('<%= lblErrorStockEditar.ClientID %>').textContent = '';
             document.getElementById('<%= lblErrorStockMinimoEditar.ClientID %>').textContent = '';
             document.getElementById('<%= lblErrorTallaModif.ClientID %>').textContent = '';
 
+            document.getElementById("modalModificaciones").classList.add("show");
+        }
+
+        // FUNCIÓN 2: Para mantener el modal abierto con errores (NO recarga nada)
+        function mantenerModalModificacionesAbierto() {
             document.getElementById("modalModificaciones").classList.add("show");
         }
 

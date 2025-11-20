@@ -553,10 +553,10 @@ namespace KawkiWeb
         }
 
         // MODAL ABIERTO
+        // Cuando hay ERRORES, solo mantener visible
         private void MantenerModalModificacionesAbierto(int varianteId)
         {
-            // SOLO mostrar el modal, NO recargar datos ni limpiar mensajes
-            string script = "document.getElementById('modalModificaciones').classList.add('show');";
+            string script = "mantenerModalModificacionesAbierto();";
             ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModalModificaciones", script, true);
         }
 
@@ -1013,7 +1013,7 @@ namespace KawkiWeb
                 html.AppendFormat(@"
             <td>
                 <button type='button' class='btn-editar btn-sm' 
-                    onclick='abrirModalModificaciones(""{0}"", ""{1}"", ""{2}"", ""{3}"", ""{4}"")'>
+                    onclick='abrirModalModificaciones(""{0}"", ""{1}"", ""{2}"", ""{3}"", ""{4}"", ""{5}"", ""{6}"")'>
                     <i class='fas fa-edit'></i> Editar
                 </button>
             </td>",
@@ -1021,7 +1021,9 @@ namespace KawkiWeb
                     talla.ColorNombre,
                     talla.TallaNombre,
                     talla.TallaId,
-                    talla.UrlImagen
+                    talla.UrlImagen,
+                    talla.Stock,
+                    talla.StockMinimo
                 );
 
                 html.Append("</tr>");
