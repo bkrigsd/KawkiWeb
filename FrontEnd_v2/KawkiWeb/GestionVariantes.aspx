@@ -279,40 +279,72 @@
                         <i class="fas fa-times"></i> Cancelar
                     </button>
                     <asp:Button ID="btnGuardar" runat="server" CssClass="btn-kawki-primary"
-                        Text="💾 Registrar" OnClick="btnGuardar_Click" OnClientClick="return validarFormulario();" CausesValidation="false" />
+                        Text="Registrar" OnClick="btnGuardar_Click" OnClientClick="return validarFormulario();" CausesValidation="false" />
                 </div>
             </div>
         </div>
+   </div>
 
-        <!-- Modal de Editar Stock -->
-        <div id="modalEditarStock" class="modal-kawki">
+        <!-- Modal de Modificaciones -->
+        <div id="modalModificaciones" class="modal-kawki">
             <div class="modal-content-kawki">
                 <div class="modal-header-kawki">
-                    <h5><i class="fas fa-edit me-2"></i>Editar Stock - <span id="colorNombreStock"></span> Talla <span id="tallaNombreStock"></span></h5>
+                    <h3>Editar Variante</h3>
                 </div>
 
-                <asp:HiddenField ID="hfVarianteId" runat="server" />
+                <div class="modal-body">
+                    <asp:HiddenField ID="hfVarianteId" runat="server" />
+                    <asp:Label ID="lblVarianteInfo" runat="server" CssClass="text-muted d-block mb-3"></asp:Label>
 
-                <div class="control-stock">
-                    <label>Stock Actual *</label>
-                    <asp:TextBox ID="txtStockEditar" runat="server" CssClass="form-control" TextMode="Number" placeholder="0" />
-                    <asp:Label ID="lblErrorStockEditar" runat="server" CssClass="text-danger small d-block mt-1" />
+                    <asp:Label ID="lblMensajeModif" runat="server" CssClass="text-warning d-block mb-2"></asp:Label>
+
+                     <!-- Campo Talla -->
+                    <div class="form-group">
+                        <label>Talla</label>
+                        <asp:DropDownList ID="ddlTallaModif" runat="server" CssClass="form-control">
+                        </asp:DropDownList>
+                        <asp:Label ID="lblErrorTallaModif" runat="server" CssClass="text-danger small"></asp:Label>
+                    </div>
+
+                    <!-- Campo Stock -->
+                    <div class="form-group">
+                        <label>Stock Actual</label>
+                        <asp:TextBox ID="txtStockEditar" runat="server" CssClass="form-control" 
+                            placeholder="Ej: 50" TextMode="Number"></asp:TextBox>
+                        <asp:Label ID="lblErrorStockEditar" runat="server" CssClass="text-danger small"></asp:Label>
+                    </div>
+
+                    <!-- Campo Stock Mínimo -->
+                    <div class="form-group">
+                        <label>Stock Mínimo</label>
+                        <asp:TextBox ID="txtStockMinimoEditar" runat="server" CssClass="form-control" 
+                            placeholder="Ej: 5" TextMode="Number"></asp:TextBox>
+                        <asp:Label ID="lblErrorStockMinimoEditar" runat="server" CssClass="text-danger small"></asp:Label>
+                    </div>
+
+                    <!-- Campo URL Imagen (-->
+                    <div class="form-group">
+                        <label>URL de imagen</label>
+                        <div class="input-group">
+                            <span class="input-group-text">/Images/Productos/</span>
+                            <asp:TextBox ID="txtUrlImagenModif" runat="server" CssClass="form-control" 
+                                placeholder="nombre.jpg" />
+                        </div>
+                        <small class="text-muted">Ejemplo: producto.jpg o imagen.png</small>
+                    </div>
                 </div>
 
-                <div class="control-stock">
-                    <label>Stock Mínimo *</label>
-                    <asp:TextBox ID="txtStockMinimoEditar" runat="server" CssClass="form-control" TextMode="Number" placeholder="5" />
-                    <asp:Label ID="lblErrorStockMinimoEditar" runat="server" CssClass="text-danger small d-block mt-1" />
-                </div>
+                <asp:Label ID="lblMensajeModificaciones" runat="server" CssClass="d-block mb-3" />
 
-                <asp:Label ID="lblMensajeStock" runat="server" CssClass="d-block mb-3" />
-
-                <div class="text-end">
-                    <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModalStock()">
+                <div class="modal-footer">
+                    <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModalModificaciones()">
                         <i class="fas fa-times"></i> Cancelar
                     </button>
-                    <asp:Button ID="btnGuardarStock" runat="server" CssClass="btn-kawki-primary"
-                        Text="💾 Guardar" OnClick="btnGuardarStock_Click" OnClientClick="return validarStock();" CausesValidation="false" />
+
+                    <asp:Button ID="btnModificaciones" runat="server"
+                        Text="Guardar Cambios"
+                        CssClass="btn-kawki-primary"
+                        OnClick="btnModificaciones_Click" />
                 </div>
             </div>
         </div>
@@ -355,11 +387,10 @@
                         <i class="fas fa-times"></i> Cancelar
                     </button>
                     <asp:Button ID="btnGuardarTalla" runat="server" CssClass="btn-kawki-primary"
-                        Text="💾 Agregar Talla" OnClick="btnGuardarTalla_Click" />
+                        Text="Agregar Talla" OnClick="btnGuardarTalla_Click" />
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- Scripts -->
     <script>
@@ -435,38 +466,6 @@
             return true;
         }
 
-        function validarStock() {
-            let valido = true;
-
-            let stock = document.getElementById("txtStockEditar").value;
-            if (stock === "") {
-                document.getElementById("errorStockEditar").style.display = "block";
-                document.getElementById("errorStockEditar").innerText = "Debe ingresar un valor para el stock";
-                valido = false;
-            } else if (parseInt(stock) < 0) {
-                document.getElementById("errorStockEditar").style.display = "block";
-                document.getElementById("errorStockEditar").innerText = "El stock no puede ser negativo";
-                valido = false;
-            } else {
-                document.getElementById("errorStockEditar").style.display = "none";
-            }
-
-            let stockMinimo = document.getElementById("txtStockMinimoEditar").value;
-            if (stockMinimo === "") {
-                document.getElementById("errorStockMinimoEditar").style.display = "block";
-                document.getElementById("errorStockMinimoEditar").innerText = "Debe ingresar un valor para el stock mínimo";
-                valido = false;
-            } else if (parseInt(stockMinimo) < 0) {
-                document.getElementById("errorStockMinimoEditar").style.display = "block";
-                document.getElementById("errorStockMinimoEditar").innerText = "El stock mínimo no puede ser negativo";
-                valido = false;
-            } else {
-                document.getElementById("errorStockMinimoEditar").style.display = "none";
-            }
-
-            return valido;
-        }
-
         function seleccionarDisponibilidad(btn, valor) {
             var parent = btn.parentElement;
             parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
@@ -474,15 +473,42 @@
             document.getElementById("hdnDisponible").value = valor;
         }
 
-        function abrirModalEditarStock(varianteId, colorNombre, tallaNombre) {
-            document.getElementById("colorNombreStock").innerText = colorNombre;
-            document.getElementById("tallaNombreStock").innerText = tallaNombre;
-            document.getElementById("<%= hfVarianteId.ClientID %>").value = varianteId;
-            document.getElementById("modalEditarStock").classList.add("show");
+        function abrirModalModificaciones(varianteId, colorNombre, tallaNombre, tallaId, urlImagen) {
+
+            document.getElementById('<%= hfVarianteId.ClientID %>').value = varianteId;
+            document.getElementById('<%= lblVarianteInfo.ClientID %>').textContent =
+                `Color: ${colorNombre} | Talla: ${tallaNombre}`;
+
+            const ddlTallaModificaciones = document.getElementById('<%= ddlTallaModif.ClientID %>');
+            if (ddlTallaModificaciones && tallaId) {
+                ddlTallaModificaciones.value = tallaId;
+            }
+            // Limpiar mensajes
+            document.getElementById('<%= lblMensajeModificaciones.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorStockEditar.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorStockMinimoEditar.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorTallaModif.ClientID %>').textContent = '';
+
+            document.getElementById("modalModificaciones").classList.add("show");
         }
 
-        function cerrarModalStock() {
-            document.getElementById("modalEditarStock").classList.remove("show");
+        function cerrarModalModificaciones() {
+            document.getElementById("modalModificaciones").classList.remove("show");
+            limpiarFormularioModificaciones();
+        }
+
+        function limpiarFormularioModificaciones() {
+            document.getElementById('<%= txtStockEditar.ClientID %>').value = '';
+            document.getElementById('<%= txtStockMinimoEditar.ClientID %>').value = '';
+            document.getElementById('<%= txtUrlImagenModif.ClientID %>').value = '';
+
+            const ddlTallaModificaciones = document.getElementById('<%= ddlTallaModif.ClientID %>');
+            if (ddlTallaModificaciones) ddlTallaModificaciones.selectedIndex = 0;
+
+            document.getElementById('<%= lblMensajeModificaciones.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorStockEditar.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorStockMinimoEditar.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorTallaModif.ClientID %>').textContent = '';
         }
 
         function abrirModalAgregarTalla(colorId, colorNombre) {

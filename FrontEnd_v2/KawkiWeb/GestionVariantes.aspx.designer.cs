@@ -186,6 +186,42 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.HiddenField hfVarianteId;
 
         /// <summary>
+        /// Control lblVarianteInfo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVarianteInfo;
+
+        /// <summary>
+        /// Control lblMensajeModif.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensajeModif;
+
+        /// <summary>
+        /// Control ddlTallaModif.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTallaModif;
+
+        /// <summary>
+        /// Control lblErrorTallaModif.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorTallaModif;
+
+        /// <summary>
         /// Control txtStockEditar.
         /// </summary>
         /// <remarks>
@@ -222,22 +258,31 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.Label lblErrorStockMinimoEditar;
 
         /// <summary>
-        /// Control lblMensajeStock.
+        /// Control txtUrlImagenModif.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensajeStock;
+        protected global::System.Web.UI.WebControls.TextBox txtUrlImagenModif;
 
         /// <summary>
-        /// Control btnGuardarStock.
+        /// Control lblMensajeModificaciones.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardarStock;
+        protected global::System.Web.UI.WebControls.Label lblMensajeModificaciones;
+
+        /// <summary>
+        /// Control btnModificaciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModificaciones;
 
         /// <summary>
         /// Control hfColorIdTalla.
