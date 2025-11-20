@@ -11,41 +11,11 @@
   <message name="desactivarDescuentoResponse">
     <part name="parameters" element="tns:desactivarDescuentoResponse" />
   </message>
-  <message name="listarTodosDescuento">
-    <part name="parameters" element="tns:listarTodosDescuento" />
-  </message>
-  <message name="listarTodosDescuentoResponse">
-    <part name="parameters" element="tns:listarTodosDescuentoResponse" />
-  </message>
-  <message name="listarVigentesDescuento">
-    <part name="parameters" element="tns:listarVigentesDescuento" />
-  </message>
-  <message name="listarVigentesDescuentoResponse">
-    <part name="parameters" element="tns:listarVigentesDescuentoResponse" />
-  </message>
-  <message name="insertarDescuento">
-    <part name="parameters" element="tns:insertarDescuento" />
-  </message>
-  <message name="insertarDescuentoResponse">
-    <part name="parameters" element="tns:insertarDescuentoResponse" />
-  </message>
   <message name="modificarDescuento">
     <part name="parameters" element="tns:modificarDescuento" />
   </message>
   <message name="modificarDescuentoResponse">
     <part name="parameters" element="tns:modificarDescuentoResponse" />
-  </message>
-  <message name="esAplicableDescuento">
-    <part name="parameters" element="tns:esAplicableDescuento" />
-  </message>
-  <message name="esAplicableDescuentoResponse">
-    <part name="parameters" element="tns:esAplicableDescuentoResponse" />
-  </message>
-  <message name="calcularDescuentoDescuento">
-    <part name="parameters" element="tns:calcularDescuentoDescuento" />
-  </message>
-  <message name="calcularDescuentoDescuentoResponse">
-    <part name="parameters" element="tns:calcularDescuentoDescuentoResponse" />
   </message>
   <message name="obtenerPorIdDescuento">
     <part name="parameters" element="tns:obtenerPorIdDescuento" />
@@ -53,11 +23,17 @@
   <message name="obtenerPorIdDescuentoResponse">
     <part name="parameters" element="tns:obtenerPorIdDescuentoResponse" />
   </message>
-  <message name="activarDescuento">
-    <part name="parameters" element="tns:activarDescuento" />
+  <message name="calcularDescuentoDescuento">
+    <part name="parameters" element="tns:calcularDescuentoDescuento" />
   </message>
-  <message name="activarDescuentoResponse">
-    <part name="parameters" element="tns:activarDescuentoResponse" />
+  <message name="calcularDescuentoDescuentoResponse">
+    <part name="parameters" element="tns:calcularDescuentoDescuentoResponse" />
+  </message>
+  <message name="listarVigentesDescuento">
+    <part name="parameters" element="tns:listarVigentesDescuento" />
+  </message>
+  <message name="listarVigentesDescuentoResponse">
+    <part name="parameters" element="tns:listarVigentesDescuentoResponse" />
   </message>
   <message name="listarActivasDescuento">
     <part name="parameters" element="tns:listarActivasDescuento" />
@@ -65,46 +41,70 @@
   <message name="listarActivasDescuentoResponse">
     <part name="parameters" element="tns:listarActivasDescuentoResponse" />
   </message>
+  <message name="listarTodosDescuento">
+    <part name="parameters" element="tns:listarTodosDescuento" />
+  </message>
+  <message name="listarTodosDescuentoResponse">
+    <part name="parameters" element="tns:listarTodosDescuentoResponse" />
+  </message>
+  <message name="insertarDescuento">
+    <part name="parameters" element="tns:insertarDescuento" />
+  </message>
+  <message name="insertarDescuentoResponse">
+    <part name="parameters" element="tns:insertarDescuentoResponse" />
+  </message>
+  <message name="activarDescuento">
+    <part name="parameters" element="tns:activarDescuento" />
+  </message>
+  <message name="activarDescuentoResponse">
+    <part name="parameters" element="tns:activarDescuentoResponse" />
+  </message>
+  <message name="esAplicableDescuento">
+    <part name="parameters" element="tns:esAplicableDescuento" />
+  </message>
+  <message name="esAplicableDescuentoResponse">
+    <part name="parameters" element="tns:esAplicableDescuentoResponse" />
+  </message>
   <portType name="Descuentos">
     <operation name="desactivarDescuento">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/desactivarDescuentoRequest" message="tns:desactivarDescuento" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/desactivarDescuentoResponse" message="tns:desactivarDescuentoResponse" />
     </operation>
-    <operation name="listarTodosDescuento">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarTodosDescuentoRequest" message="tns:listarTodosDescuento" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarTodosDescuentoResponse" message="tns:listarTodosDescuentoResponse" />
-    </operation>
-    <operation name="listarVigentesDescuento">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarVigentesDescuentoRequest" message="tns:listarVigentesDescuento" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarVigentesDescuentoResponse" message="tns:listarVigentesDescuentoResponse" />
-    </operation>
-    <operation name="insertarDescuento">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoRequest" message="tns:insertarDescuento" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoResponse" message="tns:insertarDescuentoResponse" />
-    </operation>
     <operation name="modificarDescuento">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/modificarDescuentoRequest" message="tns:modificarDescuento" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/modificarDescuentoResponse" message="tns:modificarDescuentoResponse" />
-    </operation>
-    <operation name="esAplicableDescuento">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoRequest" message="tns:esAplicableDescuento" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoResponse" message="tns:esAplicableDescuentoResponse" />
-    </operation>
-    <operation name="calcularDescuentoDescuento">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/calcularDescuentoDescuentoRequest" message="tns:calcularDescuentoDescuento" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/calcularDescuentoDescuentoResponse" message="tns:calcularDescuentoDescuentoResponse" />
     </operation>
     <operation name="obtenerPorIdDescuento">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/obtenerPorIdDescuentoRequest" message="tns:obtenerPorIdDescuento" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/obtenerPorIdDescuentoResponse" message="tns:obtenerPorIdDescuentoResponse" />
     </operation>
-    <operation name="activarDescuento">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/activarDescuentoRequest" message="tns:activarDescuento" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/activarDescuentoResponse" message="tns:activarDescuentoResponse" />
+    <operation name="calcularDescuentoDescuento">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/calcularDescuentoDescuentoRequest" message="tns:calcularDescuentoDescuento" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/calcularDescuentoDescuentoResponse" message="tns:calcularDescuentoDescuentoResponse" />
+    </operation>
+    <operation name="listarVigentesDescuento">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarVigentesDescuentoRequest" message="tns:listarVigentesDescuento" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarVigentesDescuentoResponse" message="tns:listarVigentesDescuentoResponse" />
     </operation>
     <operation name="listarActivasDescuento">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarActivasDescuentoRequest" message="tns:listarActivasDescuento" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarActivasDescuentoResponse" message="tns:listarActivasDescuentoResponse" />
+    </operation>
+    <operation name="listarTodosDescuento">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarTodosDescuentoRequest" message="tns:listarTodosDescuento" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/listarTodosDescuentoResponse" message="tns:listarTodosDescuentoResponse" />
+    </operation>
+    <operation name="insertarDescuento">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoRequest" message="tns:insertarDescuento" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/insertarDescuentoResponse" message="tns:insertarDescuentoResponse" />
+    </operation>
+    <operation name="activarDescuento">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/activarDescuentoRequest" message="tns:activarDescuento" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/activarDescuentoResponse" message="tns:activarDescuentoResponse" />
+    </operation>
+    <operation name="esAplicableDescuento">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoRequest" message="tns:esAplicableDescuento" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Descuentos/esAplicableDescuentoResponse" message="tns:esAplicableDescuentoResponse" />
     </operation>
   </portType>
   <binding name="DescuentosPortBinding" type="tns:Descuentos">
@@ -118,52 +118,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarTodosDescuento">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="listarVigentesDescuento">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="insertarDescuento">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
     <operation name="modificarDescuento">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="esAplicableDescuento">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="calcularDescuentoDescuento">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -181,7 +136,16 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="activarDescuento">
+    <operation name="calcularDescuentoDescuento">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarVigentesDescuento">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -191,6 +155,42 @@
       </output>
     </operation>
     <operation name="listarActivasDescuento">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarTodosDescuento">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="insertarDescuento">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="activarDescuento">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="esAplicableDescuento">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

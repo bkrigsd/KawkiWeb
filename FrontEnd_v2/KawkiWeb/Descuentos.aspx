@@ -228,7 +228,7 @@
             document.getElementById("<%= txtFechaFin.ClientID %>").value = fechaFin;
             document.getElementById("<%= chkActivo.ClientID %>").checked = (activo === true);
             document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
-
+            actualizarValorBeneficio();
             abrirModalEditar();
         }
 
@@ -250,27 +250,25 @@
         }
 
         // Ejecutar cuando cambie el tipo de beneficio
-        document.addEventListener("DOMContentLoaded", function () {
-
+        // --- GLOBAL: accesible desde abrir/editar ---
+        function actualizarValorBeneficio() {
             const ddlBenef = document.getElementById("<%= ddlTipoBeneficio.ClientID %>");
             const txtValorBen = document.getElementById("<%= txtPorcentaje.ClientID %>");
 
-            function actualizarValorBeneficio() {
-                const selectedText = ddlBenef.options[ddlBenef.selectedIndex].text.toLowerCase();
+            const selectedText = ddlBenef.options[ddlBenef.selectedIndex].text.toLowerCase();
 
-                if (selectedText.includes("envío gratis") || selectedText.includes("envio gratis")) {
-                    txtValorBen.value = "0";
-                    txtValorBen.setAttribute("readonly", true);
-                } else {
-                    txtValorBen.removeAttribute("readonly");
-                    txtValorBen.value = "";
-                }
+            if (selectedText.includes("envío gratis") || selectedText.includes("envio gratis")) {
+                txtValorBen.value = "0";
+                txtValorBen.setAttribute("readonly", true);
+            } else {
+                txtValorBen.removeAttribute("readonly");
             }
+        }
 
+        // Ejecutar cuando cambia el dropdown
+        document.addEventListener("DOMContentLoaded", function () {
+            const ddlBenef = document.getElementById("<%= ddlTipoBeneficio.ClientID %>");
             ddlBenef.addEventListener("change", actualizarValorBeneficio);
-
-            // Ejecutar una vez al cargar el modal (por si es edición)
-            actualizarValorBeneficio();
         });
 
         function cerrarModal() {
@@ -337,37 +335,6 @@
             // 6. Marcar que no hay mensajes pendientes
             document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
         }
-
-
-        //function limpiarValidadores() {
-
-        //    // 1. Borrar mensajes de todos los validadores ASP.NET
-        //    document.querySelectorAll(".text-danger").forEach(x => {
-        //        x.innerHTML = "";
-        //    });
-
-        //    // 2. Quitar clases de error del framework
-        //    document.querySelectorAll(".aspNetDisabled, .input-validation-error").forEach(x => {
-        //        x.classList.remove("aspNetDisabled");
-        //        x.classList.remove("input-validation-error");
-        //    });
-
-        //    // 3. Resetear estado de los validadores de ASP.NET (solo si existen)
-        //    if (typeof (Page_Validators) !== "undefined") {
-        //        for (var i = 0; i < Page_Validators.length; i++) {
-        //            ValidatorEnable(Page_Validators[i], true);
-        //            Page_Validators[i].isvalid = true;
-        //        }
-        //    }
-        //    if (typeof (Page_IsValid) !== "undefined") {
-        //        Page_IsValid = true;
-        //    }
-        //}
-
-        <%--function abrirModalConfirmacion(id) {
-            document.getElementById("<%= hfIdEliminar.ClientID %>").value = id;
-            document.getElementById("modalConfirmacion").classList.add("show");
-        }--%>
 
         function cerrarModalConfirmacion() {
             document.getElementById("modalConfirmacion").classList.remove("show");
