@@ -5,7 +5,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using KawkiWebBusiness;
 using KawkiWebBusiness.KawkiWebWSCategorias;
+using KawkiWebBusiness.KawkiWebWSProductos;
 using KawkiWebBusiness.KawkiWebWSProductosVariantes;
+using KawkiWebBusiness.KawkiWebWSTallas;
 using coloresDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO;
 using tallasDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO;
 using usuariosDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO;
@@ -35,6 +37,18 @@ namespace KawkiWeb
 
             productoId = Convert.ToInt32(Request.QueryString["productoId"]);
             hfProductoId.Value = productoId.ToString();
+
+            if (IsPostBack)
+            {
+                string eventTarget = Request["__EVENTTARGET"];
+                string eventArgument = Request["__EVENTARGUMENT"];
+
+                if (eventTarget == "UpdateDisponibilidad" && !string.IsNullOrEmpty(eventArgument))
+                {
+                    ActualizarDisponibilidad(eventArgument);
+                    return;
+                }
+            }
 
             if (!IsPostBack)
             {
@@ -81,11 +95,20 @@ namespace KawkiWeb
         private void CargarTallas()
         {
             var lista = tallasBO.ListarTodosTalla();
+
+            // Para el modal principal de agregar variante
             ddlTalla.DataSource = lista;
             ddlTalla.DataTextField = "numero";
             ddlTalla.DataValueField = "talla_id";
             ddlTalla.DataBind();
             ddlTalla.Items.Insert(0, new ListItem("-- Seleccione una talla --", "0"));
+
+            // Para el modal de agregar talla a color existente
+            ddlTallaAgregar.DataSource = lista;
+            ddlTallaAgregar.DataTextField = "numero";
+            ddlTallaAgregar.DataValueField = "talla_id";
+            ddlTallaAgregar.DataBind();
+            ddlTallaAgregar.Items.Insert(0, new ListItem("-- Seleccione una talla --", "0"));
         }
 
         private void CargarVariantes()
@@ -127,6 +150,69 @@ namespace KawkiWeb
             }
         }
 
+        // ⭐ AGREGAR ESTE MÉTODO NUEVO:
+        private void ActualizarDisponibilidad(string data)
+        {
+            try
+            {
+                var partes = data.Split('|');
+                if (partes.Length != 2) return;
+
+                int varianteId = Convert.ToInt32(partes[0]);
+                bool disponible = partes[1].ToLower() == "true";
+
+                var variante = variantesBO.ObtenerPorId(varianteId);
+                if (variante == null) return;
+
+                var usuario = ObtenerUsuarioSesion();
+
+                if (usuario == null || usuario.usuarioId <= 0)
+                {
+                    lblMensaje.Text = "Error: No hay sesión de usuario válida.";
+                    MantenerModalAbierto();
+                    return;
+                }
+
+                // Mapea explicitamente al DTO que espera el servicio de Productos
+                var usuarioProductosVar = new KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO
+                {
+                    usuarioId = usuario.usuarioId,
+                    usuarioIdSpecified = true
+                };
+
+                usuario.usuarioIdSpecified = true;
+                usuarioProductosVar.usuarioIdSpecified = true;
+
+                int? resultado = variantesBO.Modificar(
+                    varianteId,
+                    variante.stock,
+                    variante.stock_minimo,
+                    variante.producto_id,
+                    variante.color,
+                    variante.talla,
+                    variante.url_imagen,
+                    disponible,
+                    usuarioProductosVar
+                );
+
+                if (resultado != null && resultado > 0)
+                {
+                    CargarVariantes();
+                    ScriptManager.RegisterStartupScript(
+                        this,
+                        GetType(),
+                        "Success",
+                        "mostrarMensajeExito('Disponibilidad actualizada correctamente');",
+                        true
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error al actualizar disponibilidad: " + ex.Message);
+            }
+        }
+
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             lblMensaje.Text = "";
@@ -135,158 +221,143 @@ namespace KawkiWeb
             try
             {
                 int colorId = Convert.ToInt32(ddlColor.SelectedValue);
+                int tallaId = Convert.ToInt32(ddlTalla.SelectedValue);
                 string urlImagen = txtUrlImagen.Text.Trim();
                 bool disponible = Request.Form["hdnDisponible"] == "true";
                 var usuario = ObtenerUsuarioSesion();
 
                 if (usuario == null || usuario.usuarioId <= 0)
                 {
-                    lblMensaje.Text = "⚠ Error: No hay sesión de usuario válida.";
+                    lblMensaje.Text = "Error: No hay sesión de usuario válida.";
                     MantenerModalAbierto();
                     return;
                 }
 
-                if (colorId == 0)
+                var usuarioProductosVar = new KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO
                 {
-                    lblMensaje.Text = "⚠ Debe seleccionar un color.";
-                    MantenerModalAbierto();
-                    return;
-                }
-
-                // Verificar si ya existe este color para el producto
-                var variantes = variantesBO.ListarPorProducto(productoId);
-                if (variantes.Any(v => v.color?.color_id == colorId))
-                {
-                    lblMensaje.Text = "⚠ Este color ya existe para este producto. Seleccione otro color.";
-                    MantenerModalAbierto();
-                    return;
-                }
-
-                string tallasText = txtTallas.Text.Trim();
-                string stocksText = txtStocks.Text.Trim();
-                string stocksMinimoText = txtStocksMinimos.Text.Trim();
-
-                if (string.IsNullOrEmpty(tallasText) || string.IsNullOrEmpty(stocksText))
-                {
-                    lblMensaje.Text = "⚠ Debe ingresar tallas y stocks.";
-                    MantenerModalAbierto();
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(urlImagen))
-                {
-                    lblMensaje.Text = "⚠ Debe ingresar una URL para la imagen del producto.";
-                    MantenerModalAbierto();
-                    return;
-                }
-
-                var tallasStocks = ParsearTallasYStocks(tallasText, stocksText, stocksMinimoText);
-
-                if (tallasStocks.Count == 0)
-                {
-                    lblMensaje.Text = "⚠ Formato inválido o tallas no válidas. Verifique los datos.";
-                    MantenerModalAbierto();
-                    return;
-                }
-
-                var color = coloresBO.ObtenerPorIdColor(colorId);
-                // Convertir categoría al tipo que espera ProductosBO
-                var coloresProducto = new KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO
-                {
-                    color_id = color.color_id,
-                    nombre = color.nombre
+                    usuarioId = usuario.usuarioId,
+                    usuarioIdSpecified = true
                 };
 
-                string urlCompleta = "/Images/Productos/" + urlImagen;
-
-                int insertadas = 0;
-                int fallidas = 0;
-                List<string> errores = new List<string>();
-
-                foreach (var item in tallasStocks)
+                // Validar color
+                if (colorId == 0)
                 {
-                    int tallaId = item.TallaId;
-                    int stock = item.Stock;
-                    int stockMinimo = item.StockMinimo;
-
-                    if (stock < 0)
-                    {
-                        lblMensaje.Text = "⚠ El stock no puede ser negativo.";
-                        MantenerModalAbierto();
-                        return;
-                    }
-
-                    if (stockMinimo < 0)
-                    {
-                        lblMensaje.Text = "⚠ El stock mínimo no puede ser negativo.";
-                        MantenerModalAbierto();
-                        return;
-                    }
-
-                    var talla = new tallasDTO { talla_id = tallaId };
-
-                    // Capturar y verificar el resultado
-                    int? resultado = variantesBO.Insertar(
-                        stock,
-                        stockMinimo,
-                        productoId,
-                        coloresProducto,
-                        talla,
-                        urlCompleta,
-                        disponible,
-                        usuario
-                    );
-
-                    if (resultado == null || resultado <= 0)
-                    {
-                        fallidas++;
-                        errores.Add($"Talla {tallaId}: No se pudo insertar (puede que ya exista esta combinación)");
-                    }
-                    else
-                    {
-                        insertadas++;
-                    }
-                }
-
-                // Mostrar resultado
-                if (insertadas > 0 && fallidas == 0)
-                {
-                    // Todo bien
-                    lblMensaje.CssClass = "text-success d-block mb-2";
-                    lblMensaje.Text = $"✓ {insertadas} variante(s) creada(s) correctamente.";
-                    LimpiarFormulario();
-                    CargarVariantes();
-
-                    ScriptManager.RegisterStartupScript(
-                        this,
-                        GetType(),
-                        "CerrarModal",
-                        "cerrarModal();",
-                        true
-                    );
-                }
-                else if (insertadas > 0 && fallidas > 0)
-                {
-                    // Algunas se insertaron, otras no
-                    lblMensaje.CssClass = "text-warning d-block mb-2";
-                    lblMensaje.Text = $"⚠ Se insertaron {insertadas} de {tallasStocks.Count} variantes.<br/>" +
-                                    string.Join("<br/>", errores);
-                    CargarVariantes();
+                    lblMensaje.Text = "Debe seleccionar un color.";
                     MantenerModalAbierto();
+                    return;
+                }
+
+                // Validar talla
+                if (tallaId == 0)
+                {
+                    lblMensaje.Text = "Debe seleccionar una talla.";
+                    MantenerModalAbierto();
+                    return;
+                }
+
+                // Validar stock
+                if (!int.TryParse(txtStock.Text.Trim(), out int stock))
+                {
+                    lblMensaje.Text = "El stock debe ser un número válido.";
+                    MantenerModalAbierto();
+                    return;
+                }
+
+                if (stock < 0)
+                {
+                    lblMensaje.Text = "El stock no puede ser negativo.";
+                    MantenerModalAbierto();
+                    return;
+                }
+
+                // Validar stock mínimo
+                if (!int.TryParse(txtStockMinimo.Text.Trim(), out int stockMinimo))
+                {
+                    stockMinimo = 5; // Valor por defecto
+                }
+
+                if (stockMinimo < 0)
+                {
+                    lblMensaje.Text = "El stock mínimo no puede ser negativo.";
+                    MantenerModalAbierto();
+                    return;
+                }
+
+                // Verificar si ya existe esta combinación color-talla
+                var variantes = variantesBO.ListarPorProducto(productoId);
+                if (variantes.Any(v => v.color?.color_id == colorId && v.talla?.talla_id == tallaId))
+                {
+                    lblMensaje.Text = "Esta combinación de color y talla ya existe. Seleccione otra.";
+                    MantenerModalAbierto();
+                    return;
+                }
+
+                // Obtener color
+                var coloresProducto = coloresBO.ObtenerPorIdColor(colorId);
+                var color = new KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO
+                {
+                    color_id = coloresProducto.color_id,
+                    nombre = coloresProducto.nombre,
+                    color_idSpecified = true
+                };
+
+                // Obtener talla
+                var tallaVariante = tallasBO.ObtenerPorIdTalla(tallaId);
+                var talla = new KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO
+                {
+                    talla_id = tallaVariante.talla_id,
+                    numero = tallaVariante.numero,
+                    talla_idSpecified = true
+                };
+
+                // Preparar URL de imagen
+                if (string.IsNullOrEmpty(urlImagen))
+                {
+                    urlImagen = "";
                 }
                 else
                 {
-                    // Ninguna se insertó
-                    lblMensaje.CssClass = "text-danger d-block mb-2";
-                    lblMensaje.Text = "❌ No se pudo crear ninguna variante.<br/>" +
-                                    string.Join("<br/>", errores);
-                    MantenerModalAbierto();
+                    urlImagen = "/Images/Productos/" + urlImagen;
                 }
+
+                // Insertar variante
+                int? resultado = variantesBO.Insertar(
+                    stock,
+                    stockMinimo,
+                    productoId,
+                    color,
+                    talla,
+                    urlImagen,
+                    disponible,
+                    usuarioProductosVar
+                );
+
+                if (resultado == null || resultado <= 0)
+                {
+                    lblMensaje.CssClass = "text-danger d-block mb-2";
+                    lblMensaje.Text = "No se pudo crear la variante. Verifique que los datos sean válidos.";
+                    MantenerModalAbierto();
+                    return;
+                }
+
+                // Éxito
+                lblMensaje.CssClass = "text-success d-block mb-2";
+                lblMensaje.Text = "✓ Variante creada correctamente.";
+                LimpiarFormulario();
+                CargarVariantes();
+
+                ScriptManager.RegisterStartupScript(
+                    this,
+                    GetType(),
+                    "CerrarModal",
+                    "cerrarModal();",
+                    true
+                );
             }
             catch (Exception ex)
             {
                 lblMensaje.CssClass = "text-danger d-block mb-2";
-                lblMensaje.Text = "❌ Error: " + ex.Message;
+                lblMensaje.Text = "Error: " + ex.Message;
                 MantenerModalAbierto();
             }
         }
@@ -294,7 +365,7 @@ namespace KawkiWeb
         protected void btnGuardarStock_Click(object sender, EventArgs e)
         {
             lblMensajeStock.Text = "";
-            lblMensajeStock.CssClass = "text-danger d-block mb-2";
+            lblMensajeStock.CssClass = "text-warning d-block mb-2";
 
             try
             {
@@ -305,46 +376,52 @@ namespace KawkiWeb
 
                 if (string.IsNullOrEmpty(stockText))
                 {
-                    lblMensajeStock.Text = "⚠ Debe ingresar un valor para el stock.";
+                    lblMensajeStock.Text = "Debe ingresar un valor para el stock.";
                     return;
                 }
 
                 if (string.IsNullOrEmpty(stockMinimoText))
                 {
-                    lblMensajeStock.Text = "⚠ Debe ingresar un valor para el stock mínimo.";
+                    lblMensajeStock.Text = "Debe ingresar un valor para el stock mínimo.";
                     return;
                 }
 
                 if (!int.TryParse(stockText, out int nuevoStock))
                 {
-                    lblMensajeStock.Text = "⚠ El stock debe ser un número válido.";
+                    lblMensajeStock.Text = "El stock debe ser un número válido.";
                     return;
                 }
 
                 if (!int.TryParse(stockMinimoText, out int nuevoStockMinimo))
                 {
-                    lblMensajeStock.Text = "⚠ El stock mínimo debe ser un número válido.";
+                    lblMensajeStock.Text = "El stock mínimo debe ser un número válido.";
                     return;
                 }
 
                 var usuario = ObtenerUsuarioSesion();
+                // Mapea explicitamente al DTO que espera el servicio de Productos
+                var usuarioProductosVar = new KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO
+                {
+                    usuarioId = usuario.usuarioId,
+                    usuarioIdSpecified = true
+                };
 
                 if (nuevoStock < 0)
                 {
-                    lblMensajeStock.Text = "⚠ El stock no puede ser negativo.";
+                    lblMensajeStock.Text = "El stock no puede ser negativo.";
                     return;
                 }
 
                 if (nuevoStockMinimo < 0)
                 {
-                    lblMensajeStock.Text = "⚠ El stock mínimo no puede ser negativo.";
+                    lblMensajeStock.Text = "El stock mínimo no puede ser negativo.";
                     return;
                 }
 
                 var variante = variantesBO.ObtenerPorId(varianteId);
                 if (variante == null)
                 {
-                    lblMensajeStock.Text = "⚠ Variante no encontrada.";
+                    lblMensajeStock.Text = "Variante no encontrada.";
                     return;
                 }
 
@@ -358,18 +435,18 @@ namespace KawkiWeb
                     variante.talla,
                     variante.url_imagen,
                     variante.disponible,
-                    usuario
+                    usuarioProductosVar
                 );
 
                 if (resultado == null || resultado <= 0)
                 {
-                    lblMensajeStock.CssClass = "text-danger d-block mb-2";
-                    lblMensajeStock.Text = "❌ No se pudo actualizar el stock. Verifique que los datos sean válidos.";
+                    lblMensajeStock.CssClass = "text-warning d-block mb-2";
+                    lblMensajeStock.Text = "No se pudo actualizar el stock. Verifique que los datos sean válidos.";
                     return;
                 }
 
                 lblMensajeStock.CssClass = "text-success d-block mb-2";
-                lblMensajeStock.Text = "✓ Stock actualizado correctamente.";
+                lblMensajeStock.Text = "Stock actualizado correctamente.";
 
                 CargarVariantes();
 
@@ -384,47 +461,84 @@ namespace KawkiWeb
             catch (Exception ex)
             {
                 lblMensajeStock.CssClass = "text-danger d-block mb-2";
-                lblMensajeStock.Text = "❌ Error: " + ex.Message;
+                lblMensajeStock.Text = "Error: " + ex.Message;
             }
         }
 
         protected void btnGuardarTalla_Click(object sender, EventArgs e)
         {
+            // Limpiar mensajes de error
             lblMensajeTalla.Text = "";
             lblMensajeTalla.CssClass = "text-danger d-block mb-2";
 
             try
             {
                 int colorId = Convert.ToInt32(hfColorIdTalla.Value);
-                int tallaId = Convert.ToInt32(ddlTalla.SelectedValue);
-                int stock = Convert.ToInt32(txtStockTalla.Text.Trim());
-                int stockMinimo = Convert.ToInt32(txtStockMinimoTalla.Text.Trim());
-                var usuario = ObtenerUsuarioSesion();
+                int tallaId = Convert.ToInt32(ddlTallaAgregar.SelectedValue);
 
+                string stockText = txtStockTalla.Text.Trim();
+                string stockMinimoText = txtStockMinimoTalla.Text.Trim();
+
+                // Validar talla
                 if (tallaId == 0)
                 {
-                    lblMensajeTalla.Text = "⚠ Seleccione una talla.";
+                    lblMensajeTalla.Text = "Seleccione una talla";
+                    lblMensajeTalla.CssClass = "text-warning d-block mb-2";
+                    MantenerModalTallaAbierto(colorId);
                     return;
                 }
 
-                if (stock < 0)
+                // Validar stock
+                if (string.IsNullOrEmpty(stockText))
                 {
-                    lblMensajeTalla.Text = "⚠ El stock no puede ser negativo.";
+                    lblMensajeTalla.Text = "Ingrese el stock inicial";
+                    lblMensajeTalla.CssClass = "text-warning d-block mb-2";
+                    MantenerModalTallaAbierto(colorId);
                     return;
                 }
 
-                if (stockMinimo < 0)
+                if (!int.TryParse(stockText, out int stock) || stock < 0)
                 {
-                    lblMensajeTalla.Text = "⚠ El stock mínimo no puede ser negativo.";
+                    lblMensajeTalla.Text = "El stock no puede ser negativo";
+                    lblMensajeTalla.CssClass = "text-warning d-block mb-2";
+                    MantenerModalTallaAbierto(colorId);
                     return;
                 }
+
+                // Validar stock mínimo
+                if (string.IsNullOrEmpty(stockMinimoText))
+                {
+                    lblMensajeTalla.Text = "Ingrese el stock mínimo";
+                    lblMensajeTalla.CssClass = "text-warning d-block mb-2";
+                    MantenerModalTallaAbierto(colorId);
+                    return;
+                }
+
+                if (!int.TryParse(stockMinimoText, out int stockMinimo) || stockMinimo < 0)
+                {
+                    lblMensajeTalla.Text = "El stock mínimo no puede ser negativo";
+                    lblMensajeTalla.CssClass = "text-warning d-block mb-2";
+                    MantenerModalTallaAbierto(colorId);
+                    return;
+                }
+
+                var usuario = ObtenerUsuarioSesion();
+
+                // Mapea explicitamente al DTO que espera el servicio de Productos
+                var usuarioProductosVar = new KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO
+                {
+                    usuarioId = usuario.usuarioId,
+                    usuarioIdSpecified = true
+                };
 
                 var variantes = variantesBO.ListarPorProducto(productoId);
 
                 // Verificar si ya existe esta combinación
                 if (variantes.Any(v => v.color?.color_id == colorId && v.talla?.talla_id == tallaId))
                 {
-                    lblMensajeTalla.Text = "⚠ Esta talla ya existe para este color. Seleccione otra talla.";
+                    lblMensajeTalla.CssClass = "text-warning d-block mb-2";
+                    lblMensajeTalla.Text = "Esta talla ya existe para este color. Seleccione otra talla.";
+                    MantenerModalTallaAbierto(colorId);
                     return;
                 }
 
@@ -434,14 +548,29 @@ namespace KawkiWeb
 
                 if (string.IsNullOrEmpty(urlImagen))
                 {
-                    lblMensajeTalla.Text = "⚠ No se encontró URL de imagen para este color.";
+                    lblMensajeTalla.CssClass = "text-danger d-block mb-2";
+                    lblMensajeTalla.Text = "No se encontró URL de imagen para este color.";
+                    MantenerModalTallaAbierto(colorId);
                     return;
                 }
 
-                var color = new coloresDTO { color_id = colorId };
-                var talla = new tallasDTO { talla_id = tallaId };
+                var colorVar = coloresBO.ObtenerPorIdColor(colorId);
+                var color = new KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO
+                {
+                    color_id = colorVar.color_id,
+                    nombre = colorVar.nombre,
+                    color_idSpecified = true
+                };
 
-                // ✅ IGUAL QUE EN USUARIOS: Capturar y verificar el resultado
+                var tallaVar = tallasBO.ObtenerPorIdTalla(tallaId);
+                var talla = new KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO
+                {
+                    talla_id = tallaVar.talla_id,
+                    numero = tallaVar.numero,
+                    talla_idSpecified = true
+                };
+
+                // Capturar y verificar el resultado
                 int? resultado = variantesBO.Insertar(
                     stock,
                     stockMinimo,
@@ -450,72 +579,58 @@ namespace KawkiWeb
                     talla,
                     urlImagen,
                     true,
-                    usuario
+                    usuarioProductosVar
                 );
 
                 if (resultado == null || resultado <= 0)
                 {
                     lblMensajeTalla.CssClass = "text-danger d-block mb-2";
-                    lblMensajeTalla.Text = "❌ No se pudo agregar la talla. Verifique que los datos sean válidos.";
+                    lblMensajeTalla.Text = "No se pudo agregar la talla. Verifique que los datos sean válidos.";
+                    MantenerModalTallaAbierto(colorId);
                     return;
                 }
 
-                lblMensajeTalla.CssClass = "text-success d-block mb-2";
-                lblMensajeTalla.Text = "✓ Talla agregada correctamente.";
-
+                // ÉXITO - Cerrar modal y recargar
+                LimpiarFormularioTalla();
                 CargarVariantes();
 
                 ScriptManager.RegisterStartupScript(
                     this,
                     GetType(),
-                    "CerrarModalTalla",
-                    "cerrarModalTalla();",
+                    "SuccessTalla",
+                    "cerrarModalTalla(); mostrarMensajeExito('Talla agregada correctamente');",
                     true
                 );
             }
             catch (Exception ex)
             {
                 lblMensajeTalla.CssClass = "text-danger d-block mb-2";
-                lblMensajeTalla.Text = "❌ Error: " + ex.Message;
+                lblMensajeTalla.Text = "Error: " + ex.Message;
+                MantenerModalTallaAbierto(Convert.ToInt32(hfColorIdTalla.Value));
             }
         }
 
-        private List<TallaStockItem> ParsearTallasYStocks(string tallasText, string stocksText, string stocksMinimoText)
+        // ⭐ AGREGAR ESTOS DOS MÉTODOS NUEVOS AL FINAL DE LA CLASE
+        private void MantenerModalTallaAbierto(int colorId)
         {
-            var resultado = new List<TallaStockItem>();
-            var tallas = tallasText.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
-            var stocks = stocksText.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
-            var stocksMinimos = stocksMinimoText.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
-
-            var tallasValidas = tallasBO.ListarTodosTalla();
-
-            for (int i = 0; i < tallas.Length; i++)
+            string colorNombre = "";
+            try
             {
-                if (!int.TryParse(tallas[i].Trim(), out int tallaNum))
-                    continue;
-
-                int stock = 0;
-                if (i < stocks.Length && int.TryParse(stocks[i].Trim(), out int s))
-                    stock = s;
-
-                int stockMinimo = 5;
-                if (i < stocksMinimos.Length && int.TryParse(stocksMinimos[i].Trim(), out int sm))
-                    stockMinimo = sm;
-
-                var tallaBD = tallasValidas.FirstOrDefault(t => t.numero == tallaNum);
-
-                if (tallaBD != null)
-                {
-                    resultado.Add(new TallaStockItem
-                    {
-                        TallaId = tallaBD.talla_id,
-                        Stock = stock,
-                        StockMinimo = stockMinimo
-                    });
-                }
+                var color = coloresBO.ObtenerPorIdColor(colorId);
+                colorNombre = color?.nombre ?? "";
             }
+            catch { }
 
-            return resultado;
+            string script = $"abrirModalAgregarTalla('{colorId}', '{colorNombre}');";
+            ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModalTalla", script, true);
+        }
+
+        private void LimpiarFormularioTalla()
+        {
+            ddlTallaAgregar.SelectedIndex = 0;
+            txtStockTalla.Text = "";
+            txtStockMinimoTalla.Text = "";
+            lblMensajeTalla.Text = "";
         }
 
         protected void btnVolver_Click(object sender, EventArgs e)
@@ -531,9 +646,9 @@ namespace KawkiWeb
         private void LimpiarFormulario()
         {
             ddlColor.SelectedIndex = 0;
-            txtTallas.Text = "";
-            txtStocks.Text = "";
-            txtStocksMinimos.Text = "";
+            ddlTalla.SelectedIndex = 0;
+            txtStock.Text = "";
+            txtStockMinimo.Text = "";
             txtUrlImagen.Text = "";
             lblMensaje.Text = "";
         }
@@ -604,16 +719,20 @@ namespace KawkiWeb
                 }
 
                 html.AppendFormat(@"
-            <td><strong>{0}</strong></td>
-            <td style='text-align: center;'><strong>{1}</strong></td>
-            <td style='text-align: center;'>{2}</td>
-            <td style='text-align: center;'>
-                {3}
-            </td>",
+                    <td><strong>{0}</strong></td>
+                    <td style='text-align: center;'><strong>{1}</strong></td>
+                    <td style='text-align: center;'>{2}</td>
+                    <td style='text-align: center;'>
+                        {3}
+                    </td>",
                     talla.TallaNombre,
                     talla.Stock,
                     talla.StockMinimo,
-                    ((bool)talla.AlertaStock && talla.Stock < talla.StockMinimo) ? "<span class='badge-alerta badge-bajo'>⚠ Bajo</span>" : ""
+                    talla.Stock == 0
+                        ? "<span class='badge-alerta badge-agotado'>🚫 Agotado</span>"
+                        : (talla.Stock < talla.StockMinimo
+                            ? "<span class='badge-alerta badge-bajo'>⚠ Bajo</span>"
+                            : "")
                 );
 
                 string activeNo = !(bool)talla.Disponible ? "active" : "";

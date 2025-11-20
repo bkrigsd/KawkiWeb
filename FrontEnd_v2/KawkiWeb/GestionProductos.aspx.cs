@@ -188,14 +188,12 @@ namespace KawkiWeb
                 var categoriaProducto = categoriasBO.ObtenerPorIdCategoria(categoriaId);
                 var estiloProducto = estilosBO.ObtenerPorIdEstilos(estiloId);
                 // === DTOs ===
-                // Convertir categoría al tipo que espera ProductosBO
+                // Convertir categoría y estilo al tipo que espera ProductosBO
                 var categoria = new KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO
                 {
                     categoria_id = categoriaProducto.categoria_id,
                     nombre = categoriaProducto.nombre
                 };
-
-                // Convertir estilo también si es necesario
                 var estilo = new KawkiWebBusiness.KawkiWebWSProductos.estilosDTO
                 {
                     estilo_id = estiloProducto.estilo_id,
@@ -256,7 +254,7 @@ namespace KawkiWeb
                     }
 
                     lblMensaje.CssClass = "text-success d-block mb-2";
-                    lblMensaje.Text = "✓ Producto registrado correctamente.";
+                    lblMensaje.Text = "Producto registrado correctamente.";
                 }
 
                 LimpiarFormulario();
