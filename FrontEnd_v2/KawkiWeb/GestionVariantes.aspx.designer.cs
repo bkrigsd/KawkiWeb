@@ -87,31 +87,31 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlColor;
 
         /// <summary>
-        /// Control ddlTalla.
+        /// Control txtTallas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTalla;
+        protected global::System.Web.UI.WebControls.TextBox txtTallas;
 
         /// <summary>
-        /// Control txtStock.
+        /// Control txtStocks.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtStock;
+        protected global::System.Web.UI.WebControls.TextBox txtStocks;
 
         /// <summary>
-        /// Control txtStockMinimo.
+        /// Control txtStocksMinimos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtStockMinimo;
+        protected global::System.Web.UI.WebControls.TextBox txtStocksMinimos;
 
         /// <summary>
         /// Control txtUrlImagen.
@@ -195,22 +195,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.HiddenField hfColorIdTalla;
 
         /// <summary>
-        /// Control ddlTallaAgregar.
+        /// Control ddlTalla.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTallaAgregar;
-
-        /// <summary>
-        /// Control lblErrorTalla.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorTalla;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTalla;
 
         /// <summary>
         /// Control txtStockTalla.
@@ -222,15 +213,6 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.TextBox txtStockTalla;
 
         /// <summary>
-        /// Control lblErrorStockTalla.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorStockTalla;
-
-        /// <summary>
         /// Control txtStockMinimoTalla.
         /// </summary>
         /// <remarks>
@@ -238,15 +220,6 @@ namespace KawkiWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtStockMinimoTalla;
-
-        /// <summary>
-        /// Control lblErrorStockMinimoTalla.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorStockMinimoTalla;
 
         /// <summary>
         /// Control lblMensajeTalla.

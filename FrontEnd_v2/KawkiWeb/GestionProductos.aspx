@@ -72,6 +72,7 @@
                 </asp:GridView>
             </div>
         </div>
+    </div>
 
     <!-- Modal de Registro/Edición -->
     <div id="modalProducto" class="modal-kawki">
