@@ -31,34 +31,70 @@
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
-                            <div class="col-md-6">
+                            <!-- NOMBRE DEL CLIENTE -->
+                            <div id="grupoNombreCliente" runat="server" class="col-md-6">
                                 <label class="form-label" for="<%= txtNombreCliente.ClientID %>">
                                     Nombre completo <span class="text-danger">*</span>
                                 </label>
+
                                 <asp:TextBox ID="txtNombreCliente" runat="server" CssClass="form-control"
                                     placeholder="Nombre y apellidos" />
+
+                                <!-- Acepta solo letras y espacios -->
+                                <asp:RegularExpressionValidator 
+                                    ID="revNombre" 
+                                    runat="server"
+                                    ControlToValidate="txtNombreCliente"
+                                    ValidationExpression="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$"
+                                    ErrorMessage="Solo se permiten letras y espacios."
+                                    CssClass="text-danger"
+                                    Display="Dynamic" />
+
                                 <asp:RequiredFieldValidator ID="rfvNombre" runat="server"
                                     ControlToValidate="txtNombreCliente"
-                                    ErrorMessage="Solo se permiten letras y espacios" CssClass="text-danger"
-                                    Display="Dynamic" 
-                                    ValidationExpression="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$" />
+                                    ErrorMessage="Este campo es obligatorio."
+                                    CssClass="text-danger"
+                                    Display="Dynamic" />
                             </div>
-                            <div class="col-md-3">
+
+                            <!-- TELEFONO -->
+                            <div id="grupoTelefono" runat="server" class="col-md-3">
                                 <label class="form-label" for="<%= txtTelefono.ClientID %>">
                                     Teléfono <span class="text-danger">*</span>
                                 </label>
+
                                 <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"
-                                    placeholder="Ej. 987654321" />
+                                    MaxLength="9" placeholder="Ej. 987654321" />
+
+                                <!-- Solo 9 números -->
+                                <asp:RegularExpressionValidator 
+                                    ID="revTelefono"
+                                    runat="server"
+                                    ControlToValidate="txtTelefono"
+                                    ValidationExpression="^[0-9]{9}$"
+                                    ErrorMessage="El teléfono debe tener exactamente 9 dígitos numéricos."
+                                    CssClass="text-danger"
+                                    Display="Dynamic" />
+
                                 <asp:RequiredFieldValidator ID="rfvTelefono" runat="server"
                                     ControlToValidate="txtTelefono"
-                                    ErrorMessage="El teléfono debe contener solo números" CssClass="text-danger"
-                                    Display="Dynamic" 
-                                    ValidationExpression="^\d{9}$" />
+                                    ErrorMessage="Este campo es obligatorio."
+                                    CssClass="text-danger"
+                                    Display="Dynamic" />
                             </div>
+
                             <!-- DNI -->
                             <div id="grupoDNI" runat="server" class="col-md-3" visible="false">
                                 <label class="form-label">DNI</label>
                                 <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" MaxLength="8"></asp:TextBox>
+                                <asp:RegularExpressionValidator 
+                                    ID="revDNI" 
+                                    runat="server"
+                                    ControlToValidate="txtDNI"
+                                    ValidationExpression="^[0-9]+$"
+                                    ErrorMessage="El DNI debe tener exactamente 8 dígitos numéricos."
+                                    CssClass="text-danger"
+                                    Display="Dynamic" />
                             </div>
 
                             <!-- RUC -->
@@ -71,12 +107,26 @@
                             <div id="grupoRazonSocial" runat="server" class="col-md-6" visible="false">
                                 <label class="form-label">Razón Social</label>
                                 <asp:TextBox ID="txtRazonSocial" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:RequiredFieldValidator 
+                                ID="rfvRazonSocial" 
+                                runat="server"
+                                ControlToValidate="txtRazonSocial"
+                                ErrorMessage="Ingrese una razón social válida."
+                                CssClass="text-danger"
+                                Display="Dynamic" />
                             </div>
 
                             <!-- Dirección Fiscal -->
                             <div id="grupoDireccionFiscal" runat="server" class="col-md-6" visible="false">
                                 <label class="form-label">Dirección Fiscal</label>
                                 <asp:TextBox ID="txtDireccionFiscal" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:RequiredFieldValidator 
+                                ID="rfvDireccionFiscal" 
+                                runat="server"
+                                ControlToValidate="txtDireccionFiscal"
+                                ErrorMessage="La dirección fiscal es obligatoria."
+                                CssClass="text-danger"
+                                Display="Dynamic" />
                             </div>
 
 
@@ -86,10 +136,9 @@
                                     <asp:ListItem Text="Instagram" Value="Instagram" />
                                     <asp:ListItem Text="Facebook" Value="Facebook" />
                                     <asp:ListItem Text="WhatsApp" Value="WhatsApp" />
-                                    <asp:ListItem Text="TikTok" Value="TikTok" />
-                                    <asp:ListItem Text="Otro" Value="Otro" />
                                 </asp:DropDownList>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -181,13 +230,13 @@
                         <div class="mb-3">
                             <label class="form-label" for="<%= ddlMetodoPago.ClientID %>">Método de pago</label>
                             <asp:DropDownList ID="ddlMetodoPago" runat="server" CssClass="form-select">
-                                <asp:ListItem Text="Yape" Value="Yape" />
+                                <%--<asp:ListItem Text="Yape" Value="Yape" />
                                 <asp:ListItem Text="Plin" Value="Plin" />
-                                <asp:ListItem Text="Transferencia" Value="Transferencia" />
+                                <asp:ListItem Text="Transferencia" Value="Transferencia" />--%>
                             </asp:DropDownList>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-12">
                             <label class="form-label" for="<%= ddlDescuentos.ClientID %>">Descuentos</label>
                             <asp:DropDownList 
                                 ID="ddlDescuentos" 
