@@ -26,6 +26,29 @@
 
         <!-- Estadísticas personales -->
         <div class="card-kawki">
+            <!-- FILTROS DE FECHA -->
+            <div class="row mb-3">
+
+                <div class="col-md-4">
+                    <label for="txtFechaInicio">Fecha Inicio</label>
+                    <asp:TextBox ID="txtFechaInicio" runat="server" 
+                                 CssClass="form-control" TextMode="Date" />
+                </div>
+
+                <div class="col-md-4">
+                    <label for="txtFechaFin">Fecha Fin</label>
+                    <asp:TextBox ID="txtFechaFin" runat="server" 
+                                 CssClass="form-control" TextMode="Date" />
+                </div>
+
+                <div class="col-md-4 d-flex align-items-end">
+                    <asp:Button ID="btnBuscar" runat="server" 
+                                CssClass="btn btn-kawki w-100"
+                                Text="Buscar"
+                                OnClick="btnBuscar_Click" />
+                </div>
+            </div>
+
             <div class="card-body">
                 <div class="stats-container">
                     <div class="stat-card">
@@ -44,44 +67,6 @@
             </div>
         </div>
 
-        <!-- Filtros 
-        <div class="card-kawki">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-filter"></i> Filtrar por fecha
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="row g-3 align-items-end">
-                    <div class="col-md-4">
-                        <label class="form-label" for="<%= txtFechaInicio.ClientID %>">
-                            <i class="fas fa-calendar-alt me-1"></i>Fecha inicio
-                        </label>
-                        <asp:TextBox ID="txtFechaInicio" runat="server" 
-                            CssClass="form-control" TextMode="Date" />
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label" for="<%= txtFechaFin.ClientID %>">
-                            <i class="fas fa-calendar-alt me-1"></i>Fecha fin
-                        </label>
-                        <asp:TextBox ID="txtFechaFin" runat="server" 
-                            CssClass="form-control" TextMode="Date" />
-                    </div>
-                    <div class="col-md-4">
-                        <asp:Button ID="btnBuscar" runat="server" 
-                            CssClass="btn btn-kawki-primary w-100"
-                            Text="🔍 Buscar"
-                            OnClick="btnBuscar_Click" />
-                        <asp:Button ID="btnLimpiar" runat="server" 
-                            CssClass="btn btn-kawki-outline w-100 mt-2"
-                            Text="Limpiar filtros"
-                            OnClick="btnLimpiar_Click" 
-                            CausesValidation="false" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
         <!-- Tabla de ventas -->
         <div class="card-kawki">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -101,12 +86,18 @@
                     GridLines="None" 
                     ShowHeaderWhenEmpty="True"
                     OnRowCommand="gvVentas_RowCommand">
+
                     <Columns>
-                        <asp:BoundField DataField="IdVenta" HeaderText="ID" />
+
+                        <asp:BoundField DataField="venta_id" HeaderText="ID" />
+
+                        <!-- FECHA: ya viene como DateTime real, así funciona -->
                         <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
-                        <asp:BoundField DataField="Cliente" HeaderText="Cliente" />
-                        <asp:BoundField DataField="Canal" HeaderText="Canal" />
+
+                        <asp:BoundField DataField="descuento" HeaderText="Descuento" />
+                        <asp:BoundField DataField="redSocial" HeaderText="Canal" />
                         <asp:BoundField DataField="CantidadProductos" HeaderText="Cant. Productos" />
+
                         <asp:TemplateField HeaderText="Monto Total">
                             <ItemTemplate>
                                 <span class="badge badge-monto">
@@ -114,24 +105,10 @@
                                 </span>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Acciones">
-                            <ItemTemplate>
-                                <asp:Button runat="server" 
-                                    CommandName="VerDetalle" 
-                                    CommandArgument='<%# Eval("IdVenta") %>'
-                                    Text="Ver detalle"
-                                    CssClass="btn btn-detalle"
-                                    CausesValidation="false" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
+
                     </Columns>
-                    <EmptyDataTemplate>
-                        <div class="text-center py-4">
-                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                            <p class="text-muted-small">No tienes ventas registradas en este rango de fechas.</p>
-                        </div>
-                    </EmptyDataTemplate>
                 </asp:GridView>
+
             </div>
         </div>
 
