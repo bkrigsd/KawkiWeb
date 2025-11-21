@@ -103,9 +103,9 @@
                                 <span class="badge badge-monto">
                                     <%# String.Format("S/ {0:0.00}", Eval("MontoTotal")) %>
                                 </span>
+                                <asp:HiddenField ID="hfMontoTotal" runat="server" Value='<%# Eval("MontoTotal") %>' />
                             </ItemTemplate>
                         </asp:TemplateField>
-
                     </Columns>
                 </asp:GridView>
 

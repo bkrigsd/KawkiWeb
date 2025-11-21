@@ -36,22 +36,32 @@ namespace KawkiWeb
         }
         private void ActualizarEstadisticas()
         {
+            int totalVentas = gvVentas.Rows.Count;
             int totalProductos = 0;
-            int totalVentas = 0;
             decimal totalMonto = 0;
 
             foreach (GridViewRow row in gvVentas.Rows)
             {
-                int cantidad = Convert.ToInt32(row.Cells[4].Text);
+                // Cantidad de productos (columna 4)
+                int cantidad = int.Parse(row.Cells[4].Text);
                 totalProductos += cantidad;
 
-                decimal monto = decimal.Parse(row.Cells[5].Text.Replace("S/", "").Trim());
-                totalMonto += monto;
+                // Obtener el monto desde DataKeys o desde un HiddenField
+                HiddenField hfMonto = (HiddenField)row.FindControl("hfMontoTotal");
+                if (hfMonto != null)
+                {
+                    decimal monto = decimal.Parse(hfMonto.Value);
+                    totalMonto += monto;
+                }
             }
 
             lblMontoTotal.Text = $"S/ {totalMonto:0.00}";
-            lblTotalVentas.Text = totalProductos.ToString();
+            lblTotalVentas.Text = totalVentas.ToString();
+            lblPromedio.Text = totalVentas > 0
+                ? $"S/ {(totalMonto / totalVentas):0.00}"
+                : "S/ 0.00";
         }
+
 
         /// <summary>
         /// Carga las ventas del vendedor según los filtros aplicados
