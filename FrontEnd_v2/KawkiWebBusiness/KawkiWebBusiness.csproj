@@ -55,6 +55,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\KawkiWebWSComprobantesDePago\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\KawkiWebWSDescuentos\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -188,6 +193,28 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\KawkiWebWSColores\KawkiWebBusiness.KawkiWebWSColores.obtenerPorIdColorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\ComprobantesPagoService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\ComprobantesPagoService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\KawkiWebBusiness.KawkiWebWSComprobantesDePago.comprobantesPagoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\KawkiWebBusiness.KawkiWebWSComprobantesDePago.insertarComprobPagoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\KawkiWebBusiness.KawkiWebWSComprobantesDePago.listarTodosComprobantePagoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\KawkiWebBusiness.KawkiWebWSComprobantesDePago.modificarComprobPagoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\KawkiWebBusiness.KawkiWebWSComprobantesDePago.obtenerPorIdComprobPagoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\KawkiWebBusiness.KawkiWebWSComprobantesDePago.obtenerPorVentaIdComprobPagoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\KawkiWebWSDescuentos\DescuentosService.wsdl" />
@@ -543,6 +570,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSCategorias\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSColores\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSComprobantesDePago\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSDescuentos\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSDetalleVentas\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSEstilos\" />
@@ -772,6 +800,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\KawkiWebWSTallas\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSComprobantesDePago\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
