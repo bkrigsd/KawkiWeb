@@ -435,8 +435,6 @@
 
         }
 
-        
-
         <%--function abrirModalConfirmacion(idUsuario) {
             document.getElementById("<%= hfIdEliminar.ClientID %>").value = idUsuario;
             document.getElementById("modalConfirmacion").classList.add("show");
