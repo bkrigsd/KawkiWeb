@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KawkiWebBusiness.KawkiWebWSVentas;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -33,6 +34,34 @@ namespace KawkiWeb
                 ActualizarEstadisticas();
             }
         }
+        private void ActualizarEstadisticas()
+        {
+            int totalVentas = gvVentas.Rows.Count;
+            int totalProductos = 0;
+            decimal totalMonto = 0;
+
+            foreach (GridViewRow row in gvVentas.Rows)
+            {
+                // Cantidad de productos (columna 4)
+                int cantidad = int.Parse(row.Cells[4].Text);
+                totalProductos += cantidad;
+
+                // Obtener el monto desde DataKeys o desde un HiddenField
+                HiddenField hfMonto = (HiddenField)row.FindControl("hfMontoTotal");
+                if (hfMonto != null)
+                {
+                    decimal monto = decimal.Parse(hfMonto.Value);
+                    totalMonto += monto;
+                }
+            }
+
+            lblMontoTotal.Text = $"S/ {totalMonto:0.00}";
+            lblTotalVentas.Text = totalVentas.ToString();
+            lblPromedio.Text = totalVentas > 0
+                ? $"S/ {(totalMonto / totalVentas):0.00}"
+                : "S/ 0.00";
+        }
+
 
         /// <summary>
         /// Carga las ventas del vendedor según los filtros aplicados
@@ -41,77 +70,61 @@ namespace KawkiWeb
         {
             try
             {
-                // TODO: Reemplazar con consulta real a la base de datos
-                // Filtrar solo las ventas del vendedor actual
-                DataTable dt = ObtenerVentasVendedorSimuladas();
+                var cliente = new KawkiWebBusiness.KawkiWebWSVentas.VentasClient();
+                var respuesta = cliente.listarTodosVenta();
 
-                // Aplicar filtros de fecha si existen
-                DateTime fechaInicio, fechaFin;
-                if (DateTime.TryParse(txtFechaInicio.Text, out fechaInicio))
+                if (respuesta == null || respuesta.Length == 0)
                 {
-                    dt = dt.AsEnumerable()
-                        .Where(row => row.Field<DateTime>("Fecha") >= fechaInicio)
-                        .CopyToDataTable();
+                    gvVentas.DataSource = null;
+                    gvVentas.DataBind();
+                    lblContador.Text = "0 ventas encontradas";
+                    lblMensaje.Text = "No tienes ventas registradas.";
+                    return;
                 }
 
-                if (DateTime.TryParse(txtFechaFin.Text, out fechaFin))
+                var lista = respuesta.Select(v =>
                 {
-                    fechaFin = fechaFin.AddDays(1).AddSeconds(-1); // Incluir todo el día
-                    dt = dt.AsEnumerable()
-                        .Where(row => row.Field<DateTime>("Fecha") <= fechaFin)
-                        .CopyToDataTable();
+                    // Convertimos fecha string → DateTime
+                    DateTime fecha = DateTime.MinValue;
+                    DateTime.TryParse(v.fecha_hora_creacion, out fecha);
+
+                    return new
+                    {
+                        v.venta_id,
+                        Fecha = fecha,  // lo guardamos como DateTime REAL
+                        v.descuento,
+                        v.redSocial,
+                        CantidadProductos = v.detalles?.Length ?? 0,
+                        MontoTotal = v.total
+                    };
+                }).ToList();
+
+                // =========================
+                // FILTRO POR FECHAS
+                // =========================
+                if (DateTime.TryParse(txtFechaInicio.Text, out DateTime fechaInicio))
+                {
+                    lista = lista.Where(v => v.Fecha >= fechaInicio).ToList();
                 }
 
-                gvVentas.DataSource = dt;
+                if (DateTime.TryParse(txtFechaFin.Text, out DateTime fechaFin))
+                {
+                    fechaFin = fechaFin.AddDays(1).AddSeconds(-1);
+                    lista = lista.Where(v => v.Fecha <= fechaFin).ToList();
+                }
+
+                gvVentas.DataSource = lista;
                 gvVentas.DataBind();
 
-                lblContador.Text = $"{dt.Rows.Count} ventas encontradas";
-
-                if (dt.Rows.Count == 0)
-                {
-                    lblMensaje.CssClass = "text-info mb-2 d-block";
-                    lblMensaje.Text = "No tienes ventas registradas en este rango de fechas.";
-                }
-                else
-                {
-                    lblMensaje.Text = string.Empty;
-                }
+                lblContador.Text = $"{lista.Count} ventas encontradas";
+                lblMensaje.Text = lista.Count == 0
+                    ? "No tienes ventas registradas en este rango de fechas."
+                    : "";
             }
             catch (Exception ex)
             {
                 lblMensaje.CssClass = "text-danger mb-2 d-block";
                 lblMensaje.Text = $"Error al cargar ventas: {ex.Message}";
-            }
-        }
-
-        /// <summary>
-        /// Actualiza las estadísticas personales del vendedor
-        /// </summary>
-        private void ActualizarEstadisticas()
-        {
-            try
-            {
-                // TODO: Reemplazar con consulta real a la base de datos
-                DataTable dt = ObtenerVentasVendedorSimuladas();
-
-                int totalVentas = dt.Rows.Count;
-                decimal montoTotal = 0m;
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    montoTotal += row.Field<decimal>("MontoTotal");
-                }
-
-                decimal promedio = totalVentas > 0 ? montoTotal / totalVentas : 0m;
-
-                lblTotalVentas.Text = totalVentas.ToString();
-                lblMontoTotal.Text = $"S/ {montoTotal:0.00}";
-                lblPromedio.Text = $"S/ {promedio:0.00}";
-            }
-            catch (Exception ex)
-            {
-                lblMensaje.CssClass = "text-danger mb-2 d-block";
-                lblMensaje.Text = $"Error al calcular estadísticas: {ex.Message}";
             }
         }
 

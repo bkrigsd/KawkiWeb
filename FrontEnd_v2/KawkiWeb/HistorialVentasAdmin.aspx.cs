@@ -15,9 +15,7 @@ namespace KawkiWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // ==========================================================
-            // ANTI-CACHE (igual que RegistroUsuario)
-            // ==========================================================
+            // AntiCaché
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
             Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
@@ -26,16 +24,11 @@ namespace KawkiWeb
             Response.AddHeader("Pragma", "no-cache");
             Response.AddHeader("Expires", "0");
 
-            // ==========================================================
-            // SOLO EJECUTAR EN FIRST LOAD
-            // ==========================================================
             if (!IsPostBack)
             {
                 string rol = Session["Rol"] as string;
 
-                // ==========================================================
-                // VALIDACIÓN DE SESIÓN (misma lógica que RegistroUsuario)
-                // ==========================================================
+                // VALIDACIÓN DE SESIÓN
                 if (string.IsNullOrEmpty(rol))
                 {
                     Response.Redirect("Error404.aspx", false);
@@ -64,9 +57,7 @@ namespace KawkiWeb
             }
         }
 
-        // ==========================================================
         // Cargar lista de vendedores reales
-        // ==========================================================
         private void CargarVendedores()
         {
             try
@@ -93,35 +84,27 @@ namespace KawkiWeb
             }
         }
 
-        // ==========================================================
         // Cargar ventas reales (usando objetos, NO DataTables)
-        // ==========================================================
         private void CargarVentas()
         {
             try
             {
                 var lista = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
 
-                // ----------------------------------
                 // Filtro por fecha inicio
-                // ----------------------------------
                 if (DateTime.TryParse(txtFechaInicio.Text, out DateTime inicio))
                 {
                     lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) >= inicio).ToList();
                 }
 
-                // ----------------------------------
                 // Filtro por fecha fin
-                // ----------------------------------
                 if (DateTime.TryParse(txtFechaFin.Text, out DateTime fin))
                 {
                     fin = fin.AddDays(1).AddSeconds(-1);
                     lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) <= fin).ToList();
                 }
 
-                // ----------------------------------
                 // Filtro por vendedor
-                // ----------------------------------
                 if (!string.IsNullOrEmpty(ddlVendedor.SelectedValue))
                 {
                     if (!string.IsNullOrEmpty(ddlVendedor.SelectedValue))
@@ -134,9 +117,7 @@ namespace KawkiWeb
                     }
                 }
 
-                // ----------------------------------
                 // Transformar a modelo para GridView
-                // ----------------------------------
                 var gvLista = lista.Select(v => new
                 {
                     IdVenta = v.venta_id,
@@ -153,11 +134,24 @@ namespace KawkiWeb
                     MontoTotal = v.total
                 }).ToList();
 
+                // ORDENAMIENTO
+                if (!string.IsNullOrEmpty(SortField))
+                {
+                    if (SortDirection == "ASC")
+                        gvLista = gvLista.OrderBy(x => x.GetType().GetProperty(SortField).GetValue(x)).ToList();
+                    else
+                        gvLista = gvLista.OrderByDescending(x => x.GetType().GetProperty(SortField).GetValue(x)).ToList();
+                }
+
                 gvVentas.DataSource = gvLista;
                 gvVentas.DataBind();
 
+                Session["VentasFiltradas"] = lista;
+
                 lblContador.Text = $"{gvLista.Count} ventas encontradas";
                 lblMensaje.Text = "";
+
+                ActualizarEstadisticas();
             }
             catch (Exception ex)
             {
@@ -165,16 +159,14 @@ namespace KawkiWeb
             }
         }
 
-        // ==========================================================
         // Estadísticas
-        // ==========================================================
         private void ActualizarEstadisticas()
         {
             try
             {
-                var ventas = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
+                var ventas = Session["VentasFiltradas"] as List<ventasDTO>;
 
-                if (!ventas.Any())
+                if (ventas == null || !ventas.Any())
                 {
                     lblTotalVentas.Text = "0";
                     lblMontoTotal.Text = "S/ 0.00";
@@ -184,10 +176,18 @@ namespace KawkiWeb
 
                 decimal montoTotal = ventas.Sum(v => Convert.ToDecimal(v.total));
                 int cantidad = ventas.Count;
+                decimal promedio = montoTotal / cantidad;
 
                 lblTotalVentas.Text = cantidad.ToString();
                 lblMontoTotal.Text = $"S/ {montoTotal:N2}";
-                lblPromedio.Text = $"S/ {(montoTotal / cantidad):N2}";
+                lblPromedio.Text = $"S/ {promedio:N2}";
+
+                ScriptManager.RegisterStartupScript(
+                    this, GetType(),
+                    "AnimarDashboard",
+                    $"animarDashboard({cantidad}, {montoTotal}, {promedio});",
+                    true
+                );
             }
             catch (Exception ex)
             {
@@ -195,11 +195,24 @@ namespace KawkiWeb
             }
         }
 
-        // ==========================================================
         // Botones
-        // ==========================================================
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
+            lblErrorFiltros.Visible = false;  // limpiamos antes de validar
+            lblErrorFiltros.Text = "";
+
+            // Validar fechas
+            if (DateTime.TryParse(txtFechaInicio.Text, out DateTime inicio) &&
+                DateTime.TryParse(txtFechaFin.Text, out DateTime fin))
+            {
+                if (inicio > fin)
+                {
+                    lblErrorFiltros.Visible = true;
+                    lblErrorFiltros.Text = "La fecha de inicio debe ser menor que la fecha de fin.";
+                    return; // Cancelar búsqueda
+                }
+            }
+
             CargarVentas();
         }
 
@@ -208,14 +221,13 @@ namespace KawkiWeb
             txtFechaInicio.Text = "";
             txtFechaFin.Text = "";
             ddlVendedor.SelectedIndex = 0;
-
+            lblErrorFiltros.Visible = false;
+            lblErrorFiltros.Text = "";
             CargarVentas();
             ActualizarEstadisticas();
         }
 
-        // ==========================================================
         // Ver detalle
-        // ==========================================================
         protected void gvVentas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "VerDetalle")
@@ -262,13 +274,31 @@ namespace KawkiWeb
             pnlDetalle.Visible = false;
         }
 
-        // ==========================================================
         // Utilidad
-        // ==========================================================
         private void MostrarError(string msg)
         {
             lblMensaje.CssClass = "text-danger d-block mb-2";
             lblMensaje.Text = msg;
         }
+
+        private string SortField
+        {
+            get => ViewState["SortField"]?.ToString() ?? "";
+            set => ViewState["SortField"] = value;
+        }
+
+        private string SortDirection
+        {
+            get => ViewState["SortDirection"]?.ToString() ?? "ASC";
+            set => ViewState["SortDirection"] = value;
+        }
+
+        protected void ActualizarOrden(object sender, EventArgs e)
+        {
+            SortField = ddlOrdenarPor.SelectedValue;
+            SortDirection = ddlDireccion.SelectedValue;
+            CargarVentas(); // Se vuelve a aplicar filtros y orden
+        }
+
     }
 }

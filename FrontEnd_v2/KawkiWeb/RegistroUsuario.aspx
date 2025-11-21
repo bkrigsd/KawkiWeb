@@ -20,6 +20,103 @@
             </div>
         </div>
 
+        <!-- Filtros de búsqueda -->
+        <div class="card-kawki mb-3">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="fas fa-search"></i> <span>Filtros de búsqueda</span>
+                </div>
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-3 mb-2">
+                    <label class="form-label">Nombre / Apellido</label>
+                    <asp:TextBox ID="txtFiltroNombre" runat="server" CssClass="form-control"
+                        placeholder="Buscar por nombre..." AutoPostBack="true"
+                        OnTextChanged="AplicarFiltros" />
+                </div>
+
+                <div class="col-md-2 mb-2">
+                    <label class="form-label">DNI</label>
+                    <asp:TextBox ID="txtFiltroDNI" runat="server" CssClass="form-control"
+                        MaxLength="8" AutoPostBack="true"
+                        placeholder="DNI" OnTextChanged="AplicarFiltros" />
+                </div>
+
+                <div class="col-md-2 mb-2">
+                    <label class="form-label">Usuario</label>
+                    <asp:TextBox ID="txtFiltroUsuario" runat="server" CssClass="form-control"
+                        placeholder="Nombre usuario" AutoPostBack="true"
+                        OnTextChanged="AplicarFiltros" />
+                </div>
+
+                <div class="col-md-2 mb-2">
+                    <label class="form-label">Rol</label>
+                    <asp:DropDownList ID="ddlFiltroRol" runat="server" CssClass="form-select"
+                        AutoPostBack="true" OnSelectedIndexChanged="AplicarFiltros">
+                        <asp:ListItem Text="-- Todos --" Value="" />
+                        <asp:ListItem Text="Administrador" Value="Administrador" />
+                        <asp:ListItem Text="Vendedor" Value="Vendedor" />
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-2 mb-2">
+                    <label class="form-label">Estado</label>
+                    <asp:DropDownList ID="ddlFiltroEstado" runat="server" CssClass="form-select"
+                        AutoPostBack="true" OnSelectedIndexChanged="AplicarFiltros">
+                        <asp:ListItem Text="-- Todos --" Value="" />
+                        <asp:ListItem Text="Activo" Value="true" />
+                        <asp:ListItem Text="Inactivo" Value="false" />
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-1 d-flex align-items-end">
+                    <button type="button" class="btn-kawki-outline w-100" onclick="limpiarFiltros()">
+                        Limpiar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Panel de Ordenamiento -->
+        <div class="card-kawki mb-3">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="fas fa-sort"></i> <span>Ordenar registros</span>
+                </div>
+            </div>
+
+            <div class="card-body row">
+
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Ordenar por</label>
+                    <asp:DropDownList ID="ddlOrdenarPor" runat="server" CssClass="form-select"
+                        AutoPostBack="true" OnSelectedIndexChanged="ActualizarOrden">
+                        <asp:ListItem Text="ID" Value="usuarioId" />
+                        <asp:ListItem Text="Nombre" Value="nombre" />
+                        <asp:ListItem Text="Apellido" Value="apePaterno" />
+                        <asp:ListItem Text="DNI" Value="dni" />
+                        <asp:ListItem Text="Usuario" Value="nombreUsuario" />
+                        <asp:ListItem Text="Email" Value="correo" />
+                        <asp:ListItem Text="Teléfono" Value="telefono" />
+                        <asp:ListItem Text="Rol" Value="tipoUsuario.nombre" />
+                        <asp:ListItem Text="Activo" Value="activo" />
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-3 mb-2">
+                    <label class="form-label">Dirección</label>
+                    <asp:DropDownList ID="ddlDireccion" runat="server" CssClass="form-select"
+                        AutoPostBack="true" OnSelectedIndexChanged="ActualizarOrden">
+                        <asp:ListItem Text="Ascendente" Value="ASC" />
+                        <asp:ListItem Text="Descendente" Value="DESC" />
+                    </asp:DropDownList>
+                </div>
+
+            </div>
+        </div>
+
         <!-- Card con tabla -->
         <div class="card-kawki">
             <div class="card-header">
@@ -82,10 +179,6 @@
                                             + ")" %>'>
                                     Editar
                                 </button>
-                                <%--<button type="button" class="btn-eliminar" 
-                                    onclick='<%# "abrirModalConfirmacion(" + Eval("usuarioId") + ")" %>'>
-                                    Eliminar
-                                </button>--%>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -236,12 +329,6 @@
                     <asp:CheckBox ID="chkActivo" runat="server" Text="Usuario activo" Checked="true" />
                 </div>
 
-                <%--<!-- Campo solo lectura visible en edición -->
-                <div id="grupoRolTexto" class="mb-3 d-none">
-                    <label class="form-label">Rol</label>
-                    <input type="text" id="txtRolLectura" class="form-control" readonly />
-                </div>--%>
-
                 <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mb-3" />
 
                 <div class="text-end">
@@ -252,30 +339,13 @@
             </div>
         </div>
 
-        <!-- Modal de confirmación de eliminación -->
-        <div id="modalConfirmacion" class="modal-confirmacion">
-            <div class="modal-content-kawki">
-                <div class="modal-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <h5>¿Confirmar eliminación?</h5>
-                <p>Esta acción no se puede deshacer</p>
-                <asp:HiddenField ID="hfIdEliminar" runat="server" Value="0" />
-                <div>
-                    <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModalConfirmacion()">Cancelar</button>
-                    <%--<asp:Button ID="btnConfirmarEliminar" runat="server" CssClass="btn-kawki-primary" style="background-color: #dc3545;"
-                        Text="Eliminar" OnClick="btnConfirmarEliminar_Click" CausesValidation="false" UseSubmitBehavior="true" />--%>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
 
         function abrirModalRegistroSinLimpiar() {
             document.getElementById("modalUsuario").classList.add("show");
-            document.getElementById("tituloModal").innerHTML =
-                '<i class="fas fa-user-plus me-2"></i>Registrar nuevo usuario';
+            document.getElementById("tituloModal").innerHTML = '<i class="fas fa-user-plus me-2"></i>Registrar nuevo usuario';
             document.getElementById("<%= btnGuardar.ClientID %>").value = "Registrar usuario";
             document.getElementById("lblInfoClave").classList.add("d-none");
         }
@@ -284,15 +354,9 @@
             document.getElementById("modalUsuario").classList.add("show");
             document.getElementById("tituloModal").innerHTML = '<i class="fas fa-user-plus me-2"></i>Registrar nuevo usuario';
             document.getElementById("<%= btnGuardar.ClientID %>").value = "Registrar usuario";
-            limpiarFormulario();
             document.getElementById("lblInfoClave").classList.add("d-none");
-        }
-
-        function abrirModalEditar() {
-            document.getElementById("modalUsuario").classList.add("show");
-            document.getElementById("tituloModal").innerHTML = '<i class="fas fa-edit me-2"></i>Editar usuario';
-            document.getElementById("<%= btnGuardar.ClientID %>").value = "Actualizar usuario";
-            document.getElementById("lblInfoClave").classList.remove("d-none");
+            limpiarFormulario();
+            resetearValidadoresASP();
         }
 
         function editarUsuario(id, nombre, apellido, dni, usuario, email, telefono, rol, clave, activo) {
@@ -311,14 +375,33 @@
             abrirModalEditar();
         }
 
-        function cerrarModal() {
-            document.getElementById("modalUsuario").classList.remove("show");
+        function abrirModalEditar() {
+            document.getElementById("modalUsuario").classList.add("show");
+            document.getElementById("tituloModal").innerHTML = '<i class="fas fa-edit me-2"></i>Editar usuario';
+            document.getElementById("<%= btnGuardar.ClientID %>").value = "Actualizar usuario";
+            document.getElementById("lblInfoClave").classList.remove("d-none");
+            resetearValidadoresASP();
         }
 
-        function cerrarModalYLimpiar() {
-            cerrarModal();
-            limpiarFormulario(); // ✔️ aquí sí se limpia
+        function cancelarUsuario() {
+            document.getElementById("modalUsuario").classList.remove("show");
+            limpiarFormulario();
+            resetModalUsuario()
+            //// Cierra el modal
+            //cerrarModal();
+            //// Hace un REFRESH limpio sin POST ni datos previos
+            window.location.href = "RegistroUsuario.aspx";
         }
+
+        function cerrarModal() {
+            document.getElementById("modalUsuario").classList.remove("show");
+            limpiarFormulario();
+        }
+
+        //function cerrarModalYLimpiar() {
+        //    cerrarModal();
+        //    limpiarFormulario();
+        //}
 
         function soloNumeros(e) {
             var charCode = e.which ? e.which : e.keyCode;
@@ -352,20 +435,14 @@
 
         }
 
-        function cancelarUsuario() {
-            // Cierra el modal
-            cerrarModal();
-            // Hace un REFRESH limpio sin POST ni datos previos
-            window.location.href = "RegistroUsuario.aspx";
-        }
-
-        function abrirModalConfirmacion(idUsuario) {
+        <%--function abrirModalConfirmacion(idUsuario) {
             document.getElementById("<%= hfIdEliminar.ClientID %>").value = idUsuario;
             document.getElementById("modalConfirmacion").classList.add("show");
-        }
+        }--%>
 
         function cerrarModalConfirmacion() {
             document.getElementById("modalConfirmacion").classList.remove("show");
+            limpiarFormulario();
         }
 
         function mostrarMensajeExito(mensaje) {
@@ -417,6 +494,72 @@
                 icono.classList.add("fa-eye");
             }
         }
+
+        function limpiarFiltros() {
+            document.getElementById("<%= txtFiltroNombre.ClientID %>").value = "";
+            document.getElementById("<%= txtFiltroDNI.ClientID %>").value = "";
+            document.getElementById("<%= txtFiltroUsuario.ClientID %>").value = "";
+            document.getElementById("<%= ddlFiltroRol.ClientID %>").selectedIndex = 0;
+            document.getElementById("<%= ddlFiltroEstado.ClientID %>").selectedIndex = 0;
+            __doPostBack('', '');
+        }
+
+        function resetearValidadoresASP() {
+            // 1. Hacer que ASP.NET considere que todo está validado
+            if (typeof (Page_Validators) !== "undefined") {
+                for (var i = 0; i < Page_Validators.length; i++) {
+                    Page_Validators[i].isvalid = true;
+
+                    // Restaurar display normal sin borrar HTML
+                    ValidatorUpdateDisplay(Page_Validators[i]);
+                }
+            }
+
+            if (typeof (Page_IsValid) !== "undefined") {
+                Page_IsValid = true;
+            }
+        }
+
+        function resetModalUsuario() {
+
+            // 1. Ocultar modal
+            document.getElementById("modalUsuario").classList.remove("show");
+
+            // 2. Limpiar formulario
+            limpiarFormulario();
+
+            // 3. Ocultar todos los mensajes de validación ASP.NET
+            document.querySelectorAll(".text-danger").forEach(x => {
+                x.classList.remove("val-hidden");
+                x.style.display = "none";
+            });
+
+            // 4. Quitar estilos de error en campos
+            document.querySelectorAll(".input-validation-error").forEach(x => {
+                x.classList.remove("input-validation-error");
+            });
+
+            // 5. Resetear validadores ASP.NET sin romperlos
+            if (typeof (Page_Validators) !== "undefined") {
+                for (var i = 0; i < Page_Validators.length; i++) {
+                    Page_Validators[i].isvalid = true;
+                    ValidatorUpdateDisplay(Page_Validators[i]);
+                }
+            }
+            if (typeof (Page_IsValid) !== "undefined") {
+                Page_IsValid = true;
+            }
+
+            // 6. Borrar labels de validación AJAX
+            document.getElementById("<%= lblErrorDNI.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorEmail.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorTelefono.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorUsuario.ClientID %>").innerText = "";
+
+            // 7. Esconder info clave
+            document.getElementById("lblInfoClave").classList.add("d-none");
+        }
+
     </script>
 
     <script>

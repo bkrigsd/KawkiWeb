@@ -1,15 +1,20 @@
 ﻿using KawkiWebBusiness;
 using KawkiWebBusiness.BO;
 using KawkiWebBusiness.KawkiWebWSDetalleVentas;
+using KawkiWebBusiness.KawkiWebWSProductos;
 using KawkiWebBusiness.KawkiWebWSVentas;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 
 namespace KawkiWeb
 {
@@ -23,6 +28,7 @@ namespace KawkiWeb
                 if (ViewState["DetalleVentas"] == null)
                 {
                     var dt = new DataTable();
+                    dt.Columns.Add("ProductoId", typeof(int));
                     dt.Columns.Add("Producto", typeof(string));
                     dt.Columns.Add("Cantidad", typeof(int));
                     dt.Columns.Add("PrecioUnitario", typeof(decimal));
@@ -40,47 +46,121 @@ namespace KawkiWeb
             {
                 // Primera carga
                 CargarProductos();
+                CargarDescuentos();
+                CargarCanalesVenta();
+                CargarMetodosPago();
                 gvDetalle.DataSource = DetalleVentas;
                 gvDetalle.DataBind();
                 ActualizarTotales();
             }
         }
-        private DataTable ObtenerProductos()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Id", typeof(int));
-            dt.Columns.Add("Nombre", typeof(string));
-            dt.Columns.Add("Descripcion", typeof(string));
-            dt.Columns.Add("Precio", typeof(decimal));
-            dt.Columns.Add("Tallas", typeof(string));
-            dt.Columns.Add("Tipo", typeof(string));
-            dt.Columns.Add("Material", typeof(string));
-            dt.Columns.Add("Color", typeof(string));
-            dt.Columns.Add("Stock", typeof(string));
-            dt.Columns.Add("Imagen", typeof(string));
 
-            // Productos tipo Oxford
-            dt.Rows.Add(1, "Oxford Clásico Beige", "Zapato oxford de cuero genuino con acabado premium, ideal para ocasiones formales y uso diario.", 150.90m, "35, 36, 39", "oxford", "clasico", "beige", "15,5,9", "~/Images/OxfordClasicoBeige.jpg");
-            dt.Rows.Add(2, "Oxford Premium Negro", "Zapato oxford de diseño moderno y sofisticado, perfecto para eventos importantes.", 250.90m, "35, 36, 37, 38, 39", "oxford", "charol", "negro", "15,12,0,5,9", "~/Images/OxfordPremiumNegro.jpg");
-            dt.Rows.Add(3, "Oxford Bicolor Café", "Zapato oxford con elegante combinación de tonos café, estilo vintage refinado.", 160.90m, "36, 37, 38, 39", "oxford", "combinado", "marron", "15,0,5,9", "~/Images/OxfordBicolorCafe.jpg");
-
-            // Productos tipo Derby
-            dt.Rows.Add(4, "Derby Elegante Marrón", "Derby de cuero con diseño tejido elegante, versátil para cualquier ocasión.", 215.90m, "35, 36, 37, 38, 39", "derby", "clasico", "marron", "15,12,0,5,9", "~/Images/DerbyClasicoMarron.jpg");
-            dt.Rows.Add(5, "Derby Charol Crema", "Derby charol con suela gruesa y diseño moderno, máxima comodidad.", 210.90m, "35, 36, 37, 38, 39", "derby", "charol", "crema", "15,12,0,5,9", "~/Images/DerbyClasicoCrema.jpg");
-            dt.Rows.Add(6, "Derby Clasico Negro", "Derby clásico con suela de goma antideslizante, ideal para caminar.", 169.90m, "36, 37, 38, 39", "derby", "clasico", "negro", "12,0,5,9", "~/Images/DerbyClasicoNegro.jpg");
-
-            return dt;
-        }
         private void CargarProductos()
         {
-            var productos = ObtenerProductos();
-            ddlProducto.DataSource = productos;
-            ddlProducto.DataTextField = "Nombre";
-            ddlProducto.DataValueField = "Precio"; // autocompleta con el precio
-            ddlProducto.DataBind();
+            try
+            {
+                var cliente = new KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantesClient();
+                var respuesta = cliente.listarTodosProdVariante();
 
-            ddlProducto.Items.Insert(0, new ListItem("-- Selecciona un producto --", ""));
+                ddlProducto.Items.Clear();
+
+                if (respuesta == null || respuesta.Length == 0)
+                {
+                    ddlProducto.Items.Add(new ListItem("-- No hay productos --", ""));
+                    return;
+                }
+
+                var lista = respuesta.Select(p => new
+                {
+                    id = p.prod_variante_id,
+                    texto = $"{p.SKU}"
+                }).ToList();
+
+                ddlProducto.DataSource = lista;
+                ddlProducto.DataTextField = "texto";
+                ddlProducto.DataValueField = "id";
+                ddlProducto.DataBind();
+
+                ddlProducto.Items.Insert(0, new ListItem("-- Selecciona --", ""));
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al cargar productos: " + ex.Message;
+                lblMensaje.CssClass = "text-danger";
+            }
         }
+        private void CargarDescuentos()
+        {
+            var cliente = new KawkiWebBusiness.KawkiWebWSDescuentos.DescuentosClient();
+            var lista = cliente.listarActivasDescuento();
+
+            ddlDescuentos.DataSource = lista;
+            ddlDescuentos.DataTextField = "descripcion";   // columna DESCRIPCION
+            ddlDescuentos.DataValueField = "descuento_id"; // columna DESCUENTO_ID
+            ddlDescuentos.DataBind();
+
+            ddlDescuentos.Items.Insert(0, new ListItem("-- Seleccione --", ""));
+        }
+        private void CargarCanalesVenta()
+        {
+            try
+            {
+                var cliente = new KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSocialesClient();
+                var lista = cliente.listarTodosRedSocial();
+
+                ddlCanal.Items.Clear();
+
+                if (lista == null || lista.Length == 0)
+                {
+                    ddlCanal.Items.Add(new ListItem("-- No hay canales --", ""));
+                    return;
+                }
+
+                ddlCanal.DataSource = lista;
+                ddlCanal.DataTextField = "nombre";        // ✔ EXISTE
+                ddlCanal.DataValueField = "redSocialId";  // ✔ EXISTE
+                ddlCanal.DataBind();
+
+                ddlCanal.Items.Insert(0, new ListItem("-- Seleccione --", ""));
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al cargar canales: " + ex.Message;
+                lblMensaje.CssClass = "text-danger";
+            }
+        }
+
+        private void CargarMetodosPago()
+        {
+            try
+            {
+                var cliente = new KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPagoClient();
+                var lista = cliente.listarTodosMetodoPago(); // Ajustar al nombre real
+
+                ddlMetodoPago.Items.Clear();
+
+                if (lista == null || lista.Length == 0)
+                {
+                    ddlMetodoPago.Items.Add(new ListItem("-- No hay métodos --", ""));
+                    return;
+                }
+
+                ddlMetodoPago.DataSource = lista;
+                ddlMetodoPago.DataTextField = "nombre";  // NOMBRE
+                ddlMetodoPago.DataValueField = "metodo_pago_id"; // ID
+                ddlMetodoPago.DataBind();
+
+                ddlMetodoPago.Items.Insert(0, new ListItem("-- Seleccione --", ""));
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al cargar métodos de pago: " + ex.Message;
+                lblMensaje.CssClass = "text-danger";
+            }
+        }
+
+
+
 
         #region Métodos de Validación
 
@@ -234,7 +314,7 @@ namespace KawkiWeb
             precio = 0m;
             mensajeError = string.Empty;
 
-            if (!decimal.TryParse(precioTexto, out precio))
+            if (!decimal.TryParse(precioTexto, NumberStyles.Any, CultureInfo.InvariantCulture, out precio))
             {
                 mensajeError = "El precio debe ser un número válido.";
                 return false;
@@ -265,31 +345,7 @@ namespace KawkiWeb
         /// <summary>
         /// Valida que el descuento sea válido
         /// </summary>
-        private bool ValidarDescuento(string descuentoTexto, decimal subtotal, out decimal descuento, out string mensajeError)
-        {
-            descuento = 0m;
-            mensajeError = string.Empty;
 
-            if (!decimal.TryParse(descuentoTexto, out descuento))
-            {
-                mensajeError = "El descuento debe ser un número válido.";
-                return false;
-            }
-
-            if (descuento < 0)
-            {
-                mensajeError = "El descuento no puede ser negativo.";
-                return false;
-            }
-
-            if (descuento > subtotal)
-            {
-                mensajeError = "El descuento no puede ser mayor al subtotal.";
-                return false;
-            }
-
-            return true;
-        }
 
         /// <summary>
         /// Valida todos los campos del cliente antes de registrar la venta
@@ -378,7 +434,6 @@ namespace KawkiWeb
         #endregion
         protected void btnAgregarProducto_Click(object sender, EventArgs e)
         {
-            // Validar selección de producto
             if (string.IsNullOrEmpty(ddlProducto.SelectedValue))
             {
                 lblMensaje.Text = "Selecciona un producto antes de agregar.";
@@ -390,7 +445,6 @@ namespace KawkiWeb
             int cantidad;
             decimal precioUnitario;
 
-            // Validaciones básicas
             if (!int.TryParse(txtCantidad.Text, out cantidad) || cantidad <= 0)
             {
                 lblMensaje.Text = "La cantidad debe ser un número mayor que 0.";
@@ -400,34 +454,36 @@ namespace KawkiWeb
 
             if (!decimal.TryParse(txtPrecioUnitario.Text, out precioUnitario) || precioUnitario <= 0)
             {
-                lblMensaje.Text = "El precio unitario debe ser un número válido.";
+                lblMensaje.Text = "El precio unitario debe ser válido.";
                 lblMensaje.CssClass = "text-danger";
                 return;
             }
 
             decimal subtotal = cantidad * precioUnitario;
 
-            // Aquí asumes que tienes una lista o DataTable en memoria (ejemplo)
             DataTable dt = ViewState["DetalleVentas"] as DataTable;
             if (dt == null)
             {
                 dt = new DataTable();
-                dt.Columns.Add("Producto");
+                dt.Columns.Add("ProductoId", typeof(int));      // Aquí guardamos prod_variante_id
+                dt.Columns.Add("Producto", typeof(string));
                 dt.Columns.Add("Cantidad", typeof(int));
                 dt.Columns.Add("PrecioUnitario", typeof(decimal));
                 dt.Columns.Add("Subtotal", typeof(decimal));
             }
 
-            dt.Rows.Add(producto, cantidad, precioUnitario, subtotal);
+            // ⬅️ ESTE ES EL ID CORRECTO AHORA (prod_variante_id)
+            int varianteId = Convert.ToInt32(ddlProducto.SelectedValue);
+
+            dt.Rows.Add(varianteId, producto, cantidad, precioUnitario, subtotal);
+
             ViewState["DetalleVentas"] = dt;
 
             gvDetalle.DataSource = dt;
             gvDetalle.DataBind();
 
-            // Actualizar totales
             ActualizarTotales();
 
-            // Limpiar campos
             ddlProducto.SelectedIndex = 0;
             txtCantidad.Text = "1";
             txtPrecioUnitario.Text = "";
@@ -436,18 +492,87 @@ namespace KawkiWeb
             lblMensaje.CssClass = "text-success";
         }
 
+
         protected void ddlProducto_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(ddlProducto.SelectedValue))
+            if (string.IsNullOrEmpty(ddlProducto.SelectedValue))
             {
-                // Rellenar el precio según la selección
-                txtPrecioUnitario.Text = ddlProducto.SelectedValue;
+                txtPrecioUnitario.Text = "";
+                return;
             }
-            else
+
+            int varianteId = Convert.ToInt32(ddlProducto.SelectedValue);
+
+            try
             {
-                txtPrecioUnitario.Text = string.Empty;
+                // 1. Obtener la variante
+                var clienteVar = new KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantesClient();
+                var variante = clienteVar.obtenerPorIdProdVariante(varianteId);
+
+                if (variante == null)
+                {
+                    lblMensaje.Text = "No se encontró la variante seleccionada.";
+                    return;
+                }
+
+                // 2. Obtener el producto usando producto_id
+                var clienteProd = new KawkiWebBusiness.KawkiWebWSProductos.ProductosClient();
+                var producto = clienteProd.obtenerPorIdProducto(variante.producto_id);
+
+                if (producto == null)
+                {
+                    lblMensaje.Text = "No se encontró el producto vinculado.";
+                    return;
+                }
+
+                // 3. Mostrar precioVenta real
+                decimal precio = (decimal)producto.precio_venta;
+                txtPrecioUnitario.Text = precio.ToString("0.00");
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error cargando precio: " + ex.Message;
+                lblMensaje.CssClass = "text-danger";
             }
         }
+        protected void ddlDescuentos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(ddlDescuentos.SelectedValue))
+                return;
+
+            int idDescuento = int.Parse(ddlDescuentos.SelectedValue);
+
+            var cliente = new KawkiWebBusiness.KawkiWebWSDescuentos.DescuentosClient();
+            var d = cliente.obtenerPorIdDescuento(idDescuento); // Ajusta el nombre del método
+
+            if (d == null) return;
+
+            // Recuperar el tipo de beneficio
+            int tipoBeneficio = d.tipo_beneficio.tipo_beneficio_id;
+            int valor = d.valor_beneficio;
+
+            switch (tipoBeneficio)
+            {
+                case 1: // Descuento por porcentaje
+                    lblMensaje.Text = $"Descuento aplicado: {valor}%";
+                    break;
+
+                case 2: // Descuento fijo
+                    lblMensaje.Text = $"Descuento aplicado: S/ {valor:0.00}";
+                    break;
+
+                case 3: // Envío gratis
+                    lblMensaje.Text = "Beneficio aplicado: Envío gratis";
+                    break;
+            }
+
+            lblMensaje.CssClass = "text-info";
+
+            // Si tienes total calculado, actualízalo aquí:
+            ActualizarTotales();
+        }
+
+
         protected void ddlComprobante_SelectedIndexChanged(object sender, EventArgs e)
         {
             string tipo = ddlComprobante.SelectedValue;
@@ -457,8 +582,8 @@ namespace KawkiWeb
             grupoRUC.Visible = false;
             grupoRazonSocial.Visible = false;
             grupoDireccionFiscal.Visible = false;
-            txtTelefono.Visible = true;
-            txtNombreCliente.Visible = true;
+            txtTelefono.Visible = false;
+            txtNombreCliente.Visible = false;
 
             // Limpiar campos específicos
             txtDNI.Text = "";
@@ -469,10 +594,12 @@ namespace KawkiWeb
             switch (tipo)
             {
                 case "boleta-simple":
+                    txtNombreCliente.Visible = true;
                     txtTelefono.Visible = true;
                     break;
 
                 case "boleta-dni":
+                    txtNombreCliente.Visible = true;
                     grupoDNI.Visible = true;
                     txtTelefono.Visible = true;
                     break;
@@ -516,35 +643,49 @@ namespace KawkiWeb
 
         private void ActualizarTotales()
         {
-            decimal subtotal = 0m;
-            foreach (DataRow row in DetalleVentas.Rows)
-            {
-                subtotal += row.Field<decimal>("Subtotal");
-            }
+            DataTable dt = ViewState["DetalleVentas"] as DataTable;
+            if (dt == null) return;
 
-            decimal descuento = 0m;
-            string mensajeError;
+            decimal subtotal = dt.AsEnumerable().Sum(r => r.Field<decimal>("Subtotal"));
+            decimal descuentoAplicado = 0;
 
-            // Validar descuento
-            if (!ValidarDescuento(txtDescuento.Text, subtotal, out descuento, out mensajeError))
+            // Si hay un descuento seleccionado
+            if (!string.IsNullOrEmpty(ddlDescuentos.SelectedValue))
             {
-                // Si hay error, mostrar y usar 0
-                if (!string.IsNullOrEmpty(mensajeError))
+                int idDescuento = int.Parse(ddlDescuentos.SelectedValue);
+
+                var cliente = new KawkiWebBusiness.KawkiWebWSDescuentos.DescuentosClient();
+                var d = cliente.obtenerPorIdDescuento(idDescuento);
+
+                if (d != null)
                 {
-                    lblMensaje.CssClass = "text-warning mb-2 d-block";
-                    lblMensaje.Text = mensajeError;
-                    descuento = 0;
-                    txtDescuento.Text = "0.00";
+                    int tipo = d.tipo_beneficio.tipo_beneficio_id;
+                    int valor = d.valor_beneficio;
+
+                    switch (tipo)
+                    {
+                        case 1: // %
+                            descuentoAplicado = subtotal * (valor / 100m);
+                            break;
+
+                        case 2: // monto fijo
+                            descuentoAplicado = valor;
+                            break;
+
+                        case 3: // envío gratis — NO descuenta subtotal
+                            descuentoAplicado = 0;
+                            break;
+                    }
                 }
             }
 
-            decimal total = subtotal - descuento;
-            if (total < 0) total = 0;
+            decimal total = subtotal - descuentoAplicado;
 
-            lblSubtotal.Text = $"S/ {subtotal:0.00}";
-            lblDescuento.Text = $"S/ {descuento:0.00}";
-            lblTotal.Text = $"S/ {total:0.00}";
+            lblSubtotal.Text = subtotal.ToString("0.00");
+            lblDescuento.Text = descuentoAplicado.ToString("0.00");
+            lblTotal.Text = total.ToString("0.00");
         }
+
 
         protected void btnRegistrarVenta_Click(object sender, EventArgs e)
         {
@@ -568,7 +709,7 @@ namespace KawkiWeb
 
             // Validar total
             decimal total = 0m;
-            if (!decimal.TryParse(lblTotal.Text.Replace("S/", "").Trim(), out total) || total <= 0)
+            if (!decimal.TryParse(lblTotal.Text.Replace("S/", "").Trim(),NumberStyles.Any,CultureInfo.InvariantCulture,out total) || total <= 0)
             {
                 lblMensaje.Text = "El total de la venta debe ser mayor a cero.";
                 return;
@@ -586,21 +727,34 @@ namespace KawkiWeb
                 int usuarioId = Convert.ToInt32(Session["UsuarioId"]);
 
                 // 2. Crear el usuariosDTO del WSDL de Ventas
-                var usuarioVendedor = new KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO()
+                var usuarioVendedor = new KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO
                 {
-                    usuarioId = usuarioId
+                    usuarioId = usuarioId,
+                    usuarioIdSpecified = true,
+
+                    activo = true,           // O el valor real del usuario
+                    activoSpecified = true
                 };
 
                 // 3. Obtener datos del formulario
                 string nombreCliente = txtNombreCliente.Text.Trim();
                 string telefono = txtTelefono.Text.Trim();
+
                 string canal = ddlCanal.SelectedValue;
                 string notas = txtNotas.Text.Trim();
 
-                // Red social
+                if (string.IsNullOrEmpty(ddlCanal.SelectedValue))
+                {
+                    lblMensaje.Text = "Selecciona un canal de venta.";
+                    lblMensaje.CssClass = "text-danger mb-2 d-block";
+                    return;
+                }
+
                 var redSocial = new KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO
                 {
                     redSocialId = Convert.ToInt32(ddlCanal.SelectedValue),
+                    redSocialIdSpecified = true,
+
                     nombre = ddlCanal.SelectedItem.Text
                 };
 
@@ -620,20 +774,73 @@ namespace KawkiWeb
                 // 5. Registrar detalles de venta
                 DetalleVentasBO detalleBO = new DetalleVentasBO();
 
-                foreach (GridViewRow row in DetalleVentas.Rows)
+
+                //foreach (DataRow row in DetalleVentas.Rows)
+                //{
+                //    try
+                //    {
+                //        string pid = row["ProductoId"]?.ToString();
+                //        string cant = row["Cantidad"]?.ToString();
+                //        string prec = row["PrecioUnitario"]?.ToString();
+                //        string subt = row["Subtotal"]?.ToString();
+
+                //        Debug.WriteLine("----------------------------------------");
+                //        Debug.WriteLine("ProductoId: " + (pid == null ? "[null]" : "'" + pid + "'"));
+                //        Debug.WriteLine("Cantidad: " + (cant == null ? "[null]" : "'" + cant + "'"));
+                //        Debug.WriteLine("Precio: " + (prec == null ? "[null]" : "'" + prec + "'"));
+                //        Debug.WriteLine("Subtotal: " + (subt == null ? "[null]" : "'" + subt + "'"));
+                //        Debug.WriteLine("----------------------------------------");
+
+                //        // Forzamos mostrar valores REALES
+                //        lblMensaje.Text = $"Debug → ProductoId: '{pid}', Cantidad: '{cant}', Precio: '{prec}', Subtotal: '{subt}'";
+                //        lblMensaje.CssClass = "text-warning mb-2 d-block";
+                //        return; // <-- detiene el proceso después de mostrar el mensaje
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        lblMensaje.Text = "Dato inválido en el detalle ➝ " + ex.Message;
+                //        lblMensaje.CssClass = "text-danger mb-2 d-block";
+                //        return;
+                //    }
+                //}
+
+
+                foreach (DataRow row in DetalleVentas.Rows)
                 {
-                    int prodVarId = Convert.ToInt32(row.Cells[0].Text);
-                    int cantidad = Convert.ToInt32(row.Cells[2].Text);
-                    double precio = Convert.ToDouble(row.Cells[3].Text);
-                    double subtotal = Convert.ToDouble(row.Cells[4].Text);
+                    int prodVarId = Convert.ToInt32(row["ProductoId"]);
+                    int cantidad = Convert.ToInt32(row["Cantidad"]);
+                    double precio = double.Parse(
+                        row["PrecioUnitario"].ToString().Replace("S/", "").Trim(),
+                        CultureInfo.InvariantCulture
+                    );
+
+                    double subtotal = double.Parse(
+                        row["Subtotal"].ToString().Replace("S/", "").Trim(),
+                        CultureInfo.InvariantCulture
+                    );
+
 
                     // Crear objeto productosVariantesDTO para DetalleVentasService
                     var productoVar = new KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO
                     {
-                        prod_variante_id = prodVarId
+                        prod_variante_id = prodVarId,
+                        prod_variante_idSpecified = true
                     };
 
+                    lblMensaje.Text =
+                    $"Debug:<br/>" +
+                    $"ProductoId = {prodVarId}<br/>" +
+                    $"Cantidad = {cantidad}<br/>" +
+                    $"Precio = '{row["PrecioUnitario"]}'<br/>" +
+                    $"Subtotal = '{row["Subtotal"]}'<br/>" +
+                    $"PrecioParseado = {precio}<br/>" +
+                    $"SubtotalParseado = {subtotal}<br/>" +
+                    $"Canal = '{ddlCanal.SelectedValue}'";
+                    
+
                     detalleBO.InsertarDetalleVenta(productoVar, ventaId, cantidad, precio, subtotal);
+
+                    return;
                 }
 
                 // 6. Todo OK
@@ -645,8 +852,12 @@ namespace KawkiWeb
             catch (Exception ex)
             {
                 lblMensaje.CssClass = "text-danger mb-2 d-block";
-                lblMensaje.Text = $"Error al registrar la venta: {ex.Message}";
+                lblMensaje.Text =
+                    "ERROR → " + ex.Message +
+                    "<br/>INNER → " + (ex.InnerException?.Message ?? "[sin inner]") +
+                    "<br/>STACK → " + ex.StackTrace;
             }
+
         }
 
 
@@ -671,7 +882,6 @@ namespace KawkiWeb
             // Limpiar comprobante y pago
             ddlComprobante.SelectedIndex = 0;
             ddlMetodoPago.SelectedIndex = 0;
-            txtDescuento.Text = "0.00";
             txtNotas.Text = string.Empty;
 
             // Limpiar detalle
