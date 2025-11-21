@@ -16,43 +16,17 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
     public interface Productos {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponiblePro" +
-            "ductoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponiblePro" +
-            "ductoResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProdu" +
+            "ctoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProdu" +
+            "ctoResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse tieneStockDisponibleProducto(KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest request);
+        KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse calcularStockTotalProducto(KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponiblePro" +
-            "ductoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponiblePro" +
-            "ductoResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse> tieneStockDisponibleProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoReques" +
-            "t", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoRespon" +
-            "se")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse modificarProducto(KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoReques" +
-            "t", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoRespon" +
-            "se")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse> modificarProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRequest" +
-            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRespons" +
-            "e")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse insertarProducto(KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRequest" +
-            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRespons" +
-            "e")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse> insertarProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProdu" +
+            "ctoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProdu" +
+            "ctoResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse> calcularStockTotalProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorCategoriaProdu" +
@@ -81,32 +55,6 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.listarTodosProductoResponse> listarTodosProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.listarTodosProductoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoReq" +
-            "uest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoRes" +
-            "ponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse obtenerPorIdProducto(KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoReq" +
-            "uest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoRes" +
-            "ponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse> obtenerPorIdProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProdu" +
-            "ctoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProdu" +
-            "ctoResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse calcularStockTotalProducto(KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProdu" +
-            "ctoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProdu" +
-            "ctoResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse> calcularStockTotalProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorEstiloProducto" +
             "Request", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorEstiloProducto" +
             "Response")]
@@ -131,22 +79,74 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
             "ctoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarConStockBajoProdu" +
             "ctoResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.listarConStockBajoProductoResponse> listarConStockBajoProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.listarConStockBajoProductoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoReq" +
+            "uest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoRes" +
+            "ponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse obtenerPorIdProducto(KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoReq" +
+            "uest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoRes" +
+            "ponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse> obtenerPorIdProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRequest" +
+            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRespons" +
+            "e")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse insertarProducto(KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRequest" +
+            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRespons" +
+            "e")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse> insertarProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoReques" +
+            "t", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoRespon" +
+            "se")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse modificarProducto(KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoReques" +
+            "t", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoRespon" +
+            "se")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse> modificarProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponiblePro" +
+            "ductoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponiblePro" +
+            "ductoResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse tieneStockDisponibleProducto(KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponiblePro" +
+            "ductoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponiblePro" +
+            "ductoResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse> tieneStockDisponibleProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="tieneStockDisponibleProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class tieneStockDisponibleProductoRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="calcularStockTotalProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class calcularStockTotalProductoRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public int producto_id;
         
-        public tieneStockDisponibleProductoRequest() {
+        public calcularStockTotalProductoRequest() {
         }
         
-        public tieneStockDisponibleProductoRequest(int producto_id) {
+        public calcularStockTotalProductoRequest(int producto_id) {
             this.producto_id = producto_id;
         }
     }
@@ -154,18 +154,176 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="tieneStockDisponibleProductoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class tieneStockDisponibleProductoResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="calcularStockTotalProductoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class calcularStockTotalProductoResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool @return;
+        public int @return;
         
-        public tieneStockDisponibleProductoResponse() {
+        public calcularStockTotalProductoResponse() {
         }
         
-        public tieneStockDisponibleProductoResponse(bool @return) {
+        public calcularStockTotalProductoResponse(int @return) {
             this.@return = @return;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
+    public partial class productosDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int producto_idField;
+        
+        private bool producto_idFieldSpecified;
+        
+        private string descripcionField;
+        
+        private categoriasDTO categoriaField;
+        
+        private estilosDTO estiloField;
+        
+        private double precio_ventaField;
+        
+        private bool precio_ventaFieldSpecified;
+        
+        private string fecha_hora_creacionField;
+        
+        private usuariosDTO usuarioField;
+        
+        private productosVariantesDTO[] variantesField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public int producto_id {
+            get {
+                return this.producto_idField;
+            }
+            set {
+                this.producto_idField = value;
+                this.RaisePropertyChanged("producto_id");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool producto_idSpecified {
+            get {
+                return this.producto_idFieldSpecified;
+            }
+            set {
+                this.producto_idFieldSpecified = value;
+                this.RaisePropertyChanged("producto_idSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string descripcion {
+            get {
+                return this.descripcionField;
+            }
+            set {
+                this.descripcionField = value;
+                this.RaisePropertyChanged("descripcion");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public categoriasDTO categoria {
+            get {
+                return this.categoriaField;
+            }
+            set {
+                this.categoriaField = value;
+                this.RaisePropertyChanged("categoria");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public estilosDTO estilo {
+            get {
+                return this.estiloField;
+            }
+            set {
+                this.estiloField = value;
+                this.RaisePropertyChanged("estilo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public double precio_venta {
+            get {
+                return this.precio_ventaField;
+            }
+            set {
+                this.precio_ventaField = value;
+                this.RaisePropertyChanged("precio_venta");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool precio_ventaSpecified {
+            get {
+                return this.precio_ventaFieldSpecified;
+            }
+            set {
+                this.precio_ventaFieldSpecified = value;
+                this.RaisePropertyChanged("precio_ventaSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public string fecha_hora_creacion {
+            get {
+                return this.fecha_hora_creacionField;
+            }
+            set {
+                this.fecha_hora_creacionField = value;
+                this.RaisePropertyChanged("fecha_hora_creacion");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public usuariosDTO usuario {
+            get {
+                return this.usuarioField;
+            }
+            set {
+                this.usuarioField = value;
+                this.RaisePropertyChanged("usuario");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("variantes", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=true, Order=7)]
+        public productosVariantesDTO[] variantes {
+            get {
+                return this.variantesField;
+            }
+            set {
+                this.variantesField = value;
+                this.RaisePropertyChanged("variantes");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
         }
     }
     
@@ -899,164 +1057,6 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class productosDTO : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private int producto_idField;
-        
-        private bool producto_idFieldSpecified;
-        
-        private string descripcionField;
-        
-        private categoriasDTO categoriaField;
-        
-        private estilosDTO estiloField;
-        
-        private double precio_ventaField;
-        
-        private bool precio_ventaFieldSpecified;
-        
-        private string fecha_hora_creacionField;
-        
-        private usuariosDTO usuarioField;
-        
-        private productosVariantesDTO[] variantesField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int producto_id {
-            get {
-                return this.producto_idField;
-            }
-            set {
-                this.producto_idField = value;
-                this.RaisePropertyChanged("producto_id");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool producto_idSpecified {
-            get {
-                return this.producto_idFieldSpecified;
-            }
-            set {
-                this.producto_idFieldSpecified = value;
-                this.RaisePropertyChanged("producto_idSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public string descripcion {
-            get {
-                return this.descripcionField;
-            }
-            set {
-                this.descripcionField = value;
-                this.RaisePropertyChanged("descripcion");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
-        public categoriasDTO categoria {
-            get {
-                return this.categoriaField;
-            }
-            set {
-                this.categoriaField = value;
-                this.RaisePropertyChanged("categoria");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
-        public estilosDTO estilo {
-            get {
-                return this.estiloField;
-            }
-            set {
-                this.estiloField = value;
-                this.RaisePropertyChanged("estilo");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
-        public double precio_venta {
-            get {
-                return this.precio_ventaField;
-            }
-            set {
-                this.precio_ventaField = value;
-                this.RaisePropertyChanged("precio_venta");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool precio_ventaSpecified {
-            get {
-                return this.precio_ventaFieldSpecified;
-            }
-            set {
-                this.precio_ventaFieldSpecified = value;
-                this.RaisePropertyChanged("precio_ventaSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
-        public string fecha_hora_creacion {
-            get {
-                return this.fecha_hora_creacionField;
-            }
-            set {
-                this.fecha_hora_creacionField = value;
-                this.RaisePropertyChanged("fecha_hora_creacion");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
-        public usuariosDTO usuario {
-            get {
-                return this.usuarioField;
-            }
-            set {
-                this.usuarioField = value;
-                this.RaisePropertyChanged("usuario");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("variantes", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=true, Order=7)]
-        public productosVariantesDTO[] variantes {
-            get {
-                return this.variantesField;
-            }
-            set {
-                this.variantesField = value;
-                this.RaisePropertyChanged("variantes");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
     public partial class estilosDTO : object, System.ComponentModel.INotifyPropertyChanged {
         
         private int estilo_idField;
@@ -1108,123 +1108,6 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarProductoRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int producto_id;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string descripcion;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public double precio_venta;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario;
-        
-        public modificarProductoRequest() {
-        }
-        
-        public modificarProductoRequest(int producto_id, string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
-            this.producto_id = producto_id;
-            this.descripcion = descripcion;
-            this.categoria = categoria;
-            this.estilo = estilo;
-            this.precio_venta = precio_venta;
-            this.usuario = usuario;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarProductoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarProductoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public modificarProductoResponse() {
-        }
-        
-        public modificarProductoResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarProductoRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string descripcion;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public double precio_venta;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario;
-        
-        public insertarProductoRequest() {
-        }
-        
-        public insertarProductoRequest(string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
-            this.descripcion = descripcion;
-            this.categoria = categoria;
-            this.estilo = estilo;
-            this.precio_venta = precio_venta;
-            this.usuario = usuario;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarProductoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarProductoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public insertarProductoResponse() {
-        }
-        
-        public insertarProductoResponse(int @return) {
-            this.@return = @return;
         }
     }
     
@@ -1295,78 +1178,6 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdProductoRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int producto_id;
-        
-        public obtenerPorIdProductoRequest() {
-        }
-        
-        public obtenerPorIdProductoRequest(int producto_id) {
-            this.producto_id = producto_id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdProductoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdProductoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductos.productosDTO @return;
-        
-        public obtenerPorIdProductoResponse() {
-        }
-        
-        public obtenerPorIdProductoResponse(KawkiWebBusiness.KawkiWebWSProductos.productosDTO @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="calcularStockTotalProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class calcularStockTotalProductoRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int producto_id;
-        
-        public calcularStockTotalProductoRequest() {
-        }
-        
-        public calcularStockTotalProductoRequest(int producto_id) {
-            this.producto_id = producto_id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="calcularStockTotalProductoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class calcularStockTotalProductoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public calcularStockTotalProductoResponse() {
-        }
-        
-        public calcularStockTotalProductoResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="listarPorEstiloProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class listarPorEstiloProductoRequest {
         
@@ -1428,6 +1239,195 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdProductoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int producto_id;
+        
+        public obtenerPorIdProductoRequest() {
+        }
+        
+        public obtenerPorIdProductoRequest(int producto_id) {
+            this.producto_id = producto_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdProductoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdProductoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSProductos.productosDTO @return;
+        
+        public obtenerPorIdProductoResponse() {
+        }
+        
+        public obtenerPorIdProductoResponse(KawkiWebBusiness.KawkiWebWSProductos.productosDTO @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarProductoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string descripcion;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public double precio_venta;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario;
+        
+        public insertarProductoRequest() {
+        }
+        
+        public insertarProductoRequest(string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
+            this.descripcion = descripcion;
+            this.categoria = categoria;
+            this.estilo = estilo;
+            this.precio_venta = precio_venta;
+            this.usuario = usuario;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarProductoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarProductoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public insertarProductoResponse() {
+        }
+        
+        public insertarProductoResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarProductoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int producto_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string descripcion;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public double precio_venta;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario;
+        
+        public modificarProductoRequest() {
+        }
+        
+        public modificarProductoRequest(int producto_id, string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
+            this.producto_id = producto_id;
+            this.descripcion = descripcion;
+            this.categoria = categoria;
+            this.estilo = estilo;
+            this.precio_venta = precio_venta;
+            this.usuario = usuario;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarProductoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarProductoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public modificarProductoResponse() {
+        }
+        
+        public modificarProductoResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="tieneStockDisponibleProducto", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class tieneStockDisponibleProductoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int producto_id;
+        
+        public tieneStockDisponibleProductoRequest() {
+        }
+        
+        public tieneStockDisponibleProductoRequest(int producto_id) {
+            this.producto_id = producto_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="tieneStockDisponibleProductoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class tieneStockDisponibleProductoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool @return;
+        
+        public tieneStockDisponibleProductoResponse() {
+        }
+        
+        public tieneStockDisponibleProductoResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface ProductosChannel : KawkiWebBusiness.KawkiWebWSProductos.Productos, System.ServiceModel.IClientChannel {
     }
@@ -1456,90 +1456,26 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.tieneStockDisponibleProducto(KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest request) {
-            return base.Channel.tieneStockDisponibleProducto(request);
+        KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.calcularStockTotalProducto(KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest request) {
+            return base.Channel.calcularStockTotalProducto(request);
         }
         
-        public bool tieneStockDisponibleProducto(int producto_id) {
-            KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest();
+        public int calcularStockTotalProducto(int producto_id) {
+            KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest();
             inValue.producto_id = producto_id;
-            KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).tieneStockDisponibleProducto(inValue);
+            KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).calcularStockTotalProducto(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse> KawkiWebBusiness.KawkiWebWSProductos.Productos.tieneStockDisponibleProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest request) {
-            return base.Channel.tieneStockDisponibleProductoAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse> KawkiWebBusiness.KawkiWebWSProductos.Productos.calcularStockTotalProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest request) {
+            return base.Channel.calcularStockTotalProductoAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse> tieneStockDisponibleProductoAsync(int producto_id) {
-            KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest();
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse> calcularStockTotalProductoAsync(int producto_id) {
+            KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest();
             inValue.producto_id = producto_id;
-            return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).tieneStockDisponibleProductoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.modificarProducto(KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest request) {
-            return base.Channel.modificarProducto(request);
-        }
-        
-        public int modificarProducto(int producto_id, string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
-            KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest();
-            inValue.producto_id = producto_id;
-            inValue.descripcion = descripcion;
-            inValue.categoria = categoria;
-            inValue.estilo = estilo;
-            inValue.precio_venta = precio_venta;
-            inValue.usuario = usuario;
-            KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).modificarProducto(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse> KawkiWebBusiness.KawkiWebWSProductos.Productos.modificarProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest request) {
-            return base.Channel.modificarProductoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse> modificarProductoAsync(int producto_id, string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
-            KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest();
-            inValue.producto_id = producto_id;
-            inValue.descripcion = descripcion;
-            inValue.categoria = categoria;
-            inValue.estilo = estilo;
-            inValue.precio_venta = precio_venta;
-            inValue.usuario = usuario;
-            return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).modificarProductoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.insertarProducto(KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest request) {
-            return base.Channel.insertarProducto(request);
-        }
-        
-        public int insertarProducto(string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
-            KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest();
-            inValue.descripcion = descripcion;
-            inValue.categoria = categoria;
-            inValue.estilo = estilo;
-            inValue.precio_venta = precio_venta;
-            inValue.usuario = usuario;
-            KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).insertarProducto(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse> KawkiWebBusiness.KawkiWebWSProductos.Productos.insertarProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest request) {
-            return base.Channel.insertarProductoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse> insertarProductoAsync(string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
-            KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest();
-            inValue.descripcion = descripcion;
-            inValue.categoria = categoria;
-            inValue.estilo = estilo;
-            inValue.precio_venta = precio_venta;
-            inValue.usuario = usuario;
-            return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).insertarProductoAsync(inValue);
+            return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).calcularStockTotalProductoAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1587,52 +1523,6 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.obtenerPorIdProducto(KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest request) {
-            return base.Channel.obtenerPorIdProducto(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSProductos.productosDTO obtenerPorIdProducto(int producto_id) {
-            KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest();
-            inValue.producto_id = producto_id;
-            KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).obtenerPorIdProducto(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse> KawkiWebBusiness.KawkiWebWSProductos.Productos.obtenerPorIdProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest request) {
-            return base.Channel.obtenerPorIdProductoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse> obtenerPorIdProductoAsync(int producto_id) {
-            KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest();
-            inValue.producto_id = producto_id;
-            return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).obtenerPorIdProductoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.calcularStockTotalProducto(KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest request) {
-            return base.Channel.calcularStockTotalProducto(request);
-        }
-        
-        public int calcularStockTotalProducto(int producto_id) {
-            KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest();
-            inValue.producto_id = producto_id;
-            KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).calcularStockTotalProducto(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse> KawkiWebBusiness.KawkiWebWSProductos.Productos.calcularStockTotalProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest request) {
-            return base.Channel.calcularStockTotalProductoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoResponse> calcularStockTotalProductoAsync(int producto_id) {
-            KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.calcularStockTotalProductoRequest();
-            inValue.producto_id = producto_id;
-            return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).calcularStockTotalProductoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSProductos.listarPorEstiloProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.listarPorEstiloProducto(KawkiWebBusiness.KawkiWebWSProductos.listarPorEstiloProductoRequest request) {
             return base.Channel.listarPorEstiloProducto(request);
         }
@@ -1674,6 +1564,116 @@ namespace KawkiWebBusiness.KawkiWebWSProductos {
         public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.listarConStockBajoProductoResponse> listarConStockBajoProductoAsync() {
             KawkiWebBusiness.KawkiWebWSProductos.listarConStockBajoProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.listarConStockBajoProductoRequest();
             return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).listarConStockBajoProductoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.obtenerPorIdProducto(KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest request) {
+            return base.Channel.obtenerPorIdProducto(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSProductos.productosDTO obtenerPorIdProducto(int producto_id) {
+            KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest();
+            inValue.producto_id = producto_id;
+            KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).obtenerPorIdProducto(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse> KawkiWebBusiness.KawkiWebWSProductos.Productos.obtenerPorIdProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest request) {
+            return base.Channel.obtenerPorIdProductoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoResponse> obtenerPorIdProductoAsync(int producto_id) {
+            KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.obtenerPorIdProductoRequest();
+            inValue.producto_id = producto_id;
+            return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).obtenerPorIdProductoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.insertarProducto(KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest request) {
+            return base.Channel.insertarProducto(request);
+        }
+        
+        public int insertarProducto(string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
+            KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest();
+            inValue.descripcion = descripcion;
+            inValue.categoria = categoria;
+            inValue.estilo = estilo;
+            inValue.precio_venta = precio_venta;
+            inValue.usuario = usuario;
+            KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).insertarProducto(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse> KawkiWebBusiness.KawkiWebWSProductos.Productos.insertarProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest request) {
+            return base.Channel.insertarProductoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.insertarProductoResponse> insertarProductoAsync(string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
+            KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.insertarProductoRequest();
+            inValue.descripcion = descripcion;
+            inValue.categoria = categoria;
+            inValue.estilo = estilo;
+            inValue.precio_venta = precio_venta;
+            inValue.usuario = usuario;
+            return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).insertarProductoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.modificarProducto(KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest request) {
+            return base.Channel.modificarProducto(request);
+        }
+        
+        public int modificarProducto(int producto_id, string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
+            KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest();
+            inValue.producto_id = producto_id;
+            inValue.descripcion = descripcion;
+            inValue.categoria = categoria;
+            inValue.estilo = estilo;
+            inValue.precio_venta = precio_venta;
+            inValue.usuario = usuario;
+            KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).modificarProducto(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse> KawkiWebBusiness.KawkiWebWSProductos.Productos.modificarProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest request) {
+            return base.Channel.modificarProductoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.modificarProductoResponse> modificarProductoAsync(int producto_id, string descripcion, KawkiWebBusiness.KawkiWebWSProductos.categoriasDTO categoria, KawkiWebBusiness.KawkiWebWSProductos.estilosDTO estilo, double precio_venta, KawkiWebBusiness.KawkiWebWSProductos.usuariosDTO usuario) {
+            KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.modificarProductoRequest();
+            inValue.producto_id = producto_id;
+            inValue.descripcion = descripcion;
+            inValue.categoria = categoria;
+            inValue.estilo = estilo;
+            inValue.precio_venta = precio_venta;
+            inValue.usuario = usuario;
+            return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).modificarProductoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse KawkiWebBusiness.KawkiWebWSProductos.Productos.tieneStockDisponibleProducto(KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest request) {
+            return base.Channel.tieneStockDisponibleProducto(request);
+        }
+        
+        public bool tieneStockDisponibleProducto(int producto_id) {
+            KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest();
+            inValue.producto_id = producto_id;
+            KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).tieneStockDisponibleProducto(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse> KawkiWebBusiness.KawkiWebWSProductos.Productos.tieneStockDisponibleProductoAsync(KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest request) {
+            return base.Channel.tieneStockDisponibleProductoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoResponse> tieneStockDisponibleProductoAsync(int producto_id) {
+            KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest inValue = new KawkiWebBusiness.KawkiWebWSProductos.tieneStockDisponibleProductoRequest();
+            inValue.producto_id = producto_id;
+            return ((KawkiWebBusiness.KawkiWebWSProductos.Productos)(this)).tieneStockDisponibleProductoAsync(inValue);
         }
     }
 }

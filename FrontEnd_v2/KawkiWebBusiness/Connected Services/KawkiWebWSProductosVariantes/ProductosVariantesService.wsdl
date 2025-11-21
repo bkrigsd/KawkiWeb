@@ -5,30 +5,6 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/ProductosVariantesService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="listarConStockBajoProdVariante">
-    <part name="parameters" element="tns:listarConStockBajoProdVariante" />
-  </message>
-  <message name="listarConStockBajoProdVarianteResponse">
-    <part name="parameters" element="tns:listarConStockBajoProdVarianteResponse" />
-  </message>
-  <message name="tieneStockDisponibleProdVariante">
-    <part name="parameters" element="tns:tieneStockDisponibleProdVariante" />
-  </message>
-  <message name="tieneStockDisponibleProdVarianteResponse">
-    <part name="parameters" element="tns:tieneStockDisponibleProdVarianteResponse" />
-  </message>
-  <message name="actualizarStockProdVariante">
-    <part name="parameters" element="tns:actualizarStockProdVariante" />
-  </message>
-  <message name="actualizarStockProdVarianteResponse">
-    <part name="parameters" element="tns:actualizarStockProdVarianteResponse" />
-  </message>
-  <message name="listarPorProductoProdVariante">
-    <part name="parameters" element="tns:listarPorProductoProdVariante" />
-  </message>
-  <message name="listarPorProductoProdVarianteResponse">
-    <part name="parameters" element="tns:listarPorProductoProdVarianteResponse" />
-  </message>
   <message name="insertarProdVariante">
     <part name="parameters" element="tns:insertarProdVariante" />
   </message>
@@ -53,11 +29,29 @@
   <message name="modificarProdVarianteResponse">
     <part name="parameters" element="tns:modificarProdVarianteResponse" />
   </message>
-  <message name="listarPorColorProdVariante">
-    <part name="parameters" element="tns:listarPorColorProdVariante" />
+  <message name="tieneStockDisponibleProdVariante">
+    <part name="parameters" element="tns:tieneStockDisponibleProdVariante" />
   </message>
-  <message name="listarPorColorProdVarianteResponse">
-    <part name="parameters" element="tns:listarPorColorProdVarianteResponse" />
+  <message name="tieneStockDisponibleProdVarianteResponse">
+    <part name="parameters" element="tns:tieneStockDisponibleProdVarianteResponse" />
+  </message>
+  <message name="listarConStockBajoProdVariante">
+    <part name="parameters" element="tns:listarConStockBajoProdVariante" />
+  </message>
+  <message name="listarConStockBajoProdVarianteResponse">
+    <part name="parameters" element="tns:listarConStockBajoProdVarianteResponse" />
+  </message>
+  <message name="actualizarStockProdVariante">
+    <part name="parameters" element="tns:actualizarStockProdVariante" />
+  </message>
+  <message name="actualizarStockProdVarianteResponse">
+    <part name="parameters" element="tns:actualizarStockProdVarianteResponse" />
+  </message>
+  <message name="listarPorProductoProdVariante">
+    <part name="parameters" element="tns:listarPorProductoProdVariante" />
+  </message>
+  <message name="listarPorProductoProdVarianteResponse">
+    <part name="parameters" element="tns:listarPorProductoProdVarianteResponse" />
   </message>
   <message name="listarPorTallaProdVariante">
     <part name="parameters" element="tns:listarPorTallaProdVariante" />
@@ -65,23 +59,13 @@
   <message name="listarPorTallaProdVarianteResponse">
     <part name="parameters" element="tns:listarPorTallaProdVarianteResponse" />
   </message>
+  <message name="listarPorColorProdVariante">
+    <part name="parameters" element="tns:listarPorColorProdVariante" />
+  </message>
+  <message name="listarPorColorProdVarianteResponse">
+    <part name="parameters" element="tns:listarPorColorProdVarianteResponse" />
+  </message>
   <portType name="ProductosVariantes">
-    <operation name="listarConStockBajoProdVariante">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStockBajoProdVarianteRequest" message="tns:listarConStockBajoProdVariante" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStockBajoProdVarianteResponse" message="tns:listarConStockBajoProdVarianteResponse" />
-    </operation>
-    <operation name="tieneStockDisponibleProdVariante">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisponibleProdVarianteRequest" message="tns:tieneStockDisponibleProdVariante" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisponibleProdVarianteResponse" message="tns:tieneStockDisponibleProdVarianteResponse" />
-    </operation>
-    <operation name="actualizarStockProdVariante">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStockProdVarianteRequest" message="tns:actualizarStockProdVariante" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStockProdVarianteResponse" message="tns:actualizarStockProdVarianteResponse" />
-    </operation>
-    <operation name="listarPorProductoProdVariante">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProductoProdVarianteRequest" message="tns:listarPorProductoProdVariante" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProductoProdVarianteResponse" message="tns:listarPorProductoProdVarianteResponse" />
-    </operation>
     <operation name="insertarProdVariante">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/insertarProdVarianteRequest" message="tns:insertarProdVariante" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/insertarProdVarianteResponse" message="tns:insertarProdVarianteResponse" />
@@ -98,53 +82,33 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/modificarProdVarianteRequest" message="tns:modificarProdVariante" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/modificarProdVarianteResponse" message="tns:modificarProdVarianteResponse" />
     </operation>
-    <operation name="listarPorColorProdVariante">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorColorProdVarianteRequest" message="tns:listarPorColorProdVariante" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorColorProdVarianteResponse" message="tns:listarPorColorProdVarianteResponse" />
+    <operation name="tieneStockDisponibleProdVariante">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisponibleProdVarianteRequest" message="tns:tieneStockDisponibleProdVariante" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisponibleProdVarianteResponse" message="tns:tieneStockDisponibleProdVarianteResponse" />
+    </operation>
+    <operation name="listarConStockBajoProdVariante">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStockBajoProdVarianteRequest" message="tns:listarConStockBajoProdVariante" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStockBajoProdVarianteResponse" message="tns:listarConStockBajoProdVarianteResponse" />
+    </operation>
+    <operation name="actualizarStockProdVariante">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStockProdVarianteRequest" message="tns:actualizarStockProdVariante" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStockProdVarianteResponse" message="tns:actualizarStockProdVarianteResponse" />
+    </operation>
+    <operation name="listarPorProductoProdVariante">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProductoProdVarianteRequest" message="tns:listarPorProductoProdVariante" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProductoProdVarianteResponse" message="tns:listarPorProductoProdVarianteResponse" />
     </operation>
     <operation name="listarPorTallaProdVariante">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorTallaProdVarianteRequest" message="tns:listarPorTallaProdVariante" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorTallaProdVarianteResponse" message="tns:listarPorTallaProdVarianteResponse" />
     </operation>
+    <operation name="listarPorColorProdVariante">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorColorProdVarianteRequest" message="tns:listarPorColorProdVariante" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorColorProdVarianteResponse" message="tns:listarPorColorProdVarianteResponse" />
+    </operation>
   </portType>
   <binding name="ProductosVariantesPortBinding" type="tns:ProductosVariantes">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="listarConStockBajoProdVariante">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="tieneStockDisponibleProdVariante">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="actualizarStockProdVariante">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="listarPorProductoProdVariante">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
     <operation name="insertarProdVariante">
       <soap:operation soapAction="" />
       <input>
@@ -181,7 +145,34 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarPorColorProdVariante">
+    <operation name="tieneStockDisponibleProdVariante">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarConStockBajoProdVariante">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="actualizarStockProdVariante">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarPorProductoProdVariante">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -191,6 +182,15 @@
       </output>
     </operation>
     <operation name="listarPorTallaProdVariante">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarPorColorProdVariante">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
