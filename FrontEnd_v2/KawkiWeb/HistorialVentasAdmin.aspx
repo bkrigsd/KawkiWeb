@@ -1,0 +1,268 @@
+﻿<%@ Page Title="Historial Ventas" Language="C#" MasterPageFile="~/KawkiWeb.master"
+    AutoEventWireup="true" CodeBehind="HistorialVentasAdmin.aspx.cs" Inherits="KawkiWeb.HistorialVentasAdmin" %>
+
+<asp:Content ID="HeadExtra" ContentPlaceHolderID="HeadContent" runat="server">
+    <link href="Content/Stylo/historialventaadmin.css" rel="stylesheet" />
+</asp:Content>
+
+<asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="container-fluid historial-container">
+        <!-- Encabezado -->
+        <div class="historial-header">
+            <h1>
+                <i class="fas fa-chart-line me-2"></i>Historial de Ventas
+            </h1>
+            <p>Consulta el historial completo de ventas con filtros avanzados por fecha y vendedor.</p>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="card-kawki">
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Ventas</div>
+                        <asp:Label ID="lblTotalVentas" runat="server" ClientIDMode="Static" CssClass="stat-value" Text="0" />
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-label">Monto Total</div>
+                        <asp:Label ID="lblMontoTotal" runat="server" ClientIDMode="Static" CssClass="stat-value" Text="S/ 0.00" />
+                    </div>
+                    <div class="stat-card blue">
+                        <div class="stat-label">Promedio por Venta</div>
+                        <asp:Label ID="lblPromedio" runat="server" ClientIDMode="Static" CssClass="stat-value" Text="S/ 0.00" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="card-kawki">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-filter"></i> Filtros de búsqueda
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-3">
+                        <label class="form-label" for="<%= txtFechaInicio.ClientID %>">
+                            <i class="fas fa-calendar-alt me-1"></i>Fecha inicio
+                        </label>
+                        <asp:TextBox ID="txtFechaInicio" runat="server" 
+                            CssClass="form-control" TextMode="Date" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="<%= txtFechaFin.ClientID %>">
+                            <i class="fas fa-calendar-alt me-1"></i>Fecha fin
+                        </label>
+                        <asp:TextBox ID="txtFechaFin" runat="server" 
+                            CssClass="form-control" TextMode="Date" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="<%= ddlVendedor.ClientID %>">
+                            <i class="fas fa-user me-1"></i>Vendedor
+                        </label>
+                        <asp:DropDownList ID="ddlVendedor" runat="server" CssClass="form-select">
+                            <asp:ListItem Text="Todos los vendedores" Value="" />
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-md-3">
+                        <asp:Button ID="btnBuscar" runat="server" 
+                            CssClass="btn btn-kawki-primary w-100"
+                            Text="Buscar"
+                            OnClick="btnBuscar_Click" />
+                        <asp:Button ID="btnLimpiar" runat="server" 
+                            CssClass="btn btn-kawki-outline w-100 mt-2"
+                            Text="Limpiar filtros"
+                            OnClick="btnLimpiar_Click" 
+                            CausesValidation="false" />
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <asp:Label ID="lblErrorFiltros" runat="server"
+                        CssClass="text-danger d-block mt-2"
+                        Visible="false" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Ordenamiento -->
+        <div class="card-kawki mb-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-sort"></i> Ordenar registros
+                </h5>
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Ordenar por</label>
+                    <asp:DropDownList ID="ddlOrdenarPor" runat="server"
+                        CssClass="form-select" AutoPostBack="true"
+                        OnSelectedIndexChanged="ActualizarOrden">
+                        <asp:ListItem Text="ID" Value="IdVenta" />
+                        <asp:ListItem Text="Fecha" Value="Fecha" />
+                        <asp:ListItem Text="Vendedor" Value="Vendedor" />
+                        <asp:ListItem Text="Canal" Value="Canal" />
+                        <asp:ListItem Text="Monto Total" Value="MontoTotal" />
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Dirección</label>
+                    <asp:DropDownList ID="ddlDireccion" runat="server"
+                        CssClass="form-select" AutoPostBack="true"
+                        OnSelectedIndexChanged="ActualizarOrden">
+                        <asp:ListItem Text="Ascendente" Value="ASC" />
+                        <asp:ListItem Text="Descendente" Value="DESC" />
+                    </asp:DropDownList>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tabla de ventas -->
+        <div class="card-kawki">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-receipt"></i> Listado de Ventas
+                </h5>
+                <span class="badge badge-vendedor">
+                    <asp:Label ID="lblContador" runat="server" Text="0 ventas encontradas" />
+                </span>
+            </div>
+            <div class="card-body">
+                <asp:Label ID="lblMensaje" runat="server" CssClass="text-info mb-2 d-block" />
+
+                <asp:GridView ID="gvVentas" runat="server" 
+                    AutoGenerateColumns="False"
+                    CssClass="table table-historial"
+                    GridLines="None" 
+                    ShowHeaderWhenEmpty="True"
+                    OnRowCommand="gvVentas_RowCommand">
+                    <Columns>
+                        <asp:BoundField DataField="IdVenta" HeaderText="ID" />
+                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
+                        <asp:BoundField DataField="Vendedor" HeaderText="Vendedor" />
+                        <asp:BoundField DataField="Canal" HeaderText="Canal" />
+                        <%--<asp:BoundField DataField="Descuento" HeaderText="Descuento" />--%>
+                        <%--<asp:BoundField DataField="EsValida" HeaderText="Válida" />--%>
+                        <asp:TemplateField HeaderText="Monto Total">
+                            <ItemTemplate>
+                                <span class="badge badge-monto">
+                                    <%# String.Format("S/ {0:0.00}", Eval("MontoTotal")) %>
+                                </span>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <%--<asp:TemplateField HeaderText="Acciones">
+                            <ItemTemplate>
+                                <asp:Button runat="server" 
+                                    CommandName="VerDetalle" 
+                                    CommandArgument='<%# Eval("IdVenta") %>'
+                                    Text="Ver detalle"
+                                    CssClass="btn btn-detalle"
+                                    CausesValidation="false" />
+                            </ItemTemplate>
+                        </asp:TemplateField>--%>
+                    </Columns>
+                    <EmptyDataTemplate>
+                        <div class="text-center py-4">
+                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                            <p class="text-muted-small">No se encontraron ventas con los filtros aplicados.</p>
+                        </div>
+                    </EmptyDataTemplate>
+                </asp:GridView>
+            </div>
+        </div>
+
+        <!-- Modal de detalle (simulado con panel) -->
+        <asp:Panel ID="pnlDetalle" runat="server" Visible="false" CssClass="card-kawki">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-info-circle"></i> Detalle de Venta #<asp:Label ID="lblIdVentaDetalle" runat="server" />
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <%--<div class="col-md-6">
+                        <strong>Cliente:</strong> <asp:Label ID="lblClienteDetalle" runat="server" />
+                    </div>--%>
+                    <div class="col-md-6">
+                        <strong>Vendedor:</strong> <asp:Label ID="lblVendedorDetalle" runat="server" />
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Fecha:</strong> <asp:Label ID="lblFechaDetalle" runat="server" />
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Canal:</strong> <asp:Label ID="lblCanalDetalle" runat="server" />
+                    </div>
+                </div>
+
+                <h6 class="mb-2">Productos:</h6>
+                <asp:GridView ID="gvDetalleProductos" runat="server" 
+                    AutoGenerateColumns="False"
+                    CssClass="table table-historial"
+                    GridLines="None">
+                    <Columns>
+                        <asp:BoundField DataField="Producto" HeaderText="Producto" />
+                        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                        <asp:BoundField DataField="PrecioUnitario" HeaderText="P. Unitario" DataFormatString="{0:C}" />
+                        <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
+                    </Columns>
+                </asp:GridView>
+
+                <div class="mt-3 text-end">
+                    <strong>Total:</strong> 
+                    <span class="badge badge-monto" style="font-size: 16px;">
+                        <asp:Label ID="lblTotalDetalle" runat="server" />
+                    </span>
+                </div>
+
+                <div class="mt-3">
+                    <asp:Button ID="btnCerrarDetalle" runat="server" 
+                        CssClass="btn btn-kawki-outline"
+                        Text="Cerrar"
+                        OnClick="btnCerrarDetalle_Click"
+                        CausesValidation="false" />
+                </div>
+            </div>
+        </asp:Panel>
+    </div>
+
+    <script>
+        function animateNumber(elementId, start, end, duration, prefix = "", decimals = 0) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+
+            const range = end - start;
+            const stepTime = Math.abs(Math.floor(duration / range));
+            let current = start;
+            const increment = end > start ? 1 : -1;
+
+            const timer = setInterval(function () {
+                current += increment;
+
+                if ((increment > 0 && current >= end) ||
+                    (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+
+                const value = decimals > 0
+                    ? (current / 100).toFixed(decimals)
+                    : current;
+
+                element.innerText = prefix + value;
+            }, Math.max(stepTime, 10));
+        }
+
+        // Animación principal al actualizar estadísticas
+        function animarDashboard(total, monto, promedio) {
+            animateNumber("lblTotalVentas", 0, total, 600, "", 0);
+            animateNumber("lblMontoTotal", 0, monto * 100, 700, "S/ ", 2);
+            animateNumber("lblPromedio", 0, promedio * 100, 700, "S/ ", 2);
+        }
+    </script>
+
+</asp:Content>

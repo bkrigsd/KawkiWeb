@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="listarTodosTipoComprobante" type="tns:listarTodosTipoComprobante" />
+  <xs:element name="listarTodosTipoComprobanteResponse" type="tns:listarTodosTipoComprobanteResponse" />
+  <xs:element name="obtenerPorIdTipoComprobante" type="tns:obtenerPorIdTipoComprobante" />
+  <xs:element name="obtenerPorIdTipoComprobanteResponse" type="tns:obtenerPorIdTipoComprobanteResponse" />
+  <xs:element name="tiposComprobanteDTO" type="tns:tiposComprobanteDTO" />
+  <xs:complexType name="obtenerPorIdTipoComprobante">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipoComprobanteId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdTipoComprobanteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:tiposComprobanteDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tiposComprobanteDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipo_comprobante_id" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarTodosTipoComprobante">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarTodosTipoComprobanteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:tiposComprobanteDTO" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
