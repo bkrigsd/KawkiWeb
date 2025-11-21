@@ -187,9 +187,9 @@
                             OnRowCommand="gvDetalle_RowCommand">
                             <Columns>
                                 <asp:BoundField DataField="Producto" HeaderText="Producto" />
-                                <asp:BoundField DataField="Cantidad" HeaderText="Cant." />
-                                <asp:BoundField DataField="PrecioUnitario" HeaderText="P. Unitario" DataFormatString="{0:C}" />
-                                <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
+                                <asp:BoundField DataField="cantidad" HeaderText="Cant." />
+                                <asp:BoundField DataField="precio_unitario" HeaderText="P. Unitario" DataFormatString="{0:C}" />
+                                <asp:BoundField DataField="subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
                                 <asp:TemplateField HeaderText="Acción">
                                     <ItemTemplate>
                                         <asp:Button runat="server" 
