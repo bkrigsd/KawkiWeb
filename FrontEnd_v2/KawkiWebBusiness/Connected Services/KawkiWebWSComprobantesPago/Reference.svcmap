@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="7adbd24d-a92e-4850-b2e7-42f14ddc264c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="9212c6f8-f59f-42e4-9a81-5890b577ae05" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,11 +19,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8080/KawkiWebWS/ComprobantesPagoService?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8080/KawkiWebWS/ComprobantesPagoService?wsdl&#xA;" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ComprobantesPagoService.wsdl" MetadataType="Wsdl" ID="9ea63898-07cb-4a4d-be2a-d4011ceef223" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/ComprobantesPagoService?wsdl" />
-    <MetadataFile FileName="ComprobantesPagoService.xsd" MetadataType="Schema" ID="84e4ed9d-088e-43a6-8b70-a9f563ba2d16" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/ComprobantesPagoService?xsd=1" />
+    <MetadataFile FileName="ComprobantesPagoService.wsdl" MetadataType="Wsdl" ID="59ac56dc-1727-40a6-b48f-5524e82c801f" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/ComprobantesPagoService?wsdl" />
+    <MetadataFile FileName="ComprobantesPagoService.xsd" MetadataType="Schema" ID="8629357c-376f-40a0-b31c-3d77b35be0d0" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/ComprobantesPagoService?xsd=1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

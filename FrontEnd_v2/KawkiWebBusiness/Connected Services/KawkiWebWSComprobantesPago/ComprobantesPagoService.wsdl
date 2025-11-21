@@ -17,17 +17,17 @@
   <message name="listarTodosComprobantePagoResponse">
     <part name="parameters" element="tns:listarTodosComprobantePagoResponse" />
   </message>
-  <message name="obtenerPorIdComprobPago">
-    <part name="parameters" element="tns:obtenerPorIdComprobPago" />
-  </message>
-  <message name="obtenerPorIdComprobPagoResponse">
-    <part name="parameters" element="tns:obtenerPorIdComprobPagoResponse" />
-  </message>
   <message name="modificarComprobPago">
     <part name="parameters" element="tns:modificarComprobPago" />
   </message>
   <message name="modificarComprobPagoResponse">
     <part name="parameters" element="tns:modificarComprobPagoResponse" />
+  </message>
+  <message name="obtenerPorIdComprobPago">
+    <part name="parameters" element="tns:obtenerPorIdComprobPago" />
+  </message>
+  <message name="obtenerPorIdComprobPagoResponse">
+    <part name="parameters" element="tns:obtenerPorIdComprobPagoResponse" />
   </message>
   <message name="obtenerPorVentaIdComprobPago">
     <part name="parameters" element="tns:obtenerPorVentaIdComprobPago" />
@@ -44,13 +44,13 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/listarTodosComprobantePagoRequest" message="tns:listarTodosComprobantePago" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/listarTodosComprobantePagoResponse" message="tns:listarTodosComprobantePagoResponse" />
     </operation>
-    <operation name="obtenerPorIdComprobPago">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComprobPagoRequest" message="tns:obtenerPorIdComprobPago" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComprobPagoResponse" message="tns:obtenerPorIdComprobPagoResponse" />
-    </operation>
     <operation name="modificarComprobPago">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprobPagoRequest" message="tns:modificarComprobPago" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprobPagoResponse" message="tns:modificarComprobPagoResponse" />
+    </operation>
+    <operation name="obtenerPorIdComprobPago">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComprobPagoRequest" message="tns:obtenerPorIdComprobPago" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComprobPagoResponse" message="tns:obtenerPorIdComprobPagoResponse" />
     </operation>
     <operation name="obtenerPorVentaIdComprobPago">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaIdComprobPagoRequest" message="tns:obtenerPorVentaIdComprobPago" />
@@ -77,7 +77,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerPorIdComprobPago">
+    <operation name="modificarComprobPago">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -86,7 +86,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="modificarComprobPago">
+    <operation name="obtenerPorIdComprobPago">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

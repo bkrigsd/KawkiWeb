@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="S0WfmekPr7Ei34ZBqR7aYFM90JHBdp+vg6+/wh9UA4I=">
+<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="DET8T1MuBghlH8og2Em3xrdJ7mrWKfrWeB7P5lMBcO4=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="basicHttpBinding" name="ComprobantesPagoPortBinding">
+    <bindingConfiguration bindingType="basicHttpBinding" name="ComprobantesPagoPortBinding1">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ComprobantesPagoPortBinding</serializedValue>
+          <serializedValue>ComprobantesPagoPortBinding1</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -112,7 +112,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="ComprobantesPagoPort" contract="KawkiWebWSComprobantesPago.ComprobantesPago" bindingType="basicHttpBinding" address="http://localhost:8080/KawkiWebWS/ComprobantesPagoService" bindingConfiguration="ComprobantesPagoPortBinding">
+    <endpoint name="ComprobantesPagoPort1" contract="KawkiWebWSComprobantesPago.ComprobantesPago" bindingType="basicHttpBinding" address="http://localhost:8080/KawkiWebWS/ComprobantesPagoService" bindingConfiguration="ComprobantesPagoPortBinding1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>http://localhost:8080/KawkiWebWS/ComprobantesPagoService</serializedValue>
@@ -124,7 +124,7 @@
           <serializedValue>basicHttpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ComprobantesPagoPortBinding</serializedValue>
+          <serializedValue>ComprobantesPagoPortBinding1</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>KawkiWebWSComprobantesPago.ComprobantesPago</serializedValue>
@@ -187,7 +187,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ComprobantesPagoPort</serializedValue>
+          <serializedValue>ComprobantesPagoPort1</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

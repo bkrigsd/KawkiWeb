@@ -768,12 +768,12 @@ namespace KawkiWeb
                 // 5. Registrar comprobante de pago
                 try
                 {
-                    var client = new KawkiWebBusiness.KawkiWebWSComprobantesDePago.ComprobantesPagoClient();
+                    var comprobanteBO = new KawkiWebBusiness.ComprobantesPagoBO();
 
                     string tipo = ddlComprobante.SelectedValue;
 
                     // 1. Tipo de comprobante
-                    var tipoComprobante = new KawkiWebBusiness.KawkiWebWSComprobantesDePago.tiposComprobanteDTO
+                    var tipoComprobante = new KawkiWebBusiness.KawkiWebWSComprobantesPago.tiposComprobanteDTO
                     {
                         tipo_comprobante_id = (tipo == "factura" ? 2 : 1),
                         tipo_comprobante_idSpecified = true,
@@ -781,14 +781,14 @@ namespace KawkiWeb
                     };
 
                     // 2. Venta asociada
-                    var ventaDTO = new KawkiWebBusiness.KawkiWebWSComprobantesDePago.ventasDTO
+                    var ventaDTO = new KawkiWebBusiness.KawkiWebWSComprobantesPago.ventasDTO
                     {
                         venta_id = ventaId,
                         venta_idSpecified = true
                     };
 
                     // 3. Método de pago
-                    var metodoPago = new KawkiWebBusiness.KawkiWebWSComprobantesDePago.metodosPagoDTO
+                    var metodoPago = new KawkiWebBusiness.KawkiWebWSComprobantesPago.metodosPagoDTO
                     {
                         metodo_pago_id = Convert.ToInt32(ddlMetodoPago.SelectedValue),
                         metodo_pago_idSpecified = true
@@ -819,8 +819,8 @@ namespace KawkiWeb
                         telef = txtTelefono.Text.Trim();
                     }
 
-                    // 5. Insertar comprobante (firma real del WS)
-                    int comprobanteId = client.insertarComprobPago(
+                    // 5. Inserción usando tu BO
+                    int comprobanteId = comprobanteBO.InsertarComprobantePago(
                         tipoComprobante,
                         dni,
                         nombre,
@@ -844,7 +844,6 @@ namespace KawkiWeb
                     lblMensaje.Text = "Error registrando comprobante: " + ex.Message;
                     return;
                 }
-
 
                 // 6. Registrar detalles de venta
                 DetalleVentasBO detalleBO = new DetalleVentasBO();
