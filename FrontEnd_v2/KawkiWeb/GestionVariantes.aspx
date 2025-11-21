@@ -4,103 +4,141 @@
 <asp:Content ID="HeadExtra" ContentPlaceHolderID="HeadContent" runat="server">
     <link href="Content/Stylo/registrouser.css" rel="stylesheet" />
     <style>
-        .tabla-variantes { width: 100%; border-collapse: collapse; }
-        .tabla-variantes tr { border-bottom: 1px solid #e0e0e0; }
-        .tabla-variantes th { background: #f5f5f5; padding: 12px; text-align: left; font-weight: 600; }
-        .tabla-variantes td { padding: 12px; vertical-align: middle; }
-        
-        .img-color { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        
-        .badge-alerta { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
-        .badge-bajo { background: #ffebee; color: #c62828; }
-        
-        .toggle-disponible { 
-            display: inline-flex; 
-            border-radius: 20px; 
-            overflow: hidden;
-            border: 2px solid #ddd;
-        }
-        .toggle-disponible button {
-            padding: 6px 12px;
-            border: none;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .toggle-disponible .btn-no, 
-        .toggle-disponible .btn-si { 
-            background: #f5f5f5;
-            color: #666;
-        }
-        .toggle-disponible .btn-no.active { 
-            background: #e0e0e0;
-            color: #333;
-        }
-        .toggle-disponible .btn-si.active { 
-            background: #4caf50;
-            color: white;
-        }
+    /* Tabla de variantes */
+    .tabla-variantes { 
+        width: 100%; 
+        border-collapse: collapse; 
+    }
+    .tabla-variantes tr { 
+        border-bottom: 1px solid #e0e0e0; 
+    }
+    .tabla-variantes th { 
+        background: #f5f5f5; 
+        padding: 12px; 
+        text-align: left; 
+        font-weight: 600; 
+    }
+    .tabla-variantes td { 
+        padding: 12px; 
+        vertical-align: middle; 
+    }
+    
+    /* Imagen del color */
+    .img-color { 
+        width: 80px; 
+        height: 80px; 
+        object-fit: cover; 
+        border-radius: 8px; 
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    }
+    
+    /* Badge de alerta */
+    .badge-alerta { 
+        display: inline-block; 
+        padding: 4px 8px; 
+        border-radius: 4px; 
+        font-size: 12px; 
+    }
+    .badge-bajo { 
+        background: #ffebee; 
+        color: #c62828; 
+    }
 
-        .control-stock {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-            background: #f9f9f9;
-        }
-        .control-stock label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        .control-stock input {
-            width: 100%;
-            padding: 6px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        
-        .error-validation {
-            color: #dc3545;
-            font-size: 13px;
-            margin-top: 5px;
-            display: block;
-        }
+    .badge-agotado { 
+        background: #ffcdd2; 
+        color: #b71c1c; 
+        font-weight: bold;
+    }
+    
+    /* Toggle disponible */
+    .toggle-disponible { 
+        display: inline-flex; 
+        border-radius: 20px; 
+        overflow: hidden;
+        border: 2px solid #ddd;
+    }
+    .toggle-disponible button {
+        padding: 6px 12px;
+        border: none;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        transition: all 0.3s;
+        background: #f5f5f5;
+        color: #666;
+    }
+    .toggle-disponible .btn-no.active { 
+        background: #e0e0e0;
+        color: #333;
+    }
+    .toggle-disponible .btn-si.active { 
+        background: #4caf50;
+        color: white;
+    }
 
-        .btn-agregar {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: background 0.3s;
-            min-width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .btn-agregar:hover {
-            background: #218838;
-        }
-        .btn-editar {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: background 0.3s;
-            margin-right: 5px;
-        }
-        .btn-editar:hover {
-            background: #0056b3;
-        }
+    /* Control de stock */
+    .control-stock {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        background: #f9f9f9;
+    }
+    .control-stock label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+    .control-stock input {
+        width: 100%;
+        padding: 6px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    
+    /* Error de validación */
+    .error-validation {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    /* Botones */
+    .btn-agregar {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 4px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background 0.3s;
+        min-width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-agregar:hover {
+        background: #218838;
+    }
+    .btn-editar {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 4px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background 0.3s;
+        margin-right: 5px;
+    }
+    .btn-editar:hover {
+        background: #0056b3;
+    }
+
     </style>
 </asp:Content>
 
@@ -186,7 +224,7 @@
                     <label class="form-label">Color *</label>
                     <asp:DropDownList ID="ddlColor" runat="server" CssClass="form-select">
                     </asp:DropDownList>
-                    <span id="errorColor" class="error-validation" style="display: none;">⚠ Debe seleccionar un color</span>
+                    <asp:Label ID="lblErrorColor" runat="server" CssClass="text-danger small d-block mt-1" />
                 </div>
 
                 <div class="row">
@@ -194,13 +232,13 @@
                         <label class="form-label">Tallas (separadas por comas) *</label>
                         <asp:TextBox ID="txtTallas" runat="server" CssClass="form-control" 
                             placeholder="35,36,37,38,39" />
-                        <span id="errorTallas" class="error-validation" style="display: none;">⚠ Debe ingresar al menos una talla</span>
+                        <asp:Label ID="lblErrorTallas" runat="server" CssClass="text-danger small d-block mt-1" />
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Stocks (separados por comas) *</label>
                         <asp:TextBox ID="txtStocks" runat="server" CssClass="form-control" 
                             placeholder="50,40,35,30,25" />
-                        <span id="errorStocks" class="error-validation" style="display: none;">⚠ Debe ingresar los stocks</span>
+                        <asp:Label ID="lblErrorStocks" runat="server" CssClass="text-danger small d-block mt-1" />
                     </div>
                 </div>
 
@@ -208,17 +246,16 @@
                     <label class="form-label">Stock Mínimo (separados por comas)</label>
                     <asp:TextBox ID="txtStocksMinimos" runat="server" CssClass="form-control" 
                         placeholder="5,5,5,5,5 (opcional, por defecto: 5)" />
-                    <small class="text-muted">Si dejas vacío, usará 5 como valor por defecto</small>
+                    <asp:Label ID="lblErrorStocksMinimos" runat="server" CssClass="text-danger small d-block mt-1" />
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">URL de Imagen *</label>
+                    <label class="form-label">URL de Imagen</label>
                     <div class="input-group">
                         <span class="input-group-text">/Images/Productos/</span>
                         <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" 
                             placeholder="nombre.jpg" />
                     </div>
-                    <span id="errorUrlImagen" class="error-validation" style="display: none;">⚠ Debe ingresar una URL para la imagen</span>
                     <small class="text-muted">Ejemplo: producto.jpg o imagen.png</small>
                 </div>
 
@@ -242,40 +279,72 @@
                         <i class="fas fa-times"></i> Cancelar
                     </button>
                     <asp:Button ID="btnGuardar" runat="server" CssClass="btn-kawki-primary"
-                        Text="💾 Registrar" OnClick="btnGuardar_Click" OnClientClick="return validarFormulario();" CausesValidation="false" />
+                        Text="Registrar" OnClick="btnGuardar_Click" OnClientClick="return validarFormulario();" CausesValidation="false" />
                 </div>
             </div>
         </div>
+   </div>
 
-        <!-- Modal de Editar Stock -->
-        <div id="modalEditarStock" class="modal-kawki">
+        <!-- Modal de Modificaciones -->
+        <div id="modalModificaciones" class="modal-kawki">
             <div class="modal-content-kawki">
                 <div class="modal-header-kawki">
-                    <h5><i class="fas fa-edit me-2"></i>Editar Stock - <span id="colorNombreStock"></span> Talla <span id="tallaNombreStock"></span></h5>
+                    <h3>Editar Variante</h3>
                 </div>
 
-                <asp:HiddenField ID="hfVarianteId" runat="server" />
+                <div class="modal-body">
+                    <asp:HiddenField ID="hfVarianteId" runat="server" />
+                    <asp:Label ID="lblVarianteInfo" runat="server" CssClass="text-muted d-block mb-3"></asp:Label>
 
-                <div class="control-stock">
-                    <label>Stock Actual *</label>
-                    <asp:TextBox ID="txtStockEditar" runat="server" CssClass="form-control" TextMode="Number" min="0" placeholder="0" />
-                    <span id="errorStockEditar" class="error-validation" style="display: none;">⚠ El stock no puede ser negativo</span>
+                    <asp:Label ID="lblMensajeModif" runat="server" CssClass="text-warning d-block mb-2"></asp:Label>
+
+                     <!-- Campo Talla -->
+                    <div class="form-group">
+                        <label>Talla</label>
+                        <asp:DropDownList ID="ddlTallaModif" runat="server" CssClass="form-control">
+                        </asp:DropDownList>
+                        <asp:Label ID="lblErrorTallaModif" runat="server" CssClass="text-danger small"></asp:Label>
+                    </div>
+
+                    <!-- Campo Stock -->
+                    <div class="form-group">
+                        <label>Stock Actual</label>
+                        <asp:TextBox ID="txtStockEditar" runat="server" CssClass="form-control" 
+                            TextMode="Number"></asp:TextBox>
+                        <asp:Label ID="lblErrorStockEditar" runat="server" CssClass="text-danger small"></asp:Label>
+                    </div>
+
+                    <!-- Campo Stock Mínimo -->
+                    <div class="form-group">
+                        <label>Stock Mínimo</label>
+                        <asp:TextBox ID="txtStockMinimoEditar" runat="server" CssClass="form-control" 
+                            TextMode="Number"></asp:TextBox>
+                        <asp:Label ID="lblErrorStockMinimoEditar" runat="server" CssClass="text-danger small"></asp:Label>
+                    </div>
+
+                    <!-- Campo URL Imagen (-->
+                    <div class="form-group">
+                        <label>URL de imagen</label>
+                        <div class="input-group">
+                            <span class="input-group-text">/Images/Productos/</span>
+                            <asp:TextBox ID="txtUrlImagenModif" runat="server" CssClass="form-control" 
+                                placeholder="nombre.jpg" />
+                        </div>
+                        <small class="text-muted">Ejemplo: producto.jpg o imagen.png</small>
+                    </div>
                 </div>
 
-                <div class="control-stock">
-                    <label>Stock Mínimo *</label>
-                    <asp:TextBox ID="txtStockMinimoEditar" runat="server" CssClass="form-control" TextMode="Number" min="0" placeholder="5" />
-                    <span id="errorStockMinimoEditar" class="error-validation" style="display: none;">⚠ El stock mínimo no puede ser negativo</span>
-                </div>
+                <asp:Label ID="lblMensajeModificaciones" runat="server" CssClass="d-block mb-3" />
 
-                <asp:Label ID="lblMensajeStock" runat="server" CssClass="d-block mb-3" />
-
-                <div class="text-end">
-                    <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModalStock()">
+                <div class="modal-footer">
+                    <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModalModificaciones()">
                         <i class="fas fa-times"></i> Cancelar
                     </button>
-                    <asp:Button ID="btnGuardarStock" runat="server" CssClass="btn-kawki-primary"
-                        Text="💾 Guardar" OnClick="btnGuardarStock_Click" OnClientClick="return validarStock();" CausesValidation="false" />
+
+                    <asp:Button ID="btnModificaciones" runat="server"
+                        Text="Guardar Cambios"
+                        CssClass="btn-kawki-primary"
+                        OnClick="btnModificaciones_Click" />
                 </div>
             </div>
         </div>
@@ -293,18 +362,21 @@
                     <label class="form-label">Talla *</label>
                     <asp:DropDownList ID="ddlTalla" runat="server" CssClass="form-select">
                     </asp:DropDownList>
+                    <asp:Label ID="lblErrorTallaSelect" runat="server" CssClass="text-danger small d-block mt-1" />
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Stock Inicial *</label>
                         <asp:TextBox ID="txtStockTalla" runat="server" CssClass="form-control" 
-                            TextMode="Number" placeholder="0" min="0" />
+                            TextMode="Number" placeholder="0"/>
+                        <asp:Label ID="lblErrorStockTalla" runat="server" CssClass="text-danger small d-block mt-1" />
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Stock Mínimo *</label>
                         <asp:TextBox ID="txtStockMinimoTalla" runat="server" CssClass="form-control" 
-                            TextMode="Number" placeholder="5" min="0" />
+                            TextMode="Number" placeholder="5"/>
+                        <asp:Label ID="lblErrorStockMinimoTalla" runat="server" CssClass="text-danger small d-block mt-1" />
                     </div>
                 </div>
 
@@ -315,21 +387,25 @@
                         <i class="fas fa-times"></i> Cancelar
                     </button>
                     <asp:Button ID="btnGuardarTalla" runat="server" CssClass="btn-kawki-primary"
-                        Text="💾 Agregar Talla" OnClick="btnGuardarTalla_Click" />
+                        Text="Agregar Talla" OnClick="btnGuardarTalla_Click" />
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- Scripts -->
     <script>
         function abrirModalRegistro() {
-            limpiarFormulario();
-            document.getElementById("modalVariante").classList.add("show");
+            var modal = document.getElementById("modalVariante");
+            if (modal) {
+                modal.style.display = "flex";
+                var computed = window.getComputedStyle(modal).display;
+            }
         }
 
         function cerrarModal() {
-            document.getElementById("modalVariante").classList.remove("show");
+            var modal = document.getElementById("modalVariante");
+            modal.style.display = "none";
+            modal.classList.remove("show");
             limpiarFormulario();
         }
 
@@ -341,13 +417,13 @@
             document.getElementById("<%= txtUrlImagen.ClientID %>").value = "";
             document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
             document.getElementById("hdnDisponible").value = "true";
-            
+
             // Ocultar todos los errores
             document.getElementById("errorColor").style.display = "none";
             document.getElementById("errorTallas").style.display = "none";
             document.getElementById("errorStocks").style.display = "none";
             document.getElementById("errorUrlImagen").style.display = "none";
-            
+
             var buttons = document.querySelectorAll("#modalVariante .toggle-disponible button");
             buttons.forEach(b => b.classList.remove('active'));
             document.querySelector("#modalVariante .toggle-disponible .btn-si").classList.add('active');
@@ -355,7 +431,7 @@
 
         function validarFormulario() {
             let valido = true;
-            
+
             // Validar color
             let color = document.getElementById("<%= ddlColor.ClientID %>").value;
             if (color === "0" || color === "") {
@@ -364,7 +440,7 @@
             } else {
                 document.getElementById("errorColor").style.display = "none";
             }
-            
+
             // Validar tallas
             let tallas = document.getElementById("<%= txtTallas.ClientID %>").value.trim();
             if (tallas === "") {
@@ -373,7 +449,7 @@
             } else {
                 document.getElementById("errorTallas").style.display = "none";
             }
-            
+
             // Validar stocks
             let stocks = document.getElementById("<%= txtStocks.ClientID %>").value.trim();
             if (stocks === "") {
@@ -383,52 +459,11 @@
                 document.getElementById("errorStocks").style.display = "none";
             }
 
-            // Validar URL imagen
-            let urlImagen = document.getElementById("<%= txtUrlImagen.ClientID %>").value.trim();
-            if (urlImagen === "") {
-                document.getElementById("errorUrlImagen").style.display = "block";
-                valido = false;
-            } else {
-                document.getElementById("errorUrlImagen").style.display = "none";
-            }
-            
             if (!valido) {
                 return false;
             }
-            
-            return true;
-        }
 
-        function validarStock() {
-            let valido = true;
-            
-            let stock = document.getElementById("txtStockEditar").value;
-            if (stock === "") {
-                document.getElementById("errorStockEditar").style.display = "block";
-                document.getElementById("errorStockEditar").innerText = "⚠ Debe ingresar un valor para el stock";
-                valido = false;
-            } else if (parseInt(stock) < 0) {
-                document.getElementById("errorStockEditar").style.display = "block";
-                document.getElementById("errorStockEditar").innerText = "⚠ El stock no puede ser negativo";
-                valido = false;
-            } else {
-                document.getElementById("errorStockEditar").style.display = "none";
-            }
-            
-            let stockMinimo = document.getElementById("txtStockMinimoEditar").value;
-            if (stockMinimo === "") {
-                document.getElementById("errorStockMinimoEditar").style.display = "block";
-                document.getElementById("errorStockMinimoEditar").innerText = "⚠ Debe ingresar un valor para el stock mínimo";
-                valido = false;
-            } else if (parseInt(stockMinimo) < 0) {
-                document.getElementById("errorStockMinimoEditar").style.display = "block";
-                document.getElementById("errorStockMinimoEditar").innerText = "⚠ El stock mínimo no puede ser negativo";
-                valido = false;
-            } else {
-                document.getElementById("errorStockMinimoEditar").style.display = "none";
-            }
-            
-            return valido;
+            return true;
         }
 
         function seleccionarDisponibilidad(btn, valor) {
@@ -438,15 +473,58 @@
             document.getElementById("hdnDisponible").value = valor;
         }
 
-        function abrirModalEditarStock(varianteId, colorNombre, tallaNombre) {
-            document.getElementById("colorNombreStock").innerText = colorNombre;
-            document.getElementById("tallaNombreStock").innerText = tallaNombre;
-            document.getElementById("<%= hfVarianteId.ClientID %>").value = varianteId;
-            document.getElementById("modalEditarStock").classList.add("show");
+        // FUNCIÓN 1: Para abrir el modal la primera vez (carga datos de BD)
+        function abrirModalModificaciones(varianteId, colorNombre, tallaNombre, tallaId, urlImagen, stock, stockMinimo) {
+            document.getElementById('<%= hfVarianteId.ClientID %>').value = varianteId;
+            document.getElementById('<%= lblVarianteInfo.ClientID %>').textContent =
+                `Color: ${colorNombre} | Talla: ${tallaNombre}`;
+
+            const ddlTallaModificaciones = document.getElementById('<%= ddlTallaModif.ClientID %>');
+            if (ddlTallaModificaciones && tallaId) {
+                ddlTallaModificaciones.value = tallaId;
+            }
+
+            // CARGAR valores de BD
+            document.getElementById('<%= txtStockEditar.ClientID %>').value = stock || '';
+            document.getElementById('<%= txtStockMinimoEditar.ClientID %>').value = stockMinimo || '';
+    
+            let nombreArchivo = '';
+            if (urlImagen) {
+                nombreArchivo = urlImagen.replace('/Images/Productos/', '');
+            }
+            document.getElementById('<%= txtUrlImagenModif.ClientID %>').value = nombreArchivo;
+    
+            // Limpiar mensajes
+            document.getElementById('<%= lblMensajeModificaciones.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorStockEditar.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorStockMinimoEditar.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorTallaModif.ClientID %>').textContent = '';
+
+            document.getElementById("modalModificaciones").classList.add("show");
         }
 
-        function cerrarModalStock() {
-            document.getElementById("modalEditarStock").classList.remove("show");
+        // FUNCIÓN 2: Para mantener el modal abierto con errores (NO recarga nada)
+        function mantenerModalModificacionesAbierto() {
+            document.getElementById("modalModificaciones").classList.add("show");
+        }
+
+        function cerrarModalModificaciones() {
+            document.getElementById("modalModificaciones").classList.remove("show");
+            limpiarFormularioModificaciones();
+        }
+
+        function limpiarFormularioModificaciones() {
+            document.getElementById('<%= txtStockEditar.ClientID %>').value = '';
+            document.getElementById('<%= txtStockMinimoEditar.ClientID %>').value = '';
+            document.getElementById('<%= txtUrlImagenModif.ClientID %>').value = '';
+
+            const ddlTallaModificaciones = document.getElementById('<%= ddlTallaModif.ClientID %>');
+            if (ddlTallaModificaciones) ddlTallaModificaciones.selectedIndex = 0;
+
+            document.getElementById('<%= lblMensajeModificaciones.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorStockEditar.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorStockMinimoEditar.ClientID %>').textContent = '';
+            document.getElementById('<%= lblErrorTallaModif.ClientID %>').textContent = '';
         }
 
         function abrirModalAgregarTalla(colorId, colorNombre) {
@@ -463,7 +541,9 @@
             var parent = btn.parentElement;
             parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            console.log('Cambiar disponibilidad variante ' + varianteId + ' a ' + disponible);
+
+            // Hacer petición al servidor para actualizar
+            __doPostBack('UpdateDisponibilidad', varianteId + '|' + disponible);
         }
 
         function mostrarMensajeExito(mensaje) {
@@ -489,5 +569,6 @@
             document.body.appendChild(mensajeDiv);
             setTimeout(function () { mensajeDiv.remove(); }, 5000);
         }
+
     </script>
 </asp:Content>

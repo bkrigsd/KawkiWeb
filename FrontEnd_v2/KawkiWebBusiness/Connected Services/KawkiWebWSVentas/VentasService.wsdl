@@ -17,6 +17,12 @@
   <message name="listarTodosVentaResponse">
     <part name="parameters" element="tns:listarTodosVentaResponse" />
   </message>
+  <message name="obtenerPorIdVenta">
+    <part name="parameters" element="tns:obtenerPorIdVenta" />
+  </message>
+  <message name="obtenerPorIdVentaResponse">
+    <part name="parameters" element="tns:obtenerPorIdVentaResponse" />
+  </message>
   <message name="modificarVenta">
     <part name="parameters" element="tns:modificarVenta" />
   </message>
@@ -37,6 +43,10 @@
     <operation name="listarTodosVenta">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/listarTodosVentaRequest" message="tns:listarTodosVenta" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/listarTodosVentaResponse" message="tns:listarTodosVentaResponse" />
+    </operation>
+    <operation name="obtenerPorIdVenta">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest" message="tns:obtenerPorIdVenta" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse" message="tns:obtenerPorIdVentaResponse" />
     </operation>
     <operation name="modificarVenta">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaRequest" message="tns:modificarVenta" />
@@ -59,6 +69,15 @@
       </output>
     </operation>
     <operation name="listarTodosVenta">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="obtenerPorIdVenta">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

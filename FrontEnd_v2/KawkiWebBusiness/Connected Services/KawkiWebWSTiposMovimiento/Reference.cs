@@ -16,19 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposMovimiento {
     public interface TiposMovimiento {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoM" +
-            "ovimientoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoM" +
-            "ovimientoResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoResponse obtenerPorIdTipoMovimiento(KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoM" +
-            "ovimientoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoM" +
-            "ovimientoResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoResponse> obtenerPorIdTipoMovimientoAsync(KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/listarTodosTipoMo" +
             "vimientoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/listarTodosTipoMo" +
             "vimientoResponse")]
@@ -40,10 +27,23 @@ namespace KawkiWebBusiness.KawkiWebWSTiposMovimiento {
             "vimientoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/listarTodosTipoMo" +
             "vimientoResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoResponse> listarTodosTipoMovimientoAsync(KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoM" +
+            "ovimientoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoM" +
+            "ovimientoResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoResponse obtenerPorIdTipoMovimiento(KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoM" +
+            "ovimientoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoM" +
+            "ovimientoResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoResponse> obtenerPorIdTipoMovimientoAsync(KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoRequest request);
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -105,6 +105,34 @@ namespace KawkiWebBusiness.KawkiWebWSTiposMovimiento {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoMovimiento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosTipoMovimientoRequest {
+        
+        public listarTodosTipoMovimientoRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoMovimientoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosTipoMovimientoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSTiposMovimiento.tiposMovimientoDTO[] @return;
+        
+        public listarTodosTipoMovimientoResponse() {
+        }
+        
+        public listarTodosTipoMovimientoResponse(KawkiWebBusiness.KawkiWebWSTiposMovimiento.tiposMovimientoDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdTipoMovimiento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class obtenerPorIdTipoMovimientoRequest {
         
@@ -138,34 +166,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposMovimiento {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoMovimiento", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosTipoMovimientoRequest {
-        
-        public listarTodosTipoMovimientoRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoMovimientoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosTipoMovimientoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSTiposMovimiento.tiposMovimientoDTO[] @return;
-        
-        public listarTodosTipoMovimientoResponse() {
-        }
-        
-        public listarTodosTipoMovimientoResponse(KawkiWebBusiness.KawkiWebWSTiposMovimiento.tiposMovimientoDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface TiposMovimientoChannel : KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento, System.ServiceModel.IClientChannel {
     }
@@ -194,6 +194,27 @@ namespace KawkiWebBusiness.KawkiWebWSTiposMovimiento {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoResponse KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento.listarTodosTipoMovimiento(KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest request) {
+            return base.Channel.listarTodosTipoMovimiento(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSTiposMovimiento.tiposMovimientoDTO[] listarTodosTipoMovimiento() {
+            KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest();
+            KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoResponse retVal = ((KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento)(this)).listarTodosTipoMovimiento(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoResponse> KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento.listarTodosTipoMovimientoAsync(KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest request) {
+            return base.Channel.listarTodosTipoMovimientoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoResponse> listarTodosTipoMovimientoAsync() {
+            KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest();
+            return ((KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento)(this)).listarTodosTipoMovimientoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoResponse KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento.obtenerPorIdTipoMovimiento(KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoRequest request) {
             return base.Channel.obtenerPorIdTipoMovimiento(request);
         }
@@ -214,27 +235,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposMovimiento {
             KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposMovimiento.obtenerPorIdTipoMovimientoRequest();
             inValue.tipoMovimientoId = tipoMovimientoId;
             return ((KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento)(this)).obtenerPorIdTipoMovimientoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoResponse KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento.listarTodosTipoMovimiento(KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest request) {
-            return base.Channel.listarTodosTipoMovimiento(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSTiposMovimiento.tiposMovimientoDTO[] listarTodosTipoMovimiento() {
-            KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest();
-            KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoResponse retVal = ((KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento)(this)).listarTodosTipoMovimiento(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoResponse> KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento.listarTodosTipoMovimientoAsync(KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest request) {
-            return base.Channel.listarTodosTipoMovimientoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoResponse> listarTodosTipoMovimientoAsync() {
-            KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposMovimiento.listarTodosTipoMovimientoRequest();
-            return ((KawkiWebBusiness.KawkiWebWSTiposMovimiento.TiposMovimiento)(this)).listarTodosTipoMovimientoAsync(inValue);
         }
     }
 }

@@ -5,31 +5,31 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/TiposUsuarioService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="listarTodosTipoUsuario">
-    <part name="parameters" element="tns:listarTodosTipoUsuario" />
-  </message>
-  <message name="listarTodosTipoUsuarioResponse">
-    <part name="parameters" element="tns:listarTodosTipoUsuarioResponse" />
-  </message>
   <message name="obtenerPorIdTipoUsuario">
     <part name="parameters" element="tns:obtenerPorIdTipoUsuario" />
   </message>
   <message name="obtenerPorIdTipoUsuarioResponse">
     <part name="parameters" element="tns:obtenerPorIdTipoUsuarioResponse" />
   </message>
+  <message name="listarTodosTipoUsuario">
+    <part name="parameters" element="tns:listarTodosTipoUsuario" />
+  </message>
+  <message name="listarTodosTipoUsuarioResponse">
+    <part name="parameters" element="tns:listarTodosTipoUsuarioResponse" />
+  </message>
   <portType name="TiposUsuario">
-    <operation name="listarTodosTipoUsuario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/listarTodosTipoUsuarioRequest" message="tns:listarTodosTipoUsuario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/listarTodosTipoUsuarioResponse" message="tns:listarTodosTipoUsuarioResponse" />
-    </operation>
     <operation name="obtenerPorIdTipoUsuario">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/obtenerPorIdTipoUsuarioRequest" message="tns:obtenerPorIdTipoUsuario" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/obtenerPorIdTipoUsuarioResponse" message="tns:obtenerPorIdTipoUsuarioResponse" />
     </operation>
+    <operation name="listarTodosTipoUsuario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/listarTodosTipoUsuarioRequest" message="tns:listarTodosTipoUsuario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/listarTodosTipoUsuarioResponse" message="tns:listarTodosTipoUsuarioResponse" />
+    </operation>
   </portType>
   <binding name="TiposUsuarioPortBinding" type="tns:TiposUsuario">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="listarTodosTipoUsuario">
+    <operation name="obtenerPorIdTipoUsuario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -38,7 +38,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerPorIdTipoUsuario">
+    <operation name="listarTodosTipoUsuario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -46,14 +47,14 @@ namespace KawkiWeb
                 // Primera carga
                 CargarProductos();
                 CargarDescuentos();
-                //CargarCanalesVenta();
+                CargarCanalesVenta();
                 CargarMetodosPago();
                 gvDetalle.DataSource = DetalleVentas;
                 gvDetalle.DataBind();
                 ActualizarTotales();
             }
         }
-       
+
         private void CargarProductos()
         {
             try
@@ -103,7 +104,7 @@ namespace KawkiWeb
         private void CargarCanalesVenta()
         {
             try
-            { 
+            {
                 var cliente = new KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSocialesClient();
                 var lista = cliente.listarTodosRedSocial();
 
@@ -116,8 +117,8 @@ namespace KawkiWeb
                 }
 
                 ddlCanal.DataSource = lista;
-                ddlCanal.DataTextField = "nombre";   // campo NOMBRE de la tabla
-                ddlCanal.DataValueField = "canal_id"; // campo CANAL_ID
+                ddlCanal.DataTextField = "nombre";        // ✔ EXISTE
+                ddlCanal.DataValueField = "redSocialId";  // ✔ EXISTE
                 ddlCanal.DataBind();
 
                 ddlCanal.Items.Insert(0, new ListItem("-- Seleccione --", ""));
@@ -128,6 +129,7 @@ namespace KawkiWeb
                 lblMensaje.CssClass = "text-danger";
             }
         }
+
         private void CargarMetodosPago()
         {
             try
@@ -312,7 +314,7 @@ namespace KawkiWeb
             precio = 0m;
             mensajeError = string.Empty;
 
-            if (!decimal.TryParse(precioTexto, out precio))
+            if (!decimal.TryParse(precioTexto, NumberStyles.Any, CultureInfo.InvariantCulture, out precio))
             {
                 mensajeError = "El precio debe ser un número válido.";
                 return false;
@@ -343,7 +345,7 @@ namespace KawkiWeb
         /// <summary>
         /// Valida que el descuento sea válido
         /// </summary>
-        
+
 
         /// <summary>
         /// Valida todos los campos del cliente antes de registrar la venta
@@ -707,7 +709,7 @@ namespace KawkiWeb
 
             // Validar total
             decimal total = 0m;
-            if (!decimal.TryParse(lblTotal.Text.Replace("S/", "").Trim(), out total) || total <= 0)
+            if (!decimal.TryParse(lblTotal.Text.Replace("S/", "").Trim(),NumberStyles.Any,CultureInfo.InvariantCulture,out total) || total <= 0)
             {
                 lblMensaje.Text = "El total de la venta debe ser mayor a cero.";
                 return;
@@ -727,19 +729,32 @@ namespace KawkiWeb
                 // 2. Crear el usuariosDTO del WSDL de Ventas
                 var usuarioVendedor = new KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO
                 {
-                    usuarioId = usuarioId
+                    usuarioId = usuarioId,
+                    usuarioIdSpecified = true,
+
+                    activo = true,           // O el valor real del usuario
+                    activoSpecified = true
                 };
 
                 // 3. Obtener datos del formulario
                 string nombreCliente = txtNombreCliente.Text.Trim();
                 string telefono = txtTelefono.Text.Trim();
+
                 string canal = ddlCanal.SelectedValue;
                 string notas = txtNotas.Text.Trim();
 
-                // Red social
+                if (string.IsNullOrEmpty(ddlCanal.SelectedValue))
+                {
+                    lblMensaje.Text = "Selecciona un canal de venta.";
+                    lblMensaje.CssClass = "text-danger mb-2 d-block";
+                    return;
+                }
+
                 var redSocial = new KawkiWebBusiness.KawkiWebWSVentas.redesSocialesDTO
                 {
                     redSocialId = Convert.ToInt32(ddlCanal.SelectedValue),
+                    redSocialIdSpecified = true,
+
                     nombre = ddlCanal.SelectedItem.Text
                 };
 
@@ -794,16 +809,38 @@ namespace KawkiWeb
                 {
                     int prodVarId = Convert.ToInt32(row["ProductoId"]);
                     int cantidad = Convert.ToInt32(row["Cantidad"]);
-                    double precio = Convert.ToDouble(row["PrecioUnitario"]);
-                    double subtotal = Convert.ToDouble(row["Subtotal"]);
+                    double precio = double.Parse(
+                        row["PrecioUnitario"].ToString().Replace("S/", "").Trim(),
+                        CultureInfo.InvariantCulture
+                    );
+
+                    double subtotal = double.Parse(
+                        row["Subtotal"].ToString().Replace("S/", "").Trim(),
+                        CultureInfo.InvariantCulture
+                    );
+
 
                     // Crear objeto productosVariantesDTO para DetalleVentasService
                     var productoVar = new KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO
                     {
-                        prod_variante_id = prodVarId
+                        prod_variante_id = prodVarId,
+                        prod_variante_idSpecified = true
                     };
 
+                    lblMensaje.Text =
+                    $"Debug:<br/>" +
+                    $"ProductoId = {prodVarId}<br/>" +
+                    $"Cantidad = {cantidad}<br/>" +
+                    $"Precio = '{row["PrecioUnitario"]}'<br/>" +
+                    $"Subtotal = '{row["Subtotal"]}'<br/>" +
+                    $"PrecioParseado = {precio}<br/>" +
+                    $"SubtotalParseado = {subtotal}<br/>" +
+                    $"Canal = '{ddlCanal.SelectedValue}'";
+                    
+
                     detalleBO.InsertarDetalleVenta(productoVar, ventaId, cantidad, precio, subtotal);
+
+                    return;
                 }
 
                 // 6. Todo OK
@@ -815,8 +852,12 @@ namespace KawkiWeb
             catch (Exception ex)
             {
                 lblMensaje.CssClass = "text-danger mb-2 d-block";
-                lblMensaje.Text = $"Error al registrar la venta: {ex.Message}";
+                lblMensaje.Text =
+                    "ERROR → " + ex.Message +
+                    "<br/>INNER → " + (ex.InnerException?.Message ?? "[sin inner]") +
+                    "<br/>STACK → " + ex.StackTrace;
             }
+
         }
 
 

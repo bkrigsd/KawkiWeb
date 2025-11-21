@@ -5,31 +5,31 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/TiposCondicionService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="obtenerPorIdTipoCondicion">
-    <part name="parameters" element="tns:obtenerPorIdTipoCondicion" />
-  </message>
-  <message name="obtenerPorIdTipoCondicionResponse">
-    <part name="parameters" element="tns:obtenerPorIdTipoCondicionResponse" />
-  </message>
   <message name="listarTodosTipoCondicion">
     <part name="parameters" element="tns:listarTodosTipoCondicion" />
   </message>
   <message name="listarTodosTipoCondicionResponse">
     <part name="parameters" element="tns:listarTodosTipoCondicionResponse" />
   </message>
+  <message name="obtenerPorIdTipoCondicion">
+    <part name="parameters" element="tns:obtenerPorIdTipoCondicion" />
+  </message>
+  <message name="obtenerPorIdTipoCondicionResponse">
+    <part name="parameters" element="tns:obtenerPorIdTipoCondicionResponse" />
+  </message>
   <portType name="TiposCondicion">
-    <operation name="obtenerPorIdTipoCondicion">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCondicionRequest" message="tns:obtenerPorIdTipoCondicion" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCondicionResponse" message="tns:obtenerPorIdTipoCondicionResponse" />
-    </operation>
     <operation name="listarTodosTipoCondicion">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/listarTodosTipoCondicionRequest" message="tns:listarTodosTipoCondicion" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/listarTodosTipoCondicionResponse" message="tns:listarTodosTipoCondicionResponse" />
     </operation>
+    <operation name="obtenerPorIdTipoCondicion">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCondicionRequest" message="tns:obtenerPorIdTipoCondicion" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCondicionResponse" message="tns:obtenerPorIdTipoCondicionResponse" />
+    </operation>
   </portType>
   <binding name="TiposCondicionPortBinding" type="tns:TiposCondicion">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="obtenerPorIdTipoCondicion">
+    <operation name="listarTodosTipoCondicion">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -38,7 +38,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarTodosTipoCondicion">
+    <operation name="obtenerPorIdTipoCondicion">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

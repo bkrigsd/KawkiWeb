@@ -21,15 +21,15 @@
                 <div class="stats-container">
                     <div class="stat-card">
                         <div class="stat-label">Total Ventas</div>
-                        <asp:Label ID="lblTotalVentas" runat="server" CssClass="stat-value" Text="0" />
+                        <asp:Label ID="lblTotalVentas" runat="server" ClientIDMode="Static" CssClass="stat-value" Text="0" />
                     </div>
                     <div class="stat-card green">
                         <div class="stat-label">Monto Total</div>
-                        <asp:Label ID="lblMontoTotal" runat="server" CssClass="stat-value" Text="S/ 0.00" />
+                        <asp:Label ID="lblMontoTotal" runat="server" ClientIDMode="Static" CssClass="stat-value" Text="S/ 0.00" />
                     </div>
                     <div class="stat-card blue">
                         <div class="stat-label">Promedio por Venta</div>
-                        <asp:Label ID="lblPromedio" runat="server" CssClass="stat-value" Text="S/ 0.00" />
+                        <asp:Label ID="lblPromedio" runat="server" ClientIDMode="Static" CssClass="stat-value" Text="S/ 0.00" />
                     </div>
                 </div>
             </div>
@@ -78,6 +78,47 @@
                             CausesValidation="false" />
                     </div>
                 </div>
+
+                <div class="col-12">
+                    <asp:Label ID="lblErrorFiltros" runat="server"
+                        CssClass="text-danger d-block mt-2"
+                        Visible="false" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Ordenamiento -->
+        <div class="card-kawki mb-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-sort"></i> Ordenar registros
+                </h5>
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Ordenar por</label>
+                    <asp:DropDownList ID="ddlOrdenarPor" runat="server"
+                        CssClass="form-select" AutoPostBack="true"
+                        OnSelectedIndexChanged="ActualizarOrden">
+                        <asp:ListItem Text="ID" Value="IdVenta" />
+                        <asp:ListItem Text="Fecha" Value="Fecha" />
+                        <asp:ListItem Text="Vendedor" Value="Vendedor" />
+                        <asp:ListItem Text="Canal" Value="Canal" />
+                        <asp:ListItem Text="Monto Total" Value="MontoTotal" />
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Dirección</label>
+                    <asp:DropDownList ID="ddlDireccion" runat="server"
+                        CssClass="form-select" AutoPostBack="true"
+                        OnSelectedIndexChanged="ActualizarOrden">
+                        <asp:ListItem Text="Ascendente" Value="ASC" />
+                        <asp:ListItem Text="Descendente" Value="DESC" />
+                    </asp:DropDownList>
+                </div>
+
             </div>
         </div>
 
@@ -103,10 +144,10 @@
                     <Columns>
                         <asp:BoundField DataField="IdVenta" HeaderText="ID" />
                         <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
-                        <asp:BoundField DataField="Cliente" HeaderText="Cliente" />
                         <asp:BoundField DataField="Vendedor" HeaderText="Vendedor" />
                         <asp:BoundField DataField="Canal" HeaderText="Canal" />
-                        <asp:BoundField DataField="CantidadProductos" HeaderText="Cant. Productos" />
+                        <%--<asp:BoundField DataField="Descuento" HeaderText="Descuento" />--%>
+                        <%--<asp:BoundField DataField="EsValida" HeaderText="Válida" />--%>
                         <asp:TemplateField HeaderText="Monto Total">
                             <ItemTemplate>
                                 <span class="badge badge-monto">
@@ -114,7 +155,7 @@
                                 </span>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Acciones">
+                        <%--<asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
                                 <asp:Button runat="server" 
                                     CommandName="VerDetalle" 
@@ -123,7 +164,7 @@
                                     CssClass="btn btn-detalle"
                                     CausesValidation="false" />
                             </ItemTemplate>
-                        </asp:TemplateField>
+                        </asp:TemplateField>--%>
                     </Columns>
                     <EmptyDataTemplate>
                         <div class="text-center py-4">
@@ -144,9 +185,9 @@
             </div>
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-md-6">
+                    <%--<div class="col-md-6">
                         <strong>Cliente:</strong> <asp:Label ID="lblClienteDetalle" runat="server" />
-                    </div>
+                    </div>--%>
                     <div class="col-md-6">
                         <strong>Vendedor:</strong> <asp:Label ID="lblVendedorDetalle" runat="server" />
                     </div>
@@ -188,4 +229,40 @@
             </div>
         </asp:Panel>
     </div>
+
+    <script>
+        function animateNumber(elementId, start, end, duration, prefix = "", decimals = 0) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+
+            const range = end - start;
+            const stepTime = Math.abs(Math.floor(duration / range));
+            let current = start;
+            const increment = end > start ? 1 : -1;
+
+            const timer = setInterval(function () {
+                current += increment;
+
+                if ((increment > 0 && current >= end) ||
+                    (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+
+                const value = decimals > 0
+                    ? (current / 100).toFixed(decimals)
+                    : current;
+
+                element.innerText = prefix + value;
+            }, Math.max(stepTime, 10));
+        }
+
+        // Animación principal al actualizar estadísticas
+        function animarDashboard(total, monto, promedio) {
+            animateNumber("lblTotalVentas", 0, total, 600, "", 0);
+            animateNumber("lblMontoTotal", 0, monto * 100, 700, "S/ ", 2);
+            animateNumber("lblPromedio", 0, promedio * 100, 700, "S/ ", 2);
+        }
+    </script>
+
 </asp:Content>

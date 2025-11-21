@@ -97,11 +97,11 @@
                        title="Mostrar contraseña"></i>
                 </div>
 
-                <div class="text-end mb-2">
+                <%--<div class="text-end mb-2">
                     <a href="RecuperarClave.aspx" class="link-recuperar">
                         ¿Olvidaste tu contraseña?
                     </a>
-                </div>
+                </div>--%>
 
                 <asp:Label ID="lblMensaje" runat="server"
                     CssClass="text-danger mb-2 d-block" />

@@ -16,19 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposCondicion {
     public interface TiposCondicion {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCo" +
-            "ndicionRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCo" +
-            "ndicionResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionResponse obtenerPorIdTipoCondicion(KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCo" +
-            "ndicionRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCo" +
-            "ndicionResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionResponse> obtenerPorIdTipoCondicionAsync(KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/listarTodosTipoCon" +
             "dicionRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/listarTodosTipoCon" +
             "dicionResponse")]
@@ -40,10 +27,23 @@ namespace KawkiWebBusiness.KawkiWebWSTiposCondicion {
             "dicionRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/listarTodosTipoCon" +
             "dicionResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionResponse> listarTodosTipoCondicionAsync(KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCo" +
+            "ndicionRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCo" +
+            "ndicionResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionResponse obtenerPorIdTipoCondicion(KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCo" +
+            "ndicionRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposCondicion/obtenerPorIdTipoCo" +
+            "ndicionResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionResponse> obtenerPorIdTipoCondicionAsync(KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionRequest request);
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -105,6 +105,34 @@ namespace KawkiWebBusiness.KawkiWebWSTiposCondicion {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoCondicion", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosTipoCondicionRequest {
+        
+        public listarTodosTipoCondicionRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoCondicionResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosTipoCondicionResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSTiposCondicion.tiposCondicionDTO[] @return;
+        
+        public listarTodosTipoCondicionResponse() {
+        }
+        
+        public listarTodosTipoCondicionResponse(KawkiWebBusiness.KawkiWebWSTiposCondicion.tiposCondicionDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdTipoCondicion", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class obtenerPorIdTipoCondicionRequest {
         
@@ -138,34 +166,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposCondicion {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoCondicion", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosTipoCondicionRequest {
-        
-        public listarTodosTipoCondicionRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoCondicionResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosTipoCondicionResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSTiposCondicion.tiposCondicionDTO[] @return;
-        
-        public listarTodosTipoCondicionResponse() {
-        }
-        
-        public listarTodosTipoCondicionResponse(KawkiWebBusiness.KawkiWebWSTiposCondicion.tiposCondicionDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface TiposCondicionChannel : KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion, System.ServiceModel.IClientChannel {
     }
@@ -194,6 +194,27 @@ namespace KawkiWebBusiness.KawkiWebWSTiposCondicion {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionResponse KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion.listarTodosTipoCondicion(KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest request) {
+            return base.Channel.listarTodosTipoCondicion(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSTiposCondicion.tiposCondicionDTO[] listarTodosTipoCondicion() {
+            KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest();
+            KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionResponse retVal = ((KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion)(this)).listarTodosTipoCondicion(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionResponse> KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion.listarTodosTipoCondicionAsync(KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest request) {
+            return base.Channel.listarTodosTipoCondicionAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionResponse> listarTodosTipoCondicionAsync() {
+            KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest();
+            return ((KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion)(this)).listarTodosTipoCondicionAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionResponse KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion.obtenerPorIdTipoCondicion(KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionRequest request) {
             return base.Channel.obtenerPorIdTipoCondicion(request);
         }
@@ -214,27 +235,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposCondicion {
             KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposCondicion.obtenerPorIdTipoCondicionRequest();
             inValue.tipoCondicionId = tipoCondicionId;
             return ((KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion)(this)).obtenerPorIdTipoCondicionAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionResponse KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion.listarTodosTipoCondicion(KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest request) {
-            return base.Channel.listarTodosTipoCondicion(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSTiposCondicion.tiposCondicionDTO[] listarTodosTipoCondicion() {
-            KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest();
-            KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionResponse retVal = ((KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion)(this)).listarTodosTipoCondicion(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionResponse> KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion.listarTodosTipoCondicionAsync(KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest request) {
-            return base.Channel.listarTodosTipoCondicionAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionResponse> listarTodosTipoCondicionAsync() {
-            KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposCondicion.listarTodosTipoCondicionRequest();
-            return ((KawkiWebBusiness.KawkiWebWSTiposCondicion.TiposCondicion)(this)).listarTodosTipoCondicionAsync(inValue);
         }
     }
 }
