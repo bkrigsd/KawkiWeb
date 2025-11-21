@@ -42,13 +42,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
 
         /// <summary>
-        /// Control rfvDescripcion.
+        /// Control lblErrorDescripcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDescripcion;
+        protected global::System.Web.UI.WebControls.Label lblErrorDescripcion;
 
         /// <summary>
         /// Control ddlCategoria.
@@ -60,13 +60,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlCategoria;
 
         /// <summary>
-        /// Control rfvCategoria.
+        /// Control lblErrorCategoria.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCategoria;
+        protected global::System.Web.UI.WebControls.Label lblErrorCategoria;
 
         /// <summary>
         /// Control ddlEstilo.
@@ -78,13 +78,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlEstilo;
 
         /// <summary>
-        /// Control rfvEstilo.
+        /// Control lblErrorEstilo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEstilo;
+        protected global::System.Web.UI.WebControls.Label lblErrorEstilo;
 
         /// <summary>
         /// Control txtPrecio.
@@ -96,22 +96,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.TextBox txtPrecio;
 
         /// <summary>
-        /// Control rfvPrecio.
+        /// Control lblErrorPrecio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPrecio;
-
-        /// <summary>
-        /// Control revPrecio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revPrecio;
+        protected global::System.Web.UI.WebControls.Label lblErrorPrecio;
 
         /// <summary>
         /// Control lblMensaje.

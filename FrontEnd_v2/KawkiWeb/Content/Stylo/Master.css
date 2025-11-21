@@ -9,23 +9,47 @@
     --color-active: #FCE4E9;
 }
 
+/* MODO OSCURO */
+/*.dark-mode {
+    --color-primary: #2b2b2b;
+    --color-secondary: #1e1e1e;
+    --color-accent: #ED6B7F;
+    --color-text: #f5f5f5;
+    --color-text-light: #cfcfcf;
+    --color-border: #444;
+    --color-hover: #3a3a3a;
+    --color-active: #3d2a2f;
+}
+
+
+.modo-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--color-text);
+    transition: 0.3s;
+}
+
+    .modo-btn:hover {
+        color: var(--color-accent);
+    }*/
+
+
 body {
     background-color: var(--color-secondary);
 }
 
-/* SIDEBAR MEJORADO */
 .sidebar {
-    background: linear-gradient(180deg, #FFFFFF 0%, var(--color-primary) 100%);
-    border-right: 1px solid var(--color-border);
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-    padding: 0;
+    width: 275px;
     height: 100vh;
     position: fixed;
-    width: 275px;
-    top: 0;
     left: 0;
-    overflow-y: auto;
-    z-index: 1000;
+    top: 0;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    -ms-overflow-style: none !important; /* IE */
+    scrollbar-width: none !important; /* Firefox */
 }
 
     .sidebar .logo {
@@ -37,7 +61,6 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
-        /* altura fija y flex para centrar imagen sin mover el border */
     }
 
         .sidebar .logo img {
@@ -53,7 +76,7 @@ body {
 /* MENÚ SIDEBAR */
 .sidebar-menu {
     list-style: none;
-    padding: 15px 0;
+    padding: 0 !important; /* ← sin espacio arriba */
     margin: 0;
 }
 
@@ -66,12 +89,12 @@ body {
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 20px 35px;
+        padding: 22px 35px;
         color: var(--color-text);
         text-decoration: none;
         transition: all 0.3s ease;
         border-left: 4px solid transparent;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 500;
         white-space: nowrap;
         overflow: hidden;
@@ -107,28 +130,86 @@ body {
 
     /* Botón Cerrar Sesión */
     .sidebar-menu .cerrar-sesion {
-        margin-top: auto;
-        border-top: 2px solid var(--color-border);
-        padding-top: 15px;
-        margin-top: 20px;
+        margin-top: 10px; /* antes 20px */
+        padding-top: 8px; /* antes 15px */
+        border-top: none; /* elimina la línea gris */
     }
 
-.cerrar-sesion-link {
-    color: #D32F4A !important;
+.logout-wrapper {
+    padding: 10px 25px;
 }
 
-    .cerrar-sesion-link:hover {
-        background-color: #FEE8EC !important;
-        color: #B8253A !important;
+/*.cerrar-sesion-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    background: rgba(237, 107, 127, 0.10);
+    border-radius: 6px;
+    text-decoration: none;
+    color: #C43248 !important;
+    font-size: 14px;
+}*/
+
+.cerrar-sesion {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+    .cerrar-sesion-link {
+        padding: 18px 35px !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
-    .cerrar-sesion-link i {
-        color: #D32F4A !important;
+        .cerrar-sesion-link i {
+            font-size: 18px;
+            color: #D32F4A;
+        }
+
+        .cerrar-sesion-link:hover {
+            background: rgba(237, 107, 127, 0.20);
+            color: #8A1E2D !important;
+        }
+
+        /*.cerrar-sesion-link i {
+            color: #D32F4A !important;
+        }
+
+        .cerrar-sesion-link:hover i {
+            color: #B8253A !important;
+        }*/
+
+/* Contenedor Fijo del Logout */
+.logout-box {
+    padding: 18px 0;
+    border-top: 2px solid var(--color-border);
+    background-color: #fff;
+    text-align: center;
+    margin-top: auto; /* lo empuja al fondo */
+}
+
+    .logout-box a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 12px 0;
+        color: #D32F4A;
+        text-decoration: none;
+        font-weight: 600;
     }
 
-    .cerrar-sesion-link:hover i {
-        color: #B8253A !important;
+        .logout-box a:hover {
+            background-color: #FEE8EC;
+            color: #B8253A;
+        }
+
+    .logout-box i {
+        color: #D32F4A;
     }
+
 
 /* TOP BAR MEJORADO */
 .top-bar {
@@ -192,13 +273,11 @@ body {
     cursor: pointer;
     font-size: 14px;
     transition: color 0.3s ease;
-    /* asegurar que el color blanco se aplique en todos los estados */
 }
 
     .link-usuario span {
         color: white !important;
         transition: color 0.3s ease;
-        /* color blanco para el texto del nombre usuario */
     }
 
     .link-usuario i {
@@ -219,6 +298,23 @@ body {
     margin-left: 280px;
     min-height: 100vh;
     background-color: var(--color-secondary);
+}
+
+    /* Animación suave al cargar el contenido de la página */
+    .main-content > * {
+        animation: fadeInContent 0.4s ease-in-out;
+    }
+
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsivo */
@@ -246,3 +342,205 @@ body {
         min-height: auto;
     }
 }
+
+/* === SUBMENÚ PARA GESTIÓN DE PRODUCTOS === */
+
+/* Contenedor del submenú */
+.submenu-container {
+    list-style: none;
+}
+
+/* Botón principal */
+.submenu-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 35px;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 500;
+    background: none;
+    user-select: none;
+}
+
+    .submenu-btn i {
+        font-size: 21px;
+        color: var(--color-text-light);
+        transition: 0.3s;
+    }
+
+    .submenu-btn:hover {
+        background-color: var(--color-hover);
+        color: var(--color-accent);
+        border-left-color: var(--color-accent);
+    }
+
+        .submenu-btn:hover i {
+            color: var(--color-accent);
+        }
+
+/* Flecha del submenú */
+.flecha-submenu {
+    margin-left: auto;
+    font-size: 14px !important;
+    transition: transform 0.3s ease;
+}
+
+/* Lista del submenú - IMPORTANTE: CERRADA POR DEFECTO */
+.submenu-list {
+    max-height: 0 !important;
+    overflow: hidden;
+    list-style: none;
+    padding-left: 30px !important;
+    margin: 0;
+    transition: max-height 0.3s ease-out;
+    background-color: #ffffff !important;
+}
+
+/* Desactivar transición cuando se carga una página del submenú */
+.submenu-container.sin-transicion .submenu-list {
+    transition: none !important;
+}
+
+.submenu-container.sin-transicion .flecha-submenu {
+    transition: none !important;
+}
+
+.submenu-container.sin-transicion .submenu-btn {
+    transition: none !important;
+}
+
+/* Al abrir el submenú */
+.submenu-container.open .submenu-list {
+    max-height: 999px !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.submenu-container.open .flecha-submenu {
+    transform: rotate(180deg);
+}
+
+/* SOLO resaltar cuando tiene la clase activo-padre (estamos en una subpágina) */
+.submenu-btn.activo-padre {
+    background-color: var(--color-active);
+    color: var(--color-accent);
+    border-left-color: var(--color-accent);
+}
+
+    .submenu-btn.activo-padre i:not(.flecha-submenu) {
+        color: var(--color-accent);
+    }
+
+    /* Mantener el estilo activo incluso cuando hay hover */
+    .submenu-btn.activo-padre:hover {
+        background-color: var(--color-active);
+        color: var(--color-accent);
+        border-left-color: var(--color-accent);
+    }
+
+/* Items del submenú */
+.submenu-list li {
+    margin: 0;
+    position: relative;
+}
+
+    .submenu-list li a {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 12px 35px !important; /* ← igual que el menú padre */
+        font-size: 13px !important;
+        color: #555 !important;
+        text-decoration: none !important;
+        transition: all 0.3s ease !important;
+        border-left: 3px solid transparent !important;
+    }
+
+        .submenu-list li a i {
+            font-size: 16px !important;
+            color: #999 !important;
+            transition: color 0.3s ease !important;
+            min-width: 20px !important;
+        }
+
+        .submenu-list li a:hover {
+            color: var(--color-accent) !important;
+            font-weight: 500 !important;
+            background-color: rgba(237, 107, 127, 0.05) !important;
+            border-left-color: var(--color-accent) !important;
+            padding-left: 30px !important;
+        }
+
+            .submenu-list li a:hover i {
+                color: var(--color-accent) !important;
+            }
+
+        .submenu-list li a.active {
+            color: var(--color-accent) !important;
+            font-weight: 600 !important;
+            background-color: rgba(237, 107, 127, 0.08) !important;
+            border-left-color: var(--color-accent) !important;
+            padding-left: 30px !important;
+        }
+
+            .submenu-list li a.active i {
+                color: var(--color-accent) !important;
+            }
+
+/* Contenedor del botón logout*/
+.logout-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 17px;
+}
+
+.btn-cerrar-sesion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 85%;
+    padding: 14px 0;
+    background: #ED6B7F;
+    color: white !important;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+    text-decoration: none !important;
+}
+
+    .btn-cerrar-sesion span,
+    .btn-cerrar-sesion i {
+        text-decoration: none !important; /* Por si heredan del navegador */
+    }
+
+    .btn-cerrar-sesion:hover {
+        background: #D85B6F;
+        text-decoration: none !important; /* Por si el hover lo agrega */
+    }
+
+.submenu-container.cargado .submenu-list {
+    transition: none !important;
+}
+
+/* Estado activo del botón padre cuando estamos dentro del submenú */
+.submenu-btn.activo {
+    background-color: var(--color-active) !important;
+    color: var(--color-accent) !important;
+    border-left-color: var(--color-accent) !important;
+}
+
+    .submenu-btn.activo i:not(.flecha-submenu) {
+        color: var(--color-accent) !important;
+    }
+
+    .submenu-btn.activo:hover {
+        background-color: var(--color-active) !important;
+    }

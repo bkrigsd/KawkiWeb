@@ -11,7 +11,7 @@
         <div class="usuarios-header">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h1><i class="fas fa-tags me-2"></i>Gestión de Descuentos</h1>
+                    <h1><i class="fas fa-percent me-2"></i>Gestión de Descuentos</h1>
                     <p>Administra, crea e inhabilita los descuentos del sistema Kawki.</p>
                 </div>
                 <button type="button" class="btn-kawki-primary" onclick="abrirModalRegistro()">
