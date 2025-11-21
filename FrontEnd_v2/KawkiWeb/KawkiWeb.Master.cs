@@ -13,6 +13,10 @@ namespace KawkiWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             // Evitar que las páginas se guarden en caché
+            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+            Response.Headers.Add("Pragma", "no-cache");
+            Response.Headers.Add("Expires", "0");
+
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
             Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
@@ -21,6 +25,11 @@ namespace KawkiWeb
 
             var rol = (Session["Rol"] as string) ?? string.Empty;
             var usuario = (Session["Usuario"] as string) ?? string.Empty;
+
+            if (Session["Usuario"] != null)
+                lnkPerfil.NavigateUrl = "Perfil.aspx";
+            else
+                lnkPerfil.NavigateUrl = "Login.aspx";
 
             bool logueado = !string.IsNullOrEmpty(usuario);
             bool esVendedor = rol.Equals("vendedor", StringComparison.OrdinalIgnoreCase);

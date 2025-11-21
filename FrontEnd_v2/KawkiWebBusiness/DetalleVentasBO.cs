@@ -1,48 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using KawkiWebBusiness.KawkiWebWSDetalleVentas;
-using KawkiWebBusiness.KawkiWebWSProductos;
-using KawkiWebBusiness.KawkiWebWSVentas;
-using detalleVentasDTO = KawkiWebBusiness.KawkiWebWSDetalleVentas.detalleVentasDTO;
-using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO;
 
-namespace KawkiWebBusiness
+namespace KawkiWebBusiness.BO
 {
     public class DetalleVentasBO
     {
-        private DetalleVentasClient clienteSOAP;
+        private DetalleVentasClient cliente;
 
         public DetalleVentasBO()
         {
-            this.clienteSOAP = new DetalleVentasClient();
+            cliente = new DetalleVentasClient();
         }
 
-        public int InsertarDetalleVenta(productosVariantesDTO productoVAR, int ventaId, int cantidad, double precioUnitario, double subtotal)
+        public int InsertarDetalleVenta(productosVariantesDTO productoVar, int ventaId, int cantidad,
+            double precioUnitario, double subtotal)
         {
-            return this.clienteSOAP.insertarDetalleVenta(productoVAR, ventaId, cantidad, precioUnitario, subtotal);
-        }
-        
-        public int ModificarDetalleVenta(int detalleVentaId,productosVariantesDTO productoVAR, int ventaId, int cantidad, double precioUnitario, double subtotal)
-        {
-            return this.clienteSOAP.modificarDetalleVenta(detalleVentaId, productoVAR, ventaId, cantidad, precioUnitario, subtotal);
+            return cliente.insertarDetalleVenta(productoVar,ventaId, cantidad, precioUnitario,subtotal);
         }
 
-        public detalleVentasDTO ObtenerPorIdDetalleVenta(int detalleVentaId)
+        public detalleVentasDTO ObtenerPorId(int detalleId)
         {
-                return this.clienteSOAP.obtenerPorIdDetalleVenta(detalleVentaId);
+            return cliente.obtenerPorIdDetalleVenta(detalleId);
         }
 
-        public IList<detalleVentasDTO> listarTodos()
+        public List<detalleVentasDTO> ListarTodos()
         {
-            return this.clienteSOAP.listarTodosDetalleVenta();
+            var lista = cliente.listarTodosDetalleVenta();
+            return new List<detalleVentasDTO>(lista);
         }
 
-        public IList<detalleVentasDTO> listarPorVentaId(int ventaId)
+        public List<detalleVentasDTO> ListarPorVentaId(int ventaId)
         {
-            return this.clienteSOAP.listarPorVentaIdDetalleVenta(ventaId);
+            var lista = cliente.listarPorVentaIdDetalleVenta(ventaId);
+            return new List<detalleVentasDTO>(lista);
+        }
+
+        public int ModificarDetalleVenta(int detalleId, productosVariantesDTO productoVar,int ventaId,int cantidad,
+            double precioUnitario,double subtotal)
+        {
+            return cliente.modificarDetalleVenta(detalleId, productoVar,ventaId, cantidad, precioUnitario,subtotal);
         }
     }
 }
+

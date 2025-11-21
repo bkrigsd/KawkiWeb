@@ -100,7 +100,7 @@
 
                 <div class="info-item">
                     <i class="fas fa-user"></i> 
-                    <span><strong>Nombre:</strong> <asp:Label ID="lblUsuario" runat="server" /></span>
+                    <span><strong>Nombre Completo:</strong> <asp:Label ID="lblUsuario" runat="server" /></span>
                 </div>
 
                 <div class="info-item">
@@ -110,7 +110,7 @@
             </div>
 
             <!-- HISTORIAL DE COMPRAS -->
-            <div id="historialDeComprasDiv" runat="server" class="card-soft" style="margin-top:20px;">
+            <%--<div id="historialDeComprasDiv" runat="server" class="card-soft" style="margin-top:20px;">
                 <h3><i class="fas fa-box-open"></i>Historial de Compras</h3>
 
                 <div class="historial-item">
@@ -134,7 +134,7 @@
                         <div class="estado" style="background:#e4ecff; color:#2c63d6;">En tránsito</div>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </div>
 
         <!-- DERECHA -->

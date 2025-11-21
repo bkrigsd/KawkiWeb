@@ -19,17 +19,38 @@ namespace KawkiWeb
 
             if (!IsPostBack)
             {
-                string usuario = Session["Usuario"].ToString();
-                string rol = Session["Rol"]?.ToString() ?? "Cliente Kawki";
+                string usuarioLogin = Session["Usuario"]?.ToString() ?? "";
+                string nombreCompleto = Session["UsuarioNombreCompleto"]?.ToString() ?? usuarioLogin;
+                string email = Session["Email"]?.ToString() ?? "";
+                string rol = Session["Rol"]?.ToString() ?? "";
 
-                lblUsuario.Text = usuario;
-                lblUsuario2.Text = usuario;
-                lblEmail.Text = usuario + "@kawki.com"; // temporal
-                lblRol.Text = rol;
-                lblInicial.Text = usuario.Substring(0, 1).ToUpper();
-            
+                string rolMostrar = "";
+                switch (rol.ToLower())
+                {
+                    case "admin":
+                        rolMostrar = "Administrador";
+                        break;
+                    case "vendedor":
+                        rolMostrar = "Vendedor";
+                        break;
+                    default:
+                        rolMostrar = "Usuario";
+                        break;
+                }
+
+                lblRol.Text = rolMostrar;
+
+                // Main info
+                lblUsuario.Text = nombreCompleto;
+                lblUsuario2.Text = nombreCompleto;
+                lblEmail.Text = email;
+
+                // Inicial del nombre
+                lblInicial.Text = nombreCompleto.Length > 0 ? nombreCompleto.Substring(0, 1).ToUpper(): "?";
+
+
                 bool esCliente = rol.Equals("cliente",StringComparison.OrdinalIgnoreCase);
-                bool esVendedor = rol.Equals("vendedor", StringComparison.OrdinalIgnoreCase);
+                bool esVendedor = rol.Equals("Vendedor", StringComparison.OrdinalIgnoreCase);
 
                 var historialDiv = FindControlRecursive(this, "historialDeComprasDiv");
                 if (historialDiv != null)

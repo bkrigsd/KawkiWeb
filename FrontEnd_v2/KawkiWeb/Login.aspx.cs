@@ -37,7 +37,7 @@ namespace KawkiWeb
 
             try
             {
-                var usuarioBO = new UsuarioBO();
+                //var usuarioBO = new UsuarioBO();
                 var usuarioDTO = usuarioBO.AutenticarUsuario(usuario, clave);
 
                 if (usuarioDTO != null)
@@ -65,6 +65,7 @@ namespace KawkiWeb
                     Session["UsuarioId"] = usuarioDTO.usuarioId;
                     Session["Rol"] = rol;
                     Session["UsuarioNombreCompleto"] = usuarioDTO.nombre + " " + usuarioDTO.apePaterno;
+                    Session["Email"] = usuarioDTO.correo ?? "";
 
                     // Redirección según el rol
                     if (rol == "admin")

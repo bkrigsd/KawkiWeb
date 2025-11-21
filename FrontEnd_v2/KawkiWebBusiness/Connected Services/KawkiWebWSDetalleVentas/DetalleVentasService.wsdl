@@ -11,6 +11,12 @@
   <message name="listarPorVentaIdDetalleVentaResponse">
     <part name="parameters" element="tns:listarPorVentaIdDetalleVentaResponse" />
   </message>
+  <message name="obtenerPorIdDetalleVenta">
+    <part name="parameters" element="tns:obtenerPorIdDetalleVenta" />
+  </message>
+  <message name="obtenerPorIdDetalleVentaResponse">
+    <part name="parameters" element="tns:obtenerPorIdDetalleVentaResponse" />
+  </message>
   <message name="insertarDetalleVenta">
     <part name="parameters" element="tns:insertarDetalleVenta" />
   </message>
@@ -29,16 +35,14 @@
   <message name="modificarDetalleVentaResponse">
     <part name="parameters" element="tns:modificarDetalleVentaResponse" />
   </message>
-  <message name="obtenerPorIdDetalleVenta">
-    <part name="parameters" element="tns:obtenerPorIdDetalleVenta" />
-  </message>
-  <message name="obtenerPorIdDetalleVentaResponse">
-    <part name="parameters" element="tns:obtenerPorIdDetalleVentaResponse" />
-  </message>
   <portType name="DetalleVentas">
     <operation name="listarPorVentaIdDetalleVenta">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/listarPorVentaIdDetalleVentaRequest" message="tns:listarPorVentaIdDetalleVenta" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/listarPorVentaIdDetalleVentaResponse" message="tns:listarPorVentaIdDetalleVentaResponse" />
+    </operation>
+    <operation name="obtenerPorIdDetalleVenta">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/obtenerPorIdDetalleVentaRequest" message="tns:obtenerPorIdDetalleVenta" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/obtenerPorIdDetalleVentaResponse" message="tns:obtenerPorIdDetalleVentaResponse" />
     </operation>
     <operation name="insertarDetalleVenta">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/insertarDetalleVentaRequest" message="tns:insertarDetalleVenta" />
@@ -52,14 +56,19 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/modificarDetalleVentaRequest" message="tns:modificarDetalleVenta" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/modificarDetalleVentaResponse" message="tns:modificarDetalleVentaResponse" />
     </operation>
-    <operation name="obtenerPorIdDetalleVenta">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/obtenerPorIdDetalleVentaRequest" message="tns:obtenerPorIdDetalleVenta" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/DetalleVentas/obtenerPorIdDetalleVentaResponse" message="tns:obtenerPorIdDetalleVentaResponse" />
-    </operation>
   </portType>
   <binding name="DetalleVentasPortBinding" type="tns:DetalleVentas">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <operation name="listarPorVentaIdDetalleVenta">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="obtenerPorIdDetalleVenta">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -87,15 +96,6 @@
       </output>
     </operation>
     <operation name="modificarDetalleVenta">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="obtenerPorIdDetalleVenta">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

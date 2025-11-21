@@ -1,11 +1,9 @@
-﻿using System;
+﻿using KawkiWebBusiness.KawkiWebWSUsuarios;
+using KawkiWebBusiness.KawkiWebWSVentas;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using KawkiWebBusiness.KawkiWebWSUsuarios;
-using KawkiWebBusiness.KawkiWebWSVentas;
-using usuariosDTO = KawkiWebBusiness.KawkiWebWSVentas.usuariosDTO;
 
 namespace KawkiWebBusiness
 {
@@ -17,15 +15,11 @@ namespace KawkiWebBusiness
         {
             this.clienteSOAP = new VentasClient();
         }
-
-        public int InsertarVenta(usuariosDTO usuario, double total, descuentosDTO descuento, redesSocialesDTO redSocial)
+        //insertar venta debe tener la lista de productos de la venta
+        public int InsertarVenta(KawkiWebWSVentas.usuariosDTO usuario, double total,
+                                 descuentosDTO descuento, redesSocialesDTO redSocial)
         {
             return this.clienteSOAP.insertarVenta(usuario, total, descuento, redSocial);
-        }
-
-        public int ModificarVenta(int ventaId, usuariosDTO usuario, double total, descuentosDTO descuento, redesSocialesDTO redSocial, bool esValida)
-        {
-            return this.clienteSOAP.modificarVenta(ventaId,usuario,total,descuento, redSocial, esValida);
         }
 
         public ventasDTO ObtenerPorIdVenta(int ventaId)
@@ -38,9 +32,14 @@ namespace KawkiWebBusiness
             return this.clienteSOAP.listarTodosVenta();
         }
 
-        //public int EliminarVenta(int ventaId)
-        //{
-        //    return this.clienteSOAP.eliminarVenta(ventaId);
-        //}
+        public int ModificarVenta(int ventaId, KawkiWebWSVentas.usuariosDTO usuario,
+                                  double total, descuentosDTO descuento,
+                                  redesSocialesDTO redSocial, bool esValida)
+        {
+            return this.clienteSOAP.modificarVenta(
+                ventaId, usuario, total, descuento, redSocial, esValida
+            );
+        }
+
     }
 }
