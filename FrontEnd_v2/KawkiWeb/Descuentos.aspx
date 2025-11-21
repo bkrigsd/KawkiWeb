@@ -203,8 +203,7 @@
     <script>
         function abrirModalRegistroSinLimpiar() {
             document.getElementById("modalDescuento").classList.add("show");
-            document.getElementById("tituloModal").innerHTML =
-                '<i class="fas fa-tag me-2"></i>Registrar nuevo descuento';
+            document.getElementById("tituloModal").innerHTML = '<i class="fas fa-tag me-2"></i>Registrar nuevo descuento';
             document.getElementById("<%= btnGuardar.ClientID %>").value = "Registrar descuento";
         }
 
@@ -246,7 +245,7 @@
             limpiarFormulario();
             resetModalDescuento() 
             // Hace un REFRESH limpio sin POST ni datos previos
-            /*window.location.href = "Descuentos.aspx";*/
+            window.location.href = "Descuentos.aspx";
         }
 
         // Ejecutar cuando cambie el tipo de beneficio
