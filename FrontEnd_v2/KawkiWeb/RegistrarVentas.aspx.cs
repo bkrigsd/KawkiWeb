@@ -563,17 +563,17 @@ namespace KawkiWeb
             string mensajeError;
 
             // Validar descuento
-            if (!ValidarDescuento(txtDescuento.Text, subtotal, out descuento, out mensajeError))
-            {
-                // Si hay error, mostrar y usar 0
-                if (!string.IsNullOrEmpty(mensajeError))
-                {
-                    lblMensaje.CssClass = "text-warning mb-2 d-block";
-                    lblMensaje.Text = mensajeError;
-                    descuento = 0;
-                    txtDescuento.Text = "0.00";
-                }
-            }
+            //if (!ValidarDescuento(txtDescuento.Text, subtotal, out descuento, out mensajeError))
+            //{
+            //    // Si hay error, mostrar y usar 0
+            //    if (!string.IsNullOrEmpty(mensajeError))
+            //    {
+            //        lblMensaje.CssClass = "text-warning mb-2 d-block";
+            //        lblMensaje.Text = mensajeError;
+            //        descuento = 0;
+            //        txtDescuento.Text = "0.00";
+            //    }
+            //}
 
             decimal total = subtotal - descuento;
             if (total < 0) total = 0;
