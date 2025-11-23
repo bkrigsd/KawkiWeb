@@ -119,6 +119,10 @@ DELIMITER ;
 -- =====================================================
 -- LISTAR VARIANTES DE PRODUCTO POR PRODUCTO_ID
 -- =====================================================
+-- =====================================================
+-- SP_LISTAR_VARIANTES_POR_PRODUCTO - MySQL (ACTUALIZADO CON JOINS)
+-- Lista variantes de un producto específico con datos completos
+-- =====================================================
 USE KAWKI_DB;
 
 DELIMITER $$
@@ -130,20 +134,36 @@ CREATE PROCEDURE SP_LISTAR_VARIANTES_POR_PRODUCTO(
 )
 BEGIN
     SELECT 
-        PROD_VARIANTE_ID,
-        SKU,
-        STOCK,
-        STOCK_MINIMO,
-        ALERTA_STOCK,
-        PRODUCTO_ID,
-        COLOR_ID,
-        TALLA_ID,
-        URL_IMAGEN,
-        FECHA_HORA_CREACION,
-        DISPONIBLE,
-        USUARIO_ID
-    FROM PRODUCTOS_VARIANTES
-    WHERE PRODUCTO_ID = p_producto_id;
+        -- Campos de la variante de producto
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        pv.STOCK_MINIMO,
+        pv.ALERTA_STOCK,
+        pv.PRODUCTO_ID,
+        pv.URL_IMAGEN,
+        pv.FECHA_HORA_CREACION,
+        pv.DISPONIBLE,
+        
+        -- Color completo (JOIN)
+        c.COLOR_ID,
+        c.NOMBRE AS COLOR_NOMBRE,
+        
+        -- Talla completa (JOIN)
+        t.TALLA_ID,
+        t.NUMERO AS TALLA_NUMERO,
+        
+        -- Usuario de la variante (JOIN)
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS_VARIANTES pv
+    INNER JOIN COLORES c ON pv.COLOR_ID = c.COLOR_ID
+    INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+    INNER JOIN USUARIOS u ON pv.USUARIO_ID = u.USUARIO_ID
+    WHERE pv.PRODUCTO_ID = p_producto_id
+    ORDER BY pv.PROD_VARIANTE_ID;
 END$$
 
 DELIMITER ;
@@ -261,81 +281,18 @@ BEGIN
     ORDER BY u.NOMBRE, u.APE_PATERNO;
 END$$
 
-
--- =====================================================
--- 3. SP_CAMBIAR_CONTRASENHA
--- Cambia la contraseña de un usuario validando la actual
--- =====================================================
-DROP PROCEDURE IF EXISTS SP_CAMBIAR_CONTRASENHA$$
-
-CREATE PROCEDURE SP_CAMBIAR_CONTRASENHA(
-    IN p_usuario_id INT,
-    IN p_contrasenha_actual VARCHAR(255),
-    IN p_contrasenha_nueva VARCHAR(255),
-    OUT p_resultado INT,
-    OUT p_mensaje VARCHAR(200)
-)
-BEGIN
-    DECLARE v_contrasenha_bd VARCHAR(255);
-    DECLARE v_usuario_existe INT;
-    
-    -- Códigos de resultado:
-    -- 0 = Éxito
-    -- 1 = Usuario no existe
-    -- 2 = Contraseña actual incorrecta
-    -- 3 = Nueva contraseña inválida (menos de 8 caracteres)
-    
-    -- Verificar que el usuario existe
-    SELECT COUNT(*) INTO v_usuario_existe
-    FROM USUARIOS
-    WHERE USUARIO_ID = p_usuario_id;
-    
-    IF v_usuario_existe = 0 THEN
-        SET p_resultado = 1;
-        SET p_mensaje = 'Usuario no encontrado';
-    ELSE
-        -- Obtener contraseña actual de la BD
-        SELECT CONTRASENHA INTO v_contrasenha_bd
-        FROM USUARIOS
-        WHERE USUARIO_ID = p_usuario_id;
-        
-        -- Verificar que la contraseña actual coincide
-        IF v_contrasenha_bd != p_contrasenha_actual THEN
-            SET p_resultado = 2;
-            SET p_mensaje = 'La contraseña actual es incorrecta';
-        ELSE
-            -- Validar que la nueva contraseña tenga al menos 8 caracteres
-            IF LENGTH(p_contrasenha_nueva) < 8 THEN
-                SET p_resultado = 3;
-                SET p_mensaje = 'La nueva contraseña debe tener al menos 8 caracteres';
-            ELSE
-                -- Actualizar la contraseña
-                UPDATE USUARIOS
-                SET CONTRASENHA = p_contrasenha_nueva
-                WHERE USUARIO_ID = p_usuario_id;
-                
-                SET p_resultado = 0;
-                SET p_mensaje = 'Contraseña actualizada correctamente';
-            END IF;
-        END IF;
-    END IF;
-END$$
-
-
--- =====================================================
--- 4. SP_AUTENTICAR_USUARIO
--- Autentica un usuario por nombre de usuario o correo
--- Retorna los datos del usuario si las credenciales son válidas
--- =====================================================
 USE KAWKI_DB;
-
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS SP_AUTENTICAR_USUARIO$$
+-- =====================================================
+-- SP_OBTENER_USUARIO_POR_NOMBRE_O_CORREO (NUEVO)
+-- Obtiene usuario por nombre de usuario o correo
+-- SIN VALIDAR CONTRASEÑA (eso lo hace Java con BCrypt)
+-- =====================================================
+DROP PROCEDURE IF EXISTS SP_OBTENER_USUARIO_POR_NOMBRE_O_CORREO$$
 
-CREATE PROCEDURE SP_AUTENTICAR_USUARIO(
-    IN p_nombre_usuario_o_correo VARCHAR(100),
-    IN p_contrasenha VARCHAR(255)
+CREATE PROCEDURE SP_OBTENER_USUARIO_POR_NOMBRE_O_CORREO(
+    IN p_nombre_usuario_o_correo VARCHAR(100)
 )
 BEGIN
     SELECT 
@@ -347,11 +304,11 @@ BEGIN
         u.TELEFONO,
         u.CORREO,
         u.NOMBRE_USUARIO,
-        u.CONTRASENHA,
+        u.CONTRASENHA, -- ✅ Retorna el hash para que Java lo valide con BCrypt
         u.FECHA_HORA_CREACION,
         u.ACTIVO,
         
-        -- Tipo de usuario completo (JOIN) - TODOS LOS CAMPOS (id y nombre)
+        -- Tipo de usuario completo (JOIN)
         tu.TIPO_USUARIO_ID,
         tu.NOMBRE AS TIPO_USUARIO_NOMBRE
         
@@ -359,7 +316,6 @@ BEGIN
     INNER JOIN TIPOS_USUARIO tu ON u.TIPO_USUARIO_ID = tu.TIPO_USUARIO_ID
     WHERE (u.NOMBRE_USUARIO = p_nombre_usuario_o_correo 
            OR u.CORREO = p_nombre_usuario_o_correo)
-    AND u.CONTRASENHA = p_contrasenha
     AND u.ACTIVO = 1
     LIMIT 1;
 END$$
