@@ -31,7 +31,6 @@ namespace KawkiWeb
                 lblNombreVendedor.Text = VendedorActual;
 
                 CargarVentas();
-                ActualizarEstadisticas();
             }
         }
         private void ActualizarEstadisticas()
@@ -120,37 +119,13 @@ namespace KawkiWeb
                 lblMensaje.Text = lista.Count == 0
                     ? "No tienes ventas registradas en este rango de fechas."
                     : "";
+                ActualizarEstadisticas();
             }
             catch (Exception ex)
             {
                 lblMensaje.CssClass = "text-danger mb-2 d-block";
                 lblMensaje.Text = $"Error al cargar ventas: {ex.Message}";
             }
-        }
-
-        /// <summary>
-        /// Datos simulados de ventas del vendedor actual (reemplazar con consulta real)
-        /// </summary>
-        private DataTable ObtenerVentasVendedorSimuladas()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("IdVenta", typeof(int));
-            dt.Columns.Add("Fecha", typeof(DateTime));
-            dt.Columns.Add("Cliente", typeof(string));
-            dt.Columns.Add("Canal", typeof(string));
-            dt.Columns.Add("CantidadProductos", typeof(int));
-            dt.Columns.Add("MontoTotal", typeof(decimal));
-
-            // Datos de ejemplo - Solo ventas del vendedor actual
-            // En producción, esto vendría de: WHERE Vendedor = @VendedorActual
-            dt.Rows.Add(1, DateTime.Now.AddDays(-7), "Ana Torres", "Instagram", 3, 150.50m);
-            dt.Rows.Add(2, DateTime.Now.AddDays(-5), "Carmen Soto", "Facebook", 5, 275.00m);
-            dt.Rows.Add(3, DateTime.Now.AddDays(-3), "Miguel Ruiz", "WhatsApp", 2, 120.00m);
-            dt.Rows.Add(4, DateTime.Now.AddDays(-2), "Laura Mendoza", "Instagram", 4, 198.75m);
-            dt.Rows.Add(5, DateTime.Now.AddDays(-1), "Roberto Silva", "TikTok", 1, 65.00m);
-            dt.Rows.Add(6, DateTime.Now, "Patricia Rojas", "WhatsApp", 3, 210.50m);
-
-            return dt;
         }
 
         /// <summary>
@@ -210,16 +185,14 @@ namespace KawkiWeb
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             CargarVentas();
-            ActualizarEstadisticas();
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             txtFechaInicio.Text = string.Empty;
             txtFechaFin.Text = string.Empty;
-            CargarVentas();
-            ActualizarEstadisticas();
             lblMensaje.Text = string.Empty;
+            CargarVentas();
         }
 
         protected void gvVentas_RowCommand(object sender, GridViewCommandEventArgs e)
