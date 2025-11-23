@@ -1,85 +1,84 @@
-﻿using System.Collections.Generic;
-using KawkiWebBusiness.KawkiWebWSComprobantesPago;
+﻿using KawkiWebBusiness.KawkiWebWSComprobantesPago;
+using System.Collections.Generic;
 
-namespace KawkiWebBusiness.BO
+namespace KawkiWebBusiness
 {
     public class ComprobantesPagoBO
     {
-        private ComprobantesPagoClient cliente;
+        private ComprobantesPagoClient clienteSOAP;
 
         public ComprobantesPagoBO()
         {
-            cliente = new ComprobantesPagoClient();
+            this.clienteSOAP = new ComprobantesPagoClient();
         }
 
-        public int InsertarComprobante(
+        // Insertar comprobante de pago
+        public int InsertarComprobantePago(
             tiposComprobanteDTO tipoComprobante,
             string dniCliente,
             string nombreCliente,
             string rucCliente,
-            string razonSocial,
-            string direccionFiscal,
-            string telefono,
+            string razonSocialCliente,
+            string direccionFiscalCliente,
+            string telefonoCliente,
             double total,
             ventasDTO venta,
             metodosPagoDTO metodoPago)
         {
-            return cliente.insertarComprobPago(
+            return this.clienteSOAP.insertarComprobPago(
                 tipoComprobante,
                 dniCliente,
                 nombreCliente,
                 rucCliente,
-                razonSocial,
-                direccionFiscal,
-                telefono,
+                razonSocialCliente,
+                direccionFiscalCliente,
+                telefonoCliente,
                 total,
                 venta,
                 metodoPago
             );
         }
 
-        public comprobantesPagoDTO ObtenerPorId(int comprobanteId)
+        // Obtener comprobante por ID
+        public comprobantesPagoDTO ObtenerPorIdComprobante(int comprobanteId)
         {
-            return cliente.obtenerPorIdComprobPago(comprobanteId);
+            return this.clienteSOAP.obtenerPorIdComprobPago(comprobanteId);
         }
 
-        public List<comprobantesPagoDTO> ListarTodos()
+        // Listar todos
+        public IList<comprobantesPagoDTO> ListarTodosComprobantes()
         {
-            var array = cliente.listarTodosComprobantePago();
-            return new List<comprobantesPagoDTO>(array);
+            return this.clienteSOAP.listarTodosComprobantePago();
         }
 
-        public int ModificarComprobante(
+        // Modificar comprobante
+        public int ModificarComprobantePago(
             int comprobanteId,
             tiposComprobanteDTO tipoComprobante,
             string dniCliente,
             string nombreCliente,
             string rucCliente,
-            string razonSocial,
-            string direccionFiscal,
-            string telefono,
+            string razonSocialCliente,
+            string direccionFiscalCliente,
+            string telefonoCliente,
             double total,
             ventasDTO venta,
-            metodosPagoDTO metodoPago)
+            metodosPagoDTO metodoPago
+        )
         {
-            return cliente.modificarComprobPago(
+            return this.clienteSOAP.modificarComprobPago(
                 comprobanteId,
                 tipoComprobante,
                 dniCliente,
                 nombreCliente,
                 rucCliente,
-                razonSocial,
-                direccionFiscal,
-                telefono,
+                razonSocialCliente,
+                direccionFiscalCliente,
+                telefonoCliente,
                 total,
                 venta,
                 metodoPago
             );
-        }
-
-        public comprobantesPagoDTO ObtenerPorVentaId(int ventaId)
-        {
-            return cliente.obtenerPorVentaIdComprobPago(ventaId);
         }
     }
 }

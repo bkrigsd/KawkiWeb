@@ -386,3 +386,18 @@
 .val-hidden {
     visibility: hidden !important;
 }
+
+/* Que todos los labels se vean parejitos */
+.usuarios-container label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.filtros-acciones .btn {
+    white-space: nowrap;
+    padding-inline: 14px;
+}
+
+.filtros-acciones .form-select {
+    min-width: 130px;
+}

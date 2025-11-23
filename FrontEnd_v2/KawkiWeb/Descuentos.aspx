@@ -7,6 +7,7 @@
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="usuarios-container">
+
         <!-- Header -->
         <div class="usuarios-header">
             <div class="d-flex justify-content-between align-items-center">
@@ -17,6 +18,90 @@
                 <button type="button" class="btn-kawki-primary" onclick="abrirModalRegistro()">
                     <i class="fas fa-plus me-1"></i> Nuevo Descuento
                 </button>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+
+                <!-- Descripción -->
+                <div class="col-lg-3 col-md-4">
+                    <label class="form-label" for="<%= txtFiltroDescripcion.ClientID %>">
+                        <i class="fas fa-file-alt me-1"></i>Descripción
+                    </label>
+                    <asp:TextBox ID="txtFiltroDescripcion" runat="server" CssClass="form-control" />
+                </div>
+
+                <!-- Tipo condición -->
+                <div class="col-lg-2 col-md-4">
+                    <label class="form-label" for="<%= ddlFiltroTipoCondicion.ClientID %>">
+                        <i class="fas fa-cogs me-1"></i>Tipo de condición
+                    </label>
+                    <asp:DropDownList ID="ddlFiltroTipoCondicion" runat="server" CssClass="form-select"></asp:DropDownList>
+                </div>
+
+                <!-- Tipo beneficio -->
+                <div class="col-lg-2 col-md-4">
+                    <label class="form-label" for="<%= ddlFiltroTipoBeneficio.ClientID %>">
+                        <i class="fas fa-gift me-1"></i>Tipo de beneficio
+                    </label>
+                    <asp:DropDownList ID="ddlFiltroTipoBeneficio" runat="server" CssClass="form-select"></asp:DropDownList>
+                </div>
+
+                <!-- Fecha Inicio -->
+                <div class="col-lg-2 col-md-4">
+                    <label class="form-label" for="<%= txtFiltroFechaInicio.ClientID %>">
+                        <i class="fas fa-calendar-alt me-1"></i>Fecha Inicio
+                    </label>
+                    <asp:TextBox ID="txtFiltroFechaInicio" runat="server" TextMode="Date" CssClass="form-control" />
+                    <asp:Label ID="lblErrorFechaInicio" runat="server"
+                               CssClass="text-danger small d-block mt-1"
+                               Visible="false" />
+                </div>
+
+                <!-- Fecha Fin -->
+                <div class="col-lg-2 col-md-4">
+                    <label class="form-label" for="<%= txtFiltroFechaFin.ClientID %>">
+                        <i class="fas fa-calendar-alt me-1"></i>Fecha Fin
+                    </label>
+                    <asp:TextBox ID="txtFiltroFechaFin" runat="server" TextMode="Date" CssClass="form-control" />
+                    <asp:Label ID="lblErrorFechaFin" runat="server"
+                               CssClass="text-danger small d-block mt-1"
+                               Visible="false" />
+                </div>
+
+                <!-- Estado + Botones -->
+                <div class="col-lg-3 col-md-8 filtros-acciones">
+                    <label class="form-label" for="<%= ddlFiltroActivo.ClientID %>">
+                        <i class="fas fa-toggle-on me-1"></i>Estado
+                    </label>
+                    <div class="d-flex gap-2">
+                        <asp:DropDownList ID="ddlFiltroActivo" runat="server" CssClass="form-select me-2">
+                            <asp:ListItem Text="-- Todos --" Value="" />
+                            <asp:ListItem Text="Activos" Value="true" />
+                            <asp:ListItem Text="Inactivos" Value="false" />
+                        </asp:DropDownList>
+
+                        <div class="d-flex flex-column flex-md-row gap-2">
+                            <asp:Button ID="btnBuscar" runat="server"
+                                CssClass="btn btn-kawki-primary"
+                                Text="Buscar"
+                                OnClick="btnBuscar_Click" CausesValidation="false" />
+                            <asp:Button ID="btnLimpiar" runat="server"
+                                CssClass="btn btn-kawki-outline"
+                                Text="Limpiar"
+                                OnClick="btnLimpiar_Click"
+                                CausesValidation="false" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <asp:Label ID="lblErrorFiltros" runat="server"
+                        CssClass="text-danger d-block mt-2"
+                        Visible="false" />
+                </div>
             </div>
         </div>
 
@@ -243,7 +328,7 @@
             //cerrarModal();
             document.getElementById("modalDescuento").classList.remove("show");
             limpiarFormulario();
-            resetModalDescuento() 
+            resetModalDescuento()
             // Hace un REFRESH limpio sin POST ni datos previos
             window.location.href = "Descuentos.aspx";
         }
@@ -338,5 +423,24 @@
         function cerrarModalConfirmacion() {
             document.getElementById("modalConfirmacion").classList.remove("show");
         }
+
+        // Filtros
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.getElementById("<%= txtFiltroDescripcion.ClientID %>").addEventListener("input", autoBuscar);
+            document.getElementById("<%= ddlFiltroTipoCondicion.ClientID %>").addEventListener("change", autoBuscar);
+            document.getElementById("<%= ddlFiltroTipoBeneficio.ClientID %>").addEventListener("change", autoBuscar);
+            document.getElementById("<%= ddlFiltroActivo.ClientID %>").addEventListener("change", autoBuscar);
+            document.getElementById("<%= txtFiltroFechaInicio.ClientID %>").addEventListener("change", autoBuscar);
+            document.getElementById("<%= txtFiltroFechaFin.ClientID %>").addEventListener("change", autoBuscar);
+
+        });
+
+        // Ejecuta el botón buscar desde JS
+        <%--function autoBuscar() {
+            document.getElementById("<%= btnBuscar.ClientID %>").click();
+        }--%>
+
+
     </script>
 </asp:Content>

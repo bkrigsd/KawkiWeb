@@ -2190,6 +2190,7 @@
     <Content Include="Content\LoginModern\login-modern.css" />
     <Content Include="Content\LoginModern\login-modern.js" />
     <Content Include="Content\site.css" />
+    <Content Include="Content\Stylo\detallevent.css" />
     <Content Include="Content\Stylo\gestionproductos.css" />
     <Content Include="Content\Stylo\historialventaadmin.css" />
     <Content Include="Content\Stylo\historialventavendedor.css" />
