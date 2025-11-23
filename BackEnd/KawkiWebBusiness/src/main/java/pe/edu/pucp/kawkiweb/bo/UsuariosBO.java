@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import org.mindrot.jbcrypt.BCrypt;
 import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
@@ -63,6 +64,10 @@ public class UsuariosBO {
                 return null;
             }
 
+            //Hasheamos la contraseña
+            String contrasenhaHasheada = BCrypt.hashpw(contrasenha,
+                    BCrypt.gensalt(12));
+
             UsuariosDTO usuarioDTO = new UsuariosDTO();
             usuarioDTO.setNombre(nombre.trim());
             usuarioDTO.setApePaterno(apePaterno.trim());
@@ -70,7 +75,7 @@ public class UsuariosBO {
             usuarioDTO.setTelefono(telefono);
             usuarioDTO.setCorreo(correo.trim().toLowerCase());
             usuarioDTO.setNombreUsuario(nombreUsuario.trim().toLowerCase());
-            usuarioDTO.setContrasenha(contrasenha);
+            usuarioDTO.setContrasenha(contrasenhaHasheada);
             usuarioDTO.setFechaHoraCreacion(LocalDateTime.now());
             usuarioDTO.setTipoUsuario(tipoUsuario);
             usuarioDTO.setActivo(activo);
@@ -160,6 +165,10 @@ public class UsuariosBO {
                 return null;
             }
 
+            //Hasheamos la contraseña
+            String contrasenhaHasheada = BCrypt.hashpw(contrasenha,
+                    BCrypt.gensalt(12));
+
             UsuariosDTO usuarioDTO = new UsuariosDTO();
             usuarioDTO.setUsuarioId(usuarioId);
             usuarioDTO.setNombre(nombre.trim());
@@ -168,7 +177,7 @@ public class UsuariosBO {
             usuarioDTO.setTelefono(telefono);
             usuarioDTO.setCorreo(correo.trim().toLowerCase());
             usuarioDTO.setNombreUsuario(nombreUsuario.trim().toLowerCase());
-            usuarioDTO.setContrasenha(contrasenha);
+            usuarioDTO.setContrasenha(contrasenhaHasheada);
             usuarioDTO.setTipoUsuario(tipoUsuario);
             usuarioDTO.setActivo(activo);
 
@@ -295,26 +304,40 @@ public class UsuariosBO {
                 return false;
             }
 
-            // Validar longitud de nueva contraseña (validación básica)
+            // Validar longitud de nueva contraseña
             if (contrasenhaNueva.length() < 8) {
                 System.err.println("Error: La nueva contraseña debe tener al menos 8 caracteres");
                 return false;
             }
 
-            ResultadoSP resultado = this.usuarioDAO.cambiarContrasenha(
-                    usuarioId,
-                    contrasenhaActual,
-                    contrasenhaNueva
-            );
+            // OBTENER EL USUARIO PARA VERIFICAR LA CONTRASEÑA ACTUAL
+            UsuariosDTO usuario = this.usuarioDAO.obtenerPorId(usuarioId);
 
-            // Mostrar mensaje del SP
-            if (!resultado.esExitoso()) {
-                System.err.println("Error: " + resultado.getMensaje());
-            } else {
-                System.out.println("Éxito: " + resultado.getMensaje());
+            if (usuario == null) {
+                System.err.println("Error: Usuario no encontrado");
+                return false;
             }
 
-            return resultado.esExitoso();
+            // VERIFICAR CONTRASEÑA ACTUAL CON BCRYPT
+            if (!BCrypt.checkpw(contrasenhaActual, usuario.getContrasenha())) {
+                System.err.println("Error: La contraseña actual es incorrecta");
+                return false;
+            }
+
+            // HASHEAR LA NUEVA CONTRASEÑA
+            String nuevaHasheada = BCrypt.hashpw(contrasenhaNueva, BCrypt.gensalt(12));
+
+            // ACTUALIZAR EN LA BD (ya no usamos el SP de cambiar contraseña)
+            usuario.setContrasenha(nuevaHasheada);
+            Integer resultado = this.usuarioDAO.modificar(usuario);
+
+            if (resultado != null && resultado > 0) {
+                System.out.println("Éxito: Contraseña actualizada correctamente");
+                return true;
+            } else {
+                System.err.println("Error: No se pudo actualizar la contraseña");
+                return false;
+            }
 
         } catch (Exception e) {
             System.err.println("Error al cambiar contraseña: " + e.getMessage());
@@ -337,11 +360,22 @@ public class UsuariosBO {
                 return null;
             }
 
-            // Usar el método del DAO que llama al stored procedure
-            return this.usuarioDAO.autenticar(
-                    nombreUsuario.trim(),
-                    contrasenha
+            // OBTENER USUARIO POR NOMBRE O CORREO (sin validar contraseña en el SP)
+            UsuariosDTO usuario = this.usuarioDAO.obtenerPorNombreOCorreo(
+                    nombreUsuario.trim()
             );
+
+            // Si no existe el usuario o está inactivo
+            if (usuario == null || !usuario.getActivo()) {
+                return null;
+            }
+
+            // VERIFICAR CONTRASEÑA CON BCRYPT
+            if (BCrypt.checkpw(contrasenha, usuario.getContrasenha())) {
+                return usuario;
+            } else {
+                return null;
+            }
 
         } catch (Exception e) {
             System.err.println("Error al autenticar usuario: " + e.getMessage());
