@@ -230,7 +230,7 @@
         </asp:Panel>
     </div>
 
-    <script>
+    <%--<script>
         function animateNumber(elementId, start, end, duration, prefix = "", decimals = 0) {
             const element = document.getElementById(elementId);
             if (!element) return;
@@ -260,9 +260,9 @@
         // Animación principal al actualizar estadísticas
         function animarDashboard(total, monto, promedio) {
             animateNumber("lblTotalVentas", 0, total, 600, "", 0);
-            animateNumber("lblMontoTotal", 0, monto * 100, 700, "S/ ", 2);
-            animateNumber("lblPromedio", 0, promedio * 100, 700, "S/ ", 2);
+            animateNumber("lblMontoTotal", 0, monto * 100, 400, "S/ ", 2);
+            animateNumber("lblPromedio", 0, promedio * 100, 400, "S/ ", 2);
         }
-    </script>
+    </script>--%>
 
 </asp:Content>
