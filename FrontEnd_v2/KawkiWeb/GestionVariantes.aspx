@@ -139,6 +139,39 @@
         background: #0056b3;
     }
 
+    /* Botón Abastecimiento */
+    .btn-abastecimiento {
+        background: #ff9800;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.3s;
+        margin-right: 5px;
+        margin-bottom: 3px;
+        font-weight: 500;
+    }
+    
+    .btn-abastecimiento:hover {
+        background: #f57c00;
+        box-shadow: 0 2px 6px rgba(255, 152, 0, 0.4);
+        transform: translateY(-1px);
+    }
+    
+    .btn-abastecimiento:active {
+        transform: translateY(0);
+    }
+    
+    /* Para que se vea mejor en dispositivos pequeños */
+    @media (max-width: 768px) {
+        .btn-abastecimiento {
+            padding: 4px 8px;
+            font-size: 11px;
+        }
+    }
+
     </style>
 </asp:Content>
 
@@ -392,6 +425,87 @@
             </div>
         </div>
 
+    <div id="modalAbastecimiento" class="modal-kawki">
+        <div class="modal-content-kawki">
+            <div class="modal-header-kawki">
+                <h5><i class="fas fa-plus-circle me-2"></i>Abastecimiento de Stock</h5>
+            </div>
+
+            <asp:HiddenField ID="hfVarianteIdAbast" runat="server" />
+
+            <!-- Información del Producto -->
+            <div class="alert alert-info mb-3">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Variante:</strong> 
+                <span id="lblVarianteAbast" style="font-weight: bold;"></span>
+            </div>
+
+            <!-- Stock Actual -->
+            <div class="mb-3" style="background: #f0f8ff; padding: 12px; border-radius: 6px; border-left: 4px solid #2196F3;">
+                <label class="form-label" style="font-weight: 600; margin-bottom: 5px;">Stock Actual</label>
+                <div style="font-size: 24px; color: #2196F3; font-weight: bold;">
+                    <span id="lblStockActualAbast">0</span> unidades
+                </div>
+            </div>
+
+            <!-- Tipo de Movimiento -->
+            <div class="mb-3">
+                <label class="form-label">Tipo de Movimiento *</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button type="button" class="btn-tipo-mov" data-tipo="INGRESO" onclick="seleccionarTipoMovimiento(this, 'INGRESO')" style="border: 2px solid #4caf50; background: white; color: #4caf50; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                        <i class="fas fa-arrow-up"></i> INGRESO
+                    </button>
+                    <button type="button" class="btn-tipo-mov" data-tipo="AJUSTE" onclick="seleccionarTipoMovimiento(this, 'AJUSTE')" style="border: 2px solid #ff9800; background: white; color: #ff9800; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                        <i class="fas fa-sync-alt"></i> AJUSTE
+                    </button>
+                </div>
+                <input type="hidden" id="hdnTipoMovimiento" name="hdnTipoMovimiento" value="" />
+                <asp:Label ID="lblErrorTipoMov" runat="server" CssClass="text-danger small d-block mt-1" />
+            </div>
+
+            <!-- Nuevo Stock (solo para AJUSTE) -->
+            <div class="mb-3" id="divNuevoStock" style="display: none;">
+                <label class="form-label">Nuevo Stock (AJUSTE) *</label>
+                <div style="display: flex; gap: 8px;">
+                    <asp:TextBox ID="txtNuevoStock" runat="server" CssClass="form-control" 
+                        TextMode="Number" placeholder="Ingrese el nuevo valor" min="0" />
+                    <div style="display: flex; align-items: center; background: #fff3cd; padding: 0 12px; border-radius: 6px; font-size: 12px; color: #856404; white-space: nowrap;">
+                        Cambio: <span id="lblCambioStock" style="font-weight: bold; margin-left: 5px;">0</span>
+                    </div>
+                </div>
+                <asp:Label ID="lblErrorNuevoStock" runat="server" CssClass="text-danger small d-block mt-1" />
+            </div>
+
+            <!-- Cantidad (solo para INGRESO) -->
+            <div class="mb-3" id="divCantidad" style="display: none;">
+                <label class="form-label">Cantidad a Ingresar *</label>
+                <asp:TextBox ID="txtCantidadIngreso" runat="server" CssClass="form-control" 
+                    TextMode="Number" placeholder="Ingrese la cantidad" min="1" />
+                <asp:Label ID="lblErrorCantidad" runat="server" CssClass="text-danger small d-block mt-1" />
+            </div>
+
+            <!-- Descripción -->
+            <div class="mb-3">
+                <label class="form-label" id="lblDescripcionLabel">Descripción <span id="spanDescripcionObligatoria" style="color: red;"></span></label>
+                <asp:TextBox ID="txtDescripcionAbast" runat="server" CssClass="form-control" 
+                    TextMode="MultiLine" Rows="3" placeholder="Ingrese los detalles del movimiento..." />
+                <small class="text-muted" id="pequenaDescripcion">Opcional para INGRESO. Obligatorio para AJUSTE.</small>
+                <asp:Label ID="lblErrorDescripcion" runat="server" CssClass="text-danger small d-block mt-1" />
+            </div>
+
+            <asp:Label ID="lblMensajeAbast" runat="server" CssClass="d-block mb-3" />
+
+            <div class="text-end">
+                <button type="button" class="btn-kawki-outline me-2" onclick="cerrarModalAbastecimiento()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <asp:Button ID="btnGuardarAbast" runat="server" CssClass="btn-kawki-primary"
+                    Text="Registrar Abastecimiento" OnClick="btnGuardarAbast_Click" 
+                    OnClientClick="return validarFormularioAbastecimiento();" />
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script>
         function abrirModalRegistro() {
@@ -401,7 +515,7 @@
             document.getElementById("modalVariante").classList.add("show");
         }
 
-        // FUNCIÓN 2: Para mantener el modal abierto con errores (NO recarga nada)
+        // Para mantener el modal abierto con errores (NO recarga nada)
         function MantenerModal() {
             document.getElementById("modalVariante").style.display = "flex";
             document.getElementById("modalVariante").classList.add("show");
@@ -468,7 +582,7 @@
             document.getElementById("hdnDisponible").value = valor;
         }
 
-        // FUNCIÓN 1: Para abrir el modal la primera vez (carga datos de BD)
+        // Para abrir el modal la primera vez (carga datos de BD)
         function abrirModalModificaciones(varianteId, colorNombre, tallaNombre, tallaId, urlImagen, stock, stockMinimo) {
             // Limpiar SOLO errores, mantener datos
             document.getElementById('<%= lblMensajeModificaciones.ClientID %>').innerText = '';
@@ -588,6 +702,157 @@
                 '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
             document.body.appendChild(mensajeDiv);
             setTimeout(function () { mensajeDiv.remove(); }, 5000);
+        }
+
+        function abrirModalAbastecimiento(varianteId, varianteInfo, stockActual) {
+            // Limpiar formulario
+            limpiarFormularioAbastecimiento();
+
+            // Llenar datos
+            document.getElementById("<%= hfVarianteIdAbast.ClientID %>").value = varianteId;
+            document.getElementById("lblVarianteAbast").textContent = varianteInfo;
+            document.getElementById("lblStockActualAbast").textContent = stockActual;
+            document.getElementById("lblStockActualAbast").dataset.stockActual = stockActual;
+
+            // Mostrar modal
+            document.getElementById("modalAbastecimiento").style.display = "flex";
+            document.getElementById("modalAbastecimiento").classList.add("show");
+        }
+
+        function seleccionarTipoMovimiento(btn, tipo) {
+            // Marcar botón activo
+            document.querySelectorAll(".btn-tipo-mov").forEach(b => {
+                b.style.background = "white";
+                b.style.color = b.dataset.tipo === "INGRESO" ? "#4caf50" : "#ff9800";
+            });
+            btn.style.background = btn.dataset.tipo === "INGRESO" ? "#4caf50" : "#ff9800";
+            btn.style.color = "white";
+
+            // Guardar tipo seleccionado
+            document.getElementById("hdnTipoMovimiento").value = tipo;
+
+            // Mostrar/ocultar campos según el tipo
+            if (tipo === "INGRESO") {
+                document.getElementById("divCantidad").style.display = "block";
+                document.getElementById("divNuevoStock").style.display = "none";
+                document.getElementById("spanDescripcionObligatoria").textContent = "";
+                document.getElementById("pequenaDescripcion").textContent = "Opcional";
+            } else { // AJUSTE
+                document.getElementById("divCantidad").style.display = "none";
+                document.getElementById("divNuevoStock").style.display = "block";
+                document.getElementById("spanDescripcionObligatoria").textContent = " *";
+                document.getElementById("pequenaDescripcion").textContent = "Obligatorio para explicar el ajuste";
+            }
+
+            // Limpiar errores
+            limpiarErroresAbastecimiento();
+        }
+
+        function calcularCambioStock() {
+            const stockActual = parseInt(document.getElementById("lblStockActualAbast").dataset.stockActual) || 0;
+            const nuevoStock = parseInt(document.getElementById("<%= txtNuevoStock.ClientID %>").value) || 0;
+            const cambio = nuevoStock - stockActual;
+
+            const lblCambio = document.getElementById("lblCambioStock");
+            if (cambio > 0) {
+                lblCambio.style.color = "#4caf50";
+                lblCambio.textContent = "+" + cambio;
+            } else if (cambio < 0) {
+                lblCambio.style.color = "#f44336";
+                lblCambio.textContent = cambio;
+            } else {
+                lblCambio.style.color = "#666";
+                lblCambio.textContent = "0";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const txtNuevoStock = document.getElementById("<%= txtNuevoStock.ClientID %>");
+        if (txtNuevoStock) {
+            txtNuevoStock.addEventListener("input", calcularCambioStock);
+        }
+    });
+
+        function validarFormularioAbastecimiento() {
+            let valido = true;
+            limpiarErroresAbastecimiento();
+
+            // Validar tipo de movimiento
+            const tipoMov = document.getElementById("hdnTipoMovimiento").value;
+            if (!tipoMov) {
+                document.getElementById("<%= lblErrorTipoMov.ClientID %>").textContent = "Debe seleccionar un tipo de movimiento";
+            valido = false;
+        }
+
+        if (tipoMov === "INGRESO") {
+            // Validar cantidad
+            const cantidad = parseInt(document.getElementById("<%= txtCantidadIngreso.ClientID %>").value);
+            if (isNaN(cantidad) || cantidad <= 0) {
+                document.getElementById("<%= lblErrorCantidad.ClientID %>").textContent = "Ingrese una cantidad mayor a 0";
+                valido = false;
+            }
+        } else if (tipoMov === "AJUSTE") {
+            // Validar nuevo stock
+            const nuevoStock = parseInt(document.getElementById("<%= txtNuevoStock.ClientID %>").value);
+            if (isNaN(nuevoStock) || nuevoStock < 0) {
+                document.getElementById("<%= lblErrorNuevoStock.ClientID %>").textContent = "Ingrese un valor válido (>= 0)";
+                valido = false;
+            }
+
+            // Validar descripción (obligatoria para ajuste)
+            const descripcion = document.getElementById("<%= txtDescripcionAbast.ClientID %>").value.trim();
+            if (descripcion === "") {
+                document.getElementById("<%= lblErrorDescripcion.ClientID %>").textContent = "La descripción es obligatoria para ajustes";
+                valido = false;
+            }
+        }
+        
+        if (!valido) {
+            document.getElementById("modalAbastecimiento").classList.add("show");
+        }
+        
+        return valido;
+    }
+
+    function limpiarErroresAbastecimiento() {
+        document.getElementById("<%= lblErrorTipoMov.ClientID %>").textContent = "";
+        document.getElementById("<%= lblErrorCantidad.ClientID %>").textContent = "";
+        document.getElementById("<%= lblErrorNuevoStock.ClientID %>").textContent = "";
+        document.getElementById("<%= lblErrorDescripcion.ClientID %>").textContent = "";
+        document.getElementById("<%= lblMensajeAbast.ClientID %>").textContent = "";
+    }
+
+    function limpiarFormularioAbastecimiento() {
+        document.getElementById("<%= hfVarianteIdAbast.ClientID %>").value = "";
+        document.getElementById("lblVarianteAbast").textContent = "";
+        document.getElementById("lblStockActualAbast").textContent = "0";
+        document.getElementById("hdnTipoMovimiento").value = "";
+        document.getElementById("<%= txtNuevoStock.ClientID %>").value = "";
+        document.getElementById("<%= txtCantidadIngreso.ClientID %>").value = "";
+            document.getElementById("<%= txtDescripcionAbast.ClientID %>").value = "";
+            document.getElementById("lblCambioStock").textContent = "0";
+
+            // Ocultar campos específicos
+            document.getElementById("divCantidad").style.display = "none";
+            document.getElementById("divNuevoStock").style.display = "none";
+
+            // Limpiar botones
+            document.querySelectorAll(".btn-tipo-mov").forEach(b => {
+                b.style.background = "white";
+                b.style.color = b.dataset.tipo === "INGRESO" ? "#4caf50" : "#ff9800";
+            });
+
+            limpiarErroresAbastecimiento();
+        }
+
+        function mantenerModalAbastecimientoAbierto() {
+            document.getElementById("modalAbastecimiento").classList.add("show");
+        }
+
+        function cerrarModalAbastecimiento() {
+            document.getElementById("modalAbastecimiento").style.display = "none";
+            document.getElementById("modalAbastecimiento").classList.remove("show");
+            limpiarFormularioAbastecimiento();
         }
 
     </script>
