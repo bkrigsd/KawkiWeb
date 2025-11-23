@@ -753,8 +753,21 @@ namespace KawkiWeb
                     nombre = ddlCanal.SelectedItem.Text
                 };
 
-                // Descuento aún no se usa
+                
+                // CREAR DESCUENTO SI SELECCIONÓ UNO
                 KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento = null;
+
+                if (!string.IsNullOrEmpty(ddlDescuentos.SelectedValue))
+                {
+                    int idDescuento = int.Parse(ddlDescuentos.SelectedValue);
+
+                    descuento = new KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO
+                    {
+                        descuento_id = idDescuento,
+                        descuento_idSpecified = true
+                    };
+                }
+
 
                 // 4. Insertar venta
                 VentasBO ventasBO = new VentasBO();
@@ -819,7 +832,7 @@ namespace KawkiWeb
                         telef = txtTelefono.Text.Trim();
                     }
 
-                    // 5. Inserción usando tu BO
+                    // 5. Inserción 
                     int comprobanteId = comprobanteBO.InsertarComprobantePago(
                         tipoComprobante,
                         dni,
