@@ -159,9 +159,6 @@ namespace KawkiWeb
             }
         }
 
-
-
-
         #region Métodos de Validación
 
         /// <summary>
@@ -472,7 +469,6 @@ namespace KawkiWeb
                 dt.Columns.Add("Subtotal", typeof(decimal));
             }
 
-            // ⬅️ ESTE ES EL ID CORRECTO AHORA (prod_variante_id)
             int varianteId = Convert.ToInt32(ddlProducto.SelectedValue);
 
             dt.Rows.Add(varianteId, producto, cantidad, precioUnitario, subtotal);
@@ -543,7 +539,7 @@ namespace KawkiWeb
             int idDescuento = int.Parse(ddlDescuentos.SelectedValue);
 
             var cliente = new KawkiWebBusiness.KawkiWebWSDescuentos.DescuentosClient();
-            var d = cliente.obtenerPorIdDescuento(idDescuento); // Ajusta el nombre del método
+            var d = cliente.obtenerPorIdDescuento(idDescuento);
 
             if (d == null) return;
 
@@ -568,7 +564,6 @@ namespace KawkiWeb
 
             lblMensaje.CssClass = "text-info";
 
-            // Si tienes total calculado, actualízalo aquí:
             ActualizarTotales();
         }
 
@@ -758,8 +753,21 @@ namespace KawkiWeb
                     nombre = ddlCanal.SelectedItem.Text
                 };
 
-                // Descuento aún no se usa
+                
+                // CREAR DESCUENTO SI SELECCIONÓ UNO
                 KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento = null;
+
+                if (!string.IsNullOrEmpty(ddlDescuentos.SelectedValue))
+                {
+                    int idDescuento = int.Parse(ddlDescuentos.SelectedValue);
+
+                    descuento = new KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO
+                    {
+                        descuento_id = idDescuento,
+                        descuento_idSpecified = true
+                    };
+                }
+
 
                 // 4. Insertar venta
                 VentasBO ventasBO = new VentasBO();
@@ -770,40 +778,88 @@ namespace KawkiWeb
                     lblMensaje.Text = "No se pudo registrar la venta.";
                     return;
                 }
+                // 5. Registrar comprobante de pago
+                try
+                {
+                    var comprobanteBO = new KawkiWebBusiness.ComprobantesPagoBO();
 
-                // 5. Registrar detalles de venta
+                    string tipo = ddlComprobante.SelectedValue;
+
+                    // 1. Tipo de comprobante
+                    var tipoComprobante = new KawkiWebBusiness.KawkiWebWSComprobantesPago.tiposComprobanteDTO
+                    {
+                        tipo_comprobante_id = (tipo == "factura" ? 2 : 1),
+                        tipo_comprobante_idSpecified = true,
+                        nombre = (tipo == "factura" ? "Factura" : "Boleta")
+                    };
+
+                    // 2. Venta asociada
+                    var ventaDTO = new KawkiWebBusiness.KawkiWebWSComprobantesPago.ventasDTO
+                    {
+                        venta_id = ventaId,
+                        venta_idSpecified = true
+                    };
+
+                    // 3. Método de pago
+                    var metodoPago = new KawkiWebBusiness.KawkiWebWSComprobantesPago.metodosPagoDTO
+                    {
+                        metodo_pago_id = Convert.ToInt32(ddlMetodoPago.SelectedValue),
+                        metodo_pago_idSpecified = true
+                    };
+
+                    // 4. Datos del cliente (según tipo)
+                    string dni = null;
+                    string nombre = null;
+                    string ruc = null;
+                    string razon = null;
+                    string direccionFiscal = null;
+                    string telef = null;
+
+                    if (tipo == "boleta-simple")
+                    {
+                        nombre = txtNombreCliente.Text.Trim();
+                    }
+                    else if (tipo == "boleta-dni")
+                    {
+                        nombre = txtNombreCliente.Text.Trim();
+                        dni = txtDNI.Text.Trim();
+                    }
+                    else // factura
+                    {
+                        razon = txtRazonSocial.Text.Trim();
+                        ruc = txtRUC.Text.Trim();
+                        direccionFiscal = txtDireccionFiscal.Text.Trim();
+                        telef = txtTelefono.Text.Trim();
+                    }
+
+                    // 5. Inserción 
+                    int comprobanteId = comprobanteBO.InsertarComprobantePago(
+                        tipoComprobante,
+                        dni,
+                        nombre,
+                        ruc,
+                        razon,
+                        direccionFiscal,
+                        telef,
+                        (double)total,
+                        ventaDTO,
+                        metodoPago
+                    );
+
+                    if (comprobanteId <= 0)
+                    {
+                        lblMensaje.Text = "La venta se registró, pero el comprobante NO.";
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.Text = "Error registrando comprobante: " + ex.Message;
+                    return;
+                }
+
+                // 6. Registrar detalles de venta
                 DetalleVentasBO detalleBO = new DetalleVentasBO();
-
-
-                //foreach (DataRow row in DetalleVentas.Rows)
-                //{
-                //    try
-                //    {
-                //        string pid = row["ProductoId"]?.ToString();
-                //        string cant = row["Cantidad"]?.ToString();
-                //        string prec = row["PrecioUnitario"]?.ToString();
-                //        string subt = row["Subtotal"]?.ToString();
-
-                //        Debug.WriteLine("----------------------------------------");
-                //        Debug.WriteLine("ProductoId: " + (pid == null ? "[null]" : "'" + pid + "'"));
-                //        Debug.WriteLine("Cantidad: " + (cant == null ? "[null]" : "'" + cant + "'"));
-                //        Debug.WriteLine("Precio: " + (prec == null ? "[null]" : "'" + prec + "'"));
-                //        Debug.WriteLine("Subtotal: " + (subt == null ? "[null]" : "'" + subt + "'"));
-                //        Debug.WriteLine("----------------------------------------");
-
-                //        // Forzamos mostrar valores REALES
-                //        lblMensaje.Text = $"Debug → ProductoId: '{pid}', Cantidad: '{cant}', Precio: '{prec}', Subtotal: '{subt}'";
-                //        lblMensaje.CssClass = "text-warning mb-2 d-block";
-                //        return; // <-- detiene el proceso después de mostrar el mensaje
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        lblMensaje.Text = "Dato inválido en el detalle ➝ " + ex.Message;
-                //        lblMensaje.CssClass = "text-danger mb-2 d-block";
-                //        return;
-                //    }
-                //}
-
 
                 foreach (DataRow row in DetalleVentas.Rows)
                 {
