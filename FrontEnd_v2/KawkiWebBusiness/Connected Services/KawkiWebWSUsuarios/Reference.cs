@@ -16,39 +16,30 @@ namespace KawkiWebBusiness.KawkiWebWSUsuarios {
     public interface Usuarios {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/verificarUnicidadRequest" +
-            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/verificarUnicidadRespons" +
-            "e")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuari" +
+            "oRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuari" +
+            "oResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse verificarUnicidad(KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest request);
+        KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse cambiarContrasenhaUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/verificarUnicidadRequest" +
-            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/verificarUnicidadRespons" +
-            "e")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse> verificarUnicidadAsync(KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuari" +
+            "oRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuari" +
+            "oResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse> cambiarContrasenhaUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRequest" +
-            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRespons" +
-            "e")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioReque" +
+            "st", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioRespo" +
+            "nse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse autenticarUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest request);
+        KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse obtenerPorIdUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRequest" +
-            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRespons" +
-            "e")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse> autenticarUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse insertarUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse> insertarUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioReque" +
+            "st", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioRespo" +
+            "nse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse> obtenerPorIdUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/listarTodosUsuarioReques" +
@@ -75,79 +66,83 @@ namespace KawkiWebBusiness.KawkiWebWSUsuarios {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.modificarUsuarioResponse> modificarUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.modificarUsuarioRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioReque" +
-            "st", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioRespo" +
-            "nse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse obtenerPorIdUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest request);
+        KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse insertarUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioReque" +
-            "st", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/obtenerPorIdUsuarioRespo" +
-            "nse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse> obtenerPorIdUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/insertarUsuarioResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse> insertarUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuari" +
-            "oRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuari" +
-            "oResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRequest" +
+            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRespons" +
+            "e")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse cambiarContrasenhaUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest request);
+        KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse autenticarUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuari" +
-            "oRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/cambiarContrasenhaUsuari" +
-            "oResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse> cambiarContrasenhaUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRequest" +
+            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/autenticarUsuarioRespons" +
+            "e")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse> autenticarUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/verificarUnicidadRequest" +
+            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/verificarUnicidadRespons" +
+            "e")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse verificarUnicidad(KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/verificarUnicidadRequest" +
+            "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Usuarios/verificarUnicidadRespons" +
+            "e")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse> verificarUnicidadAsync(KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="verificarUnicidad", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class verificarUnicidadRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="cambiarContrasenhaUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class cambiarContrasenhaUsuarioRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string correo;
+        public int usuarioId;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string nombreUsuario;
+        public string contrasenhaActual;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string dni;
+        public string contrasenhaNueva;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int usuarioIdExcluir;
-        
-        public verificarUnicidadRequest() {
+        public cambiarContrasenhaUsuarioRequest() {
         }
         
-        public verificarUnicidadRequest(string correo, string nombreUsuario, string dni, int usuarioIdExcluir) {
-            this.correo = correo;
-            this.nombreUsuario = nombreUsuario;
-            this.dni = dni;
-            this.usuarioIdExcluir = usuarioIdExcluir;
+        public cambiarContrasenhaUsuarioRequest(int usuarioId, string contrasenhaActual, string contrasenhaNueva) {
+            this.usuarioId = usuarioId;
+            this.contrasenhaActual = contrasenhaActual;
+            this.contrasenhaNueva = contrasenhaNueva;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="verificarUnicidadResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class verificarUnicidadResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="cambiarContrasenhaUsuarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class cambiarContrasenhaUsuarioResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=true)]
-        public System.Nullable<bool>[] @return;
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool @return;
         
-        public verificarUnicidadResponse() {
+        public cambiarContrasenhaUsuarioResponse() {
         }
         
-        public verificarUnicidadResponse(System.Nullable<bool>[] @return) {
+        public cambiarContrasenhaUsuarioResponse(bool @return) {
             this.@return = @return;
         }
     }
@@ -415,116 +410,35 @@ namespace KawkiWebBusiness.KawkiWebWSUsuarios {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="autenticarUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class autenticarUsuarioRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdUsuarioRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string nombreUsuario;
+        public int usuarioId;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string contrasenha;
-        
-        public autenticarUsuarioRequest() {
+        public obtenerPorIdUsuarioRequest() {
         }
         
-        public autenticarUsuarioRequest(string nombreUsuario, string contrasenha) {
-            this.nombreUsuario = nombreUsuario;
-            this.contrasenha = contrasenha;
+        public obtenerPorIdUsuarioRequest(int usuarioId) {
+            this.usuarioId = usuarioId;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="autenticarUsuarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class autenticarUsuarioResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdUsuarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdUsuarioResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO @return;
         
-        public autenticarUsuarioResponse() {
+        public obtenerPorIdUsuarioResponse() {
         }
         
-        public autenticarUsuarioResponse(KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarUsuarioRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string nombre;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string apePaterno;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string dni;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string telefono;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string correo;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string nombreUsuario;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=6)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string contrasenha;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=7)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO tipoUsuario;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=8)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool activo;
-        
-        public insertarUsuarioRequest() {
-        }
-        
-        public insertarUsuarioRequest(string nombre, string apePaterno, string dni, string telefono, string correo, string nombreUsuario, string contrasenha, KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO tipoUsuario, bool activo) {
-            this.nombre = nombre;
-            this.apePaterno = apePaterno;
-            this.dni = dni;
-            this.telefono = telefono;
-            this.correo = correo;
-            this.nombreUsuario = nombreUsuario;
-            this.contrasenha = contrasenha;
-            this.tipoUsuario = tipoUsuario;
-            this.activo = activo;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarUsuarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarUsuarioResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public insertarUsuarioResponse() {
-        }
-        
-        public insertarUsuarioResponse(int @return) {
+        public obtenerPorIdUsuarioResponse(KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO @return) {
             this.@return = @return;
         }
     }
@@ -641,35 +555,75 @@ namespace KawkiWebBusiness.KawkiWebWSUsuarios {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdUsuarioRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarUsuarioRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int usuarioId;
+        public string nombre;
         
-        public obtenerPorIdUsuarioRequest() {
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string apePaterno;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string dni;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string telefono;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string correo;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string nombreUsuario;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string contrasenha;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=7)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO tipoUsuario;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool activo;
+        
+        public insertarUsuarioRequest() {
         }
         
-        public obtenerPorIdUsuarioRequest(int usuarioId) {
-            this.usuarioId = usuarioId;
+        public insertarUsuarioRequest(string nombre, string apePaterno, string dni, string telefono, string correo, string nombreUsuario, string contrasenha, KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO tipoUsuario, bool activo) {
+            this.nombre = nombre;
+            this.apePaterno = apePaterno;
+            this.dni = dni;
+            this.telefono = telefono;
+            this.correo = correo;
+            this.nombreUsuario = nombreUsuario;
+            this.contrasenha = contrasenha;
+            this.tipoUsuario = tipoUsuario;
+            this.activo = activo;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdUsuarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdUsuarioResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarUsuarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarUsuarioResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO @return;
+        public int @return;
         
-        public obtenerPorIdUsuarioResponse() {
+        public insertarUsuarioResponse() {
         }
         
-        public obtenerPorIdUsuarioResponse(KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO @return) {
+        public insertarUsuarioResponse(int @return) {
             this.@return = @return;
         }
     }
@@ -677,45 +631,91 @@ namespace KawkiWebBusiness.KawkiWebWSUsuarios {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="cambiarContrasenhaUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class cambiarContrasenhaUsuarioRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="autenticarUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class autenticarUsuarioRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int usuarioId;
+        public string nombreUsuario;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string contrasenhaActual;
+        public string contrasenha;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string contrasenhaNueva;
-        
-        public cambiarContrasenhaUsuarioRequest() {
+        public autenticarUsuarioRequest() {
         }
         
-        public cambiarContrasenhaUsuarioRequest(int usuarioId, string contrasenhaActual, string contrasenhaNueva) {
-            this.usuarioId = usuarioId;
-            this.contrasenhaActual = contrasenhaActual;
-            this.contrasenhaNueva = contrasenhaNueva;
+        public autenticarUsuarioRequest(string nombreUsuario, string contrasenha) {
+            this.nombreUsuario = nombreUsuario;
+            this.contrasenha = contrasenha;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="cambiarContrasenhaUsuarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class cambiarContrasenhaUsuarioResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="autenticarUsuarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class autenticarUsuarioResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool @return;
+        public KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO @return;
         
-        public cambiarContrasenhaUsuarioResponse() {
+        public autenticarUsuarioResponse() {
         }
         
-        public cambiarContrasenhaUsuarioResponse(bool @return) {
+        public autenticarUsuarioResponse(KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="verificarUnicidad", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class verificarUnicidadRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string correo;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string nombreUsuario;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string dni;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int usuarioIdExcluir;
+        
+        public verificarUnicidadRequest() {
+        }
+        
+        public verificarUnicidadRequest(string correo, string nombreUsuario, string dni, int usuarioIdExcluir) {
+            this.correo = correo;
+            this.nombreUsuario = nombreUsuario;
+            this.dni = dni;
+            this.usuarioIdExcluir = usuarioIdExcluir;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="verificarUnicidadResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class verificarUnicidadResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=true)]
+        public System.Nullable<bool>[] @return;
+        
+        public verificarUnicidadResponse() {
+        }
+        
+        public verificarUnicidadResponse(System.Nullable<bool>[] @return) {
             this.@return = @return;
         }
     }
@@ -748,96 +748,53 @@ namespace KawkiWebBusiness.KawkiWebWSUsuarios {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.verificarUnicidad(KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest request) {
-            return base.Channel.verificarUnicidad(request);
+        KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.cambiarContrasenhaUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest request) {
+            return base.Channel.cambiarContrasenhaUsuario(request);
         }
         
-        public System.Nullable<bool>[] verificarUnicidad(string correo, string nombreUsuario, string dni, int usuarioIdExcluir) {
-            KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest();
-            inValue.correo = correo;
-            inValue.nombreUsuario = nombreUsuario;
-            inValue.dni = dni;
-            inValue.usuarioIdExcluir = usuarioIdExcluir;
-            KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse retVal = ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).verificarUnicidad(inValue);
+        public bool cambiarContrasenhaUsuario(int usuarioId, string contrasenhaActual, string contrasenhaNueva) {
+            KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest();
+            inValue.usuarioId = usuarioId;
+            inValue.contrasenhaActual = contrasenhaActual;
+            inValue.contrasenhaNueva = contrasenhaNueva;
+            KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).cambiarContrasenhaUsuario(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse> KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.verificarUnicidadAsync(KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest request) {
-            return base.Channel.verificarUnicidadAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse> KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.cambiarContrasenhaUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest request) {
+            return base.Channel.cambiarContrasenhaUsuarioAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse> verificarUnicidadAsync(string correo, string nombreUsuario, string dni, int usuarioIdExcluir) {
-            KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest();
-            inValue.correo = correo;
-            inValue.nombreUsuario = nombreUsuario;
-            inValue.dni = dni;
-            inValue.usuarioIdExcluir = usuarioIdExcluir;
-            return ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).verificarUnicidadAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse> cambiarContrasenhaUsuarioAsync(int usuarioId, string contrasenhaActual, string contrasenhaNueva) {
+            KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest();
+            inValue.usuarioId = usuarioId;
+            inValue.contrasenhaActual = contrasenhaActual;
+            inValue.contrasenhaNueva = contrasenhaNueva;
+            return ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).cambiarContrasenhaUsuarioAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.autenticarUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest request) {
-            return base.Channel.autenticarUsuario(request);
+        KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.obtenerPorIdUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest request) {
+            return base.Channel.obtenerPorIdUsuario(request);
         }
         
-        public KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO autenticarUsuario(string nombreUsuario, string contrasenha) {
-            KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest();
-            inValue.nombreUsuario = nombreUsuario;
-            inValue.contrasenha = contrasenha;
-            KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).autenticarUsuario(inValue);
+        public KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO obtenerPorIdUsuario(int usuarioId) {
+            KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest();
+            inValue.usuarioId = usuarioId;
+            KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).obtenerPorIdUsuario(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse> KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.autenticarUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest request) {
-            return base.Channel.autenticarUsuarioAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse> KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.obtenerPorIdUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest request) {
+            return base.Channel.obtenerPorIdUsuarioAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse> autenticarUsuarioAsync(string nombreUsuario, string contrasenha) {
-            KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest();
-            inValue.nombreUsuario = nombreUsuario;
-            inValue.contrasenha = contrasenha;
-            return ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).autenticarUsuarioAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.insertarUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest request) {
-            return base.Channel.insertarUsuario(request);
-        }
-        
-        public int insertarUsuario(string nombre, string apePaterno, string dni, string telefono, string correo, string nombreUsuario, string contrasenha, KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO tipoUsuario, bool activo) {
-            KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest();
-            inValue.nombre = nombre;
-            inValue.apePaterno = apePaterno;
-            inValue.dni = dni;
-            inValue.telefono = telefono;
-            inValue.correo = correo;
-            inValue.nombreUsuario = nombreUsuario;
-            inValue.contrasenha = contrasenha;
-            inValue.tipoUsuario = tipoUsuario;
-            inValue.activo = activo;
-            KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).insertarUsuario(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse> KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.insertarUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest request) {
-            return base.Channel.insertarUsuarioAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse> insertarUsuarioAsync(string nombre, string apePaterno, string dni, string telefono, string correo, string nombreUsuario, string contrasenha, KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO tipoUsuario, bool activo) {
-            KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest();
-            inValue.nombre = nombre;
-            inValue.apePaterno = apePaterno;
-            inValue.dni = dni;
-            inValue.telefono = telefono;
-            inValue.correo = correo;
-            inValue.nombreUsuario = nombreUsuario;
-            inValue.contrasenha = contrasenha;
-            inValue.tipoUsuario = tipoUsuario;
-            inValue.activo = activo;
-            return ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).insertarUsuarioAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse> obtenerPorIdUsuarioAsync(int usuarioId) {
+            KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest();
+            inValue.usuarioId = usuarioId;
+            return ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).obtenerPorIdUsuarioAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -903,53 +860,96 @@ namespace KawkiWebBusiness.KawkiWebWSUsuarios {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.obtenerPorIdUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest request) {
-            return base.Channel.obtenerPorIdUsuario(request);
+        KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.insertarUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest request) {
+            return base.Channel.insertarUsuario(request);
         }
         
-        public KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO obtenerPorIdUsuario(int usuarioId) {
-            KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest();
-            inValue.usuarioId = usuarioId;
-            KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).obtenerPorIdUsuario(inValue);
+        public int insertarUsuario(string nombre, string apePaterno, string dni, string telefono, string correo, string nombreUsuario, string contrasenha, KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO tipoUsuario, bool activo) {
+            KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest();
+            inValue.nombre = nombre;
+            inValue.apePaterno = apePaterno;
+            inValue.dni = dni;
+            inValue.telefono = telefono;
+            inValue.correo = correo;
+            inValue.nombreUsuario = nombreUsuario;
+            inValue.contrasenha = contrasenha;
+            inValue.tipoUsuario = tipoUsuario;
+            inValue.activo = activo;
+            KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).insertarUsuario(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse> KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.obtenerPorIdUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest request) {
-            return base.Channel.obtenerPorIdUsuarioAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse> KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.insertarUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest request) {
+            return base.Channel.insertarUsuarioAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioResponse> obtenerPorIdUsuarioAsync(int usuarioId) {
-            KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.obtenerPorIdUsuarioRequest();
-            inValue.usuarioId = usuarioId;
-            return ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).obtenerPorIdUsuarioAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioResponse> insertarUsuarioAsync(string nombre, string apePaterno, string dni, string telefono, string correo, string nombreUsuario, string contrasenha, KawkiWebBusiness.KawkiWebWSUsuarios.tiposUsuarioDTO tipoUsuario, bool activo) {
+            KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.insertarUsuarioRequest();
+            inValue.nombre = nombre;
+            inValue.apePaterno = apePaterno;
+            inValue.dni = dni;
+            inValue.telefono = telefono;
+            inValue.correo = correo;
+            inValue.nombreUsuario = nombreUsuario;
+            inValue.contrasenha = contrasenha;
+            inValue.tipoUsuario = tipoUsuario;
+            inValue.activo = activo;
+            return ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).insertarUsuarioAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.cambiarContrasenhaUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest request) {
-            return base.Channel.cambiarContrasenhaUsuario(request);
+        KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.autenticarUsuario(KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest request) {
+            return base.Channel.autenticarUsuario(request);
         }
         
-        public bool cambiarContrasenhaUsuario(int usuarioId, string contrasenhaActual, string contrasenhaNueva) {
-            KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest();
-            inValue.usuarioId = usuarioId;
-            inValue.contrasenhaActual = contrasenhaActual;
-            inValue.contrasenhaNueva = contrasenhaNueva;
-            KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).cambiarContrasenhaUsuario(inValue);
+        public KawkiWebBusiness.KawkiWebWSUsuarios.usuariosDTO autenticarUsuario(string nombreUsuario, string contrasenha) {
+            KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest();
+            inValue.nombreUsuario = nombreUsuario;
+            inValue.contrasenha = contrasenha;
+            KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).autenticarUsuario(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse> KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.cambiarContrasenhaUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest request) {
-            return base.Channel.cambiarContrasenhaUsuarioAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse> KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.autenticarUsuarioAsync(KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest request) {
+            return base.Channel.autenticarUsuarioAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioResponse> cambiarContrasenhaUsuarioAsync(int usuarioId, string contrasenhaActual, string contrasenhaNueva) {
-            KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.cambiarContrasenhaUsuarioRequest();
-            inValue.usuarioId = usuarioId;
-            inValue.contrasenhaActual = contrasenhaActual;
-            inValue.contrasenhaNueva = contrasenhaNueva;
-            return ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).cambiarContrasenhaUsuarioAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioResponse> autenticarUsuarioAsync(string nombreUsuario, string contrasenha) {
+            KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.autenticarUsuarioRequest();
+            inValue.nombreUsuario = nombreUsuario;
+            inValue.contrasenha = contrasenha;
+            return ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).autenticarUsuarioAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.verificarUnicidad(KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest request) {
+            return base.Channel.verificarUnicidad(request);
+        }
+        
+        public System.Nullable<bool>[] verificarUnicidad(string correo, string nombreUsuario, string dni, int usuarioIdExcluir) {
+            KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest();
+            inValue.correo = correo;
+            inValue.nombreUsuario = nombreUsuario;
+            inValue.dni = dni;
+            inValue.usuarioIdExcluir = usuarioIdExcluir;
+            KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse retVal = ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).verificarUnicidad(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse> KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios.verificarUnicidadAsync(KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest request) {
+            return base.Channel.verificarUnicidadAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadResponse> verificarUnicidadAsync(string correo, string nombreUsuario, string dni, int usuarioIdExcluir) {
+            KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest inValue = new KawkiWebBusiness.KawkiWebWSUsuarios.verificarUnicidadRequest();
+            inValue.correo = correo;
+            inValue.nombreUsuario = nombreUsuario;
+            inValue.dni = dni;
+            inValue.usuarioIdExcluir = usuarioIdExcluir;
+            return ((KawkiWebBusiness.KawkiWebWSUsuarios.Usuarios)(this)).verificarUnicidadAsync(inValue);
         }
     }
 }

@@ -29,19 +29,6 @@ namespace KawkiWebBusiness.KawkiWebWSMovimientosInventario {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorProductoVarianteMovInventarioResponse> listarPorProductoVarianteMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorProductoVarianteMovInventarioRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorTi" +
-            "poMovimientoMovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorTi" +
-            "poMovimientoMovInventarioResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse listarPorTipoMovimientoMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorTi" +
-            "poMovimientoMovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorTi" +
-            "poMovimientoMovInventarioResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse> listarPorTipoMovimientoMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarMovim" +
             "ientosRecientesMovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarMovim" +
             "ientosRecientesMovInventarioResponse")]
@@ -55,30 +42,17 @@ namespace KawkiWebBusiness.KawkiWebWSMovimientosInventario {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarMovimientosRecientesMovInventarioResponse> listarMovimientosRecientesMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarMovimientosRecientesMovInventarioRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorI" +
-            "dMovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorI" +
-            "dMovInventarioResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorTi" +
+            "poMovimientoMovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorTi" +
+            "poMovimientoMovInventarioResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse obtenerPorIdMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest request);
+        KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse listarPorTipoMovimientoMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorI" +
-            "dMovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorI" +
-            "dMovInventarioResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse> obtenerPorIdMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarTodos" +
-            "MovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarTodos" +
-            "MovInventarioResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse listarTodosMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarTodos" +
-            "MovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarTodos" +
-            "MovInventarioResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse> listarTodosMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorTi" +
+            "poMovimientoMovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorTi" +
+            "poMovimientoMovInventarioResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse> listarPorTipoMovimientoMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/modificarMo" +
@@ -105,6 +79,32 @@ namespace KawkiWebBusiness.KawkiWebWSMovimientosInventario {
             "InventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/insertarMov" +
             "InventarioResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.insertarMovInventarioResponse> insertarMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.insertarMovInventarioRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorI" +
+            "dMovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorI" +
+            "dMovInventarioResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse obtenerPorIdMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorI" +
+            "dMovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorI" +
+            "dMovInventarioResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse> obtenerPorIdMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarTodos" +
+            "MovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarTodos" +
+            "MovInventarioResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse listarTodosMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarTodos" +
+            "MovInventarioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarTodos" +
+            "MovInventarioResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse> listarTodosMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorRa" +
@@ -1097,42 +1097,6 @@ namespace KawkiWebBusiness.KawkiWebWSMovimientosInventario {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarPorTipoMovimientoMovInventario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarPorTipoMovimientoMovInventarioRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int tipo_movimiento_id;
-        
-        public listarPorTipoMovimientoMovInventarioRequest() {
-        }
-        
-        public listarPorTipoMovimientoMovInventarioRequest(int tipo_movimiento_id) {
-            this.tipo_movimiento_id = tipo_movimiento_id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarPorTipoMovimientoMovInventarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarPorTipoMovimientoMovInventarioResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] @return;
-        
-        public listarPorTipoMovimientoMovInventarioResponse() {
-        }
-        
-        public listarPorTipoMovimientoMovInventarioResponse(KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="listarMovimientosRecientesMovInventario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class listarMovimientosRecientesMovInventarioRequest {
         
@@ -1169,63 +1133,35 @@ namespace KawkiWebBusiness.KawkiWebWSMovimientosInventario {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdMovInventario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdMovInventarioRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarPorTipoMovimientoMovInventario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarPorTipoMovimientoMovInventarioRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int movInventarioId;
+        public int tipo_movimiento_id;
         
-        public obtenerPorIdMovInventarioRequest() {
+        public listarPorTipoMovimientoMovInventarioRequest() {
         }
         
-        public obtenerPorIdMovInventarioRequest(int movInventarioId) {
-            this.movInventarioId = movInventarioId;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdMovInventarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdMovInventarioResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO @return;
-        
-        public obtenerPorIdMovInventarioResponse() {
-        }
-        
-        public obtenerPorIdMovInventarioResponse(KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO @return) {
-            this.@return = @return;
+        public listarPorTipoMovimientoMovInventarioRequest(int tipo_movimiento_id) {
+            this.tipo_movimiento_id = tipo_movimiento_id;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosMovInventario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosMovInventarioRequest {
-        
-        public listarTodosMovInventarioRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosMovInventarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosMovInventarioResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarPorTipoMovimientoMovInventarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarPorTipoMovimientoMovInventarioResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] @return;
         
-        public listarTodosMovInventarioResponse() {
+        public listarPorTipoMovimientoMovInventarioResponse() {
         }
         
-        public listarTodosMovInventarioResponse(KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] @return) {
+        public listarPorTipoMovimientoMovInventarioResponse(KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] @return) {
             this.@return = @return;
         }
     }
@@ -1343,6 +1279,70 @@ namespace KawkiWebBusiness.KawkiWebWSMovimientosInventario {
         }
         
         public insertarMovInventarioResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdMovInventario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdMovInventarioRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int movInventarioId;
+        
+        public obtenerPorIdMovInventarioRequest() {
+        }
+        
+        public obtenerPorIdMovInventarioRequest(int movInventarioId) {
+            this.movInventarioId = movInventarioId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdMovInventarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdMovInventarioResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO @return;
+        
+        public obtenerPorIdMovInventarioResponse() {
+        }
+        
+        public obtenerPorIdMovInventarioResponse(KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosMovInventario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosMovInventarioRequest {
+        
+        public listarTodosMovInventarioRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosMovInventarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosMovInventarioResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] @return;
+        
+        public listarTodosMovInventarioResponse() {
+        }
+        
+        public listarTodosMovInventarioResponse(KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] @return) {
             this.@return = @return;
         }
     }
@@ -1628,29 +1628,6 @@ namespace KawkiWebBusiness.KawkiWebWSMovimientosInventario {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.listarPorTipoMovimientoMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest request) {
-            return base.Channel.listarPorTipoMovimientoMovInventario(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] listarPorTipoMovimientoMovInventario(int tipo_movimiento_id) {
-            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest();
-            inValue.tipo_movimiento_id = tipo_movimiento_id;
-            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).listarPorTipoMovimientoMovInventario(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse> KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.listarPorTipoMovimientoMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest request) {
-            return base.Channel.listarPorTipoMovimientoMovInventarioAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse> listarPorTipoMovimientoMovInventarioAsync(int tipo_movimiento_id) {
-            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest();
-            inValue.tipo_movimiento_id = tipo_movimiento_id;
-            return ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).listarPorTipoMovimientoMovInventarioAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarMovimientosRecientesMovInventarioResponse KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.listarMovimientosRecientesMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarMovimientosRecientesMovInventarioRequest request) {
             return base.Channel.listarMovimientosRecientesMovInventario(request);
         }
@@ -1674,47 +1651,26 @@ namespace KawkiWebBusiness.KawkiWebWSMovimientosInventario {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.obtenerPorIdMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest request) {
-            return base.Channel.obtenerPorIdMovInventario(request);
+        KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.listarPorTipoMovimientoMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest request) {
+            return base.Channel.listarPorTipoMovimientoMovInventario(request);
         }
         
-        public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO obtenerPorIdMovInventario(int movInventarioId) {
-            KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest();
-            inValue.movInventarioId = movInventarioId;
-            KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).obtenerPorIdMovInventario(inValue);
+        public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] listarPorTipoMovimientoMovInventario(int tipo_movimiento_id) {
+            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest();
+            inValue.tipo_movimiento_id = tipo_movimiento_id;
+            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).listarPorTipoMovimientoMovInventario(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse> KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.obtenerPorIdMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest request) {
-            return base.Channel.obtenerPorIdMovInventarioAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse> KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.listarPorTipoMovimientoMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest request) {
+            return base.Channel.listarPorTipoMovimientoMovInventarioAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse> obtenerPorIdMovInventarioAsync(int movInventarioId) {
-            KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest();
-            inValue.movInventarioId = movInventarioId;
-            return ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).obtenerPorIdMovInventarioAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.listarTodosMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest request) {
-            return base.Channel.listarTodosMovInventario(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] listarTodosMovInventario() {
-            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest();
-            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).listarTodosMovInventario(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse> KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.listarTodosMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest request) {
-            return base.Channel.listarTodosMovInventarioAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse> listarTodosMovInventarioAsync() {
-            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest();
-            return ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).listarTodosMovInventarioAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioResponse> listarPorTipoMovimientoMovInventarioAsync(int tipo_movimiento_id) {
+            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarPorTipoMovimientoMovInventarioRequest();
+            inValue.tipo_movimiento_id = tipo_movimiento_id;
+            return ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).listarPorTipoMovimientoMovInventarioAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1779,6 +1735,50 @@ namespace KawkiWebBusiness.KawkiWebWSMovimientosInventario {
             inValue.prod_variante = prod_variante;
             inValue.usuario = usuario;
             return ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).insertarMovInventarioAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.obtenerPorIdMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest request) {
+            return base.Channel.obtenerPorIdMovInventario(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO obtenerPorIdMovInventario(int movInventarioId) {
+            KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest();
+            inValue.movInventarioId = movInventarioId;
+            KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).obtenerPorIdMovInventario(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse> KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.obtenerPorIdMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest request) {
+            return base.Channel.obtenerPorIdMovInventarioAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioResponse> obtenerPorIdMovInventarioAsync(int movInventarioId) {
+            KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.obtenerPorIdMovInventarioRequest();
+            inValue.movInventarioId = movInventarioId;
+            return ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).obtenerPorIdMovInventarioAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.listarTodosMovInventario(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest request) {
+            return base.Channel.listarTodosMovInventario(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSMovimientosInventario.movimientosInventarioDTO[] listarTodosMovInventario() {
+            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest();
+            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).listarTodosMovInventario(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse> KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario.listarTodosMovInventarioAsync(KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest request) {
+            return base.Channel.listarTodosMovInventarioAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioResponse> listarTodosMovInventarioAsync() {
+            KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest inValue = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.listarTodosMovInventarioRequest();
+            return ((KawkiWebBusiness.KawkiWebWSMovimientosInventario.MovimientosInventario)(this)).listarTodosMovInventarioAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

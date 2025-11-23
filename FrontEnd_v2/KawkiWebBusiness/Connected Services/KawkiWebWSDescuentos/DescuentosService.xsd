@@ -23,18 +23,6 @@
   <xs:element name="obtenerPorIdDescuentoResponse" type="tns:obtenerPorIdDescuentoResponse" />
   <xs:element name="tiposBeneficioDTO" type="tns:tiposBeneficioDTO" />
   <xs:element name="tiposCondicionDTO" type="tns:tiposCondicionDTO" />
-  <xs:complexType name="esAplicableDescuento">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="descuentoId" type="xs:int" />
-      <xs:element minOccurs="0" name="cantidadProductos" type="xs:int" />
-      <xs:element minOccurs="0" name="montoTotal" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="esAplicableDescuentoResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="listarVigentesDescuento">
     <xs:sequence />
   </xs:complexType>
@@ -68,12 +56,14 @@
       <xs:element minOccurs="0" name="nombre" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="desactivarDescuento">
+  <xs:complexType name="esAplicableDescuento">
     <xs:sequence>
       <xs:element minOccurs="0" name="descuentoId" type="xs:int" />
+      <xs:element minOccurs="0" name="cantidadProductos" type="xs:int" />
+      <xs:element minOccurs="0" name="montoTotal" type="xs:double" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="desactivarDescuentoResponse">
+  <xs:complexType name="esAplicableDescuentoResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:boolean" />
     </xs:sequence>
@@ -84,6 +74,16 @@
   <xs:complexType name="listarTodosDescuentoResponse">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:descuentosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="desactivarDescuento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descuentoId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="desactivarDescuentoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="obtenerPorIdDescuento">

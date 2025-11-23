@@ -16,19 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposBeneficio {
     public interface TiposBeneficio {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBen" +
-            "eficioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBen" +
-            "eficioResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse listarTodosTipoBeneficio(KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBen" +
-            "eficioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBen" +
-            "eficioResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse> listarTodosTipoBeneficioAsync(KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/obtenerPorIdTipoBe" +
             "neficioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/obtenerPorIdTipoBe" +
             "neficioResponse")]
@@ -40,6 +27,19 @@ namespace KawkiWebBusiness.KawkiWebWSTiposBeneficio {
             "neficioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/obtenerPorIdTipoBe" +
             "neficioResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposBeneficio.obtenerPorIdTipoBeneficioResponse> obtenerPorIdTipoBeneficioAsync(KawkiWebBusiness.KawkiWebWSTiposBeneficio.obtenerPorIdTipoBeneficioRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBen" +
+            "eficioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBen" +
+            "eficioResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse listarTodosTipoBeneficio(KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBen" +
+            "eficioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBen" +
+            "eficioResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse> listarTodosTipoBeneficioAsync(KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest request);
     }
     
     /// <remarks/>
@@ -105,34 +105,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposBeneficio {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoBeneficio", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosTipoBeneficioRequest {
-        
-        public listarTodosTipoBeneficioRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoBeneficioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosTipoBeneficioResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSTiposBeneficio.tiposBeneficioDTO[] @return;
-        
-        public listarTodosTipoBeneficioResponse() {
-        }
-        
-        public listarTodosTipoBeneficioResponse(KawkiWebBusiness.KawkiWebWSTiposBeneficio.tiposBeneficioDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdTipoBeneficio", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class obtenerPorIdTipoBeneficioRequest {
         
@@ -166,6 +138,34 @@ namespace KawkiWebBusiness.KawkiWebWSTiposBeneficio {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoBeneficio", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosTipoBeneficioRequest {
+        
+        public listarTodosTipoBeneficioRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoBeneficioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosTipoBeneficioResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSTiposBeneficio.tiposBeneficioDTO[] @return;
+        
+        public listarTodosTipoBeneficioResponse() {
+        }
+        
+        public listarTodosTipoBeneficioResponse(KawkiWebBusiness.KawkiWebWSTiposBeneficio.tiposBeneficioDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface TiposBeneficioChannel : KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio, System.ServiceModel.IClientChannel {
     }
@@ -194,27 +194,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposBeneficio {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio.listarTodosTipoBeneficio(KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest request) {
-            return base.Channel.listarTodosTipoBeneficio(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSTiposBeneficio.tiposBeneficioDTO[] listarTodosTipoBeneficio() {
-            KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest();
-            KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse retVal = ((KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio)(this)).listarTodosTipoBeneficio(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse> KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio.listarTodosTipoBeneficioAsync(KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest request) {
-            return base.Channel.listarTodosTipoBeneficioAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse> listarTodosTipoBeneficioAsync() {
-            KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest();
-            return ((KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio)(this)).listarTodosTipoBeneficioAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSTiposBeneficio.obtenerPorIdTipoBeneficioResponse KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio.obtenerPorIdTipoBeneficio(KawkiWebBusiness.KawkiWebWSTiposBeneficio.obtenerPorIdTipoBeneficioRequest request) {
             return base.Channel.obtenerPorIdTipoBeneficio(request);
         }
@@ -235,6 +214,27 @@ namespace KawkiWebBusiness.KawkiWebWSTiposBeneficio {
             KawkiWebBusiness.KawkiWebWSTiposBeneficio.obtenerPorIdTipoBeneficioRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposBeneficio.obtenerPorIdTipoBeneficioRequest();
             inValue.tipoBeneficioId = tipoBeneficioId;
             return ((KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio)(this)).obtenerPorIdTipoBeneficioAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio.listarTodosTipoBeneficio(KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest request) {
+            return base.Channel.listarTodosTipoBeneficio(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSTiposBeneficio.tiposBeneficioDTO[] listarTodosTipoBeneficio() {
+            KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest();
+            KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse retVal = ((KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio)(this)).listarTodosTipoBeneficio(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse> KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio.listarTodosTipoBeneficioAsync(KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest request) {
+            return base.Channel.listarTodosTipoBeneficioAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioResponse> listarTodosTipoBeneficioAsync() {
+            KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposBeneficio.listarTodosTipoBeneficioRequest();
+            return ((KawkiWebBusiness.KawkiWebWSTiposBeneficio.TiposBeneficio)(this)).listarTodosTipoBeneficioAsync(inValue);
         }
     }
 }

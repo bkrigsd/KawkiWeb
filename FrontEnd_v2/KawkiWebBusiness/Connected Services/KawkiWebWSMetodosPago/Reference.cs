@@ -16,19 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSMetodosPago {
     public interface MetodosPago {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/obtenerPorIdMetodoPag" +
-            "oRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/obtenerPorIdMetodoPag" +
-            "oResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoResponse obtenerPorIdMetodoPago(KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/obtenerPorIdMetodoPag" +
-            "oRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/obtenerPorIdMetodoPag" +
-            "oResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoResponse> obtenerPorIdMetodoPagoAsync(KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/listarTodosMetodoPago" +
             "Request", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/listarTodosMetodoPago" +
             "Response")]
@@ -40,6 +27,19 @@ namespace KawkiWebBusiness.KawkiWebWSMetodosPago {
             "Request", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/listarTodosMetodoPago" +
             "Response")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoResponse> listarTodosMetodoPagoAsync(KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/obtenerPorIdMetodoPag" +
+            "oRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/obtenerPorIdMetodoPag" +
+            "oResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoResponse obtenerPorIdMetodoPago(KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/obtenerPorIdMetodoPag" +
+            "oRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MetodosPago/obtenerPorIdMetodoPag" +
+            "oResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoResponse> obtenerPorIdMetodoPagoAsync(KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoRequest request);
     }
     
     /// <remarks/>
@@ -105,6 +105,34 @@ namespace KawkiWebBusiness.KawkiWebWSMetodosPago {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosMetodoPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosMetodoPagoRequest {
+        
+        public listarTodosMetodoPagoRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosMetodoPagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosMetodoPagoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSMetodosPago.metodosPagoDTO[] @return;
+        
+        public listarTodosMetodoPagoResponse() {
+        }
+        
+        public listarTodosMetodoPagoResponse(KawkiWebBusiness.KawkiWebWSMetodosPago.metodosPagoDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdMetodoPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class obtenerPorIdMetodoPagoRequest {
         
@@ -138,34 +166,6 @@ namespace KawkiWebBusiness.KawkiWebWSMetodosPago {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosMetodoPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosMetodoPagoRequest {
-        
-        public listarTodosMetodoPagoRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosMetodoPagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosMetodoPagoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSMetodosPago.metodosPagoDTO[] @return;
-        
-        public listarTodosMetodoPagoResponse() {
-        }
-        
-        public listarTodosMetodoPagoResponse(KawkiWebBusiness.KawkiWebWSMetodosPago.metodosPagoDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface MetodosPagoChannel : KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago, System.ServiceModel.IClientChannel {
     }
@@ -194,6 +194,27 @@ namespace KawkiWebBusiness.KawkiWebWSMetodosPago {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoResponse KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago.listarTodosMetodoPago(KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest request) {
+            return base.Channel.listarTodosMetodoPago(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSMetodosPago.metodosPagoDTO[] listarTodosMetodoPago() {
+            KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest();
+            KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago)(this)).listarTodosMetodoPago(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoResponse> KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago.listarTodosMetodoPagoAsync(KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest request) {
+            return base.Channel.listarTodosMetodoPagoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoResponse> listarTodosMetodoPagoAsync() {
+            KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest();
+            return ((KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago)(this)).listarTodosMetodoPagoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoResponse KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago.obtenerPorIdMetodoPago(KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoRequest request) {
             return base.Channel.obtenerPorIdMetodoPago(request);
         }
@@ -214,27 +235,6 @@ namespace KawkiWebBusiness.KawkiWebWSMetodosPago {
             KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSMetodosPago.obtenerPorIdMetodoPagoRequest();
             inValue.metodoPagoId = metodoPagoId;
             return ((KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago)(this)).obtenerPorIdMetodoPagoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoResponse KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago.listarTodosMetodoPago(KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest request) {
-            return base.Channel.listarTodosMetodoPago(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSMetodosPago.metodosPagoDTO[] listarTodosMetodoPago() {
-            KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest();
-            KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago)(this)).listarTodosMetodoPago(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoResponse> KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago.listarTodosMetodoPagoAsync(KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest request) {
-            return base.Channel.listarTodosMetodoPagoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoResponse> listarTodosMetodoPagoAsync() {
-            KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSMetodosPago.listarTodosMetodoPagoRequest();
-            return ((KawkiWebBusiness.KawkiWebWSMetodosPago.MetodosPago)(this)).listarTodosMetodoPagoAsync(inValue);
         }
     }
 }
