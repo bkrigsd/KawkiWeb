@@ -42,42 +42,6 @@ namespace KawkiWeb
             }
         }
 
-        protected void gvCategorias_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Editar")
-            {
-                try
-                {
-                    int categoriaId = Convert.ToInt32(e.CommandArgument);
-                    CargarCategoriaParaEditar(categoriaId);
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "abrirModalEditar",
-                        "abrirModalEditar();", true);
-                }
-                catch (Exception ex)
-                {
-                    MostrarError("Error al cargar la categoría: " + ex.Message);
-                }
-            }
-        }
-
-        private void CargarCategoriaParaEditar(int categoriaId)
-        {
-            try
-            {
-                categoriasDTO categoria = categoriaBO.ObtenerPorIdCategoria(categoriaId);
-
-                if (categoria != null)
-                {
-                    hfCategoriaId.Value = categoria.categoria_id.ToString();
-                    txtNombre.Text = categoria.nombre;
-                }
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error al obtener la categoría: " + ex.Message);
-            }
-        }
-
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             if (ValidarFormulario())

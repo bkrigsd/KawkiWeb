@@ -42,42 +42,6 @@ namespace KawkiWeb
             }
         }
 
-        protected void gvColores_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Editar")
-            {
-                try
-                {
-                    int colorId = Convert.ToInt32(e.CommandArgument);
-                    CargarColorParaEditar(colorId);
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "abrirModalEditar",
-                        "abrirModalEditar();", true);
-                }
-                catch (Exception ex)
-                {
-                    MostrarError("Error al cargar el color: " + ex.Message);
-                }
-            }
-        }
-
-        private void CargarColorParaEditar(int colorId)
-        {
-            try
-            {
-                coloresDTO color = coloresBO.ObtenerPorIdColor(colorId);
-
-                if (color != null)
-                {
-                    hfColorId.Value = color.color_id.ToString();
-                    txtNombre.Text = color.nombre;
-                }
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error al obtener el color: " + ex.Message);
-            }
-        }
-
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             if (ValidarFormulario())

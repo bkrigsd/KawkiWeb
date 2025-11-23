@@ -317,9 +317,9 @@ namespace KawkiWeb
                         Response.Redirect($"GestionVariantes.aspx?productoId={productoId}");
                         break;
 
-                    case "Editar":
-                        CargarProductoParaEdicion(productoId);
-                        break;
+                    //case "Editar":
+                    //    CargarProductoParaEdicion(productoId);
+                    //    break;
                 }
             }
             catch (Exception ex)
@@ -328,28 +328,28 @@ namespace KawkiWeb
             }
         }
 
-        private void CargarProductoParaEdicion(int productoId)
-        {
-            try
-            {
-                var producto = productosBO.ObtenerPorIdProducto(productoId);
-                if (producto != null)
-                {
-                    hfProductoId.Value = producto.producto_id.ToString();
-                    txtDescripcion.Text = producto.descripcion;
-                    ddlCategoria.SelectedValue = producto.categoria.categoria_id.ToString();
-                    ddlEstilo.SelectedValue = producto.estilo.estilo_id.ToString();
-                    txtPrecio.Text = producto.precio_venta.ToString("F2");
+        //private void CargarProductoParaEdicion(int productoId)
+        //{
+        //    try
+        //    {
+        //        var producto = productosBO.ObtenerPorIdProducto(productoId);
+        //        if (producto != null)
+        //        {
+        //            hfProductoId.Value = producto.producto_id.ToString();
+        //            txtDescripcion.Text = producto.descripcion;
+        //            ddlCategoria.SelectedValue = producto.categoria.categoria_id.ToString();
+        //            ddlEstilo.SelectedValue = producto.estilo.estilo_id.ToString();
+        //            txtPrecio.Text = producto.precio_venta.ToString("F2");
 
-                    ScriptManager.RegisterStartupScript(this, GetType(), "AbrirEditar",
-                        "abrirModalEditar();", true);
-                }
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error al cargar producto: " + ex.Message);
-            }
-        }
+        //            ScriptManager.RegisterStartupScript(this, GetType(), "AbrirEditar",
+        //                "abrirModalEditar();", true);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MostrarError("Error al cargar producto: " + ex.Message);
+        //    }
+        //}
 
         // =====================================================
         // 🔹 Auxiliares
@@ -377,6 +377,7 @@ namespace KawkiWeb
             ScriptManager.RegisterStartupScript(this, GetType(), "Error",
                 $"mostrarMensajeError('{mensaje.Replace("'", "\\'")}');", true);
         }
+
 
     }
 }

@@ -42,42 +42,6 @@ namespace KawkiWeb
             }
         }
 
-        protected void gvEstilos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Editar")
-            {
-                try
-                {
-                    int estiloId = Convert.ToInt32(e.CommandArgument);
-                    CargarEstiloParaEditar(estiloId);
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "abrirModalEditar",
-                        "abrirModalEditar();", true);
-                }
-                catch (Exception ex)
-                {
-                    MostrarError("Error al cargar el estilo: " + ex.Message);
-                }
-            }
-        }
-
-        private void CargarEstiloParaEditar(int estiloId)
-        {
-            try
-            {
-                estilosDTO estilo = estiloBO.ObtenerPorIdEstilos(estiloId);
-
-                if (estilo != null)
-                {
-                    hfEstiloId.Value = estilo.estilo_id.ToString();
-                    txtNombre.Text = estilo.nombre;
-                }
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error al obtener el estilo: " + ex.Message);
-            }
-        }
-
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             if (ValidarFormulario())

@@ -42,42 +42,6 @@ namespace KawkiWeb
             }
         }
 
-        protected void gvTallas_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Editar")
-            {
-                try
-                {
-                    int tallaId = Convert.ToInt32(e.CommandArgument);
-                    CargarTallaParaEditar(tallaId);
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "abrirModalEditar",
-                        "abrirModalEditar();", true);
-                }
-                catch (Exception ex)
-                {
-                    MostrarError("Error al cargar la talla: " + ex.Message);
-                }
-            }
-        }
-
-        private void CargarTallaParaEditar(int tallaId)
-        {
-            try
-            {
-                tallasDTO talla = tallasBO.ObtenerPorIdTalla(tallaId);
-
-                if (talla != null)
-                {
-                    hfTallaId.Value = talla.talla_id.ToString();
-                    txtNumero.Text = talla.numero.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error al obtener la talla: " + ex.Message);
-            }
-        }
-
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             if (ValidarFormulario())

@@ -29,21 +29,17 @@
             </div>
             <div class="card-body">
                 <asp:GridView ID="gvColores" runat="server" AutoGenerateColumns="False" 
-                    CssClass="table-usuarios" DataKeyNames="ColorId" 
-                    OnRowCommand="gvColores_RowCommand">
+                    CssClass="table-usuarios" DataKeyNames="ColorId">
                     <Columns>
                         <asp:BoundField DataField="ColorId" HeaderText="ID" />
                         <asp:BoundField DataField="Nombre" HeaderText="Color" />
                         
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
-                                <asp:LinkButton runat="server" 
-                                    CommandName="Editar" 
-                                    CommandArgument='<%# Eval("ColorId") %>'
-                                    CssClass="btn-editar"
-                                    CausesValidation="false">
+                                <button type='button' class='btn-editar'
+                                    onclick='cargarDatosEdicion(<%# Eval("ColorId") %>, "<%# Eval("Nombre") %>"); return false;'>
                                     <i class="fas fa-edit"></i> Editar
-                                </asp:LinkButton>
+                                </button>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -151,6 +147,21 @@
             document.getElementById("<%= txtNombre.ClientID %>").value = "";
             document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
             document.getElementById("<%= lblErrorNombre.ClientID %>").innerText = "";
+        }
+
+        function cargarDatosEdicion(colorId, nombre) {
+            // Limpiar errores primero
+            document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorNombre.ClientID %>").innerText = "";
+
+            // Cargar datos en el formulario
+            document.getElementById("<%= hfColorId.ClientID %>").value = colorId;
+            document.getElementById("<%= txtNombre.ClientID %>").value = nombre;
+    
+            // Configurar modal para edición
+            document.getElementById("modalColor").classList.add("show");
+            document.getElementById("tituloModal").innerHTML = '<i class="fas fa-edit me-2"></i>Editar color';
+                    document.getElementById("<%= btnGuardar.ClientID %>").value = "Actualizar color";
         }
     </script>
 </asp:Content>
