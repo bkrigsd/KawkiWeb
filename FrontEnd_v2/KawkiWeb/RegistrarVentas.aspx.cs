@@ -818,6 +818,7 @@ namespace KawkiWeb
                     if (tipo == "boleta-simple")
                     {
                         nombre = txtNombreCliente.Text.Trim();
+                        telef = txtTelefono.Text.Trim();
                     }
                     else if (tipo == "boleta-dni")
                     {
@@ -829,7 +830,7 @@ namespace KawkiWeb
                         razon = txtRazonSocial.Text.Trim();
                         ruc = txtRUC.Text.Trim();
                         direccionFiscal = txtDireccionFiscal.Text.Trim();
-                        telef = txtTelefono.Text.Trim();
+                        //telef = txtTelefono.Text.Trim();
                     }
 
                     // 5. Inserción 
