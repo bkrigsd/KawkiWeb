@@ -144,6 +144,7 @@
     <Compile Include="DescuentosBO.cs" />
     <Compile Include="DetalleVentasBO.cs" />
     <Compile Include="EstilosBO.cs" />
+    <Compile Include="MovimientosInventarioBO.cs" />
     <Compile Include="ProductosBO.cs" />
     <Compile Include="ProductosVariantesBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
