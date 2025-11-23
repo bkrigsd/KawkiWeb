@@ -47,7 +47,7 @@ namespace KawkiWeb
                 {
                     CargarVendedores();
                     CargarVentas();
-                    ActualizarEstadisticas();
+                    //ActualizarEstadisticas();
                 }
                 catch (Exception ex)
                 {
@@ -91,6 +91,8 @@ namespace KawkiWeb
             {
                 var lista = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
 
+                var listaCompleta = new List<ventasDTO>(lista);
+
                 // Filtro por fecha inicio
                 if (DateTime.TryParse(txtFechaInicio.Text, out DateTime inicio))
                 {
@@ -116,6 +118,14 @@ namespace KawkiWeb
                         ).ToList();
                     }
                 }
+
+                // Determinar si hay filtros activos
+                bool hayFiltros = !string.IsNullOrEmpty(txtFechaInicio.Text) ||
+                                  !string.IsNullOrEmpty(txtFechaFin.Text) ||
+                                  !string.IsNullOrEmpty(ddlVendedor.SelectedValue);
+
+                // Si NO hay filtros, usar la lista completa para estadísticas
+                Session["VentasFiltradas"] = hayFiltros ? lista : listaCompleta;
 
                 // Transformar a modelo para GridView
                 var gvLista = lista.Select(v => new
@@ -146,7 +156,7 @@ namespace KawkiWeb
                 gvVentas.DataSource = gvLista;
                 gvVentas.DataBind();
 
-                Session["VentasFiltradas"] = lista;
+                //Session["VentasFiltradas"] = lista;
 
                 lblContador.Text = $"{gvLista.Count} ventas encontradas";
                 lblMensaje.Text = "";
@@ -224,7 +234,7 @@ namespace KawkiWeb
             lblErrorFiltros.Visible = false;
             lblErrorFiltros.Text = "";
             CargarVentas();
-            ActualizarEstadisticas();
+            //ActualizarEstadisticas();
         }
 
         // Ver detalle

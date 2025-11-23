@@ -235,26 +235,28 @@
             const element = document.getElementById(elementId);
             if (!element) return;
 
+            const startTime = performance.now();
             const range = end - start;
-            const stepTime = Math.abs(Math.floor(duration / range));
-            let current = start;
-            const increment = end > start ? 1 : -1;
 
-            const timer = setInterval(function () {
-                current += increment;
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1); // 0 a 1
 
-                if ((increment > 0 && current >= end) ||
-                    (increment < 0 && current <= end)) {
-                    current = end;
-                    clearInterval(timer);
-                }
+                // Interpolación lineal
+                const current = start + (range * progress);
 
                 const value = decimals > 0
                     ? (current / 100).toFixed(decimals)
-                    : current;
+                    : Math.round(current);
 
                 element.innerText = prefix + value;
-            }, Math.max(stepTime, 10));
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            requestAnimationFrame(update);
         }
 
         // Animación principal al actualizar estadísticas
