@@ -5,6 +5,6 @@
     Renaming the file extension or editing the content of this file may   
     cause the file to be unrecognizable by the program.
 -->
-<GenericObjectDataSource DisplayName="eliminarDetalleVentaResponse" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>KawkiWebBusiness.KawkiWebWSDetalleVentas.eliminarDetalleVentaResponse, Connected Services.KawkiWebWSDetalleVentas.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+<GenericObjectDataSource DisplayName="tiposMovimientoDTO" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+   <TypeInfo>KawkiWebBusiness.KawkiWebWSTiposMovimiento.tiposMovimientoDTO, Connected Services.KawkiWebWSTiposMovimiento.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

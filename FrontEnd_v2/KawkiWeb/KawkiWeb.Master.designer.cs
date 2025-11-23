@@ -87,13 +87,13 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.PlaceHolder phSesionUsuario;
 
         /// <summary>
-        /// Control btnPerfilUsuario.
+        /// Control lnkPerfil.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnPerfilUsuario;
+        protected global::System.Web.UI.WebControls.HyperLink lnkPerfil;
 
         /// <summary>
         /// Control MainContent.

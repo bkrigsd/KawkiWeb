@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.UI;
 using KawkiWebBusiness;
 using KawkiWebBusiness.KawkiWebWSUsuarios;
@@ -13,19 +14,40 @@ namespace KawkiWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Anti-cache
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+
             if (!IsPostBack)
             {
+                if (Session["MantenerModal"] != null)
+                {
+                    string modo = Session["MantenerModal"].ToString();
+                    Session["MantenerModal"] = null;
+
+                    if (modo == "editar")
+                        ScriptManager.RegisterStartupScript(this, GetType(), "AbrirEditar", "abrirModalEditar();", true);
+                    else
+                        ScriptManager.RegisterStartupScript(this, GetType(), "AbrirRegistrar", "abrirModalRegistroSinLimpiar();", true);
+                }
+
                 var rol = Session["Rol"] as string;
+
+                // Verificación de sesión
                 if (string.IsNullOrEmpty(rol))
                 {
-                    Response.Redirect("Login.aspx");
+                    Response.Redirect("Error404.aspx", false);
                     return;
                 }
 
                 if (rol == "vendedor")
                 {
-                    // Un vendedor no debe ver el registro de usuarios
-                    Response.Redirect("Productos.aspx");
+                    Response.Redirect("Productos.aspx", false);
                     return;
                 }
 
@@ -33,9 +55,7 @@ namespace KawkiWeb
             }
         }
 
-        // =====================================================
-        // 🔹 Cargar usuarios desde el servicio SOAP
-        // =====================================================
+        // Cargar usuarios desde el servicio SOAP
         private void CargarUsuarios()
         {
             try
@@ -52,14 +72,15 @@ namespace KawkiWeb
             }
         }
 
-        // =====================================================
-        // 🔹 Guardar (insertar o modificar)
-        // =====================================================
+        //  Guardar (insertar o modificar)
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            // Limpiar mensajes antiguos
+            lblErrorDNI.Text = "";
+            lblErrorEmail.Text = "";
+            lblErrorTelefono.Text = "";
+            lblErrorUsuario.Text = "";
             lblMensaje.Text = "";
-            lblMensaje.CssClass = "text-danger d-block mb-2";
-
             try
             {
                 bool esEdicion = hfIdUsuario.Value != "0";
@@ -73,39 +94,27 @@ namespace KawkiWeb
                 string rol = ddlRol.SelectedValue;
 
                 // === VALIDACIONES ===
-                if (string.IsNullOrEmpty(nombre))
-                {
-                    lblMensaje.Text = "El nombre es obligatorio.";
-                    MantenerModalAbierto(esEdicion);
-                    return;
-                }
-                if (string.IsNullOrEmpty(apellido))
-                {
-                    lblMensaje.Text = "El apellido es obligatorio.";
-                    MantenerModalAbierto(esEdicion);
-                    return;
-                }
-                if (string.IsNullOrEmpty(usuario))
-                {
-                    lblMensaje.Text = "El nombre de usuario es obligatorio.";
-                    MantenerModalAbierto(esEdicion);
-                    return;
-                }
+                // Removidas las llamadas a usuarioBO.validar* porque no existen en el WS.
+                // Implementa validaciones locales aquí si es necesario, o agrégalas al WS.
+                // Ejemplo: Validaciones básicas con Regex (ya están en el código original).
+
                 if (!Regex.IsMatch(dni, @"^\d{8}$"))
                 {
-                    lblMensaje.Text = "El DNI debe tener 8 dígitos numéricos.";
+                    lblErrorDNI.Text = "El DNI debe tener 8 dígitos numéricos.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
+
                 if (!Regex.IsMatch(email, @"^[\w\.-]+@([\w-]+\.)+[\w-]{2,}$"))
                 {
-                    lblMensaje.Text = "Ingrese un correo electrónico válido.";
+                    lblErrorEmail.Text = "Ingrese un correo electrónico válido.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
+
                 if (!Regex.IsMatch(telefono, @"^\d{9}$"))
                 {
-                    lblMensaje.Text = "El teléfono debe tener 9 dígitos.";
+                    lblErrorTelefono.Text = "El teléfono debe tener 9 dígitos.";
                     MantenerModalAbierto(esEdicion);
                     return;
                 }
@@ -130,10 +139,52 @@ namespace KawkiWeb
                     return;
                 }
 
-                // Crear objeto tipoUsuario
-                // === Crear objeto tipoUsuario ===
-                var tipoUsuario = new tiposUsuarioDTO();
+                // VERIFICACIÓN DE UNICIDAD
 
+                int idActual = esEdicion ? Convert.ToInt32(hfIdUsuario.Value) : 0;
+
+                // Llamar a tu método de negocio (NO directamente al WS)
+                bool[] unicidad = usuarioBO.VerificarUnicidad(
+                    email.Trim().ToLower(),
+                    usuario.Trim().ToLower(),
+                    dni.Trim(),
+                    idActual
+                );
+
+                // resultado: [correoExiste, usuarioExiste, dniExiste]
+                bool correoExiste = unicidad[0];
+                bool usuarioExiste = unicidad[1];
+                bool dniExiste = unicidad[2];
+                bool hayError = false;
+
+                if (correoExiste)
+                {
+                    lblErrorEmail.Text = "❌ El correo ya está registrado.";
+                    hayError = true;
+                }
+
+                if (usuarioExiste)
+                {
+                    lblErrorUsuario.Text = "❌ El nombre de usuario ya está registrado.";
+                    hayError = true;
+                }
+
+                if (dniExiste)
+                {
+                    lblErrorDNI.Text = "❌ El DNI ya está registrado.";
+                    hayError = true;
+                }
+
+                if (hayError)
+                {
+                    RestaurarPassword(clave);
+                    MantenerModalAbierto(esEdicion);
+                    return;
+                }
+
+
+                // Crear objeto tipoUsuario
+                var tipoUsuario = new tiposUsuarioDTO();
                 string rolSeleccionado = ddlRol.SelectedValue.Trim().ToLower();
 
                 if (rolSeleccionado == "admin" || rolSeleccionado == "administrador")
@@ -148,14 +199,15 @@ namespace KawkiWeb
                 }
                 else
                 {
-                    // Valor por defecto si no se detecta correctamente
                     tipoUsuario.tipoUsuarioId = 1;
                     tipoUsuario.nombre = "Vendedor";
                 }
 
                 tipoUsuario.tipoUsuarioIdSpecified = true;
 
-
+                // Determinar 'activo'
+                // Obtener estado del checkbox
+                bool activo = chkActivo.Checked;
 
                 // Guardar
                 if (esEdicion)
@@ -163,44 +215,41 @@ namespace KawkiWeb
                     int idUsuario = Convert.ToInt32(hfIdUsuario.Value);
                     if (string.IsNullOrEmpty(clave))
                     {
-                        // Si no se escribió una nueva contraseña, se conserva la actual
                         var usuarioExistente = usuarioBO.ObtenerPorIdUsuario(idUsuario);
                         if (usuarioExistente != null)
                         {
                             clave = usuarioExistente.contrasenha;
                         }
                     }
-                    int? resultado = usuarioBO.ModificarUsuario(idUsuario, nombre, apellido, dni, telefono, email, usuario, clave, tipoUsuario);
+                    // Actualizado: Agregado 'activo'
+                    int? resultado = usuarioBO.ModificarUsuario(idUsuario, nombre, apellido, dni, telefono, email, usuario, clave, tipoUsuario, activo);
 
                     if (resultado == null || resultado <= 0)
                     {
                         lblMensaje.CssClass = "text-danger d-block mb-2";
-                        lblMensaje.Text = "❌ No se pudo actualizar el usuario. "
-                            + "Verifique que los datos sean válidos o que la contraseña tenga al menos 8 caracteres.";
-                        MantenerModalAbierto(true);
+                        lblMensaje.Text = "❌ No se pudo actualizar el usuario.";
+                        Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
                         return;
                     }
 
                     lblMensaje.CssClass = "text-success d-block mb-2";
                     lblMensaje.Text = "✓ Usuario actualizado correctamente.";
-
                 }
                 else
                 {
-                    int? resultado = usuarioBO.InsertarUsuario(nombre, apellido, dni, telefono,email, usuario, clave, tipoUsuario);
+                    // Actualizado: Agregado 'activo'
+                    int? resultado = usuarioBO.InsertarUsuario(nombre, apellido, dni, telefono, email, usuario, clave, tipoUsuario, activo);
 
                     if (resultado == null || resultado <= 0)
                     {
                         lblMensaje.CssClass = "text-danger d-block mb-2";
-                        lblMensaje.Text = "❌ Error: No se pudo registrar el usuario. "
-                            + "Verifique que el correo, usuario o DNI no estén duplicados.";
-                        MantenerModalAbierto(false);
+                        lblMensaje.Text = "❌ Error: No se pudo registrar el usuario.";
+                        Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
                         return;
                     }
 
                     lblMensaje.CssClass = "text-success d-block mb-2";
                     lblMensaje.Text = "✓ Usuario registrado correctamente.";
-
                 }
 
                 CargarUsuarios();
@@ -208,38 +257,70 @@ namespace KawkiWeb
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error al guardar: " + ex.Message;
+                string error = ex.Message.ToUpper();
+
+                bool esEdicion = hfIdUsuario.Value != "0";
+
+                if (error.Contains("CORREO_EXISTE"))
+                {
+                    lblErrorEmail.Text = "❌ El correo ya está registrado.";
+                    Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
+                    return;
+                }
+
+                if (error.Contains("USUARIO_EXISTE"))
+                {
+                    lblErrorUsuario.Text = "❌ El nombre de usuario ya está registrado.";
+                    Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
+                    return;
+                }
+
+                if (error.Contains("DNI_EXISTE"))
+                {
+                    lblErrorDNI.Text = "❌ El DNI ya está registrado.";
+                    Session["MantenerModal"] = esEdicion ? "editar" : "registrar";
+                    return;
+                }
+
+                lblMensaje.Text = "❌ Error inesperado: " + ex.Message;
+                MantenerModalAbierto(esEdicion);
             }
         }
 
         // =====================================================
         // 🔹 Eliminar usuario
         // =====================================================
-        protected void btnConfirmarEliminar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int idUsuario = Convert.ToInt32(hfIdEliminar.Value);
-                usuarioBO.EliminarUsuario(idUsuario);
-                CargarUsuarios();
+        //protected void btnConfirmarEliminar_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int idUsuario = Convert.ToInt32(hfIdEliminar.Value);
+        //        usuarioBO.EliminarUsuario(idUsuario);
+        //        CargarUsuarios();
 
-                ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalEliminar",
-                    "cerrarModalConfirmacion(); mostrarMensajeExito('Usuario eliminado correctamente');", true);
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, GetType(), "ErrorEliminar",
-                    "cerrarModalConfirmacion(); mostrarMensajeError('Error al eliminar: " + ex.Message.Replace("'", "\\'") + "');", true);
-            }
-        }
+        //        ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalEliminar",
+        //            "cerrarModalConfirmacion(); mostrarMensajeExito('Usuario eliminado correctamente');", true);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ScriptManager.RegisterStartupScript(this, GetType(), "ErrorEliminar",
+        //            "cerrarModalConfirmacion(); mostrarMensajeError('Error al eliminar: " + ex.Message.Replace("'", "\\'") + "');", true);
+        //    }
+        //}
 
         // =====================================================
         // 🔹 Utilidades
         // =====================================================
         private void MantenerModalAbierto(bool esEdicion)
         {
-            string script = esEdicion ? "abrirModalEditar();" : "abrirModalRegistro();";
+            string script = esEdicion ? "abrirModalEditar();" : "abrirModalRegistroSinLimpiar();";
             ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModal", script, true);
         }
+
+        private void RestaurarPassword(string clave)
+        {
+            txtClave.Attributes["value"] = clave;
+        }
+
     }
 }

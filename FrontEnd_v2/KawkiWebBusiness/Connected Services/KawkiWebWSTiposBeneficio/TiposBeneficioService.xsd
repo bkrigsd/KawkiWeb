@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="listarTodosTipoBeneficio" type="tns:listarTodosTipoBeneficio" />
+  <xs:element name="listarTodosTipoBeneficioResponse" type="tns:listarTodosTipoBeneficioResponse" />
+  <xs:element name="obtenerPorIdTipoBeneficio" type="tns:obtenerPorIdTipoBeneficio" />
+  <xs:element name="obtenerPorIdTipoBeneficioResponse" type="tns:obtenerPorIdTipoBeneficioResponse" />
+  <xs:element name="tiposBeneficioDTO" type="tns:tiposBeneficioDTO" />
+  <xs:complexType name="listarTodosTipoBeneficio">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarTodosTipoBeneficioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:tiposBeneficioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tiposBeneficioDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipo_beneficio_id" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdTipoBeneficio">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipoBeneficioId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdTipoBeneficioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:tiposBeneficioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

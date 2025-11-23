@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="d90d2dce-2acd-44f9-8500-a24ed0d00dc9" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="988d75ae-23b1-47a5-9f66-d22f9c951d47" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,8 +22,8 @@
     <MetadataSource Address="http://localhost:8080/KawkiWebWS/TallasService?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="TallasService.xsd" MetadataType="Schema" ID="0f9aea2e-fd00-4477-b418-f1ebe3b29060" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/TallasService?xsd=1" />
-    <MetadataFile FileName="TallasService.wsdl" MetadataType="Wsdl" ID="2d4b7f23-acf3-4088-82bc-d14b0e6787e0" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/TallasService?wsdl" />
+    <MetadataFile FileName="TallasService.xsd" MetadataType="Schema" ID="e6fef013-2e1c-4cb5-a04c-20093f41ef29" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/TallasService?xsd=1" />
+    <MetadataFile FileName="TallasService.wsdl" MetadataType="Wsdl" ID="e05bcdb3-7c98-4b8f-bc2e-8a2972899704" SourceId="1" SourceUrl="http://localhost:8080/KawkiWebWS/TallasService?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

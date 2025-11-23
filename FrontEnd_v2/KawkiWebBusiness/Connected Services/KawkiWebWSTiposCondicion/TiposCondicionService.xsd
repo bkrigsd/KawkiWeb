@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="listarTodosTipoCondicion" type="tns:listarTodosTipoCondicion" />
+  <xs:element name="listarTodosTipoCondicionResponse" type="tns:listarTodosTipoCondicionResponse" />
+  <xs:element name="obtenerPorIdTipoCondicion" type="tns:obtenerPorIdTipoCondicion" />
+  <xs:element name="obtenerPorIdTipoCondicionResponse" type="tns:obtenerPorIdTipoCondicionResponse" />
+  <xs:element name="tiposCondicionDTO" type="tns:tiposCondicionDTO" />
+  <xs:complexType name="obtenerPorIdTipoCondicion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipoCondicionId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdTipoCondicionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:tiposCondicionDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tiposCondicionDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipo_condicion_id" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarTodosTipoCondicion">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarTodosTipoCondicionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:tiposCondicionDTO" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

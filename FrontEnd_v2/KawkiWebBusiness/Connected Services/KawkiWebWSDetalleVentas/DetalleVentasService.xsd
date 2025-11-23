@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="eliminarDetalleVenta" type="tns:eliminarDetalleVenta" />
-  <xs:element name="eliminarDetalleVentaResponse" type="tns:eliminarDetalleVentaResponse" />
+  <xs:element name="coloresDTO" type="tns:coloresDTO" />
+  <xs:element name="detalleVentasDTO" type="tns:detalleVentasDTO" />
   <xs:element name="insertarDetalleVenta" type="tns:insertarDetalleVenta" />
   <xs:element name="insertarDetalleVentaResponse" type="tns:insertarDetalleVentaResponse" />
   <xs:element name="listarPorVentaIdDetalleVenta" type="tns:listarPorVentaIdDetalleVenta" />
@@ -12,6 +12,10 @@
   <xs:element name="modificarDetalleVentaResponse" type="tns:modificarDetalleVentaResponse" />
   <xs:element name="obtenerPorIdDetalleVenta" type="tns:obtenerPorIdDetalleVenta" />
   <xs:element name="obtenerPorIdDetalleVentaResponse" type="tns:obtenerPorIdDetalleVentaResponse" />
+  <xs:element name="productosVariantesDTO" type="tns:productosVariantesDTO" />
+  <xs:element name="tallasDTO" type="tns:tallasDTO" />
+  <xs:element name="tiposUsuarioDTO" type="tns:tiposUsuarioDTO" />
+  <xs:element name="usuariosDTO" type="tns:usuariosDTO" />
   <xs:complexType name="listarPorVentaIdDetalleVenta">
     <xs:sequence>
       <xs:element minOccurs="0" name="ventaId" type="xs:int" />
@@ -24,27 +28,28 @@
   </xs:complexType>
   <xs:complexType name="detalleVentasDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" name="cantidad" type="xs:int" />
       <xs:element minOccurs="0" name="detalle_venta_id" type="xs:int" />
+      <xs:element minOccurs="0" name="cantidad" type="xs:int" />
       <xs:element minOccurs="0" name="precio_unitario" type="xs:double" />
-      <xs:element minOccurs="0" name="prodVariante" type="tns:productosVariantesDTO" />
       <xs:element minOccurs="0" name="subtotal" type="xs:double" />
       <xs:element minOccurs="0" name="venta_id" type="xs:int" />
+      <xs:element minOccurs="0" name="prodVariante" type="tns:productosVariantesDTO" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="productosVariantesDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" name="alerta_stock" type="xs:boolean" />
-      <xs:element minOccurs="0" name="color" type="tns:coloresDTO" />
-      <xs:element minOccurs="0" name="disponible" type="xs:boolean" />
-      <xs:element minOccurs="0" name="fecha_hora_creacion" type="tns:localDateTime" />
       <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
-      <xs:element minOccurs="0" name="producto_id" type="xs:int" />
       <xs:element minOccurs="0" name="SKU" type="xs:string" />
       <xs:element minOccurs="0" name="stock" type="xs:int" />
       <xs:element minOccurs="0" name="stock_minimo" type="xs:int" />
+      <xs:element minOccurs="0" name="alerta_stock" type="xs:boolean" />
+      <xs:element minOccurs="0" name="producto_id" type="xs:int" />
+      <xs:element minOccurs="0" name="color" type="tns:coloresDTO" />
       <xs:element minOccurs="0" name="talla" type="tns:tallasDTO" />
       <xs:element minOccurs="0" name="url_imagen" type="xs:string" />
+      <xs:element minOccurs="0" name="disponible" type="xs:boolean" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
+      <xs:element minOccurs="0" name="fecha_hora_creacion" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="coloresDTO">
@@ -53,13 +58,31 @@
       <xs:element minOccurs="0" name="nombre" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="localDateTime" final="extension restriction">
-    <xs:sequence />
-  </xs:complexType>
   <xs:complexType name="tallasDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" name="numero" type="xs:int" />
       <xs:element minOccurs="0" name="talla_id" type="xs:int" />
+      <xs:element minOccurs="0" name="numero" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="usuariosDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="usuarioId" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+      <xs:element minOccurs="0" name="apePaterno" type="xs:string" />
+      <xs:element minOccurs="0" name="dni" type="xs:string" />
+      <xs:element minOccurs="0" name="telefono" type="xs:string" />
+      <xs:element minOccurs="0" name="correo" type="xs:string" />
+      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
+      <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
+      <xs:element minOccurs="0" name="fechaHoraCreacion" type="xs:string" />
+      <xs:element minOccurs="0" name="tipoUsuario" type="tns:tiposUsuarioDTO" />
+      <xs:element minOccurs="0" name="activo" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tiposUsuarioDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipoUsuarioId" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="modificarDetalleVenta">
@@ -93,16 +116,6 @@
   <xs:complexType name="listarTodosDetalleVentaResponse">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:detalleVentasDTO" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="eliminarDetalleVenta">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="detalleVentaId" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="eliminarDetalleVentaResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="insertarDetalleVenta">

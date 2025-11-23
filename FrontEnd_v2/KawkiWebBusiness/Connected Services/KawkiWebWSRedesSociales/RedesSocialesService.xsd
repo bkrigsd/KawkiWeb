@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="listarTodosRedSocial" type="tns:listarTodosRedSocial" />
+  <xs:element name="listarTodosRedSocialResponse" type="tns:listarTodosRedSocialResponse" />
+  <xs:element name="obtenerPorIdRedSocial" type="tns:obtenerPorIdRedSocial" />
+  <xs:element name="obtenerPorIdRedSocialResponse" type="tns:obtenerPorIdRedSocialResponse" />
+  <xs:element name="redesSocialesDTO" type="tns:redesSocialesDTO" />
+  <xs:complexType name="listarTodosRedSocial">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarTodosRedSocialResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:redesSocialesDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="redesSocialesDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="redSocialId" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdRedSocial">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="redSocialId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdRedSocialResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:redesSocialesDTO" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

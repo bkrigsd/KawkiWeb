@@ -12,21 +12,28 @@ namespace KawkiWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Limpiar sesión
             Session.Clear();
             Session.Abandon();
 
-            // (Opcional) si usas FormsAuthentication
-            FormsAuthentication.SignOut();
+            // Invalidar cookie de sesión
+            if (Request.Cookies["ASP.NET_SessionId"] != null)
+            {
+                Response.Cookies["ASP.NET_SessionId"].Expires = DateTime.Now.AddDays(-1);
+            }
 
-            // Evitar caché de esta página también
+            // BLOQUEO TOTAL DE CACHE
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
-            Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
             Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
             Response.Cache.SetAllowResponseInBrowserHistory(false);
 
-            Response.Redirect("Login.aspx");
+            Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+
+            // Redirección sin posibilidad de volver atrás
+            Response.Redirect("Login.aspx", true); // << TRUE corta la ejecución y evita volver atrás
         }
     }
 }

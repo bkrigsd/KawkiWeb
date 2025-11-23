@@ -26,6 +26,9 @@
     <script src="Scripts/jquery-3.7.1.js"></script>
     <script src="Scripts/jquery-3.7.1.min.js"></script>
 
+    <!-- Estilos mejorados para barra lateral y superior -->
+    <link href="Content/Stylo/Master.css" rel="stylesheet" />
+
     <!-- Head extra por página -->
     <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
 
@@ -57,12 +60,6 @@
                     <li><a href="HistorialVentasAdmin.aspx" runat="server"><i class="fas fa-file-alt"></i><span>Historial de Ventas</span></a></li>
                 </asp:PlaceHolder>
 
-                <!-- Nosotros y Contacto: solo para el público o cliente -->
-                <%--<asp:PlaceHolder ID="phNosYContacto" runat="server" Visible="true">
-                    <li><a href="Nosotros.aspx" runat="server"><i class="fas fa-info-circle"></i><span>Nosotros</span></a></li>
-                    <li><a href="Contacto.aspx" runat="server"><i class="fas fa-envelope"></i><span>Contacto</span></a></li>
-                </asp:PlaceHolder>--%>
-
                 <!-- Botón Cerrar Sesión -->
                 <asp:PlaceHolder ID="phCerrarSesion" runat="server" Visible="false">
                     <li class="cerrar-sesion">
@@ -91,9 +88,14 @@
                 <!-- Logueado -->
                 <asp:PlaceHolder ID="phSesionUsuario" runat="server" Visible="false">
                     <div class="usuario-logueado">
-                        <asp:LinkButton ID="btnPerfilUsuario" runat="server" CssClass="link-usuario" OnClick="btnPerfilUsuario_Click">
-                        <%= Session["Usuario"] ?? "" %>
-                        </asp:LinkButton>
+                        <%--<asp:LinkButton ID="btnPerfilUsuario" runat="server" CssClass="link-usuario" OnClick="btnPerfilUsuario_Click">
+                        <i class="fas fa-user"></i>
+                            <span><%= Session["Usuario"] ?? "" %></span>
+                        </asp:LinkButton>--%>
+                        <asp:HyperLink ID="lnkPerfil" runat="server" CssClass="link-usuario">
+                           <i class="fas fa-user"></i>
+                           <span><%= Session["Usuario"] ?? "" %></span>
+                        </asp:HyperLink>
                     </div>
                 </asp:PlaceHolder>
 
@@ -121,5 +123,20 @@
             });
         });
     </script>
+
+    <script>
+        // Evitar que vuelva con Back después del logout
+        window.history.forward();
+
+        function noBack() {
+            window.history.forward();
+        }
+
+        window.onload = noBack;
+        window.onpageshow = function (evt) {
+            if (evt.persisted) noBack();
+        };
+    </script>
+
 </body>
 </html>
