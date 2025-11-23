@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="coloresDTO" type="tns:coloresDTO" />
+  <xs:element name="crearAjusteInventarioMovInventario" type="tns:crearAjusteInventarioMovInventario" />
+  <xs:element name="crearAjusteInventarioMovInventarioResponse" type="tns:crearAjusteInventarioMovInventarioResponse" />
+  <xs:element name="insertarMovInventario" type="tns:insertarMovInventario" />
+  <xs:element name="insertarMovInventarioResponse" type="tns:insertarMovInventarioResponse" />
+  <xs:element name="listarMovimientosRecientesMovInventario" type="tns:listarMovimientosRecientesMovInventario" />
+  <xs:element name="listarMovimientosRecientesMovInventarioResponse" type="tns:listarMovimientosRecientesMovInventarioResponse" />
+  <xs:element name="listarPorProductoVarianteMovInventario" type="tns:listarPorProductoVarianteMovInventario" />
+  <xs:element name="listarPorProductoVarianteMovInventarioResponse" type="tns:listarPorProductoVarianteMovInventarioResponse" />
+  <xs:element name="listarPorRangoFechasMovInventario" type="tns:listarPorRangoFechasMovInventario" />
+  <xs:element name="listarPorRangoFechasMovInventarioResponse" type="tns:listarPorRangoFechasMovInventarioResponse" />
+  <xs:element name="listarPorTipoMovimientoMovInventario" type="tns:listarPorTipoMovimientoMovInventario" />
+  <xs:element name="listarPorTipoMovimientoMovInventarioResponse" type="tns:listarPorTipoMovimientoMovInventarioResponse" />
+  <xs:element name="listarPorUsuarioMovInventario" type="tns:listarPorUsuarioMovInventario" />
+  <xs:element name="listarPorUsuarioMovInventarioResponse" type="tns:listarPorUsuarioMovInventarioResponse" />
+  <xs:element name="listarTodosMovInventario" type="tns:listarTodosMovInventario" />
+  <xs:element name="listarTodosMovInventarioResponse" type="tns:listarTodosMovInventarioResponse" />
+  <xs:element name="modificarMovInventario" type="tns:modificarMovInventario" />
+  <xs:element name="modificarMovInventarioResponse" type="tns:modificarMovInventarioResponse" />
+  <xs:element name="movimientosInventarioDTO" type="tns:movimientosInventarioDTO" />
+  <xs:element name="obtenerPorIdMovInventario" type="tns:obtenerPorIdMovInventario" />
+  <xs:element name="obtenerPorIdMovInventarioResponse" type="tns:obtenerPorIdMovInventarioResponse" />
+  <xs:element name="productosVariantesDTO" type="tns:productosVariantesDTO" />
+  <xs:element name="registrarIngresoMovInventario" type="tns:registrarIngresoMovInventario" />
+  <xs:element name="registrarIngresoMovInventarioResponse" type="tns:registrarIngresoMovInventarioResponse" />
+  <xs:element name="registrarSalidaMovInventario" type="tns:registrarSalidaMovInventario" />
+  <xs:element name="registrarSalidaMovInventarioResponse" type="tns:registrarSalidaMovInventarioResponse" />
+  <xs:element name="tallasDTO" type="tns:tallasDTO" />
+  <xs:element name="tiposMovimientoDTO" type="tns:tiposMovimientoDTO" />
+  <xs:element name="tiposUsuarioDTO" type="tns:tiposUsuarioDTO" />
+  <xs:element name="usuariosDTO" type="tns:usuariosDTO" />
+  <xs:complexType name="listarPorProductoVarianteMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorProductoVarianteMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:movimientosInventarioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="movimientosInventarioDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="mov_inventario_id" type="xs:int" />
+      <xs:element minOccurs="0" name="cantidad" type="xs:int" />
+      <xs:element minOccurs="0" name="fecha_hora_mov" type="xs:string" />
+      <xs:element minOccurs="0" name="observacion" type="xs:string" />
+      <xs:element minOccurs="0" name="tipo_movimiento" type="tns:tiposMovimientoDTO" />
+      <xs:element minOccurs="0" name="prod_variante" type="tns:productosVariantesDTO" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tiposMovimientoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipoMovimientoId" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="productosVariantesDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
+      <xs:element minOccurs="0" name="SKU" type="xs:string" />
+      <xs:element minOccurs="0" name="stock" type="xs:int" />
+      <xs:element minOccurs="0" name="stock_minimo" type="xs:int" />
+      <xs:element minOccurs="0" name="alerta_stock" type="xs:boolean" />
+      <xs:element minOccurs="0" name="producto_id" type="xs:int" />
+      <xs:element minOccurs="0" name="color" type="tns:coloresDTO" />
+      <xs:element minOccurs="0" name="talla" type="tns:tallasDTO" />
+      <xs:element minOccurs="0" name="url_imagen" type="xs:string" />
+      <xs:element minOccurs="0" name="disponible" type="xs:boolean" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
+      <xs:element minOccurs="0" name="fecha_hora_creacion" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="coloresDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="color_id" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tallasDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="talla_id" type="xs:int" />
+      <xs:element minOccurs="0" name="numero" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="usuariosDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="usuarioId" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+      <xs:element minOccurs="0" name="apePaterno" type="xs:string" />
+      <xs:element minOccurs="0" name="dni" type="xs:string" />
+      <xs:element minOccurs="0" name="telefono" type="xs:string" />
+      <xs:element minOccurs="0" name="correo" type="xs:string" />
+      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
+      <xs:element minOccurs="0" name="contrasenha" type="xs:string" />
+      <xs:element minOccurs="0" name="fechaHoraCreacion" type="xs:string" />
+      <xs:element minOccurs="0" name="tipoUsuario" type="tns:tiposUsuarioDTO" />
+      <xs:element minOccurs="0" name="activo" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tiposUsuarioDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipoUsuarioId" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="insertarMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cantidad" type="xs:int" />
+      <xs:element minOccurs="0" name="observacion" type="xs:string" />
+      <xs:element minOccurs="0" name="tipo_movimiento" type="tns:tiposMovimientoDTO" />
+      <xs:element minOccurs="0" name="prod_variante" type="tns:productosVariantesDTO" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="insertarMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorTipoMovimientoMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipo_movimiento_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorTipoMovimientoMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:movimientosInventarioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarMovimientosRecientesMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="limite" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarMovimientosRecientesMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:movimientosInventarioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="registrarIngresoMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="prod_variante" type="tns:productosVariantesDTO" />
+      <xs:element minOccurs="0" name="cantidad" type="xs:int" />
+      <xs:element minOccurs="0" name="observacion" type="xs:string" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="registrarIngresoMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="movInventarioId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:movimientosInventarioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarTodosMovInventario">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarTodosMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:movimientosInventarioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorRangoFechasMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fecha_inicio" type="tns:localDateTime" />
+      <xs:element minOccurs="0" name="fecha_fin" type="tns:localDateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="localDateTime" final="extension restriction">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarPorRangoFechasMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:movimientosInventarioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modificarMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="mov_inventario_id" type="xs:int" />
+      <xs:element minOccurs="0" name="cantidad" type="xs:int" />
+      <xs:element minOccurs="0" name="observacion" type="xs:string" />
+      <xs:element minOccurs="0" name="tipo_movimiento" type="tns:tiposMovimientoDTO" />
+      <xs:element minOccurs="0" name="prod_variante" type="tns:productosVariantesDTO" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modificarMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="registrarSalidaMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="prod_variante" type="tns:productosVariantesDTO" />
+      <xs:element minOccurs="0" name="cantidad" type="xs:int" />
+      <xs:element minOccurs="0" name="observacion" type="xs:string" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="registrarSalidaMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorUsuarioMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="usuario_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorUsuarioMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:movimientosInventarioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="crearAjusteInventarioMovInventario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="prod_variante" type="tns:productosVariantesDTO" />
+      <xs:element minOccurs="0" name="stockReal" type="xs:int" />
+      <xs:element minOccurs="0" name="observacion" type="xs:string" />
+      <xs:element minOccurs="0" name="usuario" type="tns:usuariosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="crearAjusteInventarioMovInventarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

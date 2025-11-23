@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" targetNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="activarDescuento" type="tns:activarDescuento" />
+  <xs:element name="activarDescuentoResponse" type="tns:activarDescuentoResponse" />
+  <xs:element name="calcularDescuentoDescuento" type="tns:calcularDescuentoDescuento" />
+  <xs:element name="calcularDescuentoDescuentoResponse" type="tns:calcularDescuentoDescuentoResponse" />
+  <xs:element name="desactivarDescuento" type="tns:desactivarDescuento" />
+  <xs:element name="desactivarDescuentoResponse" type="tns:desactivarDescuentoResponse" />
+  <xs:element name="descuentosDTO" type="tns:descuentosDTO" />
+  <xs:element name="esAplicableDescuento" type="tns:esAplicableDescuento" />
+  <xs:element name="esAplicableDescuentoResponse" type="tns:esAplicableDescuentoResponse" />
+  <xs:element name="insertarDescuento" type="tns:insertarDescuento" />
+  <xs:element name="insertarDescuentoResponse" type="tns:insertarDescuentoResponse" />
+  <xs:element name="listarActivasDescuento" type="tns:listarActivasDescuento" />
+  <xs:element name="listarActivasDescuentoResponse" type="tns:listarActivasDescuentoResponse" />
+  <xs:element name="listarTodosDescuento" type="tns:listarTodosDescuento" />
+  <xs:element name="listarTodosDescuentoResponse" type="tns:listarTodosDescuentoResponse" />
+  <xs:element name="listarVigentesDescuento" type="tns:listarVigentesDescuento" />
+  <xs:element name="listarVigentesDescuentoResponse" type="tns:listarVigentesDescuentoResponse" />
+  <xs:element name="modificarDescuento" type="tns:modificarDescuento" />
+  <xs:element name="modificarDescuentoResponse" type="tns:modificarDescuentoResponse" />
+  <xs:element name="obtenerPorIdDescuento" type="tns:obtenerPorIdDescuento" />
+  <xs:element name="obtenerPorIdDescuentoResponse" type="tns:obtenerPorIdDescuentoResponse" />
+  <xs:element name="tiposBeneficioDTO" type="tns:tiposBeneficioDTO" />
+  <xs:element name="tiposCondicionDTO" type="tns:tiposCondicionDTO" />
+  <xs:complexType name="esAplicableDescuento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descuentoId" type="xs:int" />
+      <xs:element minOccurs="0" name="cantidadProductos" type="xs:int" />
+      <xs:element minOccurs="0" name="montoTotal" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="esAplicableDescuentoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarVigentesDescuento">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarVigentesDescuentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:descuentosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="descuentosDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descuento_id" type="xs:int" />
+      <xs:element minOccurs="0" name="descripcion" type="xs:string" />
+      <xs:element minOccurs="0" name="tipo_condicion" type="tns:tiposCondicionDTO" />
+      <xs:element minOccurs="0" name="valor_condicion" type="xs:int" />
+      <xs:element minOccurs="0" name="tipo_beneficio" type="tns:tiposBeneficioDTO" />
+      <xs:element minOccurs="0" name="valor_beneficio" type="xs:int" />
+      <xs:element minOccurs="0" name="fecha_inicio" type="xs:string" />
+      <xs:element minOccurs="0" name="fecha_fin" type="xs:string" />
+      <xs:element minOccurs="0" name="activo" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tiposCondicionDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipo_condicion_id" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tiposBeneficioDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipo_beneficio_id" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="desactivarDescuento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descuentoId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="desactivarDescuentoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarTodosDescuento">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarTodosDescuentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:descuentosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdDescuento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descuentoId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerPorIdDescuentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:descuentosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarActivasDescuento">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarActivasDescuentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:descuentosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="calcularDescuentoDescuento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descuentoId" type="xs:int" />
+      <xs:element minOccurs="0" name="montoTotal" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="calcularDescuentoDescuentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modificarDescuento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descuentoId" type="xs:int" />
+      <xs:element minOccurs="0" name="descripcion" type="xs:string" />
+      <xs:element minOccurs="0" name="tipo_condicion" type="tns:tiposCondicionDTO" />
+      <xs:element minOccurs="0" name="valor_condicion" type="xs:int" />
+      <xs:element minOccurs="0" name="tipo_beneficio" type="tns:tiposBeneficioDTO" />
+      <xs:element minOccurs="0" name="valor_beneficio" type="xs:int" />
+      <xs:element minOccurs="0" name="fecha_inicio" type="xs:string" />
+      <xs:element minOccurs="0" name="fecha_fin" type="xs:string" />
+      <xs:element minOccurs="0" name="activo" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modificarDescuentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="insertarDescuento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descripcion" type="xs:string" />
+      <xs:element minOccurs="0" name="tipo_condicion" type="tns:tiposCondicionDTO" />
+      <xs:element minOccurs="0" name="valor_condicion" type="xs:int" />
+      <xs:element minOccurs="0" name="tipo_beneficio" type="tns:tiposBeneficioDTO" />
+      <xs:element minOccurs="0" name="valor_beneficio" type="xs:int" />
+      <xs:element minOccurs="0" name="fecha_inicio" type="xs:string" />
+      <xs:element minOccurs="0" name="fecha_fin" type="xs:string" />
+      <xs:element minOccurs="0" name="activo" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="insertarDescuentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="activarDescuento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descuentoId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="activarDescuentoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
