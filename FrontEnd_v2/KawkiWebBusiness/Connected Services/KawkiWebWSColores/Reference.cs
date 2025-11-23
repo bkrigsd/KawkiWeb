@@ -25,15 +25,6 @@ namespace KawkiWebBusiness.KawkiWebWSColores {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSColores.listarTodosColorResponse> listarTodosColorAsync(KawkiWebBusiness.KawkiWebWSColores.listarTodosColorRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse modificarColor(KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse> modificarColorAsync(KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/insertarColorRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/insertarColorResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
@@ -52,10 +43,19 @@ namespace KawkiWebBusiness.KawkiWebWSColores {
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/obtenerPorIdColorRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/obtenerPorIdColorResponse" +
             "")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSColores.obtenerPorIdColorResponse> obtenerPorIdColorAsync(KawkiWebBusiness.KawkiWebWSColores.obtenerPorIdColorRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse modificarColor(KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Colores/modificarColorResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse> modificarColorAsync(KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest request);
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -145,47 +145,6 @@ namespace KawkiWebBusiness.KawkiWebWSColores {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarColor", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarColorRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int colorId;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string nombreColor;
-        
-        public modificarColorRequest() {
-        }
-        
-        public modificarColorRequest(int colorId, string nombreColor) {
-            this.colorId = colorId;
-            this.nombreColor = nombreColor;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarColorResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarColorResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public modificarColorResponse() {
-        }
-        
-        public modificarColorResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="insertarColor", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class insertarColorRequest {
         
@@ -255,6 +214,47 @@ namespace KawkiWebBusiness.KawkiWebWSColores {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarColor", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarColorRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int colorId;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string nombreColor;
+        
+        public modificarColorRequest() {
+        }
+        
+        public modificarColorRequest(int colorId, string nombreColor) {
+            this.colorId = colorId;
+            this.nombreColor = nombreColor;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarColorResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarColorResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public modificarColorResponse() {
+        }
+        
+        public modificarColorResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface ColoresChannel : KawkiWebBusiness.KawkiWebWSColores.Colores, System.ServiceModel.IClientChannel {
     }
@@ -304,31 +304,6 @@ namespace KawkiWebBusiness.KawkiWebWSColores {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse KawkiWebBusiness.KawkiWebWSColores.Colores.modificarColor(KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest request) {
-            return base.Channel.modificarColor(request);
-        }
-        
-        public int modificarColor(int colorId, string nombreColor) {
-            KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest inValue = new KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest();
-            inValue.colorId = colorId;
-            inValue.nombreColor = nombreColor;
-            KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse retVal = ((KawkiWebBusiness.KawkiWebWSColores.Colores)(this)).modificarColor(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse> KawkiWebBusiness.KawkiWebWSColores.Colores.modificarColorAsync(KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest request) {
-            return base.Channel.modificarColorAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse> modificarColorAsync(int colorId, string nombreColor) {
-            KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest inValue = new KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest();
-            inValue.colorId = colorId;
-            inValue.nombreColor = nombreColor;
-            return ((KawkiWebBusiness.KawkiWebWSColores.Colores)(this)).modificarColorAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSColores.insertarColorResponse KawkiWebBusiness.KawkiWebWSColores.Colores.insertarColor(KawkiWebBusiness.KawkiWebWSColores.insertarColorRequest request) {
             return base.Channel.insertarColor(request);
         }
@@ -372,6 +347,31 @@ namespace KawkiWebBusiness.KawkiWebWSColores {
             KawkiWebBusiness.KawkiWebWSColores.obtenerPorIdColorRequest inValue = new KawkiWebBusiness.KawkiWebWSColores.obtenerPorIdColorRequest();
             inValue.colorId = colorId;
             return ((KawkiWebBusiness.KawkiWebWSColores.Colores)(this)).obtenerPorIdColorAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse KawkiWebBusiness.KawkiWebWSColores.Colores.modificarColor(KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest request) {
+            return base.Channel.modificarColor(request);
+        }
+        
+        public int modificarColor(int colorId, string nombreColor) {
+            KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest inValue = new KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest();
+            inValue.colorId = colorId;
+            inValue.nombreColor = nombreColor;
+            KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse retVal = ((KawkiWebBusiness.KawkiWebWSColores.Colores)(this)).modificarColor(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse> KawkiWebBusiness.KawkiWebWSColores.Colores.modificarColorAsync(KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest request) {
+            return base.Channel.modificarColorAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSColores.modificarColorResponse> modificarColorAsync(int colorId, string nombreColor) {
+            KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest inValue = new KawkiWebBusiness.KawkiWebWSColores.modificarColorRequest();
+            inValue.colorId = colorId;
+            inValue.nombreColor = nombreColor;
+            return ((KawkiWebBusiness.KawkiWebWSColores.Colores)(this)).modificarColorAsync(inValue);
         }
     }
 }

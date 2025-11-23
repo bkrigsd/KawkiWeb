@@ -75,16 +75,6 @@
       <xs:element minOccurs="0" name="return" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="tieneStockDisponibleProdVariante">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="tieneStockDisponibleProdVarianteResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="actualizarStockProdVariante">
     <xs:sequence>
       <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
@@ -92,6 +82,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="actualizarStockProdVarianteResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tieneStockDisponibleProdVariante">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="prod_variante_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tieneStockDisponibleProdVarianteResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:boolean" />
     </xs:sequence>
@@ -132,22 +132,22 @@
       <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosVariantesDTO" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="listarPorTallaProdVariante">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="talla_id" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="listarPorTallaProdVarianteResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosVariantesDTO" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="listarPorColorProdVariante">
     <xs:sequence>
       <xs:element minOccurs="0" name="color_id" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="listarPorColorProdVarianteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosVariantesDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorTallaProdVariante">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="talla_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorTallaProdVarianteResponse">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:productosVariantesDTO" />
     </xs:sequence>
