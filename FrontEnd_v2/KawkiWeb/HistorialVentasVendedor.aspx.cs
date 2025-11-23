@@ -8,7 +8,7 @@ using KawkiWebBusiness;
 using KawkiWebBusiness.BO;
 using KawkiWebBusiness.KawkiWebWSVentas;
 using KawkiWebBusiness.KawkiWebWSDetalleVentas;
-using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO;
+using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO;
 
 namespace KawkiWeb
 {
@@ -120,15 +120,33 @@ namespace KawkiWeb
                     Session["VentasVendedor"] = new List<ventasDTO>(lista);
                 }
 
-                if (DateTime.TryParse(txtFechaInicio.Text, out DateTime fechaInicio))
+                DateTime? fechaInicioVal = null;
+                DateTime? fechaFinVal = null;
+
+                // Filtro por fecha inicio
+                if (!string.IsNullOrEmpty(txtFechaInicio.Text) && DateTime.TryParse(txtFechaInicio.Text, out DateTime fechaInicio))
                 {
+                    fechaInicioVal = fechaInicio;
                     lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) >= fechaInicio).ToList();
                 }
 
-                if (DateTime.TryParse(txtFechaFin.Text, out DateTime fechaFin))
+                // Filtro por fecha fin
+                if (!string.IsNullOrEmpty(txtFechaFin.Text) && DateTime.TryParse(txtFechaFin.Text, out DateTime fechaFin))
                 {
-                    fechaFin = fechaFin.AddDays(1).AddSeconds(-1);
-                    lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) <= fechaFin).ToList();
+                    fechaFinVal = fechaFin.AddDays(1).AddSeconds(-1);
+                    lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) <= fechaFinVal).ToList();
+                }
+
+                // Validar que fecha inicio no sea mayor a fecha fin
+                if (fechaInicioVal.HasValue && fechaFinVal.HasValue && fechaInicioVal > fechaFinVal)
+                {
+                    lblErrorFiltros.CssClass = "text-danger d-block mt-2";
+                    lblErrorFiltros.Text = "La fecha de inicio debe ser menor que la fecha de fin.";
+                    lblErrorFiltros.Visible = true;
+                    gvVentas.DataSource = null;
+                    gvVentas.DataBind();
+                    ResetearEstadisticas();
+                    return; // Cancelar búsqueda
                 }
 
                 if (hayFiltros)
@@ -137,15 +155,31 @@ namespace KawkiWeb
                 }
 
                 // Transformar para GridView
-                var gvLista = lista.Select(v => new
+                var gvLista = new List<dynamic>();
+
+                foreach (var v in lista)
                 {
-                    venta_id = v.venta_id,
-                    Fecha = DateTime.Parse(v.fecha_hora_creacion),
-                    descuento = v.descuento?.descripcion ?? "Sin descuento",
-                    redSocial = v.redSocial?.nombre ?? "N/D",
-                    CantidadProductos = v.detalles?.Length ?? 0,
-                    MontoTotal = v.total
-                }).OrderByDescending(x => x.Fecha).ToList();
+                    try
+                    {
+                        // Obtener los detalles de ESTA venta para contar TOTAL DE UNIDADES
+                        var detallesVenta = detalleVentasBO.ListarPorVentaId(v.venta_id);
+                        int cantidadProductos = detallesVenta != null ? detallesVenta.Sum(d => d.cantidad) : 0;
+
+                        gvLista.Add(new
+                        {
+                            venta_id = v.venta_id,
+                            Fecha = DateTime.Parse(v.fecha_hora_creacion),
+                            descuento = v.descuento?.descripcion ?? "Sin descuento",
+                            redSocial = v.redSocial?.nombre ?? "N/D",
+                            CantidadProductos = cantidadProductos,  // ← Ahora desde DetalleVentas
+                            MontoTotal = v.total
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error en venta {v.venta_id}: {ex.Message}");
+                    }
+                }
 
                 gvVentas.DataSource = gvLista;
                 gvVentas.DataBind();
@@ -230,13 +264,35 @@ namespace KawkiWeb
 
                 if (detallesVenta != null && detallesVenta.Count > 0)
                 {
-                    var detalles = detallesVenta.Select(d => new
+                    var detalles = new List<dynamic>();
+
+                    foreach (var d in detallesVenta)
                     {
-                        Producto = ObtenerNombreProductoCompleto(d.prodVariante),
-                        Cantidad = d.cantidad,
-                        PrecioUnitario = d.precio_unitario,
-                        Subtotal = d.subtotal
-                    }).ToList();
+                        // d.prodVariante es un int (el ID de la variante)
+                        System.Diagnostics.Debug.WriteLine($"DEBUG: d.prodVariante = {d.prodVariante} (tipo: {d.prodVariante?.GetType().Name})");
+
+                        // Obtener el DTO completo
+                        var varianteCompleta = productosVariantesBO.ObtenerPorId(d.prodVariante.prod_variante_id);
+
+                        System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta es NULL? {varianteCompleta == null}");
+
+                        if (varianteCompleta != null)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta.producto_id = {varianteCompleta.producto_id}");
+                            System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta.color?.nombre = '{varianteCompleta.color?.nombre}'");
+                            System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta.talla?.nombre = '{varianteCompleta.talla?.numero}'");
+                        }
+
+                        string nombreProducto = ObtenerNombreProductoCompleto(varianteCompleta);
+
+                        detalles.Add(new
+                        {
+                            Producto = nombreProducto,
+                            Cantidad = d.cantidad,
+                            PrecioUnitario = d.precio_unitario,
+                            Subtotal = d.subtotal
+                        });
+                    }
 
                     gvDetalleProductos.DataSource = detalles;
                     gvDetalleProductos.DataBind();
@@ -324,40 +380,55 @@ namespace KawkiWeb
                 MostrarDetalle(idVenta);
             }
         }
-   
-        /// <summary>
-        /// Construye el nombre completo del producto: "Categoría Estilo Color"
-        /// Ejemplo: "Oxford Clásico Beige"
-        /// </summary>
+
         private string ObtenerNombreProductoCompleto(productosVariantesDTO variante)
         {
-            if (variante == null) return "N/D";
+            if (variante == null)
+            {
+                System.Diagnostics.Debug.WriteLine("DEBUG: variante es NULL");
+                return "N/D - Variante nula";
+            }
 
             try
             {
                 int productoId = variante.producto_id;
+                System.Diagnostics.Debug.WriteLine($"DEBUG: productoId = {productoId}");
 
-                if (productoId == 0) return "Producto N/D";
+                if (productoId == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("DEBUG: productoId es 0");
+                    return "Producto N/D - ID inválido";
+                }
 
                 // Obtener el producto padre
                 var producto = productosBO.ObtenerPorIdProducto(productoId);
+                System.Diagnostics.Debug.WriteLine($"DEBUG: Producto encontrado? {(producto != null ? "SÍ" : "NO")}");
 
-                if (producto == null) return "Producto N/D";
+                if (producto == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"DEBUG: Producto ID {productoId} NO encontrado en BD");
+                    return $"Producto N/D - ID {productoId} no existe";
+                }
 
                 // Construir nombre: Categoría + Estilo + Color
                 string categoria = producto.categoria?.nombre ?? "";
                 string estilo = producto.estilo?.nombre ?? "";
                 string color = variante.color?.nombre ?? "";
 
-                // Formato: "Oxford Clásico Beige"
+                System.Diagnostics.Debug.WriteLine($"DEBUG: categoria='{categoria}', estilo='{estilo}', color='{color}'");
+
+                // Formato: "Oxford Clásico Beige M"
                 string nombreCompleto = $"{categoria} {estilo} {color}".Trim();
+
+                System.Diagnostics.Debug.WriteLine($"DEBUG: nombreCompleto = '{nombreCompleto}'");
 
                 return nombreCompleto;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error en ObtenerNombreProductoCompleto: {ex.Message}");
-                return "N/D";
+                System.Diagnostics.Debug.WriteLine($"ERROR en ObtenerNombreProductoCompleto: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"ERROR StackTrace: {ex.StackTrace}");
+                return $"ERROR: {ex.Message}";
             }
         }
 

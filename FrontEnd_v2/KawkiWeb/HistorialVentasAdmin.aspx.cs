@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -90,9 +91,7 @@ namespace KawkiWeb
             try
             {
                 var lista = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
-
                 var listaCompleta = new List<ventasDTO>(lista);
-
                 // Filtro por fecha inicio
                 if (DateTime.TryParse(txtFechaInicio.Text, out DateTime inicio))
                 {
@@ -112,7 +111,6 @@ namespace KawkiWeb
                     if (!string.IsNullOrEmpty(ddlVendedor.SelectedValue))
                     {
                         string vendedor = ddlVendedor.SelectedValue;
-
                         lista = lista.Where(v =>
                             $"{v.usuario?.nombre} {v.usuario?.apePaterno}" == vendedor
                         ).ToList();
@@ -121,9 +119,8 @@ namespace KawkiWeb
 
                 // Determinar si hay filtros activos
                 bool hayFiltros = !string.IsNullOrEmpty(txtFechaInicio.Text) ||
-                                  !string.IsNullOrEmpty(txtFechaFin.Text) ||
-                                  !string.IsNullOrEmpty(ddlVendedor.SelectedValue);
-
+                          !string.IsNullOrEmpty(txtFechaFin.Text) ||
+                          !string.IsNullOrEmpty(ddlVendedor.SelectedValue);
                 // Si NO hay filtros, usar la lista completa para estadísticas
                 Session["VentasFiltradas"] = hayFiltros ? lista : listaCompleta;
 
@@ -132,18 +129,13 @@ namespace KawkiWeb
                 {
                     IdVenta = v.venta_id,
                     Fecha = DateTime.Parse(v.fecha_hora_creacion),
-
                     Vendedor = $"{v.usuario?.nombre} {v.usuario?.apePaterno}",
-
                     Canal = v.redSocial?.nombre,
-
                     // NUEVAS COLUMNAS
                     //Descuento = v.descuento?.descripcion,
                     //EsValida = v.esValida ? "Sí" : "No",
-
                     MontoTotal = v.total
                 }).ToList();
-
                 // ORDENAMIENTO
                 if (!string.IsNullOrEmpty(SortField))
                 {
@@ -152,15 +144,11 @@ namespace KawkiWeb
                     else
                         gvLista = gvLista.OrderByDescending(x => x.GetType().GetProperty(SortField).GetValue(x)).ToList();
                 }
-
                 gvVentas.DataSource = gvLista;
                 gvVentas.DataBind();
-
                 //Session["VentasFiltradas"] = lista;
-
                 lblContador.Text = $"{gvLista.Count} ventas encontradas";
                 lblMensaje.Text = "";
-
                 ActualizarEstadisticas();
             }
             catch (Exception ex)
