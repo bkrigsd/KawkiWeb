@@ -522,15 +522,15 @@ BEGIN
         NOMBRE_USUARIO, CONTRASENHA, FECHA_HORA_CREACION, TIPO_USUARIO_ID, ACTIVO
     ) VALUES
     -- Vendedor 1
-    ('Juan', N'Bazán', '77045687', '910789123', 'juan@kawki.com', 'juanbaz', '20216686', GETDATE(), 1, 1),
+    ('Juan', N'Bazán', '77045687', '910789123', 'juan@kawki.com', 'juanbaz', '$2a$12$LmNG5JeVp.FrQUORGRHFUOu2.Xc7bdO84LpUL5hpAW1q5x6pNJKk2', GETDATE(), 1, 1),
     
     -- Vendedor 2
-    ('Helen', 'Castillo', '74258741', '986521478', 'helen@kawki.com', 'helencas', '20202079', GETDATE(), 1, 1),
+    ('Helen', 'Castillo', '74258741', '986521478', 'helen@kawki.com', 'helencas', '$2a$12$nE20hX4AeLw/mdar4VJQpeTSMBjhcy8eYIeEb5V6VFQtMl5YZh/1G', GETDATE(), 1, 1),
     
     -- Administrador 1
-    ('Fabio', 'Ingaruca', '75412365', '985963214', 'fabio@kawki.com', 'fabioing', '20216590', GETDATE(), 2, 1),
+    ('Fabio', 'Ingaruca', '75412365', '985963214', 'fabio@kawki.com', 'fabioing', '$2a$12$ncmjIED2Eod7uWXEgtGXKeENoNdObQvkbYZxRlT9S4ptx9gRsla5y', GETDATE(), 2, 1),
     
     -- Administrador 2
-    ('Angelina', 'Fernandez', '74859632', '984712365', 'angelina@kawki.com', 'angelinafer', '20212667', GETDATE(), 2, 1);
+    ('Angelina', 'Fernandez', '74859632', '984712365', 'angelina@kawki.com', 'angelinafer', '$2a$12$pcqmd/c0HXCvJjs6YdnH4OjmMCah4iOCTmN6tU.aXhSSjZ/oD0bBq', GETDATE(), 2, 1);
 END
 GO

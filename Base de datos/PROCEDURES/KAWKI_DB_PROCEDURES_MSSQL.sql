@@ -121,8 +121,12 @@ END
 GO
 
 -- =====================================================
--- LISTAR VARIANTES DE PRODUCTO POR PRODUCTO_ID
+-- SP_LISTAR_VARIANTES_POR_PRODUCTO - MS SQL (ACTUALIZADO CON JOINS)
+-- Lista variantes de un producto específico con datos completos
 -- =====================================================
+USE KAWKI_DB;
+GO
+
 IF OBJECT_ID('SP_LISTAR_VARIANTES_POR_PRODUCTO', 'P') IS NOT NULL
     DROP PROCEDURE SP_LISTAR_VARIANTES_POR_PRODUCTO;
 GO
@@ -134,20 +138,36 @@ BEGIN
     SET NOCOUNT ON;
     
     SELECT 
-        PROD_VARIANTE_ID,
-        SKU,
-        STOCK,
-        STOCK_MINIMO,
-        ALERTA_STOCK,
-        PRODUCTO_ID,
-        COLOR_ID,
-        TALLA_ID,
-        URL_IMAGEN,
-        FECHA_HORA_CREACION,
-        DISPONIBLE,
-        USUARIO_ID
-    FROM PRODUCTOS_VARIANTES
-    WHERE PRODUCTO_ID = @p_producto_id;
+        -- Campos de la variante de producto
+        pv.PROD_VARIANTE_ID,
+        pv.SKU,
+        pv.STOCK,
+        pv.STOCK_MINIMO,
+        pv.ALERTA_STOCK,
+        pv.PRODUCTO_ID,
+        pv.URL_IMAGEN,
+        pv.FECHA_HORA_CREACION,
+        pv.DISPONIBLE,
+        
+        -- Color completo (JOIN)
+        c.COLOR_ID,
+        c.NOMBRE AS COLOR_NOMBRE,
+        
+        -- Talla completa (JOIN)
+        t.TALLA_ID,
+        t.NUMERO AS TALLA_NUMERO,
+        
+        -- Usuario de la variante (JOIN)
+        u.USUARIO_ID,
+        u.NOMBRE AS USUARIO_NOMBRE,
+        u.APE_PATERNO AS USUARIO_APE_PATERNO
+        
+    FROM PRODUCTOS_VARIANTES pv
+    INNER JOIN COLORES c ON pv.COLOR_ID = c.COLOR_ID
+    INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+    INNER JOIN USUARIOS u ON pv.USUARIO_ID = u.USUARIO_ID
+    WHERE pv.PRODUCTO_ID = @p_producto_id
+    ORDER BY pv.PROD_VARIANTE_ID;
 END
 GO
 
@@ -294,93 +314,20 @@ BEGIN
 END
 GO
 
-
 -- =====================================================
--- 3. SP_CAMBIAR_CONTRASENHA
--- Cambia la contraseña de un usuario validando la actual
--- =====================================================
-IF OBJECT_ID('dbo.SP_CAMBIAR_CONTRASENHA', 'P') IS NOT NULL
-    DROP PROCEDURE dbo.SP_CAMBIAR_CONTRASENHA;
-GO
-
-CREATE PROCEDURE dbo.SP_CAMBIAR_CONTRASENHA
-    @p_usuario_id INT,
-    @p_contrasenha_actual VARCHAR(255),
-    @p_contrasenha_nueva VARCHAR(255),
-    @p_resultado INT OUTPUT,
-    @p_mensaje VARCHAR(200) OUTPUT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    
-    DECLARE @v_contrasenha_bd VARCHAR(255);
-    DECLARE @v_usuario_existe INT;
-    
-    -- Códigos de resultado:
-    -- 0 = Éxito
-    -- 1 = Usuario no existe
-    -- 2 = Contraseña actual incorrecta
-    -- 3 = Nueva contraseña inválida (menos de 8 caracteres)
-    
-    -- Verificar que el usuario existe
-    SELECT @v_usuario_existe = COUNT(*)
-    FROM USUARIOS
-    WHERE USUARIO_ID = @p_usuario_id;
-    
-    IF @v_usuario_existe = 0
-    BEGIN
-        SET @p_resultado = 1;
-        SET @p_mensaje = 'Usuario no encontrado';
-        RETURN;
-    END
-    
-    -- Obtener contraseña actual de la BD
-    SELECT @v_contrasenha_bd = CONTRASENHA
-    FROM USUARIOS
-    WHERE USUARIO_ID = @p_usuario_id;
-    
-    -- Verificar que la contraseña actual coincide
-    IF @v_contrasenha_bd != @p_contrasenha_actual
-    BEGIN
-        SET @p_resultado = 2;
-        SET @p_mensaje = 'La contraseña actual es incorrecta';
-        RETURN;
-    END
-    
-    -- Validar que la nueva contraseña tenga al menos 8 caracteres
-    IF LEN(@p_contrasenha_nueva) < 8
-    BEGIN
-        SET @p_resultado = 3;
-        SET @p_mensaje = 'La nueva contraseña debe tener al menos 8 caracteres';
-        RETURN;
-    END
-    
-    -- Actualizar la contraseña
-    UPDATE USUARIOS
-    SET CONTRASENHA = @p_contrasenha_nueva
-    WHERE USUARIO_ID = @p_usuario_id;
-    
-    SET @p_resultado = 0;
-    SET @p_mensaje = 'Contraseña actualizada correctamente';
-END
-GO
-
-
--- =====================================================
--- 4. SP_AUTENTICAR_USUARIO
--- Autentica un usuario por nombre de usuario o correo
--- Retorna los datos del usuario si las credenciales son válidas
+-- SP_OBTENER_USUARIO_POR_NOMBRE_O_CORREO (NUEVO)
+-- Obtiene usuario por nombre de usuario o correo
+-- SIN VALIDAR CONTRASEÑA (eso lo hace Java con BCrypt)
 -- =====================================================
 USE KAWKI_DB;
 GO
 
-IF OBJECT_ID('dbo.SP_AUTENTICAR_USUARIO', 'P') IS NOT NULL
-    DROP PROCEDURE dbo.SP_AUTENTICAR_USUARIO;
+IF OBJECT_ID('dbo.SP_OBTENER_USUARIO_POR_NOMBRE_O_CORREO', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.SP_OBTENER_USUARIO_POR_NOMBRE_O_CORREO;
 GO
 
-CREATE PROCEDURE dbo.SP_AUTENTICAR_USUARIO
-    @p_nombre_usuario_o_correo VARCHAR(100),
-    @p_contrasenha VARCHAR(255)
+CREATE PROCEDURE dbo.SP_OBTENER_USUARIO_POR_NOMBRE_O_CORREO
+    @p_nombre_usuario_o_correo VARCHAR(100)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -394,11 +341,11 @@ BEGIN
         u.TELEFONO,
         u.CORREO,
         u.NOMBRE_USUARIO,
-        u.CONTRASENHA,
+        u.CONTRASENHA, -- Retorna el hash para que Java lo valide con BCrypt
         u.FECHA_HORA_CREACION,
         u.ACTIVO,
         
-        -- Tipo de usuario completo (JOIN) - TODOS LOS CAMPOS (id y nombre)
+        -- Tipo de usuario completo (JOIN)
         tu.TIPO_USUARIO_ID,
         tu.NOMBRE AS TIPO_USUARIO_NOMBRE
         
@@ -406,10 +353,10 @@ BEGIN
     INNER JOIN TIPOS_USUARIO tu ON u.TIPO_USUARIO_ID = tu.TIPO_USUARIO_ID
     WHERE (u.NOMBRE_USUARIO = @p_nombre_usuario_o_correo 
            OR u.CORREO = @p_nombre_usuario_o_correo)
-    AND u.CONTRASENHA = @p_contrasenha
     AND u.ACTIVO = 1;
 END
 GO
+
 
 -- =====================================================
 -- STORED PROCEDURES PARA DESCUENTOS - MSSQL (Optimizados)
