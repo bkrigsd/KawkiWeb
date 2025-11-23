@@ -1,197 +1,374 @@
-﻿using KawkiWebBusiness.KawkiWebWSVentas;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using KawkiWebBusiness;
+using KawkiWebBusiness.BO;
+using KawkiWebBusiness.KawkiWebWSVentas;
+using KawkiWebBusiness.KawkiWebWSDetalleVentas;
+using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO;
 
 namespace KawkiWeb
 {
     public partial class HistorialVentasVendedor : Page
     {
-        private string VendedorActual
+        private VentasBO ventasBO = new VentasBO();
+        private ComprobantesPagoBO comprobantesBO = new ComprobantesPagoBO();
+        private ProductosBO productosBO = new ProductosBO();
+        private DetalleVentasBO detalleVentasBO = new DetalleVentasBO();
+        private ProductosVariantesBO productosVariantesBO = new ProductosVariantesBO();
+
+        private string UsuarioActual
         {
-            get { return Session["Usuario"] != null ? Session["Usuario"].ToString() : ""; }
+            get { return Session["Usuario"]?.ToString() ?? ""; }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            // AntiCaché
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+
             if (!IsPostBack)
             {
-                // Verificar que el usuario sea vendedor
-                if (Session["Rol"] == null || Session["Rol"].ToString() != "vendedor")
+                string rol = Session["Rol"] as string;
+
+                // VALIDACIÓN DE SESIÓN
+                if (string.IsNullOrEmpty(rol))
                 {
-                    Response.Redirect("Login.aspx");
+                    Response.Redirect("Error404.aspx", false);
                     return;
                 }
 
-                // Mostrar nombre del vendedor
-                lblNombreVendedor.Text = VendedorActual;
-
-                CargarVentas();
-            }
-        }
-        private void ActualizarEstadisticas()
-        {
-            int totalVentas = gvVentas.Rows.Count;
-            int totalProductos = 0;
-            decimal totalMonto = 0;
-
-            foreach (GridViewRow row in gvVentas.Rows)
-            {
-                // Cantidad de productos (columna 4)
-                int cantidad = int.Parse(row.Cells[4].Text);
-                totalProductos += cantidad;
-
-                // Obtener el monto desde DataKeys o desde un HiddenField
-                HiddenField hfMonto = (HiddenField)row.FindControl("hfMontoTotal");
-                if (hfMonto != null)
+                // Si es admin → redirigir
+                if (rol.ToLower() == "admin")
                 {
-                    decimal monto = decimal.Parse(hfMonto.Value);
-                    totalMonto += monto;
+                    Response.Redirect("HistorialVentasAdmin.aspx", false);
+                    return;
+                }
+
+                try
+                {
+                    lblNombreVendedor.Text = UsuarioActual;
+                    CargarVentas();
+                }
+                catch (Exception ex)
+                {
+                    MostrarError("Error al cargar la página: " + ex.Message);
                 }
             }
-
-            lblMontoTotal.Text = $"S/ {totalMonto:0.00}";
-            lblTotalVentas.Text = totalVentas.ToString();
-            lblPromedio.Text = totalVentas > 0
-                ? $"S/ {(totalMonto / totalVentas):0.00}"
-                : "S/ 0.00";
         }
 
-
-        /// <summary>
-        /// Carga las ventas del vendedor según los filtros aplicados
-        /// </summary>
         private void CargarVentas()
         {
             try
             {
-                var cliente = new KawkiWebBusiness.KawkiWebWSVentas.VentasClient();
-                var respuesta = cliente.listarTodosVenta();
+                // Obtener el ID del usuario directamente de la sesión (ya está guardado en Login)
+                int idUsuarioActual = 0;
 
-                if (respuesta == null || respuesta.Length == 0)
+                if (Session["UsuarioId"] != null)
+                {
+                    idUsuarioActual = Convert.ToInt32(Session["UsuarioId"]);
+                }
+                else
+                {
+                    lblMensaje.CssClass = "text-danger mb-2 d-block";
+                    lblMensaje.Text = "Error: No se encontró ID de usuario en sesión. Por favor, inicia sesión nuevamente.";
+                    gvVentas.DataSource = null;
+                    gvVentas.DataBind();
+                    ResetearEstadisticas();
+                    return;
+                }
+
+                string usuarioLogin = UsuarioActual;
+                string usuarioNombreCompleto = Session["UsuarioNombreCompleto"]?.ToString() ?? "Usuario desconocido";
+
+                lblMensaje.CssClass = "text-info mb-2 d-block";
+
+                // Obtener todas las ventas
+                var todasLasVentas = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
+
+                // Filtrar por usuarioId
+                var ventasVendedor = todasLasVentas
+                    .Where(v => v.usuario != null && v.usuario.usuarioId == idUsuarioActual)
+                    .ToList();
+
+                if (!ventasVendedor.Any())
                 {
                     gvVentas.DataSource = null;
                     gvVentas.DataBind();
                     lblContador.Text = "0 ventas encontradas";
-                    lblMensaje.Text = "No tienes ventas registradas.";
+                    ResetearEstadisticas();
                     return;
                 }
 
-                var lista = respuesta.Select(v =>
-                {
-                    // Convertimos fecha string → DateTime
-                    DateTime fecha = DateTime.MinValue;
-                    DateTime.TryParse(v.fecha_hora_creacion, out fecha);
+                var lista = ventasVendedor;
 
-                    return new
+                // Aplicar filtros de fecha
+                bool hayFiltros = !string.IsNullOrEmpty(txtFechaInicio.Text) ||
+                                  !string.IsNullOrEmpty(txtFechaFin.Text);
+
+                if (!hayFiltros)
+                {
+                    Session["VentasVendedor"] = new List<ventasDTO>(lista);
+                }
+
+                DateTime? fechaInicioVal = null;
+                DateTime? fechaFinVal = null;
+
+                // Filtro por fecha inicio
+                if (!string.IsNullOrEmpty(txtFechaInicio.Text) && DateTime.TryParse(txtFechaInicio.Text, out DateTime fechaInicio))
+                {
+                    fechaInicioVal = fechaInicio;
+                    lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) >= fechaInicio).ToList();
+                }
+
+                // Filtro por fecha fin
+                if (!string.IsNullOrEmpty(txtFechaFin.Text) && DateTime.TryParse(txtFechaFin.Text, out DateTime fechaFin))
+                {
+                    fechaFinVal = fechaFin.AddDays(1).AddSeconds(-1);
+                    lista = lista.Where(v => DateTime.Parse(v.fecha_hora_creacion) <= fechaFinVal).ToList();
+                }
+
+                // Validar que fecha inicio no sea mayor a fecha fin
+                if (fechaInicioVal.HasValue && fechaFinVal.HasValue && fechaInicioVal > fechaFinVal)
+                {
+                    lblErrorFiltros.CssClass = "text-danger d-block mt-2";
+                    lblErrorFiltros.Text = "La fecha de inicio debe ser menor que la fecha de fin.";
+                    lblErrorFiltros.Visible = true;
+                    gvVentas.DataSource = null;
+                    gvVentas.DataBind();
+                    ResetearEstadisticas();
+                    return; // Cancelar búsqueda
+                }
+
+                if (hayFiltros)
+                {
+                    Session["VentasVendedor"] = lista;
+                }
+
+                // Transformar para GridView
+                var gvLista = new List<dynamic>();
+
+                foreach (var v in lista)
+                {
+                    try
                     {
-                        v.venta_id,
-                        Fecha = fecha,  // lo guardamos como DateTime REAL
-                        v.descuento,
-                        v.redSocial,
-                        CantidadProductos = v.detalles?.Length ?? 0,
-                        MontoTotal = v.total
-                    };
-                }).ToList();
+                        // Obtener los detalles de ESTA venta para contar TOTAL DE UNIDADES
+                        var detallesVenta = detalleVentasBO.ListarPorVentaId(v.venta_id);
+                        int cantidadProductos = detallesVenta != null ? detallesVenta.Sum(d => d.cantidad) : 0;
 
-                // =========================
-                // FILTRO POR FECHAS
-                // =========================
-                if (DateTime.TryParse(txtFechaInicio.Text, out DateTime fechaInicio))
-                {
-                    lista = lista.Where(v => v.Fecha >= fechaInicio).ToList();
+                        gvLista.Add(new
+                        {
+                            venta_id = v.venta_id,
+                            Fecha = DateTime.Parse(v.fecha_hora_creacion),
+                            descuento = v.descuento?.descripcion ?? "Sin descuento",
+                            redSocial = v.redSocial?.nombre ?? "N/D",
+                            CantidadProductos = cantidadProductos,  // ← Ahora desde DetalleVentas
+                            MontoTotal = v.total
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error en venta {v.venta_id}: {ex.Message}");
+                    }
                 }
 
-                if (DateTime.TryParse(txtFechaFin.Text, out DateTime fechaFin))
-                {
-                    fechaFin = fechaFin.AddDays(1).AddSeconds(-1);
-                    lista = lista.Where(v => v.Fecha <= fechaFin).ToList();
-                }
-
-                gvVentas.DataSource = lista;
+                gvVentas.DataSource = gvLista;
                 gvVentas.DataBind();
 
-                lblContador.Text = $"{lista.Count} ventas encontradas";
-                lblMensaje.Text = lista.Count == 0
-                    ? "No tienes ventas registradas en este rango de fechas."
-                    : "";
+                lblContador.Text = $"{gvLista.Count} ventas encontradas";
+
                 ActualizarEstadisticas();
             }
             catch (Exception ex)
             {
                 lblMensaje.CssClass = "text-danger mb-2 d-block";
-                lblMensaje.Text = $"Error al cargar ventas: {ex.Message}";
+                lblMensaje.Text = $"<strong>ERROR:</strong> {ex.Message}";
+                gvVentas.DataSource = null;
+                gvVentas.DataBind();
+                ResetearEstadisticas();
             }
         }
 
-        /// <summary>
-        /// Obtiene el detalle de productos de una venta (simulado)
-        /// </summary>
-        private DataTable ObtenerDetalleVenta(int idVenta)
+
+
+        // También actualiza MostrarDetalle:
+        private void MostrarDetalle(int idVenta)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Producto", typeof(string));
-            dt.Columns.Add("Cantidad", typeof(int));
-            dt.Columns.Add("PrecioUnitario", typeof(decimal));
-            dt.Columns.Add("Subtotal", typeof(decimal));
+            try
+            {
+                var venta = ventasBO.ObtenerPorIdVenta(idVenta);
 
-            // Datos de ejemplo según el ID
-            if (idVenta == 1)
-            {
-                dt.Rows.Add("Producto A", 2, 50.25m, 100.50m);
-                dt.Rows.Add("Producto B", 1, 50.00m, 50.00m);
-            }
-            else if (idVenta == 2)
-            {
-                dt.Rows.Add("Producto C", 3, 45.00m, 135.00m);
-                dt.Rows.Add("Producto D", 2, 70.00m, 140.00m);
-            }
-            else
-            {
-                dt.Rows.Add("Producto X", 1, 100.00m, 100.00m);
-                dt.Rows.Add("Producto Y", 1, 50.00m, 50.00m);
-            }
+                if (venta == null)
+                {
+                    MostrarError("No se encontró la venta.");
+                    return;
+                }
 
-            return dt;
+                // Obtener el ID del usuario actual de la sesión
+                int idUsuarioActual = 0;
+                if (Session["UsuarioId"] != null)
+                {
+                    idUsuarioActual = Convert.ToInt32(Session["UsuarioId"]);
+                }
+
+                // Verificar que la venta pertenece al usuario actual
+                if (venta.usuario?.usuarioId != idUsuarioActual)
+                {
+                    MostrarError("No tienes permiso para ver esta venta.");
+                    return;
+                }
+
+                // Buscar el comprobante asociado a esta venta
+                var todosComprobantes = comprobantesBO.ListarTodosComprobantes();
+                var comprobante = todosComprobantes?.FirstOrDefault(c => c.venta?.venta_id == idVenta);
+
+                // Datos de la venta
+                lblIdVentaDetalle.Text = venta.venta_id.ToString();
+                lblFechaDetalle.Text = DateTime.Parse(venta.fecha_hora_creacion).ToString("dd/MM/yyyy HH:mm");
+                lblCanalDetalle.Text = venta.redSocial?.nombre ?? "N/D";
+                lblTotalDetalle.Text = $"S/ {venta.total:N2}";
+
+                // Datos del cliente desde el comprobante
+                if (comprobante != null)
+                {
+                    lblClienteDetalle.Text = !string.IsNullOrEmpty(comprobante.nombre_cliente)
+                        ? comprobante.nombre_cliente
+                        : (comprobante.razon_social_cliente ?? "N/D");
+
+                    lblTelefonoDetalle.Text = !string.IsNullOrEmpty(comprobante.telefono_cliente)
+                        ? comprobante.telefono_cliente
+                        : "N/D";
+
+                    lblDireccionDetalle.Text = !string.IsNullOrEmpty(comprobante.direccion_fiscal_cliente)
+                        ? comprobante.direccion_fiscal_cliente
+                        : "N/D";
+                }
+                else
+                {
+                    lblClienteDetalle.Text = "N/D - Sin comprobante";
+                    lblTelefonoDetalle.Text = "N/D";
+                    lblDireccionDetalle.Text = "N/D";
+                }
+
+                // Obtener los detalles POR SEPARADO
+                var detallesVenta = detalleVentasBO.ListarPorVentaId(idVenta);
+
+                if (detallesVenta != null && detallesVenta.Count > 0)
+                {
+                    var detalles = new List<dynamic>();
+
+                    foreach (var d in detallesVenta)
+                    {
+                        // d.prodVariante es un int (el ID de la variante)
+                        System.Diagnostics.Debug.WriteLine($"DEBUG: d.prodVariante = {d.prodVariante} (tipo: {d.prodVariante?.GetType().Name})");
+
+                        // Obtener el DTO completo
+                        var varianteCompleta = productosVariantesBO.ObtenerPorId(d.prodVariante.prod_variante_id);
+
+                        System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta es NULL? {varianteCompleta == null}");
+
+                        if (varianteCompleta != null)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta.producto_id = {varianteCompleta.producto_id}");
+                            System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta.color?.nombre = '{varianteCompleta.color?.nombre}'");
+                            System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta.talla?.nombre = '{varianteCompleta.talla?.numero}'");
+                        }
+
+                        string nombreProducto = ObtenerNombreProductoCompleto(varianteCompleta);
+
+                        detalles.Add(new
+                        {
+                            Producto = nombreProducto,
+                            Cantidad = d.cantidad,
+                            PrecioUnitario = d.precio_unitario,
+                            Subtotal = d.subtotal
+                        });
+                    }
+
+                    gvDetalleProductos.DataSource = detalles;
+                    gvDetalleProductos.DataBind();
+                }
+                else
+                {
+                    gvDetalleProductos.DataSource = null;
+                    gvDetalleProductos.DataBind();
+                }
+
+                pnlDetalle.Visible = true;
+
+                // Scroll al detalle
+                ScriptManager.RegisterStartupScript(this, GetType(), "ScrollToDetail",
+                    "$('html, body').animate({ scrollTop: $('#" + pnlDetalle.ClientID + "').offset().top - 100 }, 500);",
+                    true);
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error al cargar detalle: " + ex.Message + "<br/>" + ex.StackTrace);
+            }
         }
 
-        /// <summary>
-        /// Obtiene los datos completos de una venta (simulado)
-        /// </summary>
-        private DataRow ObtenerDatosVenta(int idVenta)
+        private void ActualizarEstadisticas()
         {
-            // TODO: Reemplazar con consulta real que incluya todos los datos
-            DataTable dt = new DataTable();
-            dt.Columns.Add("IdVenta", typeof(int));
-            dt.Columns.Add("Fecha", typeof(DateTime));
-            dt.Columns.Add("Cliente", typeof(string));
-            dt.Columns.Add("Telefono", typeof(string));
-            dt.Columns.Add("Direccion", typeof(string));
-            dt.Columns.Add("Canal", typeof(string));
-            dt.Columns.Add("MontoTotal", typeof(decimal));
+            try
+            {
+                var ventas = Session["VentasVendedor"] as List<ventasDTO>;
 
-            // Datos de ejemplo
-            dt.Rows.Add(1, DateTime.Now.AddDays(-7), "Ana Torres", "987654321", "Av. Principal 123, Lima", "Instagram", 150.50m);
-            dt.Rows.Add(2, DateTime.Now.AddDays(-5), "Carmen Soto", "912345678", "Jr. Los Olivos 456, Surco", "Facebook", 275.00m);
-            dt.Rows.Add(3, DateTime.Now.AddDays(-3), "Miguel Ruiz", "998877665", "Calle Las Flores 789, Miraflores", "WhatsApp", 120.00m);
+                if (ventas == null || !ventas.Any())
+                {
+                    ResetearEstadisticas();
+                    return;
+                }
 
-            return dt.AsEnumerable().FirstOrDefault(row => row.Field<int>("IdVenta") == idVenta);
+                decimal montoTotal = ventas.Sum(v => Convert.ToDecimal(v.total));
+                int cantidad = ventas.Count;
+                decimal promedio = montoTotal / cantidad;
+
+                lblTotalVentas.Text = cantidad.ToString();
+                lblMontoTotal.Text = $"S/ {montoTotal:N2}";
+                lblPromedio.Text = $"S/ {promedio:N2}";
+
+                // Animación (opcional)
+                ScriptManager.RegisterStartupScript(
+                    this, GetType(),
+                    "AnimarDashboard",
+                    $"animarDashboard({cantidad}, {montoTotal}, {promedio});",
+                    true
+                );
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error en estadísticas: " + ex.Message);
+                ResetearEstadisticas();
+            }
+        }
+
+        private void ResetearEstadisticas()
+        {
+            lblTotalVentas.Text = "0";
+            lblMontoTotal.Text = "S/ 0.00";
+            lblPromedio.Text = "S/ 0.00";
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
+            lblMensaje.Text = "";
             CargarVentas();
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
-            txtFechaInicio.Text = string.Empty;
-            txtFechaFin.Text = string.Empty;
-            lblMensaje.Text = string.Empty;
+            txtFechaInicio.Text = "";
+            txtFechaFin.Text = "";
+            lblMensaje.Text = "";
             CargarVentas();
         }
 
@@ -204,47 +381,54 @@ namespace KawkiWeb
             }
         }
 
-        /// <summary>
-        /// Muestra el detalle completo de una venta específica
-        /// </summary>
-        private void MostrarDetalle(int idVenta)
+        private string ObtenerNombreProductoCompleto(productosVariantesDTO variante)
         {
+            if (variante == null)
+            {
+                System.Diagnostics.Debug.WriteLine("DEBUG: variante es NULL");
+                return "N/D - Variante nula";
+            }
+
             try
             {
-                // Obtener datos de la venta
-                DataRow venta = ObtenerDatosVenta(idVenta);
+                int productoId = variante.producto_id;
+                System.Diagnostics.Debug.WriteLine($"DEBUG: productoId = {productoId}");
 
-                if (venta != null)
+                if (productoId == 0)
                 {
-                    lblIdVentaDetalle.Text = idVenta.ToString();
-                    lblClienteDetalle.Text = venta["Cliente"].ToString();
-                    lblTelefonoDetalle.Text = venta["Telefono"].ToString();
-                    lblDireccionDetalle.Text = venta["Direccion"].ToString();
-                    lblFechaDetalle.Text = Convert.ToDateTime(venta["Fecha"]).ToString("dd/MM/yyyy HH:mm");
-                    lblCanalDetalle.Text = venta["Canal"].ToString();
-                    lblTotalDetalle.Text = $"S/ {venta["MontoTotal"]:0.00}";
-
-                    // Cargar detalle de productos
-                    DataTable detalle = ObtenerDetalleVenta(idVenta);
-                    gvDetalleProductos.DataSource = detalle;
-                    gvDetalleProductos.DataBind();
-
-                    pnlDetalle.Visible = true;
-
-                    // Scroll automático al detalle
-                    ScriptManager.RegisterStartupScript(this, GetType(), "ScrollToDetail",
-                        "$('html, body').animate({ scrollTop: $('#" + pnlDetalle.ClientID + "').offset().top - 100 }, 500);", true);
+                    System.Diagnostics.Debug.WriteLine("DEBUG: productoId es 0");
+                    return "Producto N/D - ID inválido";
                 }
-                else
+
+                // Obtener el producto padre
+                var producto = productosBO.ObtenerPorIdProducto(productoId);
+                System.Diagnostics.Debug.WriteLine($"DEBUG: Producto encontrado? {(producto != null ? "SÍ" : "NO")}");
+
+                if (producto == null)
                 {
-                    lblMensaje.CssClass = "text-warning mb-2 d-block";
-                    lblMensaje.Text = "No se encontró la venta solicitada.";
+                    System.Diagnostics.Debug.WriteLine($"DEBUG: Producto ID {productoId} NO encontrado en BD");
+                    return $"Producto N/D - ID {productoId} no existe";
                 }
+
+                // Construir nombre: Categoría + Estilo + Color
+                string categoria = producto.categoria?.nombre ?? "";
+                string estilo = producto.estilo?.nombre ?? "";
+                string color = variante.color?.nombre ?? "";
+
+                System.Diagnostics.Debug.WriteLine($"DEBUG: categoria='{categoria}', estilo='{estilo}', color='{color}'");
+
+                // Formato: "Oxford Clásico Beige M"
+                string nombreCompleto = $"{categoria} {estilo} {color}".Trim();
+
+                System.Diagnostics.Debug.WriteLine($"DEBUG: nombreCompleto = '{nombreCompleto}'");
+
+                return nombreCompleto;
             }
             catch (Exception ex)
             {
-                lblMensaje.CssClass = "text-danger mb-2 d-block";
-                lblMensaje.Text = $"Error al cargar detalle: {ex.Message}";
+                System.Diagnostics.Debug.WriteLine($"ERROR en ObtenerNombreProductoCompleto: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"ERROR StackTrace: {ex.StackTrace}");
+                return $"ERROR: {ex.Message}";
             }
         }
 
@@ -252,5 +436,12 @@ namespace KawkiWeb
         {
             pnlDetalle.Visible = false;
         }
+
+        private void MostrarError(string mensaje)
+        {
+            lblMensaje.CssClass = "text-danger mb-2 d-block";
+            lblMensaje.Text = mensaje;
+        }
     }
 }
+

@@ -66,8 +66,19 @@ namespace KawkiWeb
 
                 try
                 {
+
                     CargarCombosTipos();
+
+                    // valores por defecto de orden
+                    SortField = "IdDescuento";
+                    SortDirection = "ASC";
+
                     CargarDescuentos();
+
+
+
+                    //CargarCombosTipos();
+                    //CargarDescuentos();
                 }
                 catch (Exception ex)
                 {
@@ -197,8 +208,30 @@ namespace KawkiWeb
             }
 
 
+
+            // ORDENAMIENTO
+            if (!string.IsNullOrEmpty(SortField))
+            {
+                if (SortDirection == "ASC")
+                {
+                    listaGrid = listaGrid
+                        .OrderBy(d => d.GetType().GetProperty(SortField).GetValue(d))
+                        .ToList();
+                }
+                else
+                {
+                    listaGrid = listaGrid
+                        .OrderByDescending(d => d.GetType().GetProperty(SortField).GetValue(d))
+                        .ToList();
+                }
+            }
+
             gvDescuentos.DataSource = listaGrid;
             gvDescuentos.DataBind();
+
+
+            //gvDescuentos.DataSource = listaGrid;
+            //gvDescuentos.DataBind();
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
@@ -494,6 +527,31 @@ namespace KawkiWeb
                 lblMensaje.Text = "Error al cambiar estado: " + ex.Message;
             }
         }
+
+
+
+        private string SortField
+        {
+            get => ViewState["SortField"] as string ?? "";
+            set => ViewState["SortField"] = value;
+        }
+
+        private string SortDirection
+        {
+            get => ViewState["SortDirection"] as string ?? "ASC";
+            set => ViewState["SortDirection"] = value;
+        }
+
+
+        protected void OrdenChanged(object sender, EventArgs e)
+        {
+            SortField = ddlOrdenarPor.SelectedValue;
+            SortDirection = ddlDireccion.SelectedValue;
+            CargarDescuentos();
+        }
+
+
+
 
         // Si en el futuro agregas eliminar en backend, aquí iría btnConfirmarEliminar_Click
         // por ahora el botón está comentado en el .aspx

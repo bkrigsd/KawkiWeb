@@ -15,6 +15,24 @@ namespace KawkiWeb
     {
 
         /// <summary>
+        /// Control ddlOrdenarPor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlOrdenarPor;
+
+        /// <summary>
+        /// Control ddlDireccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDireccion;
+
+        /// <summary>
         /// Control txtFiltroDescripcion.
         /// </summary>
         /// <remarks>

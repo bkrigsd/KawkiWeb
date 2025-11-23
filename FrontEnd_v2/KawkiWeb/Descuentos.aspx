@@ -22,78 +22,108 @@
         </div>
 
         <!-- Filtros -->
-        <div class="card-body">
-            <div class="row g-3 align-items-end">
+        <div class="card-kawki mb-3 filtros-card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <h5 class="card-title mb-0 d-flex align-items-center">
+                        <i class="fas fa-filter me-2"></i> Filtros de búsqueda
+                    </h5>
 
-                <!-- Descripción -->
-                <div class="col-lg-3 col-md-4">
-                    <label class="form-label" for="<%= txtFiltroDescripcion.ClientID %>">
-                        <i class="fas fa-file-alt me-1"></i>Descripción
-                    </label>
-                    <asp:TextBox ID="txtFiltroDescripcion" runat="server" CssClass="form-control" />
+                    <!-- Ordenamiento pequeño a la derecha -->
+                    <div class="filtros-orden d-flex align-items-center">
+                        <span class="orden-label me-1">Ordenar:</span>
+
+                        <asp:DropDownList ID="ddlOrdenarPor" runat="server"
+                            CssClass="form-select form-select-sm orden-select me-1"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="OrdenChanged">
+                            <asp:ListItem Text="ID" Value="IdDescuento" />
+                            <asp:ListItem Text="Descripción" Value="Descripcion" />
+                            <asp:ListItem Text="Fecha inicio" Value="FechaInicio" />
+                            <asp:ListItem Text="Fecha fin" Value="FechaFin" />
+                        </asp:DropDownList>
+
+                        <asp:DropDownList ID="ddlDireccion" runat="server"
+                            CssClass="form-select form-select-sm orden-select"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="OrdenChanged">
+                            <asp:ListItem Text="Asc" Value="ASC" />
+                            <asp:ListItem Text="Desc" Value="DESC" />
+                        </asp:DropDownList>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body">
+                <!-- Fila 1: descripción / tipo condición / tipo beneficio / fechas -->
+                <div class="row g-3 align-items-end filtros-row">
+                    <div class="col-lg-3 col-md-6 filtros-descripcion">
+                        <label class="form-label" for="<%= txtFiltroDescripcion.ClientID %>">
+                            <i class="fas fa-file-alt me-1"></i>Descripción
+                        </label>
+                        <asp:TextBox ID="txtFiltroDescripcion" runat="server" CssClass="form-control" />
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 filtros-tipo-condicion">
+                        <label class="form-label" for="<%= ddlFiltroTipoCondicion.ClientID %>">
+                            <i class="fas fa-cogs me-1"></i>Tipo de condición
+                        </label>
+                        <asp:DropDownList ID="ddlFiltroTipoCondicion" runat="server" CssClass="form-select"></asp:DropDownList>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 filtros-tipo-beneficio">
+                        <label class="form-label" for="<%= ddlFiltroTipoBeneficio.ClientID %>">
+                            <i class="fas fa-gift me-1"></i>Tipo de beneficio
+                        </label>
+                        <asp:DropDownList ID="ddlFiltroTipoBeneficio" runat="server" CssClass="form-select"></asp:DropDownList>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 filtros-fecha-inicio">
+                        <label class="form-label" for="<%= txtFiltroFechaInicio.ClientID %>">
+                            <i class="fas fa-calendar-alt me-1"></i>Fecha Inicio
+                        </label>
+                        <asp:TextBox ID="txtFiltroFechaInicio" runat="server" TextMode="Date" CssClass="form-control" />
+                        <asp:Label ID="lblErrorFechaInicio" runat="server"
+                                   CssClass="text-danger small d-block mt-1"
+                                   Visible="false" />
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 filtros-fecha-fin">
+                        <label class="form-label" for="<%= txtFiltroFechaFin.ClientID %>">
+                            <i class="fas fa-calendar-alt me-1"></i>Fecha Fin
+                        </label>
+                        <asp:TextBox ID="txtFiltroFechaFin" runat="server" TextMode="Date" CssClass="form-control" />
+                        <asp:Label ID="lblErrorFechaFin" runat="server"
+                                   CssClass="text-danger small d-block mt-1"
+                                   Visible="false" />
+                    </div>
                 </div>
 
-                <!-- Tipo condición -->
-                <div class="col-lg-2 col-md-4">
-                    <label class="form-label" for="<%= ddlFiltroTipoCondicion.ClientID %>">
-                        <i class="fas fa-cogs me-1"></i>Tipo de condición
-                    </label>
-                    <asp:DropDownList ID="ddlFiltroTipoCondicion" runat="server" CssClass="form-select"></asp:DropDownList>
-                </div>
-
-                <!-- Tipo beneficio -->
-                <div class="col-lg-2 col-md-4">
-                    <label class="form-label" for="<%= ddlFiltroTipoBeneficio.ClientID %>">
-                        <i class="fas fa-gift me-1"></i>Tipo de beneficio
-                    </label>
-                    <asp:DropDownList ID="ddlFiltroTipoBeneficio" runat="server" CssClass="form-select"></asp:DropDownList>
-                </div>
-
-                <!-- Fecha Inicio -->
-                <div class="col-lg-2 col-md-4">
-                    <label class="form-label" for="<%= txtFiltroFechaInicio.ClientID %>">
-                        <i class="fas fa-calendar-alt me-1"></i>Fecha Inicio
-                    </label>
-                    <asp:TextBox ID="txtFiltroFechaInicio" runat="server" TextMode="Date" CssClass="form-control" />
-                    <asp:Label ID="lblErrorFechaInicio" runat="server"
-                               CssClass="text-danger small d-block mt-1"
-                               Visible="false" />
-                </div>
-
-                <!-- Fecha Fin -->
-                <div class="col-lg-2 col-md-4">
-                    <label class="form-label" for="<%= txtFiltroFechaFin.ClientID %>">
-                        <i class="fas fa-calendar-alt me-1"></i>Fecha Fin
-                    </label>
-                    <asp:TextBox ID="txtFiltroFechaFin" runat="server" TextMode="Date" CssClass="form-control" />
-                    <asp:Label ID="lblErrorFechaFin" runat="server"
-                               CssClass="text-danger small d-block mt-1"
-                               Visible="false" />
-                </div>
-
-                <!-- Estado + Botones -->
-                <div class="col-lg-3 col-md-8 filtros-acciones">
-                    <label class="form-label" for="<%= ddlFiltroActivo.ClientID %>">
-                        <i class="fas fa-toggle-on me-1"></i>Estado
-                    </label>
-                    <div class="d-flex gap-2">
-                        <asp:DropDownList ID="ddlFiltroActivo" runat="server" CssClass="form-select me-2">
+                <!-- Fila 2: estado + botones -->
+                <div class="row g-3 align-items-end mt-1 filtros-row">
+                    <div class="col-lg-3 col-md-6 filtros-estado">
+                        <label class="form-label" for="<%= ddlFiltroActivo.ClientID %>">
+                            <i class="fas fa-toggle-on me-1"></i>Estado
+                        </label>
+                        <asp:DropDownList ID="ddlFiltroActivo" runat="server" CssClass="form-select">
                             <asp:ListItem Text="-- Todos --" Value="" />
                             <asp:ListItem Text="Activos" Value="true" />
                             <asp:ListItem Text="Inactivos" Value="false" />
                         </asp:DropDownList>
+                    </div>
 
-                        <div class="d-flex flex-column flex-md-row gap-2">
-                            <asp:Button ID="btnBuscar" runat="server"
-                                CssClass="btn btn-kawki-primary"
-                                Text="Buscar"
-                                OnClick="btnBuscar_Click" CausesValidation="false" />
-                            <asp:Button ID="btnLimpiar" runat="server"
-                                CssClass="btn btn-kawki-outline"
-                                Text="Limpiar"
-                                OnClick="btnLimpiar_Click"
-                                CausesValidation="false" />
-                        </div>
+                    <div class="col-lg-3 col-md-6 ms-auto filtros-botones d-flex gap-2 justify-content-end">
+                        <asp:Button ID="btnBuscar" runat="server"
+                            CssClass="btn btn-kawki-primary px-4"
+                            Text="Buscar"
+                            OnClick="btnBuscar_Click" CausesValidation="false" />
+
+                        <asp:Button ID="btnLimpiar" runat="server"
+                            CssClass="btn btn-kawki-outline px-4"
+                            Text="Limpiar"
+                            OnClick="btnLimpiar_Click"
+                            CausesValidation="false" />
                     </div>
                 </div>
 

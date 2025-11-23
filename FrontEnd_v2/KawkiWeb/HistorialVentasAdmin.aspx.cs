@@ -19,6 +19,8 @@ namespace KawkiWeb
 
         private List<productosDTO> ListaProductos;
 
+        private readonly UsuarioBO _usuarioBO = new UsuarioBO();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             // AntiCaché
@@ -76,33 +78,31 @@ namespace KawkiWeb
         // Cargar lista de vendedores reales
         private void CargarVendedores()
         {
+            ddlVendedor.Items.Clear();
+            ddlVendedor.Items.Add(new ListItem("Todos los vendedores", "0"));
+
             try
             {
-                // Llamamos al WS de usuarios
-                var client = new UsuariosClient();
-
-                // Obtenemos TODOS los usuarios
-                var usuarios = client.listarTodosUsuario();
-
-                // Filtramos solo los vendedores activos
-                var vendedores = usuarios
-                    .Where(u => u.tipoUsuario != null
-                             && u.tipoUsuario.tipoUsuarioId == 1
-                             && u.activo == true)
-                    .OrderBy(u => u.nombre)
+                var vendedores = _usuarioBO.ListarVendedoresActivos()
+                    .Select(u => new
+                    {
+                        Id = u.usuarioId,
+                        NombreCompleto = $"{u.nombre} {u.apePaterno}"
+                    })
                     .ToList();
 
-                ddlVendedor.Items.Clear();
-                ddlVendedor.Items.Add(new ListItem("Todos los vendedores", "0"));
-
-                foreach (var u in vendedores)
-                {
-                    string nombre = $"{u.nombre} {u.apePaterno}";
-                    ddlVendedor.Items.Add(new ListItem(nombre, nombre));
-                }
+                // Para que no borre el item "Todos los vendedores"
+                ddlVendedor.AppendDataBoundItems = true;
+                ddlVendedor.DataSource = vendedores;
+                ddlVendedor.DataTextField = "NombreCompleto";
+                ddlVendedor.DataValueField = "Id";
+                ddlVendedor.DataBind();
             }
-            catch
+            catch (Exception ex)
             {
+                // Al menos registra el error
+                // Logger.Log(ex);  // o Debug.WriteLine(ex.Message);
+
                 ddlVendedor.Items.Clear();
                 ddlVendedor.Items.Add(new ListItem("Todos los vendedores", "0"));
             }
