@@ -119,6 +119,9 @@
 
         // Para abrir modal EDITAR
         function abrirModalEditar() {
+            document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorNombre.ClientID %>").innerText = "";
+
             document.getElementById("modalCategoria").classList.add("show");
             document.getElementById("tituloModal").innerHTML = '<i class="fas fa-edit me-2"></i>Editar categoría';
             document.getElementById("<%= btnGuardar.ClientID %>").value = "Actualizar categoría";

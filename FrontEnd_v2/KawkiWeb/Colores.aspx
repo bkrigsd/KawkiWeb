@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Estilos" Language="C#" MasterPageFile="~/KawkiWeb.master" AutoEventWireup="true" CodeBehind="Colores.aspx.cs" Inherits="KawkiWeb.Colores" %>
+﻿<%@ Page Title="Colores" Language="C#" MasterPageFile="~/KawkiWeb.master" AutoEventWireup="true" CodeBehind="Colores.aspx.cs" Inherits="KawkiWeb.Colores" %>
 
 <asp:Content ID="HeadExtra" ContentPlaceHolderID="HeadContent" runat="server">
     <link href="Content/Stylo/registrouser.css" rel="stylesheet" />
@@ -11,7 +11,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h1><i class="fas fa-tags me-2"></i>Gestión de Colores</h1>
-                    <p>Administra los estilos </p>
+                    <p>Administra los colores </p>
                 </div>
                 <button type="button" class="btn-kawki-primary" onclick="abrirModalRegistro()">
                     <i class="fas fa-plus me-1"></i> Nuevo Color
@@ -33,7 +33,7 @@
                     OnRowCommand="gvColores_RowCommand">
                     <Columns>
                         <asp:BoundField DataField="ColorId" HeaderText="ID" />
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                        <asp:BoundField DataField="Nombre" HeaderText="Color" />
                         
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
@@ -120,6 +120,9 @@
 
         // Para abrir modal EDITAR
         function abrirModalEditar() {
+            document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorNombre.ClientID %>").innerText = "";
+
             document.getElementById("modalColor").classList.add("show");
             document.getElementById("tituloModal").innerHTML = '<i class="fas fa-edit me-2"></i>Editar color';
             document.getElementById("<%= btnGuardar.ClientID %>").value = "Actualizar color";

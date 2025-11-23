@@ -165,6 +165,12 @@
 
         // Para abrir modal EDITAR (limpia datos)
         function abrirModalEditar() {
+            document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorDescripcion.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorCategoria.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorEstilo.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorPrecio.ClientID %>").innerText = "";
+
             document.getElementById("modalProducto").classList.add("show");
             document.getElementById("tituloModal").innerHTML = '<i class="fas fa-edit me-2"></i>Editar producto';
             document.getElementById("<%= btnGuardar.ClientID %>").value = "Actualizar producto";

@@ -395,17 +395,21 @@
     <!-- Scripts -->
     <script>
         function abrirModalRegistro() {
-            var modal = document.getElementById("modalVariante");
-            if (modal) {
-                modal.style.display = "flex";
-                var computed = window.getComputedStyle(modal).display;
-            }
+            // Limpiar TODO antes de abrir
+            limpiarFormulario();
+            document.getElementById("modalVariante").style.display = "flex";
+            document.getElementById("modalVariante").classList.add("show");
+        }
+
+        // FUNCIÓN 2: Para mantener el modal abierto con errores (NO recarga nada)
+        function MantenerModal() {
+            document.getElementById("modalVariante").style.display = "flex";
+            document.getElementById("modalVariante").classList.add("show");
         }
 
         function cerrarModal() {
-            var modal = document.getElementById("modalVariante");
-            modal.style.display = "none";
-            modal.classList.remove("show");
+            document.getElementById("modalVariante").style.display = "none";
+            document.getElementById("modalVariante").classList.remove("show");
             limpiarFormulario();
         }
 
@@ -415,14 +419,15 @@
             document.getElementById("<%= txtStocks.ClientID %>").value = "";
             document.getElementById("<%= txtStocksMinimos.ClientID %>").value = "";
             document.getElementById("<%= txtUrlImagen.ClientID %>").value = "";
+            document.getElementById('<%= lblErrorStockEditar.ClientID %>').innerText = '';
+            document.getElementById('<%= lblErrorStockMinimoEditar.ClientID %>').innerText = '';
+            document.getElementById('<%= lblErrorColor.ClientID %>').innerText = '';
+            document.getElementById('<%= lblErrorTallas.ClientID %>').innerText = '';
+            document.getElementById('<%= lblErrorStocks.ClientID %>').innerText = '';
+            document.getElementById('<%= lblErrorStocksMinimos.ClientID %>').innerText = '';
+            document.getElementById('<%= lblErrorTallaModif.ClientID %>').innerText = '';
             document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
             document.getElementById("hdnDisponible").value = "true";
-
-            // Ocultar todos los errores
-            document.getElementById("errorColor").style.display = "none";
-            document.getElementById("errorTallas").style.display = "none";
-            document.getElementById("errorStocks").style.display = "none";
-            document.getElementById("errorUrlImagen").style.display = "none";
 
             var buttons = document.querySelectorAll("#modalVariante .toggle-disponible button");
             buttons.forEach(b => b.classList.remove('active'));
@@ -437,31 +442,21 @@
             if (color === "0" || color === "") {
                 document.getElementById("errorColor").style.display = "block";
                 valido = false;
-            } else {
-                document.getElementById("errorColor").style.display = "none";
-            }
+            } 
 
             // Validar tallas
             let tallas = document.getElementById("<%= txtTallas.ClientID %>").value.trim();
             if (tallas === "") {
                 document.getElementById("errorTallas").style.display = "block";
                 valido = false;
-            } else {
-                document.getElementById("errorTallas").style.display = "none";
-            }
+            } 
 
             // Validar stocks
             let stocks = document.getElementById("<%= txtStocks.ClientID %>").value.trim();
             if (stocks === "") {
                 document.getElementById("errorStocks").style.display = "block";
                 valido = false;
-            } else {
-                document.getElementById("errorStocks").style.display = "none";
-            }
-
-            if (!valido) {
-                return false;
-            }
+            } 
 
             return true;
         }
@@ -475,6 +470,12 @@
 
         // FUNCIÓN 1: Para abrir el modal la primera vez (carga datos de BD)
         function abrirModalModificaciones(varianteId, colorNombre, tallaNombre, tallaId, urlImagen, stock, stockMinimo) {
+            // Limpiar SOLO errores, mantener datos
+            document.getElementById('<%= lblMensajeModificaciones.ClientID %>').innerText = '';
+            document.getElementById('<%= lblErrorStockEditar.ClientID %>').innerText = '';
+            document.getElementById('<%= lblErrorStockMinimoEditar.ClientID %>').innerText = '';
+            document.getElementById('<%= lblErrorTallaModif.ClientID %>').innerText = '';
+
             document.getElementById('<%= hfVarianteId.ClientID %>').value = varianteId;
             document.getElementById('<%= lblVarianteInfo.ClientID %>').textContent =
                 `Color: ${colorNombre} | Talla: ${tallaNombre}`;
@@ -493,12 +494,6 @@
                 nombreArchivo = urlImagen.replace('/Images/Productos/', '');
             }
             document.getElementById('<%= txtUrlImagenModif.ClientID %>').value = nombreArchivo;
-    
-            // Limpiar mensajes
-            document.getElementById('<%= lblMensajeModificaciones.ClientID %>').textContent = '';
-            document.getElementById('<%= lblErrorStockEditar.ClientID %>').textContent = '';
-            document.getElementById('<%= lblErrorStockMinimoEditar.ClientID %>').textContent = '';
-            document.getElementById('<%= lblErrorTallaModif.ClientID %>').textContent = '';
 
             document.getElementById("modalModificaciones").classList.add("show");
         }
@@ -528,6 +523,30 @@
         }
 
         function abrirModalAgregarTalla(colorId, colorNombre) {
+            // Limpiar errores antes de abrir
+            limpiarFormularioTalla();
+
+            document.getElementById("<%= hfColorIdTalla.ClientID %>").value = colorId;
+            document.getElementById("colorNombreTalla").innerText = colorNombre;
+            document.getElementById("modalAgregarTalla").classList.add("show");
+        }
+
+        function limpiarFormularioTalla() {
+            // Limpiar TODO: datos y errores
+            document.getElementById("<%= ddlTalla.ClientID %>").selectedIndex = 0;
+            document.getElementById("<%= txtStockTalla.ClientID %>").value = "";
+            document.getElementById("<%= txtStockMinimoTalla.ClientID %>").value = "";
+
+            // Limpiar errores
+            document.getElementById("<%= lblErrorTallaSelect.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorStockTalla.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorStockMinimoTalla.ClientID %>").innerText = "";
+            document.getElementById("<%= lblMensajeTalla.ClientID %>").innerText = "";
+        }
+
+        // FUNCIÓN 2: Para mantener el modal abierto con errores (NO recarga nada)
+        function MantenerModalTallaAbierto(colorId,colorNombre) {
+            // Para reabrir después de error - NO LIMPIAR, mantener datos
             document.getElementById("<%= hfColorIdTalla.ClientID %>").value = colorId;
             document.getElementById("colorNombreTalla").innerText = colorNombre;
             document.getElementById("modalAgregarTalla").classList.add("show");
@@ -535,6 +554,7 @@
 
         function cerrarModalTalla() {
             document.getElementById("modalAgregarTalla").classList.remove("show");
+            limpiarFormularioTalla();
         }
 
         function cambiarDisponibilidad(btn, varianteId, disponible) {

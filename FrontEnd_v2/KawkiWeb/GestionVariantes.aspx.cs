@@ -729,8 +729,8 @@ namespace KawkiWeb
             }
             catch { }
 
-            string script = $"abrirModalAgregarTalla('{colorId}', '{colorNombre}');";
-            ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModalTalla", script, true);
+            string script = $"MantenerModalTallaAbierto('{colorId}', '{colorNombre}');";
+            ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModalTallaAbierto", script, true);
         }
 
         private void LimpiarFormularioTalla()
@@ -890,7 +890,7 @@ namespace KawkiWeb
 
         private void MantenerModalAbierto()
         {
-            ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModal", "abrirModalRegistro();", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModal", "MantenerModal();", true);
         }
 
         private void LimpiarFormulario()

@@ -29,7 +29,7 @@ namespace KawkiWeb
                 // Crear lista personalizada para el GridView
                 var tallasGrid = tallas.Select(t => new
                 {
-                    TallasId = t.talla_id,
+                    TallaId = t.talla_id,
                     Numero = t.numero,
                 }).ToList();
 
@@ -85,6 +85,7 @@ namespace KawkiWeb
                 try
                 {
                     int tallaId = Convert.ToInt32(hfTallaId.Value);
+                    bool esEdicion = hfTallaId.Value != "0";
                     int numero = Convert.ToInt32(txtNumero.Text);
 
                     if (tallaId == 0)
@@ -98,19 +99,26 @@ namespace KawkiWeb
                             return;
                         }
 
-                        int resultado = tallasBO.InsertarTalla(numero);
+                        int? resultado = tallasBO.InsertarTalla(numero);
 
-                        if (resultado > 0)
+                        if (resultado == null || resultado <= 0)
                         {
-                            LimpiarFormulario();
-                            CargarTallas();
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "cerrarYMostrar",
-                                "cerrarModal(); mostrarMensajeExito('Talla registrada exitosamente');", true);
+                            lblMensaje.CssClass = "text-danger d-block mb-2";
+                            lblMensaje.Text = "No se pudo registrar la talla.";
+                            MantenerModalAbierto(esEdicion);
+                            return;
                         }
-                        else
-                        {
-                            MostrarError("Error al registrar la talla");
-                        }
+
+                        LimpiarFormulario();
+                        CargarTallas();
+
+                        ScriptManager.RegisterStartupScript(
+                            this,
+                            GetType(),
+                            "CerrarModal",
+                            "cerrarModal(); mostrarMensajeExito('Talla registrada correctamente');",
+                            true
+                        );
                     }
                     else
                     {
@@ -124,19 +132,26 @@ namespace KawkiWeb
                             return;
                         }
 
-                        int resultado = tallasBO.ModificarTalla(tallaId, numero);
+                        int? resultado = tallasBO.ModificarTalla(tallaId, numero);
 
-                        if (resultado > 0)
+                        if (resultado == null || resultado <= 0)
                         {
-                            LimpiarFormulario();
-                            CargarTallas();
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "cerrarYMostrar",
-                                "cerrarModal(); mostrarMensajeExito('Talla actualizada exitosamente');", true);
+                            lblMensaje.CssClass = "text-danger d-block mb-2";
+                            lblMensaje.Text = "No se pudo actualizar la talla.";
+                            MantenerModalAbierto(esEdicion);
+                            return;
                         }
-                        else
-                        {
-                            MostrarError("Error al actualizar la talla");
-                        }
+
+                        LimpiarFormulario();
+                        CargarTallas();
+
+                        ScriptManager.RegisterStartupScript(
+                            this,
+                            GetType(),
+                            "CerrarModal",
+                            "cerrarModal(); mostrarMensajeExito('Talla actualizada correctamente');",
+                            true
+                        );
                     }
                 }
                 catch (Exception ex)
@@ -194,6 +209,12 @@ namespace KawkiWeb
                 MostrarError("Error al validar la talla: " + ex.Message);
                 return false;
             }
+        }
+        private void MantenerModalAbierto(bool esEdicion)
+        {
+            // ⭐ Usar funciones que NO limpian
+            string script = esEdicion ? "reabrirModalEditar();" : "reabrirModalRegistro();";
+            ScriptManager.RegisterStartupScript(this, GetType(), "MantenerModal", script, true);
         }
 
         private void LimpiarFormulario()

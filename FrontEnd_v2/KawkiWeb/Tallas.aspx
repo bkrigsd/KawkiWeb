@@ -70,7 +70,7 @@
             <div class="mb-3">
                 <label class="form-label">Valor de la Talla *</label>
                 <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control" 
-                    placeholder="Ej: Oxford" />
+                    placeholder="Ej: 36" />
                 <asp:Label ID="lblErrorNumero" runat="server" CssClass="text-danger small d-block mt-1" />
             </div>
 
@@ -120,6 +120,9 @@
 
         // Para abrir modal EDITAR
         function abrirModalEditar() {
+            document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorNumero.ClientID %>").innerText = "";
+
             document.getElementById("modalTallas").classList.add("show");
             document.getElementById("tituloModal").innerHTML = '<i class="fas fa-edit me-2"></i>Editar talla';
             document.getElementById("<%= btnGuardar.ClientID %>").value = "Actualizar talla";

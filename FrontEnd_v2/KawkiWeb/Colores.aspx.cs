@@ -29,7 +29,7 @@ namespace KawkiWeb
                 // Crear lista personalizada para el GridView
                 var coloresGrid = colores.Select(c => new
                 {
-                    ColoresId = c.color_id,
+                    ColorId = c.color_id,
                     Nombre = c.nombre
                 }).ToList();
 
