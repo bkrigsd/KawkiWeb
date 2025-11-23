@@ -246,63 +246,29 @@ public class UsuariosDAOImpl extends BaseDAOImpl implements UsuariosDAO {
     }
 
     /**
-     * Cambia contraseña usando SP_CAMBIAR_CONTRASENHA
-     */
-    /**
-     * Cambia contraseña usando SP_CAMBIAR_CONTRASENHA
+     * Obtiene usuario por nombre de usuario o correo (sin
+     * validar contraseña - eso lo hace el BO con BCrypt)
      */
     @Override
-    public ResultadoSP cambiarContrasenha(Integer usuarioId, String contrasenhaActual, String contrasenhaNueva) {
-
-        ResultadoSP resultado = super.ejecutarSPConResultadoEstandar(
-                "SP_CAMBIAR_CONTRASENHA",
-                3,
-                (params) -> {
-                    try {
-                        Object[] parametros = (Object[]) params;
-                        this.statement.setInt(1, (Integer) parametros[0]);
-                        this.statement.setString(2, (String) parametros[1]);
-                        this.statement.setString(3, (String) parametros[2]);
-                    } catch (SQLException ex) {
-                        System.err.println("Error al establecer parámetros: " + ex);
-                    }
-                },
-                new Object[]{usuarioId, contrasenhaActual, contrasenhaNueva}
-        );
-
-        return resultado; // ✅ Retorna directamente ResultadoSP
-    }
-
-    /**
-     * Autentica usuario usando SP_AUTENTICAR_USUARIO
-     */
-    @Override
-    public UsuariosDTO autenticar(String nombreUsuarioOCorreo, String contrasenha) {
-        // Guardar referencia actual para no perderla
+    public UsuariosDTO obtenerPorNombreOCorreo(String nombreUsuarioOCorreo) {
         UsuariosDTO temp = this.usuario;
 
-        // Ejecutar el procedimiento usando el método base optimizado
         super.ejecutarConsultaProcedimientoConJoin(
-                "SP_AUTENTICAR_USUARIO",
-                2, // Cantidad de parámetros
+                "SP_OBTENER_USUARIO_POR_NOMBRE_O_CORREO",
+                1,
                 (params) -> {
                     try {
-                        Object[] parametros = (Object[]) params;
-                        this.statement.setString(1, (String) parametros[0]);
-                        this.statement.setString(2, (String) parametros[1]);
+                        this.statement.setString(1, (String) params);
                     } catch (SQLException ex) {
-                        System.err.println("Error al establecer parámetros de autenticación: " + ex);
+                        System.err.println("Error al establecer parámetro: " + ex);
                     }
                 },
-                new Object[]{nombreUsuarioOCorreo, contrasenha}
+                nombreUsuarioOCorreo
         );
 
-        // Guardar el resultado
-        UsuariosDTO usuarioAutenticado = this.usuario;
-
-        // Restaurar referencia original
+        UsuariosDTO usuarioEncontrado = this.usuario;
         this.usuario = temp;
 
-        return usuarioAutenticado;
+        return usuarioEncontrado;
     }
 }

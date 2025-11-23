@@ -155,7 +155,7 @@ public class DescuentosBO {
         }
 
         // Validar valor de condición
-        if (valor_condicion == null || valor_condicion < 0) {
+        if (valor_condicion == null || valor_condicion <= 0) {
             System.err.println("Validación: El valor de condición debe ser mayor a 0");
             return false;
         }
