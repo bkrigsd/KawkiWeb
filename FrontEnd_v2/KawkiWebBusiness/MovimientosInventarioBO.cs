@@ -20,7 +20,7 @@ namespace KawkiWebBusiness
         }
         public int InsertarMovInventario(int cantidad, string observacion, tiposMovimientoDTO tipo_movimiento, productosVariantesDTO prod_variante, usuariosDTO usuario)
         {
-            return this.clienteSOAP.insertarMovInventario(cantidad, observacion, tipo_movimiento, prod_variante, usuario);
+            return this.clienteSOAP.insertarMovInventario(cantidad, observacion,tipo_movimiento,prod_variante,usuario);
         }
 
         public int ModificarMovInventario(int movInventarioId, int cantidad, string observacion, tiposMovimientoDTO tipo_movimiento, productosVariantesDTO prod_variante, usuariosDTO usuario)
@@ -40,7 +40,7 @@ namespace KawkiWebBusiness
 
         public int CrearAjusteInventarioMovInventario(productosVariantesDTO prod_variante, int stockReal, string observacion, usuariosDTO usuario)
         {
-            return this.clienteSOAP.crearAjusteInventarioMovInventario(prod_variante, stockReal, observacion, usuario);
+            return this.clienteSOAP.crearAjusteInventarioMovInventario(prod_variante,stockReal,observacion,usuario);
         }
 
         public int RegistrarIngresoMovInventario(productosVariantesDTO prod_variante, int cantidad, string observacion, usuariosDTO usuario)
