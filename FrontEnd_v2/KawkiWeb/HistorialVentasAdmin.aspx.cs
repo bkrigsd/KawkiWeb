@@ -54,7 +54,7 @@ namespace KawkiWeb
                     CargarVendedores();
                     CargarProductos();
                     CargarVentas();
-                    ActualizarEstadisticas();
+                    //ActualizarEstadisticas();
                 }
                 catch (Exception ex)
                 {
@@ -118,6 +118,8 @@ namespace KawkiWeb
                 //System.Diagnostics.Debug.WriteLine("Ventas totales encontradas: " + lista.Count);
                 //lblMensaje.Text = "Ventas totales: " + lista.Count;  // temporal
 
+                var listaCompleta = new List<ventasDTO>(lista);
+
                 // Filtro por fecha inicio
                 if (DateTime.TryParse(txtFechaInicio.Text, out DateTime inicio))
                 {
@@ -143,6 +145,14 @@ namespace KawkiWeb
                     // Quitar ventas sin usuario para estadísticas correctas
                     lista = lista.Where(v => v.usuario != null).ToList();
                 }
+
+                // Determinar si hay filtros activos
+                bool hayFiltros = !string.IsNullOrEmpty(txtFechaInicio.Text) ||
+                                  !string.IsNullOrEmpty(txtFechaFin.Text) ||
+                                  !string.IsNullOrEmpty(ddlVendedor.SelectedValue);
+
+                // Si NO hay filtros, usar la lista completa para estadísticas
+                Session["VentasFiltradas"] = hayFiltros ? lista : listaCompleta;
 
                 // Transformar a modelo para GridView
                 var gvLista = lista.Select(v => new
@@ -173,7 +183,7 @@ namespace KawkiWeb
                 gvVentas.DataSource = gvLista;
                 gvVentas.DataBind();
 
-                Session["VentasFiltradas"] = lista;
+                //Session["VentasFiltradas"] = lista;
 
                 lblContador.Text = $"{gvLista.Count} ventas encontradas";
                 lblMensaje.Text = "";
@@ -248,7 +258,7 @@ namespace KawkiWeb
             lblErrorFiltros.Visible = false;
             lblErrorFiltros.Text = "";
             CargarVentas();
-            ActualizarEstadisticas();
+            //ActualizarEstadisticas();
         }
 
         // Ver detalle

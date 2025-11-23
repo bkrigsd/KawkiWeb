@@ -45,13 +45,14 @@
                         
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
-                                <asp:LinkButton runat="server" 
-                                    CommandName="Editar" 
-                                    CommandArgument='<%# Eval("ProductoId") %>'
-                                    CssClass="btn-editar"
-                                    CausesValidation="false">
+                                <button type='button' class='btn-editar'
+                                    onclick='cargarDatosEdicion(<%# Eval("ProductoId") %>, 
+                                                               "<%# Eval("Descripcion") %>", 
+                                                               <%# Eval("IdCategoria") %>, 
+                                                               <%# Eval("IdEstilo") %>, 
+                                                               <%# Eval("Precio") %>); return false;'>
                                     <i class="fas fa-edit"></i> Editar
-                                </asp:LinkButton>
+                                </button>
 
                                 <asp:LinkButton runat="server" 
                                     CommandName="VerVariantes" 
@@ -165,6 +166,12 @@
 
         // Para abrir modal EDITAR (limpia datos)
         function abrirModalEditar() {
+            document.getElementById("<%= lblMensaje.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorDescripcion.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorCategoria.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorEstilo.ClientID %>").innerText = "";
+            document.getElementById("<%= lblErrorPrecio.ClientID %>").innerText = "";
+
             document.getElementById("modalProducto").classList.add("show");
             document.getElementById("tituloModal").innerHTML = '<i class="fas fa-edit me-2"></i>Editar producto';
             document.getElementById("<%= btnGuardar.ClientID %>").value = "Actualizar producto";
@@ -201,6 +208,23 @@
             document.getElementById("<%= lblErrorCategoria.ClientID %>").innerText = "";
             document.getElementById("<%= lblErrorEstilo.ClientID %>").innerText = "";
             document.getElementById("<%= lblErrorPrecio.ClientID %>").innerText = "";
+        }
+
+        function cargarDatosEdicion(productoId, descripcion, categoriaId, estiloId, precio) {
+            // Limpiar errores
+            limpiarFormulario();
+
+            // Cargar datos
+            document.getElementById("<%= hfProductoId.ClientID %>").value = productoId;
+            document.getElementById("<%= txtDescripcion.ClientID %>").value = descripcion;
+            document.getElementById("<%= ddlCategoria.ClientID %>").value = categoriaId;
+            document.getElementById("<%= ddlEstilo.ClientID %>").value = estiloId;
+            document.getElementById("<%= txtPrecio.ClientID %>").value = precio;
+    
+            // Abrir modal
+            document.getElementById("modalProducto").classList.add("show");
+            document.getElementById("tituloModal").innerHTML = '<i class="fas fa-edit me-2"></i>Editar producto';
+            document.getElementById("<%= btnGuardar.ClientID %>").value = "Actualizar producto";
         }
 
     </script>
