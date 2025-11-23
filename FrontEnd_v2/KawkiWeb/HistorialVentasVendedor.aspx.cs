@@ -236,11 +236,11 @@ namespace KawkiWeb
                 }
 
                 // Verificar que la venta pertenezca al vendedor actual
-                if (venta.usuario?.nombreUsuario != UsuarioActual)
-                {
-                    MostrarError("No tienes permiso para ver esta venta.");
-                    return;
-                }
+                //if (venta.usuario?.nombreUsuario != UsuarioActual)
+                //{
+                //    MostrarError("No tienes permiso para ver esta venta.");
+                //    return;
+                //}
 
                 lblIdVentaDetalle.Text = venta.venta_id.ToString();
                 lblClienteDetalle.Text = "Cliente de la venta"; // Si no tienes cliente en el modelo
@@ -255,7 +255,7 @@ namespace KawkiWeb
                 {
                     var detalles = venta.detalles.Select(d => new
                     {
-                        Producto = d.prodVariante?.nombre ?? "N/D",
+                        Producto = d.prodVariante?.SKU ?? "N/D",
                         Cantidad = d.cantidad,
                         PrecioUnitario = d.precio_unitario,
                         Subtotal = d.subtotal
