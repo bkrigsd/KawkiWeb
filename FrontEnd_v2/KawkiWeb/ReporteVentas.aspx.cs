@@ -369,5 +369,80 @@ namespace KawkiWeb
             //ChartVariacionDataJson = serializer.Serialize(serie.Select(x => x.Total));
 
         }
+
+        protected void btnExportarPDF_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 1) Obtener fechas del TextBox
+                string fechaInicioStr = txtFechaInicio.Text.Trim();
+                string fechaFinStr = txtFechaFin.Text.Trim();
+
+                // 2) Si ambas están vacías o ambas tienen valor
+                bool ambasVacias = string.IsNullOrWhiteSpace(fechaInicioStr) && string.IsNullOrWhiteSpace(fechaFinStr);
+                bool ambasLlenas = !string.IsNullOrWhiteSpace(fechaInicioStr) && !string.IsNullOrWhiteSpace(fechaFinStr);
+
+                if (!ambasVacias && !ambasLlenas)
+                {
+                    lblMensajeFechas.Visible = true;
+                    lblMensajeFechas.Text = "No se puede generar un reporte con solo una fecha";
+                    return;
+                }
+
+                // 3) Si están ambas vacías, enviar null
+                if (ambasVacias)
+                {
+                    fechaInicioStr = null;
+                    fechaFinStr = null;
+                }
+                else
+                {
+                    // 4) Si están llenas, convertir a formato ISO 8601
+                    DateTime fechaInicio, fechaFin;
+
+                    if (!DateTime.TryParse(fechaInicioStr, out fechaInicio))
+                    {
+                        lblMensajeFechas.Visible = true;
+                        lblMensajeFechas.Text = "Fecha inicio inválida";
+                        return;
+                    }
+
+                    if (!DateTime.TryParse(fechaFinStr, out fechaFin))
+                    {
+                        lblMensajeFechas.Visible = true;
+                        lblMensajeFechas.Text = "Fecha fin inválida";
+                        return;
+                    }
+
+                    fechaInicioStr = fechaInicio.ToString("yyyy-MM-ddTHH:mm:ss");
+                    fechaFinStr = fechaFin.ToString("yyyy-MM-ddTHH:mm:ss");
+                }
+
+                // 5) Llamar al BO para generar el PDF
+                var reportesBO = new ReportesBO();
+                byte[] reportePDF = reportesBO.GenerarReporteVentasYTendencias(fechaInicioStr, fechaFinStr);
+
+                // 6) Validar que se generó correctamente
+                if (reportePDF == null || reportePDF.Length == 0)
+                {
+                    lblMensajeFechas.Visible = true;
+                    lblMensajeFechas.Text = "ERROR al generar el reporte, intente de nuevo";
+                    return;
+                }
+
+                // 7) Descargar el PDF al navegador
+                Response.Clear();
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-disposition", "attachment;filename=ReporteVentas.pdf");
+                Response.BinaryWrite(reportePDF);
+                Response.End();
+            }
+            catch (Exception ex)
+            {
+                lblMensajeFechas.Visible = true;
+                lblMensajeFechas.Text = "Error: " + ex.Message;
+                System.Diagnostics.Debug.WriteLine("Error al exportar PDF: " + ex.Message);
+            }
+        }
     }
 }

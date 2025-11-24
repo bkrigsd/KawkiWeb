@@ -47,10 +47,24 @@ namespace KawkiWebBusiness
             return this.clienteSOAP.listarTodosUsuario();
         }
 
-        // public IList<usuariosDTO> ListarPorTipoUsuario(int tipoUsuarioId)
-        // {
-        //     return this.clienteSOAP.listarPorTipoUsuario(tipoUsuarioId);
-        // }
+        public IList<usuariosDTO> ListarVendedoresActivos()
+        {
+            // 1 podría ser un enum TipoUsuario.Vendedor
+            const int TIPO_VENDEDOR = 1;
+
+            var usuarios = this.clienteSOAP.listarPorTipoUsuario(TIPO_VENDEDOR);
+
+            return usuarios
+                .Where(u => u != null && u.activo)
+                .OrderBy(u => u.nombre)
+                .ThenBy(u => u.apePaterno)
+                .ToList();
+        }
+
+        public IList<usuariosDTO> ListarPorTipoUsuario(int tipoUsuarioId)
+        {
+            return this.clienteSOAP.listarPorTipoUsuario(tipoUsuarioId);
+        }
 
         public bool CambiarContrasenhaUsuario(int usuarioId, string contrasenhaActual, string contrasenhaNueva)
         {

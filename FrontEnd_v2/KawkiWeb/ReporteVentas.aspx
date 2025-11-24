@@ -65,6 +65,23 @@
                 <div class="card-title"><i class="fas fa-filter"></i> Filtros de período</div>
             </div>
             <div class="card-body">
+                <%--<div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label">Fecha Inicio</label>
+                        <asp:TextBox ID="txtFechaInicio" runat="server"
+                            TextMode="Date" CssClass="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Fecha Fin</label>
+                        <asp:TextBox ID="txtFechaFin" runat="server"
+                            TextMode="Date" CssClass="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <asp:Button ID="btnGenerar" runat="server" Text="Generar Reporte"
+                            CssClass="btn-kawki-primary w-100" OnClick="btnGenerar_Click" />
+                    </div>
+                </div>--%>
+
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
                         <label class="form-label">Fecha Inicio</label>
@@ -79,6 +96,17 @@
                     <div class="col-md-4">
                         <asp:Button ID="btnGenerar" runat="server" Text="Generar Reporte"
                             CssClass="btn-kawki-primary w-100" OnClick="btnGenerar_Click" />
+                    </div>
+                </div>
+
+                <!-- NUEVO: Botón para exportar PDF -->
+                <div class="row g-3 mt-2">
+                    <div class="col-md-12">
+                        <asp:Button ID="btnExportarPDF" runat="server" 
+                            Text="Descargar como PDF" 
+                            CssClass="btn btn-kawki-outline me-2" 
+                            OnClick="btnExportarPDF_Click" 
+                            Style="width: 100%; font-weight: bold;" />
                     </div>
                 </div>
 

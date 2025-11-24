@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Historial Ventas" Language="C#" MasterPageFile="~/KawkiWeb.master"
+﻿﻿﻿<%@ Page Title="Historial Ventas" Language="C#" MasterPageFile="~/KawkiWeb.master"
     AutoEventWireup="true" CodeBehind="HistorialVentasAdmin.aspx.cs" Inherits="KawkiWeb.HistorialVentasAdmin" %>
 
 <asp:Content ID="HeadExtra" ContentPlaceHolderID="HeadContent" runat="server">
@@ -314,12 +314,12 @@
 
 
     <script>
-    function abrirDetalleVenta() {
-        document.getElementById("modalDetalleVenta").classList.add("show");
-    }
-    function cerrarDetalleVenta() {
-        document.getElementById("modalDetalleVenta").classList.remove("show");
-    }
+        function abrirDetalleVenta() {
+            document.getElementById("modalDetalleVenta").classList.add("show");
+        }
+        function cerrarDetalleVenta() {
+            document.getElementById("modalDetalleVenta").classList.remove("show");
+        }
     </script>
 
     <script>
@@ -360,4 +360,3 @@
     </script>
 
 </asp:Content>
-
