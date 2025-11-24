@@ -16,24 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
     public interface Estilos {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse modificarEstilo(KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse> modificarEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/insertarEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/insertarEstiloResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse insertarEstilo(KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/insertarEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/insertarEstiloResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse> insertarEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/obtenerPorIdEstiloRequest" +
             "", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/obtenerPorIdEstiloRespons" +
             "e")]
@@ -56,83 +38,24 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloResponse" +
             "")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse> listarTodosEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest request);
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarEstilo", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarEstiloRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int estiloId;
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/insertarEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/insertarEstiloResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse insertarEstilo(KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest request);
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string nombreEstilo;
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/insertarEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/insertarEstiloResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse> insertarEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest request);
         
-        public modificarEstiloRequest() {
-        }
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse modificarEstilo(KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest request);
         
-        public modificarEstiloRequest(int estiloId, string nombreEstilo) {
-            this.estiloId = estiloId;
-            this.nombreEstilo = nombreEstilo;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarEstiloResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarEstiloResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public modificarEstiloResponse() {
-        }
-        
-        public modificarEstiloResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarEstilo", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarEstiloRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string nombreEstilo;
-        
-        public insertarEstiloRequest() {
-        }
-        
-        public insertarEstiloRequest(string nombreEstilo) {
-            this.nombreEstilo = nombreEstilo;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarEstiloResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarEstiloResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public insertarEstiloResponse() {
-        }
-        
-        public insertarEstiloResponse(int @return) {
-            this.@return = @return;
-        }
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse> modificarEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest request);
     }
     
     /// <remarks/>
@@ -259,6 +182,83 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarEstilo", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarEstiloRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string nombreEstilo;
+        
+        public insertarEstiloRequest() {
+        }
+        
+        public insertarEstiloRequest(string nombreEstilo) {
+            this.nombreEstilo = nombreEstilo;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarEstiloResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarEstiloResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public insertarEstiloResponse() {
+        }
+        
+        public insertarEstiloResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarEstilo", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarEstiloRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int estiloId;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string nombreEstilo;
+        
+        public modificarEstiloRequest() {
+        }
+        
+        public modificarEstiloRequest(int estiloId, string nombreEstilo) {
+            this.estiloId = estiloId;
+            this.nombreEstilo = nombreEstilo;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarEstiloResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarEstiloResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public modificarEstiloResponse() {
+        }
+        
+        public modificarEstiloResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface EstilosChannel : KawkiWebBusiness.KawkiWebWSEstilos.Estilos, System.ServiceModel.IClientChannel {
     }
@@ -284,54 +284,6 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
         
         public EstilosClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse KawkiWebBusiness.KawkiWebWSEstilos.Estilos.modificarEstilo(KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest request) {
-            return base.Channel.modificarEstilo(request);
-        }
-        
-        public int modificarEstilo(int estiloId, string nombreEstilo) {
-            KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest();
-            inValue.estiloId = estiloId;
-            inValue.nombreEstilo = nombreEstilo;
-            KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse retVal = ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).modificarEstilo(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse> KawkiWebBusiness.KawkiWebWSEstilos.Estilos.modificarEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest request) {
-            return base.Channel.modificarEstiloAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse> modificarEstiloAsync(int estiloId, string nombreEstilo) {
-            KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest();
-            inValue.estiloId = estiloId;
-            inValue.nombreEstilo = nombreEstilo;
-            return ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).modificarEstiloAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse KawkiWebBusiness.KawkiWebWSEstilos.Estilos.insertarEstilo(KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest request) {
-            return base.Channel.insertarEstilo(request);
-        }
-        
-        public int insertarEstilo(string nombreEstilo) {
-            KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest();
-            inValue.nombreEstilo = nombreEstilo;
-            KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse retVal = ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).insertarEstilo(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse> KawkiWebBusiness.KawkiWebWSEstilos.Estilos.insertarEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest request) {
-            return base.Channel.insertarEstiloAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse> insertarEstiloAsync(string nombreEstilo) {
-            KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest();
-            inValue.nombreEstilo = nombreEstilo;
-            return ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).insertarEstiloAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -376,6 +328,54 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
         public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse> listarTodosEstiloAsync() {
             KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest();
             return ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).listarTodosEstiloAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse KawkiWebBusiness.KawkiWebWSEstilos.Estilos.insertarEstilo(KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest request) {
+            return base.Channel.insertarEstilo(request);
+        }
+        
+        public int insertarEstilo(string nombreEstilo) {
+            KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest();
+            inValue.nombreEstilo = nombreEstilo;
+            KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse retVal = ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).insertarEstilo(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse> KawkiWebBusiness.KawkiWebWSEstilos.Estilos.insertarEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest request) {
+            return base.Channel.insertarEstiloAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse> insertarEstiloAsync(string nombreEstilo) {
+            KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest();
+            inValue.nombreEstilo = nombreEstilo;
+            return ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).insertarEstiloAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse KawkiWebBusiness.KawkiWebWSEstilos.Estilos.modificarEstilo(KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest request) {
+            return base.Channel.modificarEstilo(request);
+        }
+        
+        public int modificarEstilo(int estiloId, string nombreEstilo) {
+            KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest();
+            inValue.estiloId = estiloId;
+            inValue.nombreEstilo = nombreEstilo;
+            KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse retVal = ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).modificarEstilo(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse> KawkiWebBusiness.KawkiWebWSEstilos.Estilos.modificarEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest request) {
+            return base.Channel.modificarEstiloAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse> modificarEstiloAsync(int estiloId, string nombreEstilo) {
+            KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest();
+            inValue.estiloId = estiloId;
+            inValue.nombreEstilo = nombreEstilo;
+            return ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).modificarEstiloAsync(inValue);
         }
     }
 }

@@ -16,17 +16,30 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     public interface ComprobantesPago {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaI" +
-            "dComprobPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaI" +
-            "dComprobPagoResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
+            "robPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
+            "robPagoResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse obtenerPorVentaIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest request);
+        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse obtenerPorIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaI" +
-            "dComprobPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaI" +
-            "dComprobPagoResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse> obtenerPorVentaIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
+            "robPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
+            "robPagoResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> obtenerPorIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprob" +
+            "PagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprob" +
+            "PagoResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse modificarComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprob" +
+            "PagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprob" +
+            "PagoResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse> modificarComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/insertarComprobP" +
@@ -55,30 +68,17 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse> listarTodosComprobantePagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprob" +
-            "PagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprob" +
-            "PagoResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaI" +
+            "dComprobPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaI" +
+            "dComprobPagoResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse modificarComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest request);
+        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse obtenerPorVentaIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprob" +
-            "PagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprob" +
-            "PagoResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse> modificarComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
-            "robPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
-            "robPagoResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse obtenerPorIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
-            "robPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
-            "robPagoResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> obtenerPorIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaI" +
+            "dComprobPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaI" +
+            "dComprobPagoResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse> obtenerPorVentaIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest request);
     }
     
     /// <remarks/>
@@ -1876,35 +1876,121 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorVentaIdComprobPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorVentaIdComprobPagoRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdComprobPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdComprobPagoRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int venta_id;
+        public int comprobante_pago_id;
         
-        public obtenerPorVentaIdComprobPagoRequest() {
+        public obtenerPorIdComprobPagoRequest() {
         }
         
-        public obtenerPorVentaIdComprobPagoRequest(int venta_id) {
-            this.venta_id = venta_id;
+        public obtenerPorIdComprobPagoRequest(int comprobante_pago_id) {
+            this.comprobante_pago_id = comprobante_pago_id;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorVentaIdComprobPagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorVentaIdComprobPagoResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdComprobPagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdComprobPagoResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO @return;
         
-        public obtenerPorVentaIdComprobPagoResponse() {
+        public obtenerPorIdComprobPagoResponse() {
         }
         
-        public obtenerPorVentaIdComprobPagoResponse(KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO @return) {
+        public obtenerPorIdComprobPagoResponse(KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarComprobPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarComprobPagoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int comprobante_pago_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSComprobantesPago.tiposComprobanteDTO tipo_comprobante;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string dni_cliente;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string nombre_cliente;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string ruc_cliente;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string razon_social_cliente;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string direccion_fiscal_cliente;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=7)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string telefono_cliente;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public double total;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=9)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSComprobantesPago.ventasDTO venta;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=10)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSComprobantesPago.metodosPagoDTO metodoPago;
+        
+        public modificarComprobPagoRequest() {
+        }
+        
+        public modificarComprobPagoRequest(int comprobante_pago_id, KawkiWebBusiness.KawkiWebWSComprobantesPago.tiposComprobanteDTO tipo_comprobante, string dni_cliente, string nombre_cliente, string ruc_cliente, string razon_social_cliente, string direccion_fiscal_cliente, string telefono_cliente, double total, KawkiWebBusiness.KawkiWebWSComprobantesPago.ventasDTO venta, KawkiWebBusiness.KawkiWebWSComprobantesPago.metodosPagoDTO metodoPago) {
+            this.comprobante_pago_id = comprobante_pago_id;
+            this.tipo_comprobante = tipo_comprobante;
+            this.dni_cliente = dni_cliente;
+            this.nombre_cliente = nombre_cliente;
+            this.ruc_cliente = ruc_cliente;
+            this.razon_social_cliente = razon_social_cliente;
+            this.direccion_fiscal_cliente = direccion_fiscal_cliente;
+            this.telefono_cliente = telefono_cliente;
+            this.total = total;
+            this.venta = venta;
+            this.metodoPago = metodoPago;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarComprobPagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarComprobPagoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public modificarComprobPagoResponse() {
+        }
+        
+        public modificarComprobPagoResponse(int @return) {
             this.@return = @return;
         }
     }
@@ -2021,121 +2107,35 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarComprobPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarComprobPagoRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorVentaIdComprobPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorVentaIdComprobPagoRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int comprobante_pago_id;
+        public int venta_id;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSComprobantesPago.tiposComprobanteDTO tipo_comprobante;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string dni_cliente;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string nombre_cliente;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string ruc_cliente;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string razon_social_cliente;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=6)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string direccion_fiscal_cliente;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=7)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string telefono_cliente;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=8)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public double total;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=9)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSComprobantesPago.ventasDTO venta;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=10)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSComprobantesPago.metodosPagoDTO metodoPago;
-        
-        public modificarComprobPagoRequest() {
+        public obtenerPorVentaIdComprobPagoRequest() {
         }
         
-        public modificarComprobPagoRequest(int comprobante_pago_id, KawkiWebBusiness.KawkiWebWSComprobantesPago.tiposComprobanteDTO tipo_comprobante, string dni_cliente, string nombre_cliente, string ruc_cliente, string razon_social_cliente, string direccion_fiscal_cliente, string telefono_cliente, double total, KawkiWebBusiness.KawkiWebWSComprobantesPago.ventasDTO venta, KawkiWebBusiness.KawkiWebWSComprobantesPago.metodosPagoDTO metodoPago) {
-            this.comprobante_pago_id = comprobante_pago_id;
-            this.tipo_comprobante = tipo_comprobante;
-            this.dni_cliente = dni_cliente;
-            this.nombre_cliente = nombre_cliente;
-            this.ruc_cliente = ruc_cliente;
-            this.razon_social_cliente = razon_social_cliente;
-            this.direccion_fiscal_cliente = direccion_fiscal_cliente;
-            this.telefono_cliente = telefono_cliente;
-            this.total = total;
-            this.venta = venta;
-            this.metodoPago = metodoPago;
+        public obtenerPorVentaIdComprobPagoRequest(int venta_id) {
+            this.venta_id = venta_id;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarComprobPagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarComprobPagoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
-        
-        public modificarComprobPagoResponse() {
-        }
-        
-        public modificarComprobPagoResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdComprobPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdComprobPagoRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int comprobante_pago_id;
-        
-        public obtenerPorIdComprobPagoRequest() {
-        }
-        
-        public obtenerPorIdComprobPagoRequest(int comprobante_pago_id) {
-            this.comprobante_pago_id = comprobante_pago_id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdComprobPagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdComprobPagoResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorVentaIdComprobPagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorVentaIdComprobPagoResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO @return;
         
-        public obtenerPorIdComprobPagoResponse() {
+        public obtenerPorVentaIdComprobPagoResponse() {
         }
         
-        public obtenerPorIdComprobPagoResponse(KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO @return) {
+        public obtenerPorVentaIdComprobPagoResponse(KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO @return) {
             this.@return = @return;
         }
     }
@@ -2168,26 +2168,69 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorVentaIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest request) {
-            return base.Channel.obtenerPorVentaIdComprobPago(request);
+        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request) {
+            return base.Channel.obtenerPorIdComprobPago(request);
         }
         
-        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO obtenerPorVentaIdComprobPago(int venta_id) {
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest();
-            inValue.venta_id = venta_id;
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorVentaIdComprobPago(inValue);
+        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO obtenerPorIdComprobPago(int comprobante_pago_id) {
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest();
+            inValue.comprobante_pago_id = comprobante_pago_id;
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorIdComprobPago(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse> KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorVentaIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest request) {
-            return base.Channel.obtenerPorVentaIdComprobPagoAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request) {
+            return base.Channel.obtenerPorIdComprobPagoAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse> obtenerPorVentaIdComprobPagoAsync(int venta_id) {
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest();
-            inValue.venta_id = venta_id;
-            return ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorVentaIdComprobPagoAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> obtenerPorIdComprobPagoAsync(int comprobante_pago_id) {
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest();
+            inValue.comprobante_pago_id = comprobante_pago_id;
+            return ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorIdComprobPagoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.modificarComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest request) {
+            return base.Channel.modificarComprobPago(request);
+        }
+        
+        public int modificarComprobPago(int comprobante_pago_id, KawkiWebBusiness.KawkiWebWSComprobantesPago.tiposComprobanteDTO tipo_comprobante, string dni_cliente, string nombre_cliente, string ruc_cliente, string razon_social_cliente, string direccion_fiscal_cliente, string telefono_cliente, double total, KawkiWebBusiness.KawkiWebWSComprobantesPago.ventasDTO venta, KawkiWebBusiness.KawkiWebWSComprobantesPago.metodosPagoDTO metodoPago) {
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest();
+            inValue.comprobante_pago_id = comprobante_pago_id;
+            inValue.tipo_comprobante = tipo_comprobante;
+            inValue.dni_cliente = dni_cliente;
+            inValue.nombre_cliente = nombre_cliente;
+            inValue.ruc_cliente = ruc_cliente;
+            inValue.razon_social_cliente = razon_social_cliente;
+            inValue.direccion_fiscal_cliente = direccion_fiscal_cliente;
+            inValue.telefono_cliente = telefono_cliente;
+            inValue.total = total;
+            inValue.venta = venta;
+            inValue.metodoPago = metodoPago;
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).modificarComprobPago(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse> KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.modificarComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest request) {
+            return base.Channel.modificarComprobPagoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse> modificarComprobPagoAsync(int comprobante_pago_id, KawkiWebBusiness.KawkiWebWSComprobantesPago.tiposComprobanteDTO tipo_comprobante, string dni_cliente, string nombre_cliente, string ruc_cliente, string razon_social_cliente, string direccion_fiscal_cliente, string telefono_cliente, double total, KawkiWebBusiness.KawkiWebWSComprobantesPago.ventasDTO venta, KawkiWebBusiness.KawkiWebWSComprobantesPago.metodosPagoDTO metodoPago) {
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest();
+            inValue.comprobante_pago_id = comprobante_pago_id;
+            inValue.tipo_comprobante = tipo_comprobante;
+            inValue.dni_cliente = dni_cliente;
+            inValue.nombre_cliente = nombre_cliente;
+            inValue.ruc_cliente = ruc_cliente;
+            inValue.razon_social_cliente = razon_social_cliente;
+            inValue.direccion_fiscal_cliente = direccion_fiscal_cliente;
+            inValue.telefono_cliente = telefono_cliente;
+            inValue.total = total;
+            inValue.venta = venta;
+            inValue.metodoPago = metodoPago;
+            return ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).modificarComprobPagoAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2253,69 +2296,26 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.modificarComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest request) {
-            return base.Channel.modificarComprobPago(request);
+        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorVentaIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest request) {
+            return base.Channel.obtenerPorVentaIdComprobPago(request);
         }
         
-        public int modificarComprobPago(int comprobante_pago_id, KawkiWebBusiness.KawkiWebWSComprobantesPago.tiposComprobanteDTO tipo_comprobante, string dni_cliente, string nombre_cliente, string ruc_cliente, string razon_social_cliente, string direccion_fiscal_cliente, string telefono_cliente, double total, KawkiWebBusiness.KawkiWebWSComprobantesPago.ventasDTO venta, KawkiWebBusiness.KawkiWebWSComprobantesPago.metodosPagoDTO metodoPago) {
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest();
-            inValue.comprobante_pago_id = comprobante_pago_id;
-            inValue.tipo_comprobante = tipo_comprobante;
-            inValue.dni_cliente = dni_cliente;
-            inValue.nombre_cliente = nombre_cliente;
-            inValue.ruc_cliente = ruc_cliente;
-            inValue.razon_social_cliente = razon_social_cliente;
-            inValue.direccion_fiscal_cliente = direccion_fiscal_cliente;
-            inValue.telefono_cliente = telefono_cliente;
-            inValue.total = total;
-            inValue.venta = venta;
-            inValue.metodoPago = metodoPago;
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).modificarComprobPago(inValue);
+        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO obtenerPorVentaIdComprobPago(int venta_id) {
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest();
+            inValue.venta_id = venta_id;
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorVentaIdComprobPago(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse> KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.modificarComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest request) {
-            return base.Channel.modificarComprobPagoAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse> KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorVentaIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest request) {
+            return base.Channel.obtenerPorVentaIdComprobPagoAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoResponse> modificarComprobPagoAsync(int comprobante_pago_id, KawkiWebBusiness.KawkiWebWSComprobantesPago.tiposComprobanteDTO tipo_comprobante, string dni_cliente, string nombre_cliente, string ruc_cliente, string razon_social_cliente, string direccion_fiscal_cliente, string telefono_cliente, double total, KawkiWebBusiness.KawkiWebWSComprobantesPago.ventasDTO venta, KawkiWebBusiness.KawkiWebWSComprobantesPago.metodosPagoDTO metodoPago) {
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.modificarComprobPagoRequest();
-            inValue.comprobante_pago_id = comprobante_pago_id;
-            inValue.tipo_comprobante = tipo_comprobante;
-            inValue.dni_cliente = dni_cliente;
-            inValue.nombre_cliente = nombre_cliente;
-            inValue.ruc_cliente = ruc_cliente;
-            inValue.razon_social_cliente = razon_social_cliente;
-            inValue.direccion_fiscal_cliente = direccion_fiscal_cliente;
-            inValue.telefono_cliente = telefono_cliente;
-            inValue.total = total;
-            inValue.venta = venta;
-            inValue.metodoPago = metodoPago;
-            return ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).modificarComprobPagoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request) {
-            return base.Channel.obtenerPorIdComprobPago(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO obtenerPorIdComprobPago(int comprobante_pago_id) {
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest();
-            inValue.comprobante_pago_id = comprobante_pago_id;
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorIdComprobPago(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request) {
-            return base.Channel.obtenerPorIdComprobPagoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> obtenerPorIdComprobPagoAsync(int comprobante_pago_id) {
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest();
-            inValue.comprobante_pago_id = comprobante_pago_id;
-            return ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorIdComprobPagoAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoResponse> obtenerPorVentaIdComprobPagoAsync(int venta_id) {
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorVentaIdComprobPagoRequest();
+            inValue.venta_id = venta_id;
+            return ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorVentaIdComprobPagoAsync(inValue);
         }
     }
 }

@@ -5,6 +5,12 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/MovimientosInventarioService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
+  <message name="listarMovimientosRecientesMovInventario">
+    <part name="parameters" element="tns:listarMovimientosRecientesMovInventario" />
+  </message>
+  <message name="listarMovimientosRecientesMovInventarioResponse">
+    <part name="parameters" element="tns:listarMovimientosRecientesMovInventarioResponse" />
+  </message>
   <message name="listarPorProductoVarianteMovInventario">
     <part name="parameters" element="tns:listarPorProductoVarianteMovInventario" />
   </message>
@@ -16,54 +22,6 @@
   </message>
   <message name="listarPorTipoMovimientoMovInventarioResponse">
     <part name="parameters" element="tns:listarPorTipoMovimientoMovInventarioResponse" />
-  </message>
-  <message name="listarMovimientosRecientesMovInventario">
-    <part name="parameters" element="tns:listarMovimientosRecientesMovInventario" />
-  </message>
-  <message name="listarMovimientosRecientesMovInventarioResponse">
-    <part name="parameters" element="tns:listarMovimientosRecientesMovInventarioResponse" />
-  </message>
-  <message name="listarPorUsuarioMovInventario">
-    <part name="parameters" element="tns:listarPorUsuarioMovInventario" />
-  </message>
-  <message name="listarPorUsuarioMovInventarioResponse">
-    <part name="parameters" element="tns:listarPorUsuarioMovInventarioResponse" />
-  </message>
-  <message name="crearAjusteInventarioMovInventario">
-    <part name="parameters" element="tns:crearAjusteInventarioMovInventario" />
-  </message>
-  <message name="crearAjusteInventarioMovInventarioResponse">
-    <part name="parameters" element="tns:crearAjusteInventarioMovInventarioResponse" />
-  </message>
-  <message name="registrarIngresoMovInventario">
-    <part name="parameters" element="tns:registrarIngresoMovInventario" />
-  </message>
-  <message name="registrarIngresoMovInventarioResponse">
-    <part name="parameters" element="tns:registrarIngresoMovInventarioResponse" />
-  </message>
-  <message name="registrarSalidaMovInventario">
-    <part name="parameters" element="tns:registrarSalidaMovInventario" />
-  </message>
-  <message name="registrarSalidaMovInventarioResponse">
-    <part name="parameters" element="tns:registrarSalidaMovInventarioResponse" />
-  </message>
-  <message name="listarPorRangoFechasMovInventario">
-    <part name="parameters" element="tns:listarPorRangoFechasMovInventario" />
-  </message>
-  <message name="listarPorRangoFechasMovInventarioResponse">
-    <part name="parameters" element="tns:listarPorRangoFechasMovInventarioResponse" />
-  </message>
-  <message name="insertarMovInventario">
-    <part name="parameters" element="tns:insertarMovInventario" />
-  </message>
-  <message name="insertarMovInventarioResponse">
-    <part name="parameters" element="tns:insertarMovInventarioResponse" />
-  </message>
-  <message name="obtenerPorIdMovInventario">
-    <part name="parameters" element="tns:obtenerPorIdMovInventario" />
-  </message>
-  <message name="obtenerPorIdMovInventarioResponse">
-    <part name="parameters" element="tns:obtenerPorIdMovInventarioResponse" />
   </message>
   <message name="listarTodosMovInventario">
     <part name="parameters" element="tns:listarTodosMovInventario" />
@@ -77,7 +35,53 @@
   <message name="modificarMovInventarioResponse">
     <part name="parameters" element="tns:modificarMovInventarioResponse" />
   </message>
+  <message name="insertarMovInventario">
+    <part name="parameters" element="tns:insertarMovInventario" />
+  </message>
+  <message name="insertarMovInventarioResponse">
+    <part name="parameters" element="tns:insertarMovInventarioResponse" />
+  </message>
+  <message name="obtenerPorIdMovInventario">
+    <part name="parameters" element="tns:obtenerPorIdMovInventario" />
+  </message>
+  <message name="obtenerPorIdMovInventarioResponse">
+    <part name="parameters" element="tns:obtenerPorIdMovInventarioResponse" />
+  </message>
+  <message name="listarPorRangoFechasMovInventario">
+    <part name="parameters" element="tns:listarPorRangoFechasMovInventario" />
+  </message>
+  <message name="listarPorRangoFechasMovInventarioResponse">
+    <part name="parameters" element="tns:listarPorRangoFechasMovInventarioResponse" />
+  </message>
+  <message name="registrarIngresoMovInventario">
+    <part name="parameters" element="tns:registrarIngresoMovInventario" />
+  </message>
+  <message name="registrarIngresoMovInventarioResponse">
+    <part name="parameters" element="tns:registrarIngresoMovInventarioResponse" />
+  </message>
+  <message name="registrarSalidaMovInventario">
+    <part name="parameters" element="tns:registrarSalidaMovInventario" />
+  </message>
+  <message name="registrarSalidaMovInventarioResponse">
+    <part name="parameters" element="tns:registrarSalidaMovInventarioResponse" />
+  </message>
+  <message name="crearAjusteInventarioMovInventario">
+    <part name="parameters" element="tns:crearAjusteInventarioMovInventario" />
+  </message>
+  <message name="crearAjusteInventarioMovInventarioResponse">
+    <part name="parameters" element="tns:crearAjusteInventarioMovInventarioResponse" />
+  </message>
+  <message name="listarPorUsuarioMovInventario">
+    <part name="parameters" element="tns:listarPorUsuarioMovInventario" />
+  </message>
+  <message name="listarPorUsuarioMovInventarioResponse">
+    <part name="parameters" element="tns:listarPorUsuarioMovInventarioResponse" />
+  </message>
   <portType name="MovimientosInventario">
+    <operation name="listarMovimientosRecientesMovInventario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarMovimientosRecientesMovInventarioRequest" message="tns:listarMovimientosRecientesMovInventario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarMovimientosRecientesMovInventarioResponse" message="tns:listarMovimientosRecientesMovInventarioResponse" />
+    </operation>
     <operation name="listarPorProductoVarianteMovInventario">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorProductoVarianteMovInventarioRequest" message="tns:listarPorProductoVarianteMovInventario" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorProductoVarianteMovInventarioResponse" message="tns:listarPorProductoVarianteMovInventarioResponse" />
@@ -85,38 +89,6 @@
     <operation name="listarPorTipoMovimientoMovInventario">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorTipoMovimientoMovInventarioRequest" message="tns:listarPorTipoMovimientoMovInventario" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorTipoMovimientoMovInventarioResponse" message="tns:listarPorTipoMovimientoMovInventarioResponse" />
-    </operation>
-    <operation name="listarMovimientosRecientesMovInventario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarMovimientosRecientesMovInventarioRequest" message="tns:listarMovimientosRecientesMovInventario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarMovimientosRecientesMovInventarioResponse" message="tns:listarMovimientosRecientesMovInventarioResponse" />
-    </operation>
-    <operation name="listarPorUsuarioMovInventario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorUsuarioMovInventarioRequest" message="tns:listarPorUsuarioMovInventario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorUsuarioMovInventarioResponse" message="tns:listarPorUsuarioMovInventarioResponse" />
-    </operation>
-    <operation name="crearAjusteInventarioMovInventario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/crearAjusteInventarioMovInventarioRequest" message="tns:crearAjusteInventarioMovInventario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/crearAjusteInventarioMovInventarioResponse" message="tns:crearAjusteInventarioMovInventarioResponse" />
-    </operation>
-    <operation name="registrarIngresoMovInventario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/registrarIngresoMovInventarioRequest" message="tns:registrarIngresoMovInventario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/registrarIngresoMovInventarioResponse" message="tns:registrarIngresoMovInventarioResponse" />
-    </operation>
-    <operation name="registrarSalidaMovInventario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/registrarSalidaMovInventarioRequest" message="tns:registrarSalidaMovInventario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/registrarSalidaMovInventarioResponse" message="tns:registrarSalidaMovInventarioResponse" />
-    </operation>
-    <operation name="listarPorRangoFechasMovInventario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorRangoFechasMovInventarioRequest" message="tns:listarPorRangoFechasMovInventario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorRangoFechasMovInventarioResponse" message="tns:listarPorRangoFechasMovInventarioResponse" />
-    </operation>
-    <operation name="insertarMovInventario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/insertarMovInventarioRequest" message="tns:insertarMovInventario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/insertarMovInventarioResponse" message="tns:insertarMovInventarioResponse" />
-    </operation>
-    <operation name="obtenerPorIdMovInventario">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorIdMovInventarioRequest" message="tns:obtenerPorIdMovInventario" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorIdMovInventarioResponse" message="tns:obtenerPorIdMovInventarioResponse" />
     </operation>
     <operation name="listarTodosMovInventario">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarTodosMovInventarioRequest" message="tns:listarTodosMovInventario" />
@@ -126,9 +98,46 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/modificarMovInventarioRequest" message="tns:modificarMovInventario" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/modificarMovInventarioResponse" message="tns:modificarMovInventarioResponse" />
     </operation>
+    <operation name="insertarMovInventario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/insertarMovInventarioRequest" message="tns:insertarMovInventario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/insertarMovInventarioResponse" message="tns:insertarMovInventarioResponse" />
+    </operation>
+    <operation name="obtenerPorIdMovInventario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorIdMovInventarioRequest" message="tns:obtenerPorIdMovInventario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/obtenerPorIdMovInventarioResponse" message="tns:obtenerPorIdMovInventarioResponse" />
+    </operation>
+    <operation name="listarPorRangoFechasMovInventario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorRangoFechasMovInventarioRequest" message="tns:listarPorRangoFechasMovInventario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorRangoFechasMovInventarioResponse" message="tns:listarPorRangoFechasMovInventarioResponse" />
+    </operation>
+    <operation name="registrarIngresoMovInventario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/registrarIngresoMovInventarioRequest" message="tns:registrarIngresoMovInventario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/registrarIngresoMovInventarioResponse" message="tns:registrarIngresoMovInventarioResponse" />
+    </operation>
+    <operation name="registrarSalidaMovInventario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/registrarSalidaMovInventarioRequest" message="tns:registrarSalidaMovInventario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/registrarSalidaMovInventarioResponse" message="tns:registrarSalidaMovInventarioResponse" />
+    </operation>
+    <operation name="crearAjusteInventarioMovInventario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/crearAjusteInventarioMovInventarioRequest" message="tns:crearAjusteInventarioMovInventario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/crearAjusteInventarioMovInventarioResponse" message="tns:crearAjusteInventarioMovInventarioResponse" />
+    </operation>
+    <operation name="listarPorUsuarioMovInventario">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorUsuarioMovInventarioRequest" message="tns:listarPorUsuarioMovInventario" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/MovimientosInventario/listarPorUsuarioMovInventarioResponse" message="tns:listarPorUsuarioMovInventarioResponse" />
+    </operation>
   </portType>
   <binding name="MovimientosInventarioPortBinding" type="tns:MovimientosInventario">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="listarMovimientosRecientesMovInventario">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="listarPorProductoVarianteMovInventario">
       <soap:operation soapAction="" />
       <input>
@@ -147,7 +156,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarMovimientosRecientesMovInventario">
+    <operation name="listarTodosMovInventario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -156,43 +165,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarPorUsuarioMovInventario">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="crearAjusteInventarioMovInventario">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="registrarIngresoMovInventario">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="registrarSalidaMovInventario">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="listarPorRangoFechasMovInventario">
+    <operation name="modificarMovInventario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -219,7 +192,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarTodosMovInventario">
+    <operation name="listarPorRangoFechasMovInventario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -228,7 +201,34 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="modificarMovInventario">
+    <operation name="registrarIngresoMovInventario">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="registrarSalidaMovInventario">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="crearAjusteInventarioMovInventario">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarPorUsuarioMovInventario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

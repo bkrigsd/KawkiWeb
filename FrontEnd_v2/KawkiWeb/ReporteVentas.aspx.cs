@@ -419,6 +419,7 @@ namespace KawkiWeb
                     // Convertir a formato ISO 8601
                     fechaInicioStr = fechaInicio.ToString("yyyy-MM-ddTHH:mm:ss");
                     fechaFinStr = fechaFin.ToString("yyyy-MM-ddTHH:mm:ss");
+
                 }
                 else
                 {

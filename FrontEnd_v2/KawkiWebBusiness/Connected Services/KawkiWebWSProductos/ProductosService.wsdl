@@ -5,23 +5,17 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/ProductosService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="tieneStockDisponibleProducto">
-    <part name="parameters" element="tns:tieneStockDisponibleProducto" />
+  <message name="modificarProducto">
+    <part name="parameters" element="tns:modificarProducto" />
   </message>
-  <message name="tieneStockDisponibleProductoResponse">
-    <part name="parameters" element="tns:tieneStockDisponibleProductoResponse" />
+  <message name="modificarProductoResponse">
+    <part name="parameters" element="tns:modificarProductoResponse" />
   </message>
-  <message name="listarPorCategoriaProducto">
-    <part name="parameters" element="tns:listarPorCategoriaProducto" />
+  <message name="insertarProducto">
+    <part name="parameters" element="tns:insertarProducto" />
   </message>
-  <message name="listarPorCategoriaProductoResponse">
-    <part name="parameters" element="tns:listarPorCategoriaProductoResponse" />
-  </message>
-  <message name="obtenerPorIdProducto">
-    <part name="parameters" element="tns:obtenerPorIdProducto" />
-  </message>
-  <message name="obtenerPorIdProductoResponse">
-    <part name="parameters" element="tns:obtenerPorIdProductoResponse" />
+  <message name="insertarProductoResponse">
+    <part name="parameters" element="tns:insertarProductoResponse" />
   </message>
   <message name="listarTodosProducto">
     <part name="parameters" element="tns:listarTodosProducto" />
@@ -35,6 +29,12 @@
   <message name="calcularStockTotalProductoResponse">
     <part name="parameters" element="tns:calcularStockTotalProductoResponse" />
   </message>
+  <message name="listarPorCategoriaProducto">
+    <part name="parameters" element="tns:listarPorCategoriaProducto" />
+  </message>
+  <message name="listarPorCategoriaProductoResponse">
+    <part name="parameters" element="tns:listarPorCategoriaProductoResponse" />
+  </message>
   <message name="listarConStockBajoProducto">
     <part name="parameters" element="tns:listarConStockBajoProducto" />
   </message>
@@ -47,30 +47,26 @@
   <message name="listarPorEstiloProductoResponse">
     <part name="parameters" element="tns:listarPorEstiloProductoResponse" />
   </message>
-  <message name="modificarProducto">
-    <part name="parameters" element="tns:modificarProducto" />
+  <message name="obtenerPorIdProducto">
+    <part name="parameters" element="tns:obtenerPorIdProducto" />
   </message>
-  <message name="modificarProductoResponse">
-    <part name="parameters" element="tns:modificarProductoResponse" />
+  <message name="obtenerPorIdProductoResponse">
+    <part name="parameters" element="tns:obtenerPorIdProductoResponse" />
   </message>
-  <message name="insertarProducto">
-    <part name="parameters" element="tns:insertarProducto" />
+  <message name="tieneStockDisponibleProducto">
+    <part name="parameters" element="tns:tieneStockDisponibleProducto" />
   </message>
-  <message name="insertarProductoResponse">
-    <part name="parameters" element="tns:insertarProductoResponse" />
+  <message name="tieneStockDisponibleProductoResponse">
+    <part name="parameters" element="tns:tieneStockDisponibleProductoResponse" />
   </message>
   <portType name="Productos">
-    <operation name="tieneStockDisponibleProducto">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponibleProductoRequest" message="tns:tieneStockDisponibleProducto" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponibleProductoResponse" message="tns:tieneStockDisponibleProductoResponse" />
+    <operation name="modificarProducto">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoRequest" message="tns:modificarProducto" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoResponse" message="tns:modificarProductoResponse" />
     </operation>
-    <operation name="listarPorCategoriaProducto">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorCategoriaProductoRequest" message="tns:listarPorCategoriaProducto" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorCategoriaProductoResponse" message="tns:listarPorCategoriaProductoResponse" />
-    </operation>
-    <operation name="obtenerPorIdProducto">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoRequest" message="tns:obtenerPorIdProducto" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoResponse" message="tns:obtenerPorIdProductoResponse" />
+    <operation name="insertarProducto">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRequest" message="tns:insertarProducto" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoResponse" message="tns:insertarProductoResponse" />
     </operation>
     <operation name="listarTodosProducto">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarTodosProductoRequest" message="tns:listarTodosProducto" />
@@ -80,6 +76,10 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProductoRequest" message="tns:calcularStockTotalProducto" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProductoResponse" message="tns:calcularStockTotalProductoResponse" />
     </operation>
+    <operation name="listarPorCategoriaProducto">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorCategoriaProductoRequest" message="tns:listarPorCategoriaProducto" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorCategoriaProductoResponse" message="tns:listarPorCategoriaProductoResponse" />
+    </operation>
     <operation name="listarConStockBajoProducto">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarConStockBajoProductoRequest" message="tns:listarConStockBajoProducto" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarConStockBajoProductoResponse" message="tns:listarConStockBajoProductoResponse" />
@@ -88,18 +88,18 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorEstiloProductoRequest" message="tns:listarPorEstiloProducto" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorEstiloProductoResponse" message="tns:listarPorEstiloProductoResponse" />
     </operation>
-    <operation name="modificarProducto">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoRequest" message="tns:modificarProducto" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoResponse" message="tns:modificarProductoResponse" />
+    <operation name="obtenerPorIdProducto">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoRequest" message="tns:obtenerPorIdProducto" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoResponse" message="tns:obtenerPorIdProductoResponse" />
     </operation>
-    <operation name="insertarProducto">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRequest" message="tns:insertarProducto" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoResponse" message="tns:insertarProductoResponse" />
+    <operation name="tieneStockDisponibleProducto">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponibleProductoRequest" message="tns:tieneStockDisponibleProducto" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponibleProductoResponse" message="tns:tieneStockDisponibleProductoResponse" />
     </operation>
   </portType>
   <binding name="ProductosPortBinding" type="tns:Productos">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="tieneStockDisponibleProducto">
+    <operation name="modificarProducto">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -108,16 +108,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarPorCategoriaProducto">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="obtenerPorIdProducto">
+    <operation name="insertarProducto">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -144,6 +135,15 @@
         <soap:body use="literal" />
       </output>
     </operation>
+    <operation name="listarPorCategoriaProducto">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="listarConStockBajoProducto">
       <soap:operation soapAction="" />
       <input>
@@ -162,7 +162,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="modificarProducto">
+    <operation name="obtenerPorIdProducto">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -171,7 +171,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="insertarProducto">
+    <operation name="tieneStockDisponibleProducto">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
