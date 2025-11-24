@@ -46,6 +46,16 @@
                             CssClass="btn-kawki-primary w-100" OnClick="btnGenerar_Click" />
                     </div>
                 </div>
+                <!-- NUEVO: Botón para exportar PDF -->
+                <div class="row g-3 mt-2">
+                    <div class="col-md-12">
+                        <asp:Button ID="btnExportarPDF" runat="server" 
+                            Text="Descargar como PDF" 
+                            CssClass="btn btn-kawki-outline me-2" 
+                            OnClick="btnExportarPDF_Click" 
+                            Style="width: 100%; font-weight: bold;" />
+                    </div>
+                </div>
             </div>
         </div>
 

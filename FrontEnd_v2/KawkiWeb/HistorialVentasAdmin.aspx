@@ -1,4 +1,4 @@
-﻿﻿﻿<%@ Page Title="Historial Ventas" Language="C#" MasterPageFile="~/KawkiWeb.master"
+﻿<%@ Page Title="Historial Ventas" Language="C#" MasterPageFile="~/KawkiWeb.master"
     AutoEventWireup="true" CodeBehind="HistorialVentasAdmin.aspx.cs" Inherits="KawkiWeb.HistorialVentasAdmin" %>
 
 <asp:Content ID="HeadExtra" ContentPlaceHolderID="HeadContent" runat="server">

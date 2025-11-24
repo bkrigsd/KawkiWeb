@@ -65,22 +65,6 @@
                 <div class="card-title"><i class="fas fa-filter"></i> Filtros de período</div>
             </div>
             <div class="card-body">
-                <%--<div class="row g-3 align-items-end">
-                    <div class="col-md-4">
-                        <label class="form-label">Fecha Inicio</label>
-                        <asp:TextBox ID="txtFechaInicio" runat="server"
-                            TextMode="Date" CssClass="form-control" />
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Fecha Fin</label>
-                        <asp:TextBox ID="txtFechaFin" runat="server"
-                            TextMode="Date" CssClass="form-control" />
-                    </div>
-                    <div class="col-md-4">
-                        <asp:Button ID="btnGenerar" runat="server" Text="Generar Reporte"
-                            CssClass="btn-kawki-primary w-100" OnClick="btnGenerar_Click" />
-                    </div>
-                </div>--%>
 
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
