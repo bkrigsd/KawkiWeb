@@ -26,10 +26,20 @@ namespace KawkiWeb
             var rol = (Session["Rol"] as string) ?? string.Empty;
             var usuario = (Session["Usuario"] as string) ?? string.Empty;
 
-            if (Session["Usuario"] != null)
-                lnkPerfil.NavigateUrl = "Perfil.aspx";
-            else
-                lnkPerfil.NavigateUrl = "Login.aspx";
+            //if (Session["Usuario"] != null)
+            //    lnkPerfil.NavigateUrl = "Perfil.aspx";
+            //else
+            //    lnkPerfil.NavigateUrl = "Login.aspx";
+
+            // 👉 AQUÍ: si no hay usuario y NO estamos en Login.aspx, manda a Login
+            string pathActual = Request.Url.AbsolutePath.ToLowerInvariant();
+            bool esLogin = pathActual.EndsWith("/login.aspx");
+
+            if (string.IsNullOrEmpty(usuario) && !esLogin)
+            {
+                Response.Redirect("~/Login.aspx", true);
+                return;
+            }
 
             bool logueado = !string.IsNullOrEmpty(usuario);
             bool esVendedor = rol.Equals("vendedor", StringComparison.OrdinalIgnoreCase);

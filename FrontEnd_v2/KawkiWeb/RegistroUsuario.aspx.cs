@@ -63,25 +63,38 @@ namespace KawkiWeb
             {
                 var lista = usuarioBO.ListarTodosUsuario();
                 lblMensaje.Text = $"Usuarios devueltos: {(lista == null ? 0 : lista.Count)}";
-                if (!string.IsNullOrEmpty(txtFiltroNombre.Text) ||
-                    !string.IsNullOrEmpty(txtFiltroDNI.Text) ||
-                    !string.IsNullOrEmpty(txtFiltroUsuario.Text) ||
-                    !string.IsNullOrEmpty(ddlFiltroRol.SelectedValue) ||
-                    !string.IsNullOrEmpty(ddlFiltroEstado.SelectedValue))
-                {
-                    AplicarFiltros(null, null);
-                }
-                else
-                {
-                    gvUsuarios.DataSource = lista;
-                    gvUsuarios.DataBind();
-                }
+
+                // Solo muestra la lista completa
+                gvUsuarios.DataSource = lista;
+                gvUsuarios.DataBind();
             }
             catch (Exception ex)
             {
                 lblMensaje.Text = "Error al cargar usuarios: " + ex.Message;
                 lblMensaje.CssClass = "text-danger d-block mb-2";
             }
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            AplicarFiltros(sender, e);
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            // Limpiar controles de filtro
+            txtFiltroNombre.Text = string.Empty;
+            txtFiltroDNI.Text = string.Empty;
+            txtFiltroUsuario.Text = string.Empty;
+            ddlFiltroRol.SelectedIndex = 0;
+            ddlFiltroEstado.SelectedIndex = 0;
+
+            // Opcional: resetear orden
+            SortField = string.Empty;
+            SortDirection = "ASC";
+
+            // Volver a cargar todos los usuarios sin filtros
+            CargarUsuarios();
         }
 
         protected void AplicarFiltros(object sender, EventArgs e)

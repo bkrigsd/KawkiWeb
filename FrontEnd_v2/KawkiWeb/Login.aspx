@@ -117,5 +117,27 @@
         </div>
     </div>
 </form>
+
+    <% if (Session["Usuario"] == null && 
+       Request.Url.AbsolutePath.ToLower().EndsWith("/login.aspx")) { %>
+    <script>
+        // Evitar que vuelva con Back DESDE LOGIN
+        window.history.forward();
+
+        function noBack() {
+            window.history.forward();
+        }
+
+        window.onload = function () {
+            noBack();
+        };
+
+        window.onpageshow = function (evt) {
+            if (evt.persisted) noBack();
+        };
+    </script>
+    <% } %>
+
+
 </body>
 </html>

@@ -2199,6 +2199,7 @@
     <Content Include="Content\Stylo\registrodescuent.css" />
     <Content Include="Content\Stylo\registrouser.css" />
     <Content Include="Content\Stylo\registroventa.css" />
+    <Content Include="Content\Stylo\reportStock.css" />
     <Content Include="DetalleProducto.aspx" />
     <Content Include="Error404.aspx" />
     <Content Include="Estilos.aspx" />
