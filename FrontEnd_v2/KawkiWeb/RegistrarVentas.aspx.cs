@@ -170,23 +170,27 @@ namespace KawkiWeb
 
             if (string.IsNullOrWhiteSpace(telefono))
             {
-                mensajeError = "El teléfono es obligatorio.";
-                return false;
+                //mensajeError = "El teléfono es obligatorio.";
+                //return false;
+                return true;
             }
 
             // Remover espacios y guiones
             telefono = telefono.Replace(" ", "").Replace("-", "");
 
-            // Validar celular: 9 dígitos empezando por 9
-            if (Regex.IsMatch(telefono, @"^9\d{8}$"))
+            if (!string.IsNullOrWhiteSpace(telefono))
             {
-                return true;
-            }
+                // Validar celular: 9 dígitos empezando por 9
+                if (Regex.IsMatch(telefono, @"^9\d{8}$"))
+                {
+                    return true;
+                }
 
-            // Validar teléfono fijo: 7 dígitos (puede empezar con 01 para Lima)
-            if (Regex.IsMatch(telefono, @"^(01)?\d{7}$"))
-            {
-                return true;
+                // Validar teléfono fijo: 7 dígitos (puede empezar con 01 para Lima)
+                if (Regex.IsMatch(telefono, @"^(01)?\d{7}$"))
+                {
+                    return true;
+                }
             }
 
             mensajeError = "Formato de teléfono inválido. Debe ser celular (9 dígitos empezando por 9) o fijo (7 dígitos).";
@@ -577,8 +581,8 @@ namespace KawkiWeb
             grupoRUC.Visible = false;
             grupoRazonSocial.Visible = false;
             grupoDireccionFiscal.Visible = false;
-            txtTelefono.Visible = false;
-            txtNombreCliente.Visible = false;
+            grupoTelefono.Visible = false;
+            grupoNombreCliente.Visible = false;
 
             // Limpiar campos específicos
             txtDNI.Text = "";
@@ -589,20 +593,20 @@ namespace KawkiWeb
             switch (tipo)
             {
                 case "boleta-simple":
-                    txtNombreCliente.Visible = true;
-                    txtTelefono.Visible = true;
+                    grupoNombreCliente.Visible = true;
+                    grupoTelefono.Visible = true;
                     break;
 
                 case "boleta-dni":
-                    txtNombreCliente.Visible = true;
+                    grupoNombreCliente.Visible = true;
                     grupoDNI.Visible = true;
-                    txtTelefono.Visible = true;
+                    grupoTelefono.Visible = true;
                     break;
 
                 case "factura":
                     // Para factura no se pide nombre personal
-                    txtNombreCliente.Visible = false;
-                    txtTelefono.Visible = false;
+                    grupoNombreCliente.Visible = false;
+                    grupoTelefono.Visible = false;
 
                     grupoRUC.Visible = true;
                     grupoRazonSocial.Visible = true;
@@ -883,15 +887,15 @@ namespace KawkiWeb
                         prod_variante_idSpecified = true
                     };
 
-                    lblMensaje.Text =
-                    $"Debug:<br/>" +
-                    $"ProductoId = {prodVarId}<br/>" +
-                    $"Cantidad = {cantidad}<br/>" +
-                    $"Precio = '{row["PrecioUnitario"]}'<br/>" +
-                    $"Subtotal = '{row["Subtotal"]}'<br/>" +
-                    $"PrecioParseado = {precio}<br/>" +
-                    $"SubtotalParseado = {subtotal}<br/>" +
-                    $"Canal = '{ddlCanal.SelectedValue}'";
+                    //lblMensaje.Text =
+                    //$"Debug:<br/>" +
+                    //$"ProductoId = {prodVarId}<br/>" +
+                    //$"Cantidad = {cantidad}<br/>" +
+                    //$"Precio = '{row["PrecioUnitario"]}'<br/>" +
+                    //$"Subtotal = '{row["Subtotal"]}'<br/>" +
+                    //$"PrecioParseado = {precio}<br/>" +
+                    //$"SubtotalParseado = {subtotal}<br/>" +
+                    //$"Canal = '{ddlCanal.SelectedValue}'";
                     
 
                     detalleBO.InsertarDetalleVenta(productoVar, ventaId, cantidad, precio, subtotal);

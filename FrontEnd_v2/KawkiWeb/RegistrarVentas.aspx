@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <!-- NOMBRE DEL CLIENTE -->
-                            <div id="grupoNombreCliente" runat="server" class="col-md-6">
+                            <div id="grupoNombreCliente" runat="server" class="col-md-6" visible="false">
                                 <label class="form-label" for="<%= txtNombreCliente.ClientID %>">
                                     Nombre completo <span class="text-danger">*</span>
                                 </label>
@@ -58,7 +58,7 @@
                             </div>
 
                             <!-- TELEFONO -->
-                            <div id="grupoTelefono" runat="server" class="col-md-3">
+                            <div id="grupoTelefono" runat="server" class="col-md-3" visible="false">
                                 <label class="form-label" for="<%= txtTelefono.ClientID %>">
                                     Teléfono <span class="text-danger">*</span>
                                 </label>
@@ -76,11 +76,11 @@
                                     CssClass="text-danger"
                                     Display="Dynamic" />
 
-                                <asp:RequiredFieldValidator ID="rfvTelefono" runat="server"
+                                <%--<asp:RequiredFieldValidator ID="rfvTelefono" runat="server"
                                     ControlToValidate="txtTelefono"
                                     ErrorMessage="Este campo es obligatorio."
                                     CssClass="text-danger"
-                                    Display="Dynamic" />
+                                    Display="Dynamic" />--%>
                             </div>
 
                             <!-- DNI -->
