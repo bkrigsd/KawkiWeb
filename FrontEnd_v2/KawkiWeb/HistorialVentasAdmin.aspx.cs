@@ -1,17 +1,25 @@
-﻿using System;
+﻿using KawkiWebBusiness;
+using KawkiWebBusiness.BO;
+using KawkiWebBusiness.KawkiWebWSProductos;
+using KawkiWebBusiness.KawkiWebWSProductosVariantes;
+using KawkiWebBusiness.KawkiWebWSUsuarios;
+using KawkiWebBusiness.KawkiWebWSVentas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using KawkiWebBusiness;
-using KawkiWebBusiness.KawkiWebWSVentas;
 
 namespace KawkiWeb
 {
     public partial class HistorialVentasAdmin : Page
     {
         private VentasBO ventasBO = new VentasBO();
+
+        private List<productosDTO> ListaProductos;
+
+        private readonly UsuarioBO _usuarioBO = new UsuarioBO();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -46,6 +54,7 @@ namespace KawkiWeb
                 try
                 {
                     CargarVendedores();
+                    CargarProductos();
                     CargarVentas();
                     //ActualizarEstadisticas();
                 }
@@ -57,30 +66,45 @@ namespace KawkiWeb
             }
         }
 
+        private void CargarProductos()
+        {
+            var client = new ProductosClient();
+            var productos = client.listarTodosProducto();
+            ListaProductos = productos.ToList();
+
+            Session["Productos"] = ListaProductos;
+        }
+
         // Cargar lista de vendedores reales
         private void CargarVendedores()
         {
+            ddlVendedor.Items.Clear();
+            ddlVendedor.Items.Add(new ListItem("Todos los vendedores", "0"));
+
             try
             {
-                var ventas = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
-
-                var vendedores = ventas
-                    .Where(v => v.usuario != null)
-                    .Select(v => $"{v.usuario?.nombre} {v.usuario?.apePaterno}")
-                    .Distinct()
-                    .OrderBy(x => x)
+                var vendedores = _usuarioBO.ListarVendedoresActivos()
+                    .Select(u => new
+                    {
+                        Id = u.usuarioId,
+                        NombreCompleto = $"{u.nombre} {u.apePaterno}"
+                    })
                     .ToList();
 
-                ddlVendedor.Items.Clear();
-                ddlVendedor.Items.Add(new ListItem("Todos los vendedores", ""));
-
-                foreach (var ven in vendedores)
-                    ddlVendedor.Items.Add(new ListItem(ven, ven));
+                // Para que no borre el item "Todos los vendedores"
+                ddlVendedor.AppendDataBoundItems = true;
+                ddlVendedor.DataSource = vendedores;
+                ddlVendedor.DataTextField = "NombreCompleto";
+                ddlVendedor.DataValueField = "Id";
+                ddlVendedor.DataBind();
             }
-            catch
+            catch (Exception ex)
             {
+                // Al menos registra el error
+                // Logger.Log(ex);  // o Debug.WriteLine(ex.Message);
+
                 ddlVendedor.Items.Clear();
-                ddlVendedor.Items.Add(new ListItem("Todos los vendedores", ""));
+                ddlVendedor.Items.Add(new ListItem("Todos los vendedores", "0"));
             }
         }
 
@@ -90,6 +114,9 @@ namespace KawkiWeb
             try
             {
                 var lista = ventasBO.ListarTodosVenta() ?? new List<ventasDTO>();
+                lblMensaje.Text = "VENTAS TOTALES DTO: " + lista.Count;
+                //System.Diagnostics.Debug.WriteLine("Ventas totales encontradas: " + lista.Count);
+                //lblMensaje.Text = "Ventas totales: " + lista.Count;  // temporal
 
                 var listaCompleta = new List<ventasDTO>(lista);
 
@@ -107,16 +134,16 @@ namespace KawkiWeb
                 }
 
                 // Filtro por vendedor
-                if (!string.IsNullOrEmpty(ddlVendedor.SelectedValue))
+                if (ddlVendedor.SelectedValue != "0")
                 {
-                    if (!string.IsNullOrEmpty(ddlVendedor.SelectedValue))
-                    {
-                        string vendedor = ddlVendedor.SelectedValue;
+                    string vendedor = ddlVendedor.SelectedItem.Text;
 
-                        lista = lista.Where(v =>
-                            $"{v.usuario?.nombre} {v.usuario?.apePaterno}" == vendedor
-                        ).ToList();
-                    }
+                    lista = lista.Where(v => v.usuario != null && $"{v.usuario.nombre} {v.usuario.apePaterno}" == vendedor).ToList();
+                }
+                else
+                {
+                    // Quitar ventas sin usuario para estadísticas correctas
+                    lista = lista.Where(v => v.usuario != null).ToList();
                 }
 
                 // Determinar si hay filtros activos
@@ -131,7 +158,7 @@ namespace KawkiWeb
                 var gvLista = lista.Select(v => new
                 {
                     IdVenta = v.venta_id,
-                    Fecha = DateTime.Parse(v.fecha_hora_creacion),
+                    Fecha = DateTime.Parse(v.fecha_hora_creacion).ToString("dd/MM/yyyy"),
 
                     Vendedor = $"{v.usuario?.nombre} {v.usuario?.apePaterno}",
 
@@ -144,7 +171,7 @@ namespace KawkiWeb
                     MontoTotal = v.total
                 }).ToList();
 
-                // ORDENAMIENTO
+                // ORDENAMIENTOvent
                 if (!string.IsNullOrEmpty(SortField))
                 {
                     if (SortDirection == "ASC")
@@ -174,9 +201,11 @@ namespace KawkiWeb
         {
             try
             {
+                // Recuperamos la lista REAL de ventasDTO
                 var ventas = Session["VentasFiltradas"] as List<ventasDTO>;
 
-                if (ventas == null || !ventas.Any())
+                // Si no hay ventas, mostramos 0
+                if (ventas == null || ventas.Count == 0)
                 {
                     lblTotalVentas.Text = "0";
                     lblMontoTotal.Text = "S/ 0.00";
@@ -184,20 +213,15 @@ namespace KawkiWeb
                     return;
                 }
 
-                decimal montoTotal = ventas.Sum(v => Convert.ToDecimal(v.total));
+                // Calculamos estadísticas
+                decimal montoTotal = ventas.Sum(v => (decimal)v.total);
                 int cantidad = ventas.Count;
-                decimal promedio = montoTotal / cantidad;
+                decimal promedio = cantidad > 0 ? montoTotal / cantidad : 0;
 
+                // Mostramos estadísticas
                 lblTotalVentas.Text = cantidad.ToString();
                 lblMontoTotal.Text = $"S/ {montoTotal:N2}";
                 lblPromedio.Text = $"S/ {promedio:N2}";
-
-                ScriptManager.RegisterStartupScript(
-                    this, GetType(),
-                    "AnimarDashboard",
-                    $"animarDashboard({cantidad}, {montoTotal}, {promedio});",
-                    true
-                );
             }
             catch (Exception ex)
             {
@@ -251,27 +275,271 @@ namespace KawkiWeb
         {
             try
             {
+                // ==============================
+                //   1. OBTENER VENTA
+                // ==============================
                 var venta = ventasBO.ObtenerPorIdVenta(idVenta);
+                if (venta == null)
+                {
+                    MostrarError("No se encontró la venta seleccionada.");
+                    return;
+                }
 
+                // ==============================
+                //   2. TRAER COMPROBANTE
+                // ==============================
+                var compBO = new ComprobantesPagoBO();
+                var comprobantes = compBO.ListarTodosComprobantes();
+
+                var comprobante = comprobantes
+                    .FirstOrDefault(c => c.venta != null && c.venta.venta_id == idVenta);
+
+                // ==============================
+                //   3. DATOS GENERALES VENTA
+                // ==============================
                 lblIdVentaDetalle.Text = venta.venta_id.ToString();
-                //lblClienteDetalle.Text = $"{venta.usuario?.nombre} {venta.usuario?.apePaterno}";
-                lblVendedorDetalle.Text = venta.usuario?.nombreUsuario;
-                lblFechaDetalle.Text = DateTime.Parse(venta.fecha_hora_creacion).ToString("dd/MM/yyyy HH:mm");
-                lblCanalDetalle.Text = venta.redSocial?.nombre;
-                lblTotalDetalle.Text = $"S/ {venta.total:N2}";
 
-                //var lista = venta.detalles.Select(d => new
-                //{
-                //    Producto = d.prodVariante?.nombre ?? "N/D",
-                //    Cantidad = d.cantidad,
-                //    PrecioUnitario = d.precio_unitario,
-                //    Subtotal = d.subtotal
-                //}).ToList();
+                if (venta.usuario != null)
+                    lblVendedorDetalle.Text = venta.usuario.nombre + " " + venta.usuario.apePaterno;
+                else
+                    lblVendedorDetalle.Text = "-";
 
-                //gvDetalleProductos.DataSource = lista;
-                //gvDetalleProductos.DataBind();
+                // Parseo de fecha seguro
+                DateTime fecha;
+                if (!string.IsNullOrEmpty(venta.fecha_hora_creacion) &&
+                    venta.fecha_hora_creacion.Length >= 10 &&
+                    DateTime.TryParseExact(
+                        venta.fecha_hora_creacion.Substring(0, 10),
+                        "yyyy-MM-dd",
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        System.Globalization.DateTimeStyles.None,
+                        out fecha))
+                {
+                    lblFechaDetalle.Text = fecha.ToString("dd/MM/yyyy");
+                }
+                else
+                {
+                    lblFechaDetalle.Text = "-";
+                }
 
-                //pnlDetalle.Visible = true;
+                lblCanalDetalle.Text = (venta.redSocial != null) ? venta.redSocial.nombre : "-";
+
+                // ==============================
+                //   4. MOSTRAR DATOS COMPROBANTE
+                // ==============================
+                if (comprobante != null)
+                {
+                    lblTipoComprobante.Text = (comprobante.tipo_comprobante != null) ? comprobante.tipo_comprobante.nombre : "-";
+                    lblNumeroSerie.Text = comprobante.numero_serie;
+                    lblNombreCliente.Text = comprobante.nombre_cliente;
+                    lblDniCliente.Text = comprobante.dni_cliente;
+                    lblRucCliente.Text = comprobante.ruc_cliente;
+                    lblDireccionFiscal.Text = comprobante.direccion_fiscal_cliente;
+                    lblMetodoPago.Text = (comprobante.metodo_pago != null) ? comprobante.metodo_pago.nombre : "-";
+                    lblSubtotal.Text = "S/ " + comprobante.subtotal.ToString("N2");
+                    lblIgv.Text = "S/ " + comprobante.igv.ToString("N2");
+                    lblTotalComprobante.Text = "S/ " + comprobante.total.ToString("N2");
+                }
+                else
+                {
+                    lblTipoComprobante.Text = "-";
+                    lblNumeroSerie.Text = "-";
+                    lblNombreCliente.Text = "-";
+                    lblDniCliente.Text = "-";
+                    lblRucCliente.Text = "-";
+                    lblDireccionFiscal.Text = "-";
+                    lblMetodoPago.Text = "-";
+                    lblSubtotal.Text = "-";
+                    lblIgv.Text = "-";
+                    lblTotalComprobante.Text = "-";
+                }
+
+                // ==============================
+                //   5. DETALLES DE PRODUCTO (CON DEBUG)
+                // ==============================
+                var detBO = new DetalleVentasBO();
+                var listaDet = detBO.ListarPorVentaId(idVenta);
+
+                if (listaDet == null || !listaDet.Any())
+                {
+                    gvDetalleProductos.DataSource = null;
+                    gvDetalleProductos.DataBind();
+                    ScriptManager.RegisterStartupScript(this, GetType(), "AbrirModalVenta", "abrirDetalleVenta();", true);
+                    return;
+                }
+
+                // 🔍 DEBUG: Ver qué contiene prodVariante
+                System.Diagnostics.Debug.WriteLine("=== INICIO DEBUG PRODUCTOS ===");
+                foreach (var det in listaDet)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Detalle ID: {det.detalle_venta_id}");
+                    if (det.prodVariante != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"  - ProdVariante ID: {det.prodVariante.prod_variante_id}");
+                        System.Diagnostics.Debug.WriteLine($"  - Producto ID: {det.prodVariante.producto_id}");
+                        System.Diagnostics.Debug.WriteLine($"  - SKU: {det.prodVariante.SKU}");
+                        System.Diagnostics.Debug.WriteLine($"  - Color: {(det.prodVariante.color != null ? det.prodVariante.color.nombre : "NULL")}");
+                        System.Diagnostics.Debug.WriteLine($"  - Talla: {(det.prodVariante.talla != null ? det.prodVariante.talla.numero.ToString() : "NULL")}");
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("  - ProdVariante es NULL");
+                    }
+                }
+                System.Diagnostics.Debug.WriteLine("=== FIN DEBUG INICIAL ===");
+
+                // 🔹 ESTRATEGIA ALTERNATIVA: Listar TODAS las variantes y hacer match
+                // (Temporal hasta saber el método correcto)
+                System.Diagnostics.Debug.WriteLine("=== OBTENIENDO VARIANTES ===");
+
+                var diccionarioProductosPorVariante = new Dictionary<int, productosDTO>();
+
+                try
+                {
+                    // Intenta listar todas las variantes
+                    var prodVarBO = new ProductosVariantesBO();
+                    var todasVariantes = prodVarBO.ListarTodos(); // O el método que tengas
+
+                    if (todasVariantes != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Total variantes en sistema: {todasVariantes.Count()}");
+
+                        // Filtrar solo las variantes que necesitamos
+                        var variantesIds = listaDet
+                            .Where(d => d.prodVariante != null && d.prodVariante.prod_variante_id > 0)
+                            .Select(d => d.prodVariante.prod_variante_id)
+                            .Distinct()
+                            .ToList();
+
+                        System.Diagnostics.Debug.WriteLine($"Variantes necesarias: {string.Join(", ", variantesIds)}");
+
+                        var prodClient = new ProductosClient();
+
+                        foreach (var varId in variantesIds)
+                        {
+                            // Buscar la variante en la lista completa
+                            var variante = todasVariantes.FirstOrDefault(v => v.prod_variante_id == varId);
+
+                            if (variante != null && variante.producto_id > 0)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Variante {varId} -> producto_id: {variante.producto_id}");
+
+                                try
+                                {
+                                    var producto = prodClient.obtenerPorIdProducto(variante.producto_id);
+                                    if (producto != null)
+                                    {
+                                        System.Diagnostics.Debug.WriteLine($"  ✓ Producto: {producto.descripcion}");
+                                        diccionarioProductosPorVariante[varId] = producto;
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"  ✗ Error obteniendo producto: {ex.Message}");
+                                }
+                            }
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Variante {varId} no encontrada o sin producto_id");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error al listar variantes: {ex.Message}");
+                }
+
+                System.Diagnostics.Debug.WriteLine($"Total productos obtenidos: {diccionarioProductosPorVariante.Count}");
+
+                // 🔹 Mapear los detalles con los productos obtenidos
+                var lista = listaDet.Select(d =>
+                {
+                    string nombreProducto = "Producto no encontrado";
+                    string color = "-";
+                    string talla = "-";
+                    string sku = "-";
+                    string debugInfo = "";
+
+                    if (d.prodVariante != null)
+                    {
+                        int varianteId = d.prodVariante.prod_variante_id;
+                        debugInfo = $"[VarID:{varianteId}]";
+
+                        // Buscar el producto usando el ID de la variante
+                        if (varianteId > 0 && diccionarioProductosPorVariante.TryGetValue(varianteId, out var producto))
+                        {
+                            nombreProducto = producto.descripcion ?? "Sin descripción";
+                        }
+
+                        // Obtener color, talla y SKU
+                        color = d.prodVariante.color?.nombre ?? "-";
+                        talla = d.prodVariante.talla?.numero.ToString() ?? "-";
+                        sku = d.prodVariante.SKU ?? "-";
+                    }
+                    else
+                    {
+                        nombreProducto = "Variante NULL";
+                    }
+
+                    return new
+                    {
+                        Producto = nombreProducto,
+                        Color = color,
+                        Talla = talla,
+                        SKU = sku,
+                        Cantidad = d.cantidad,
+                        PrecioUnitario = d.precio_unitario,
+                        Subtotal = d.subtotal
+                    };
+                }).ToList();
+
+                System.Diagnostics.Debug.WriteLine("=== FIN DEBUG PRODUCTOS ===");
+
+                gvDetalleProductos.DataSource = lista;
+                gvDetalleProductos.DataBind();
+
+                // Abrir modal
+                ScriptManager.RegisterStartupScript(
+                    this, GetType(), "AbrirModalVenta",
+                    "abrirDetalleVenta();", true);
+
+                // ==============================
+                //   6. DESCUENTO APLICADO
+                // ==============================
+                seccionDescuento.Visible = false;
+                lblDescuento.Text = "S/ 0.00";
+
+                try
+                {
+                    if (venta.descuento != null && comprobante != null)
+                    {
+                        var descuento = venta.descuento;
+                        var descBO = new DescuentosBO();
+
+                        double montoDescuento = descBO.calcularDescuentoDescuento(
+                            descuento.descuento_id,
+                            comprobante.subtotal
+                        );
+
+                        lblDescuento.Text = "- S/ " + montoDescuento.ToString("N2");
+                        lblDescDescripcion.Text = descuento.descripcion;
+
+                        lblDescCondicion.Text =
+                            (descuento.tipo_condicion != null ? descuento.tipo_condicion.nombre : "") +
+                            " " + descuento.valor_condicion;
+
+                        lblDescBeneficio.Text =
+                            (descuento.tipo_beneficio != null ? descuento.tipo_beneficio.nombre : "") +
+                            " " + descuento.valor_beneficio;
+
+                        seccionDescuento.Visible = true;
+                    }
+                }
+                catch
+                {
+                    lblDescuento.Text = "S/ 0.00";
+                }
             }
             catch (Exception ex)
             {
@@ -279,10 +547,10 @@ namespace KawkiWeb
             }
         }
 
-        protected void btnCerrarDetalle_Click(object sender, EventArgs e)
-        {
-            pnlDetalle.Visible = false;
-        }
+        //protected void btnCerrarDetalle_Click(object sender, EventArgs e)
+        //{
+        //    pnlDetalle.Visible = false;
+        //}
 
         // Utilidad
         private void MostrarError(string msg)

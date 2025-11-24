@@ -386,3 +386,78 @@
 .val-hidden {
     visibility: hidden !important;
 }
+
+/* Que todos los labels se vean parejitos */
+.usuarios-container label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.filtros-acciones .btn {
+    white-space: nowrap;
+    padding-inline: 14px;
+}
+
+.filtros-acciones .form-select {
+    min-width: 130px;
+}
+
+/* Card de filtros de búsqueda */
+.filtros-card {
+    margin-top: 10px;
+}
+
+/* Ajuste de anchos en desktop para que no se vean tan largos */
+@media (min-width: 992px) {
+    .filtros-descripcion {
+        flex: 0 0 28%;
+        max-width: 28%;
+    }
+
+    .filtros-tipo-condicion,
+    .filtros-tipo-beneficio,
+    .filtros-fecha-inicio,
+    .filtros-fecha-fin {
+        flex: 0 0 16%;
+        max-width: 16%;
+    }
+
+    .filtros-estado {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+
+    .filtros-botones {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+/* Un poco menos de espacio vertical entre filas de filtros */
+.filtros-row {
+    margin-bottom: 0;
+}
+
+
+
+.filtros-orden {
+    font-size: 12px;
+}
+
+.orden-label {
+    color: #666;
+}
+
+.orden-select {
+    width: auto;
+    min-width: 110px;
+    padding: 2px 8px;
+    font-size: 12px;
+}
+
+
+
+.filtros-orden {
+    font-size: 12px;
+    margin-left: auto; /* los empuja a la derecha */
+}

@@ -24,19 +24,19 @@ namespace KawkiWebBusiness
             double total,
             ventasDTO venta,
             metodosPagoDTO metodoPago)
-         {
-                return this.clienteSOAP.insertarComprobPago(
-                    tipoComprobante,
-                    dniCliente,
-                    nombreCliente,
-                    rucCliente,
-                    razonSocialCliente,
-                    direccionFiscalCliente,
-                    telefonoCliente,
-                    total,
-                    venta,
-                    metodoPago
-                );
+        {
+            return this.clienteSOAP.insertarComprobPago(
+                tipoComprobante,
+                dniCliente,
+                nombreCliente,
+                rucCliente,
+                razonSocialCliente,
+                direccionFiscalCliente,
+                telefonoCliente,
+                total,
+                venta,
+                metodoPago
+            );
         }
 
         // Obtener comprobante por ID

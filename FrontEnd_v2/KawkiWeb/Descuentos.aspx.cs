@@ -66,8 +66,19 @@ namespace KawkiWeb
 
                 try
                 {
+
                     CargarCombosTipos();
+
+                    // valores por defecto de orden
+                    SortField = "IdDescuento";
+                    SortDirection = "ASC";
+
                     CargarDescuentos();
+
+
+
+                    //CargarCombosTipos();
+                    //CargarDescuentos();
                 }
                 catch (Exception ex)
                 {
@@ -94,6 +105,19 @@ namespace KawkiWeb
                 ddlTipoBeneficio.DataValueField = "tipo_beneficio_id";
                 ddlTipoBeneficio.DataBind();
                 ddlTipoBeneficio.Items.Insert(0, new ListItem("-- Seleccione --", ""));
+
+                ddlFiltroTipoCondicion.DataSource = listaCond;
+                ddlFiltroTipoCondicion.DataTextField = "nombre";
+                ddlFiltroTipoCondicion.DataValueField = "tipo_condicion_id";
+                ddlFiltroTipoCondicion.DataBind();
+                ddlFiltroTipoCondicion.Items.Insert(0, new ListItem("-- Todos --", ""));
+
+                ddlFiltroTipoBeneficio.DataSource = listaBenef;
+                ddlFiltroTipoBeneficio.DataTextField = "nombre";
+                ddlFiltroTipoBeneficio.DataValueField = "tipo_beneficio_id";
+                ddlFiltroTipoBeneficio.DataBind();
+                ddlFiltroTipoBeneficio.Items.Insert(0, new ListItem("-- Todos --", ""));
+
             }
             catch (Exception ex)
             {
@@ -109,6 +133,7 @@ namespace KawkiWeb
         {
             var listaWS = descuentosBO.listarTodosDescuento() ?? new List<descuentosDTO>();
 
+            // Mapeo original
             var listaGrid = listaWS.Select(x => new
             {
                 IdDescuento = x.descuento_id,
@@ -129,8 +154,153 @@ namespace KawkiWeb
                 Activo = x.activo
             }).ToList();
 
+            // ==========================
+            // APLICAR FILTROS
+            // ==========================
+
+            // Filtro descripción
+            if (!string.IsNullOrWhiteSpace(txtFiltroDescripcion.Text))
+            {
+                string filtro = txtFiltroDescripcion.Text.ToLower();
+                listaGrid = listaGrid
+                    .Where(d => d.Descripcion != null && d.Descripcion.ToLower().Contains(filtro))
+                    .ToList();
+            }
+
+            // Filtro tipo condición
+            if (!string.IsNullOrEmpty(ddlFiltroTipoCondicion.SelectedValue))
+            {
+                int idCond = int.Parse(ddlFiltroTipoCondicion.SelectedValue);
+                listaGrid = listaGrid.Where(d => d.TipoCondicionId == idCond).ToList();
+            }
+
+            // Filtro tipo beneficio
+            if (!string.IsNullOrEmpty(ddlFiltroTipoBeneficio.SelectedValue))
+            {
+                int idBen = int.Parse(ddlFiltroTipoBeneficio.SelectedValue);
+                listaGrid = listaGrid.Where(d => d.TipoBeneficioId == idBen).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(txtFiltroFechaInicio.Text))
+            {
+                if (DateTime.TryParse(txtFiltroFechaInicio.Text, out DateTime fechaIni))
+                {
+                    listaGrid = listaGrid
+                        .Where(d => d.FechaInicio >= fechaIni)
+                        .ToList();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(txtFiltroFechaFin.Text))
+            {
+                if (DateTime.TryParse(txtFiltroFechaFin.Text, out DateTime fechaFin))
+                {
+                    listaGrid = listaGrid
+                        .Where(d => d.FechaFin <= fechaFin)
+                        .ToList();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(ddlFiltroActivo.SelectedValue))
+            {
+                bool estado = ddlFiltroActivo.SelectedValue == "true";
+                listaGrid = listaGrid.Where(d => d.Activo == estado).ToList();
+            }
+
+
+
+            // ORDENAMIENTO
+            if (!string.IsNullOrEmpty(SortField))
+            {
+                if (SortDirection == "ASC")
+                {
+                    listaGrid = listaGrid
+                        .OrderBy(d => d.GetType().GetProperty(SortField).GetValue(d))
+                        .ToList();
+                }
+                else
+                {
+                    listaGrid = listaGrid
+                        .OrderByDescending(d => d.GetType().GetProperty(SortField).GetValue(d))
+                        .ToList();
+                }
+            }
+
             gvDescuentos.DataSource = listaGrid;
             gvDescuentos.DataBind();
+
+
+            //gvDescuentos.DataSource = listaGrid;
+            //gvDescuentos.DataBind();
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            // Limpiar mensajes de error de fechas
+            lblErrorFechaInicio.Visible = false;
+            lblErrorFechaInicio.Text = "";
+            lblErrorFechaFin.Visible = false;
+            lblErrorFechaFin.Text = "";
+
+            DateTime? fechaInicio = null;
+            DateTime? fechaFin = null;
+
+            // Validar FECHA INICIO (si el usuario escribió algo)
+            if (!string.IsNullOrWhiteSpace(txtFiltroFechaInicio.Text))
+            {
+                if (!DateTime.TryParse(txtFiltroFechaInicio.Text, out var fi))
+                {
+                    lblErrorFechaInicio.Visible = true;
+                    lblErrorFechaInicio.Text = "La fecha de inicio no es válida.";
+                    return;
+                }
+                fechaInicio = fi;
+            }
+
+            // Validar FECHA FIN (si el usuario escribió algo)
+            if (!string.IsNullOrWhiteSpace(txtFiltroFechaFin.Text))
+            {
+                if (!DateTime.TryParse(txtFiltroFechaFin.Text, out var ff))
+                {
+                    lblErrorFechaFin.Visible = true;
+                    lblErrorFechaFin.Text = "La fecha de fin no es válida.";
+                    return;
+                }
+                fechaFin = ff;
+            }
+
+            // Validar RANGO: inicio <= fin (solo si ambas tienen valor)
+            if (fechaInicio.HasValue && fechaFin.HasValue && fechaInicio.Value > fechaFin.Value)
+            {
+                lblErrorFechaInicio.Visible = true;
+                lblErrorFechaInicio.Text = "La fecha inicio debe ser menor o igual que la fecha fin.";
+
+                lblErrorFechaFin.Visible = true;
+                lblErrorFechaFin.Text = "La fecha fin debe ser mayor o igual que la fecha inicio.";
+
+                return;
+            }
+
+            // Si todo está OK, aplicamos filtros normales
+            CargarDescuentos();
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtFiltroDescripcion.Text = "";
+            ddlFiltroTipoCondicion.SelectedIndex = 0;
+            ddlFiltroTipoBeneficio.SelectedIndex = 0;
+            txtFiltroFechaInicio.Text = "";
+            txtFiltroFechaFin.Text = "";
+            ddlFiltroActivo.SelectedIndex = 0;
+
+            // Limpiar mensajes de error de fechas
+            lblErrorFechaInicio.Visible = false;
+            lblErrorFechaInicio.Text = "";
+            lblErrorFechaFin.Visible = false;
+            lblErrorFechaFin.Text = "";
+
+            CargarDescuentos();
         }
 
         // ===========================================================
@@ -357,6 +527,31 @@ namespace KawkiWeb
                 lblMensaje.Text = "Error al cambiar estado: " + ex.Message;
             }
         }
+
+
+
+        private string SortField
+        {
+            get => ViewState["SortField"] as string ?? "";
+            set => ViewState["SortField"] = value;
+        }
+
+        private string SortDirection
+        {
+            get => ViewState["SortDirection"] as string ?? "ASC";
+            set => ViewState["SortDirection"] = value;
+        }
+
+
+        protected void OrdenChanged(object sender, EventArgs e)
+        {
+            SortField = ddlOrdenarPor.SelectedValue;
+            SortDirection = ddlDireccion.SelectedValue;
+            CargarDescuentos();
+        }
+
+
+
 
         // Si en el futuro agregas eliminar en backend, aquí iría btnConfirmarEliminar_Click
         // por ahora el botón está comentado en el .aspx

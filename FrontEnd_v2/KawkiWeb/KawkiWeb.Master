@@ -405,7 +405,6 @@
                 if (evt.persisted) noBack();
             };
 
-            // Agrega este script al final del body de tu Master, DESPUÉS de todos los demás scripts
             $(document).ready(function () {
                 console.log("=== DIAGNÓSTICO DE SCROLL ===");
 
