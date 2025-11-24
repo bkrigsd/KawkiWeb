@@ -6,6 +6,8 @@
   <xs:element name="cambiarContrasenhaUsuarioResponse" type="tns:cambiarContrasenhaUsuarioResponse" />
   <xs:element name="insertarUsuario" type="tns:insertarUsuario" />
   <xs:element name="insertarUsuarioResponse" type="tns:insertarUsuarioResponse" />
+  <xs:element name="listarPorTipoUsuario" type="tns:listarPorTipoUsuario" />
+  <xs:element name="listarPorTipoUsuarioResponse" type="tns:listarPorTipoUsuarioResponse" />
   <xs:element name="listarTodosUsuario" type="tns:listarTodosUsuario" />
   <xs:element name="listarTodosUsuarioResponse" type="tns:listarTodosUsuarioResponse" />
   <xs:element name="modificarUsuario" type="tns:modificarUsuario" />
@@ -77,6 +79,16 @@
   <xs:complexType name="autenticarUsuarioResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="tns:usuariosDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorTipoUsuario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipoUsuarioId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarPorTipoUsuarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:usuariosDTO" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="cambiarContrasenhaUsuario">

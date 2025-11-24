@@ -5,6 +5,12 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/ComprobantesPagoService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
+  <message name="obtenerPorVentaIdComprobPago">
+    <part name="parameters" element="tns:obtenerPorVentaIdComprobPago" />
+  </message>
+  <message name="obtenerPorVentaIdComprobPagoResponse">
+    <part name="parameters" element="tns:obtenerPorVentaIdComprobPagoResponse" />
+  </message>
   <message name="insertarComprobPago">
     <part name="parameters" element="tns:insertarComprobPago" />
   </message>
@@ -29,13 +35,11 @@
   <message name="obtenerPorIdComprobPagoResponse">
     <part name="parameters" element="tns:obtenerPorIdComprobPagoResponse" />
   </message>
-  <message name="obtenerPorVentaIdComprobPago">
-    <part name="parameters" element="tns:obtenerPorVentaIdComprobPago" />
-  </message>
-  <message name="obtenerPorVentaIdComprobPagoResponse">
-    <part name="parameters" element="tns:obtenerPorVentaIdComprobPagoResponse" />
-  </message>
   <portType name="ComprobantesPago">
+    <operation name="obtenerPorVentaIdComprobPago">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaIdComprobPagoRequest" message="tns:obtenerPorVentaIdComprobPago" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaIdComprobPagoResponse" message="tns:obtenerPorVentaIdComprobPagoResponse" />
+    </operation>
     <operation name="insertarComprobPago">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/insertarComprobPagoRequest" message="tns:insertarComprobPago" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/insertarComprobPagoResponse" message="tns:insertarComprobPagoResponse" />
@@ -52,13 +56,18 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComprobPagoRequest" message="tns:obtenerPorIdComprobPago" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComprobPagoResponse" message="tns:obtenerPorIdComprobPagoResponse" />
     </operation>
-    <operation name="obtenerPorVentaIdComprobPago">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaIdComprobPagoRequest" message="tns:obtenerPorVentaIdComprobPago" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaIdComprobPagoResponse" message="tns:obtenerPorVentaIdComprobPagoResponse" />
-    </operation>
   </portType>
   <binding name="ComprobantesPagoPortBinding" type="tns:ComprobantesPago">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="obtenerPorVentaIdComprobPago">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="insertarComprobPago">
       <soap:operation soapAction="" />
       <input>
@@ -87,15 +96,6 @@
       </output>
     </operation>
     <operation name="obtenerPorIdComprobPago">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="obtenerPorVentaIdComprobPago">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

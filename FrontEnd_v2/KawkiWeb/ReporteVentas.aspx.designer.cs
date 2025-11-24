@@ -15,15 +15,6 @@ namespace KawkiWeb
     {
 
         /// <summary>
-        /// Control ddlPeriodo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPeriodo;
-
-        /// <summary>
         /// Control txtFechaInicio.
         /// </summary>
         /// <remarks>
@@ -49,6 +40,24 @@ namespace KawkiWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGenerar;
+
+        /// <summary>
+        /// Control btnExportarPDF.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExportarPDF;
+
+        /// <summary>
+        /// Control lblMensajeFechas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensajeFechas;
 
         /// <summary>
         /// Control lblVentasTotales.
@@ -85,5 +94,14 @@ namespace KawkiWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPromedioDiario;
+
+        /// <summary>
+        /// Control gvTopProductos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvTopProductos;
     }
 }

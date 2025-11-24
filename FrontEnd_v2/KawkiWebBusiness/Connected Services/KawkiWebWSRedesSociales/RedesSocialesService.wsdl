@@ -5,31 +5,31 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/RedesSocialesService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="listarTodosRedSocial">
-    <part name="parameters" element="tns:listarTodosRedSocial" />
-  </message>
-  <message name="listarTodosRedSocialResponse">
-    <part name="parameters" element="tns:listarTodosRedSocialResponse" />
-  </message>
   <message name="obtenerPorIdRedSocial">
     <part name="parameters" element="tns:obtenerPorIdRedSocial" />
   </message>
   <message name="obtenerPorIdRedSocialResponse">
     <part name="parameters" element="tns:obtenerPorIdRedSocialResponse" />
   </message>
+  <message name="listarTodosRedSocial">
+    <part name="parameters" element="tns:listarTodosRedSocial" />
+  </message>
+  <message name="listarTodosRedSocialResponse">
+    <part name="parameters" element="tns:listarTodosRedSocialResponse" />
+  </message>
   <portType name="RedesSociales">
-    <operation name="listarTodosRedSocial">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocialRequest" message="tns:listarTodosRedSocial" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocialResponse" message="tns:listarTodosRedSocialResponse" />
-    </operation>
     <operation name="obtenerPorIdRedSocial">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/obtenerPorIdRedSocialRequest" message="tns:obtenerPorIdRedSocial" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/obtenerPorIdRedSocialResponse" message="tns:obtenerPorIdRedSocialResponse" />
     </operation>
+    <operation name="listarTodosRedSocial">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocialRequest" message="tns:listarTodosRedSocial" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocialResponse" message="tns:listarTodosRedSocialResponse" />
+    </operation>
   </portType>
   <binding name="RedesSocialesPortBinding" type="tns:RedesSociales">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="listarTodosRedSocial">
+    <operation name="obtenerPorIdRedSocial">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -38,7 +38,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerPorIdRedSocial">
+    <operation name="listarTodosRedSocial">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
