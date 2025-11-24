@@ -85,6 +85,13 @@ public class Usuarios {
         return this.usuarioBO.autenticar(nombreUsuario, contrasenha);
     }
     
+    @WebMethod(operationName = "listarPorTipoUsuario")
+    public ArrayList<UsuariosDTO> listarPorTipo(
+            @WebParam(name = "tipoUsuarioId") Integer tipoUsuarioId) {
+        
+        return new ArrayList<>(this.usuarioBO.listarPorTipo(tipoUsuarioId));
+    }
+    
     @WebMethod(operationName = "verificarUnicidad")
     public boolean[] verificarUnicidad(
             @WebParam(name = "correo") String correo, 
@@ -94,4 +101,5 @@ public class Usuarios {
         
         return this.usuarioBO.verificarUnicidad(correo, nombreUsuario, dni, usuarioIdExcluir);
     }
+    
 }

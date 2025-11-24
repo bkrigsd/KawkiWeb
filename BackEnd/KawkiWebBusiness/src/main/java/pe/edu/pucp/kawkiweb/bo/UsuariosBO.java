@@ -383,6 +383,14 @@ public class UsuariosBO {
         }
     }
 
+    public List<UsuariosDTO> listarPorTipo(Integer tipoUsuarioId) {
+        if (tipoUsuarioId == null || tipoUsuarioId == 0) {
+            return null;
+        }
+
+        return this.usuarioDAO.listarPorTipo(tipoUsuarioId);
+    }
+
     public boolean[] verificarUnicidad(String correo, String nombreUsuario, String dni, Integer usuarioIdExcluir) {
         return this.usuarioDAO.verificarUnicidad(correo, nombreUsuario, dni, usuarioIdExcluir);
     }

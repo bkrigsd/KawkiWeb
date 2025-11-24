@@ -91,4 +91,5 @@ public class Productos {
     public ArrayList<ProductosDTO> listarConStockBajoProducto() {
         return new ArrayList<>(this.productoBO.listarConStockBajo());
     }
+    
 }
