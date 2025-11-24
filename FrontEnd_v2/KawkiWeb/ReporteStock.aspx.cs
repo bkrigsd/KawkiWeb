@@ -405,7 +405,7 @@ namespace KawkiWeb
                 // 7) Descargar el PDF al navegador
                 Response.Clear();
                 Response.ContentType = "application/pdf";
-                Response.AddHeader("content-disposition", "attachment;filename=ReporteVentas.pdf");
+                Response.AddHeader("content-disposition", "attachment;filename=ReporteStocks.pdf");
                 Response.BinaryWrite(reportePDF);
                 Response.End();
             }
