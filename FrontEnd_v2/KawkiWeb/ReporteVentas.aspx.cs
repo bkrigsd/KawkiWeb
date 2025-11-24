@@ -254,11 +254,11 @@ namespace KawkiWeb
                                      .ToList();
 
             // DEBUG opcional
-            System.Diagnostics.Debug.WriteLine("=== Ventas por producto ===");
-            foreach (var v in ventasPorProducto)
-            {
-                System.Diagnostics.Debug.WriteLine($"{v.Producto}: {v.Cantidad}");
-            }
+            //System.Diagnostics.Debug.WriteLine("=== Ventas por producto ===");
+            //foreach (var v in ventasPorProducto)
+            //{
+            //    System.Diagnostics.Debug.WriteLine($"{v.Producto}: {v.Cantidad}");
+            //}
 
             // === TABLA: detalle de productos del período ===
             var tablaProductos = ventasPorProducto
