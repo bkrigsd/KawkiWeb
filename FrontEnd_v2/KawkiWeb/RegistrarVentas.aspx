@@ -128,14 +128,9 @@
                                 CssClass="text-danger"
                                 Display="Dynamic" />
                             </div>
-
-
                             <div class="col-md-4">
                                 <label class="form-label" for="<%= ddlCanal.ClientID %>">Canal de venta</label>
                                 <asp:DropDownList ID="ddlCanal" runat="server" CssClass="form-select">
-                                    <asp:ListItem Text="Instagram" Value="Instagram" />
-                                    <asp:ListItem Text="Facebook" Value="Facebook" />
-                                    <asp:ListItem Text="WhatsApp" Value="WhatsApp" />
                                 </asp:DropDownList>
                             </div>
 
@@ -221,18 +216,12 @@
                         <div class="mb-3">
                             <label class="form-label" for="<%= ddlComprobante.ClientID %>">Tipo de comprobante</label>
                             <asp:DropDownList ID="ddlComprobante" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlComprobante_SelectedIndexChanged">
-                                <asp:ListItem Text="Boleta Simple" Value="boleta-simple" />
-                                <asp:ListItem Text="Boleta con DNI" Value="boleta-dni" />
-                                <asp:ListItem Text="Factura" Value="factura" />
                             </asp:DropDownList>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="<%= ddlMetodoPago.ClientID %>">Método de pago</label>
                             <asp:DropDownList ID="ddlMetodoPago" runat="server" CssClass="form-select">
-                                <%--<asp:ListItem Text="Yape" Value="Yape" />
-                                <asp:ListItem Text="Plin" Value="Plin" />
-                                <asp:ListItem Text="Transferencia" Value="Transferencia" />--%>
                             </asp:DropDownList>
                         </div>
 

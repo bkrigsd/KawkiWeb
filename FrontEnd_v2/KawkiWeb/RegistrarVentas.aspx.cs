@@ -46,10 +46,11 @@ namespace KawkiWeb
             if (!IsPostBack)
             {
                 // Primera carga
-                CargarProductos();
-                CargarDescuentos();
                 CargarCanalesVenta();
+                CargarTiposComprobante();
                 CargarMetodosPago();
+                CargarDescuentos();
+                CargarProductos();
                 gvDetalle.DataSource = DetalleVentas;
                 gvDetalle.DataBind();
                 ActualizarTotales();
@@ -102,6 +103,29 @@ namespace KawkiWeb
 
             ddlDescuentos.Items.Insert(0, new ListItem("-- Seleccione --", ""));
         }
+        private void CargarTiposComprobante()
+        {
+            try
+            {
+                var cliente = new KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobanteClient();
+                var lista = cliente.listarTodosTipoComprobante(); // ← ESTA LÍNEA SE CAMBIA
+
+                ddlComprobante.Items.Clear();
+
+                ddlComprobante.DataSource = lista;
+                ddlComprobante.DataTextField = "nombre";  // columna NOMBRE del tipo comprobante
+                ddlComprobante.DataValueField = "tipo_comprobante_id"; // ID del tipo
+                ddlComprobante.DataBind();
+
+                ddlComprobante.Items.Insert(0, new ListItem("-- Seleccione --", ""));
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al cargar tipos de comprobante: " + ex.Message;
+            }
+        }
+
+
         private void CargarCanalesVenta()
         {
             try
@@ -123,6 +147,7 @@ namespace KawkiWeb
                 ddlCanal.DataBind();
 
                 ddlCanal.Items.Insert(0, new ListItem("-- Seleccione --", ""));
+
             }
             catch (Exception ex)
             {
