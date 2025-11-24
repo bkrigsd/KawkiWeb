@@ -365,6 +365,7 @@ namespace KawkiWeb
                         MantenerModalAbierto();
                         return;
                     }
+                    insertadas++;
                 }
 
                 LimpiarFormulario();
