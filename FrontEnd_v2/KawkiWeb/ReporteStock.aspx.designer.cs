@@ -15,15 +15,6 @@ namespace KawkiWeb
     {
 
         /// <summary>
-        /// Control ddlPeriodo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPeriodo;
-
-        /// <summary>
         /// Control txtFechaInicio.
         /// </summary>
         /// <remarks>
@@ -51,6 +42,15 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.Button btnGenerar;
 
         /// <summary>
+        /// Control btnLimpiar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLimpiar;
+
+        /// <summary>
         /// Control btnExportarPDF.
         /// </summary>
         /// <remarks>
@@ -58,6 +58,15 @@ namespace KawkiWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnExportarPDF;
+
+        /// <summary>
+        /// Control lblErrorFechas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorFechas;
 
         /// <summary>
         /// Control lblSinStock.
@@ -87,12 +96,12 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.Label lblStockTotal;
 
         /// <summary>
-        /// Control lblBajaRotacion.
+        /// Control gvCriticos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBajaRotacion;
+        protected global::System.Web.UI.WebControls.GridView gvCriticos;
     }
 }

@@ -389,17 +389,11 @@ namespace KawkiWeb
                     return;
                 }
 
-                // 3) Si están ambas vacías, enviar null
-                if (ambasVacias)
+                if (ambasLlenas)
                 {
-                    fechaInicioStr = null;
-                    fechaFinStr = null;
-                }
-                else
-                {
-                    // 4) Si están llenas, convertir a formato ISO 8601
                     DateTime fechaInicio, fechaFin;
 
+                    // Intentar convertir a DateTime
                     if (!DateTime.TryParse(fechaInicioStr, out fechaInicio))
                     {
                         lblMensajeFechas.Visible = true;
@@ -414,8 +408,23 @@ namespace KawkiWeb
                         return;
                     }
 
+                    // Comparar fechas: inicio debe ser MENOR O IGUAL a fin
+                    if (fechaInicio > fechaFin)
+                    {
+                        lblMensajeFechas.Visible = true;
+                        lblMensajeFechas.Text = "La fecha de inicio debe ser menor o igual a la fecha fin";
+                        return;
+                    }
+
+                    // Convertir a formato ISO 8601
                     fechaInicioStr = fechaInicio.ToString("yyyy-MM-ddTHH:mm:ss");
                     fechaFinStr = fechaFin.ToString("yyyy-MM-ddTHH:mm:ss");
+                }
+                else
+                {
+                    // Si ambas están vacías
+                    fechaInicioStr = null;
+                    fechaFinStr = null;
                 }
 
                 // 5) Llamar al BO para generar el PDF
