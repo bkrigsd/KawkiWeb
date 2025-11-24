@@ -360,7 +360,7 @@
             limpiarFormulario();
             resetModalDescuento()
             // Hace un REFRESH limpio sin POST ni datos previos
-            window.location.href = "Descuentos.aspx";
+            //window.location.href = "Descuentos.aspx";
         }
 
         // Ejecutar cuando cambie el tipo de beneficio
