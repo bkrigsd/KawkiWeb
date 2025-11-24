@@ -3,6 +3,8 @@
 
 <asp:Content ID="HeadExtra" ContentPlaceHolderID="HeadContent" runat="server">
     <link href="Content/Stylo/historialventaadmin.css" rel="stylesheet" />
+    <link href="Content/Stylo/detallevent.css" rel="stylesheet" />
+    <%--<link href="Content/Stylo/registrodescuent.css" rel="stylesheet" />--%>
 </asp:Content>
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -35,13 +37,40 @@
             </div>
         </div>
 
-        <!-- Filtros -->
+        <!-- Filtros + Ordenamiento -->
         <div class="card-kawki">
             <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-filter"></i> Filtros de búsqueda
-                </h5>
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <h5 class="card-title mb-0 d-flex align-items-center">
+                        <i class="fas fa-filter me-2"></i> Filtros de búsqueda
+                    </h5>
+
+                    <!-- Ordenamiento pequeño a la derecha -->
+                    <div class="filtros-orden d-flex align-items-center">
+                        <span class="orden-label me-1">Ordenar:</span>
+
+                        <asp:DropDownList ID="ddlOrdenarPor" runat="server"
+                            CssClass="form-select form-select-sm orden-select me-1"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="ActualizarOrden">
+                            <asp:ListItem Text="ID"          Value="IdVenta" />
+                            <asp:ListItem Text="Fecha"       Value="Fecha" />
+                            <asp:ListItem Text="Vendedor"    Value="Vendedor" />
+                            <asp:ListItem Text="Canal"       Value="Canal" />
+                            <asp:ListItem Text="Monto Total" Value="MontoTotal" />
+                        </asp:DropDownList>
+
+                        <asp:DropDownList ID="ddlDireccion" runat="server"
+                            CssClass="form-select form-select-sm orden-select"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="ActualizarOrden">
+                            <asp:ListItem Text="Asc"  Value="ASC" />
+                            <asp:ListItem Text="Desc" Value="DESC" />
+                        </asp:DropDownList>
+                    </div>
+                </div>
             </div>
+
             <div class="card-body">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-3">
@@ -63,7 +92,7 @@
                             <i class="fas fa-user me-1"></i>Vendedor
                         </label>
                         <asp:DropDownList ID="ddlVendedor" runat="server" CssClass="form-select">
-                            <asp:ListItem Text="Todos los vendedores" Value="" />
+                            <asp:ListItem Text="Todos los vendedores" Value="0" />
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-3">
@@ -84,41 +113,6 @@
                         CssClass="text-danger d-block mt-2"
                         Visible="false" />
                 </div>
-            </div>
-        </div>
-
-        <!-- Ordenamiento -->
-        <div class="card-kawki mb-3">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-sort"></i> Ordenar registros
-                </h5>
-            </div>
-            <div class="card-body row">
-
-                <div class="col-md-4 mb-3">
-                    <label class="form-label">Ordenar por</label>
-                    <asp:DropDownList ID="ddlOrdenarPor" runat="server"
-                        CssClass="form-select" AutoPostBack="true"
-                        OnSelectedIndexChanged="ActualizarOrden">
-                        <asp:ListItem Text="ID" Value="IdVenta" />
-                        <asp:ListItem Text="Fecha" Value="Fecha" />
-                        <asp:ListItem Text="Vendedor" Value="Vendedor" />
-                        <asp:ListItem Text="Canal" Value="Canal" />
-                        <asp:ListItem Text="Monto Total" Value="MontoTotal" />
-                    </asp:DropDownList>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label class="form-label">Dirección</label>
-                    <asp:DropDownList ID="ddlDireccion" runat="server"
-                        CssClass="form-select" AutoPostBack="true"
-                        OnSelectedIndexChanged="ActualizarOrden">
-                        <asp:ListItem Text="Ascendente" Value="ASC" />
-                        <asp:ListItem Text="Descendente" Value="DESC" />
-                    </asp:DropDownList>
-                </div>
-
             </div>
         </div>
 
@@ -143,7 +137,7 @@
                     OnRowCommand="gvVentas_RowCommand">
                     <Columns>
                         <asp:BoundField DataField="IdVenta" HeaderText="ID" />
-                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
+                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
                         <asp:BoundField DataField="Vendedor" HeaderText="Vendedor" />
                         <asp:BoundField DataField="Canal" HeaderText="Canal" />
                         <%--<asp:BoundField DataField="Descuento" HeaderText="Descuento" />--%>
@@ -155,7 +149,7 @@
                                 </span>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <%--<asp:TemplateField HeaderText="Acciones">
+                        <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
                                 <asp:Button runat="server" 
                                     CommandName="VerDetalle" 
@@ -164,7 +158,7 @@
                                     CssClass="btn btn-detalle"
                                     CausesValidation="false" />
                             </ItemTemplate>
-                        </asp:TemplateField>--%>
+                        </asp:TemplateField>
                     </Columns>
                     <EmptyDataTemplate>
                         <div class="text-center py-4">
@@ -176,59 +170,157 @@
             </div>
         </div>
 
-        <!-- Modal de detalle (simulado con panel) -->
-        <asp:Panel ID="pnlDetalle" runat="server" Visible="false" CssClass="card-kawki">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-info-circle"></i> Detalle de Venta #<asp:Label ID="lblIdVentaDetalle" runat="server" />
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="row mb-3">
-                    <%--<div class="col-md-6">
-                        <strong>Cliente:</strong> <asp:Label ID="lblClienteDetalle" runat="server" />
-                    </div>--%>
-                    <div class="col-md-6">
-                        <strong>Vendedor:</strong> <asp:Label ID="lblVendedorDetalle" runat="server" />
-                    </div>
-                    <div class="col-md-6">
-                        <strong>Fecha:</strong> <asp:Label ID="lblFechaDetalle" runat="server" />
-                    </div>
-                    <div class="col-md-6">
-                        <strong>Canal:</strong> <asp:Label ID="lblCanalDetalle" runat="server" />
-                    </div>
-                </div>
-
-                <h6 class="mb-2">Productos:</h6>
-                <asp:GridView ID="gvDetalleProductos" runat="server" 
-                    AutoGenerateColumns="False"
-                    CssClass="table table-historial"
-                    GridLines="None">
-                    <Columns>
-                        <asp:BoundField DataField="Producto" HeaderText="Producto" />
-                        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
-                        <asp:BoundField DataField="PrecioUnitario" HeaderText="P. Unitario" DataFormatString="{0:C}" />
-                        <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
-                    </Columns>
-                </asp:GridView>
-
-                <div class="mt-3 text-end">
-                    <strong>Total:</strong> 
-                    <span class="badge badge-monto" style="font-size: 16px;">
-                        <asp:Label ID="lblTotalDetalle" runat="server" />
-                    </span>
-                </div>
-
-                <div class="mt-3">
-                    <asp:Button ID="btnCerrarDetalle" runat="server" 
-                        CssClass="btn btn-kawki-outline"
-                        Text="Cerrar"
-                        OnClick="btnCerrarDetalle_Click"
-                        CausesValidation="false" />
-                </div>
-            </div>
-        </asp:Panel>
     </div>
+
+    <!-- Modal Detalle Venta -->
+    <div id="modalDetalleVenta" class="modal-kawki">
+        <div class="modal-content-kawki">
+
+            <!-- HEADER -->
+            <div class="modal-header-kawki border-bottom pb-2">
+                <h4 class="fw-bold m-0">
+                    <i class="fas fa-file-invoice-dollar me-2 text-primary"></i>
+                    Detalle de Venta # <asp:Label ID="lblIdVentaDetalle" runat="server" />
+                </h4>
+                <button type="button" class="btn-close" onclick="cerrarDetalleVenta()"></button>
+            </div>
+
+            <div class="modal-body-kawki">
+
+                <!-- INFORMACIÓN GENERAL -->
+                <div class="detalle-section">
+                    <h5 class="section-title">
+                        <i class="fas fa-info-circle me-2 text-primary"></i>Información General
+                    </h5>
+
+                    <div class="detalle-grid">
+                        <div><strong>Vendedor:</strong> <asp:Label ID="lblVendedorDetalle" runat="server" /></div>
+                        <div><strong>Fecha:</strong> <asp:Label ID="lblFechaDetalle" runat="server" /></div>
+                        <div><strong>Canal:</strong> <asp:Label ID="lblCanalDetalle" runat="server" /></div>
+                    </div>
+                </div>
+
+                <!-- COMPROBANTE -->
+                <div class="detalle-section">
+                    <h5 class="section-title">
+                        <i class="fas fa-receipt me-2 text-success"></i>Comprobante de Pago
+                    </h5>
+
+                    <div class="detalle-grid">
+                        <div><strong>Tipo:</strong> <asp:Label ID="lblTipoComprobante" runat="server" /></div>
+                        <div><strong>Serie:</strong> <asp:Label ID="lblNumeroSerie" runat="server" /></div>
+
+                        <div class="col-span-2"><strong>Cliente:</strong> <asp:Label ID="lblNombreCliente" runat="server" /></div>
+
+                        <div><strong>DNI:</strong> <asp:Label ID="lblDniCliente" runat="server" /></div>
+                        <div><strong>RUC:</strong> <asp:Label ID="lblRucCliente" runat="server" /></div>
+
+                        <div class="col-span-2">
+                            <strong>Dirección:</strong> <asp:Label ID="lblDireccionFiscal" runat="server" />
+                        </div>
+
+                        <div><strong>Método Pago:</strong> <asp:Label ID="lblMetodoPago" runat="server" /></div>
+                        <%--<div><strong>Subtotal:</strong> <asp:Label ID="lblSubtotal" runat="server" /></div>
+                        <div><strong>IGV:</strong> <asp:Label ID="lblIgv" runat="server" /></div>--%>
+                    </div>
+                </div>
+
+                <!-- PRODUCTOS -->
+                <div class="detalle-section">
+                    <h5 class="section-title">
+                        <i class="fas fa-boxes me-2 text-warning"></i>Productos
+                    </h5>
+
+                    <asp:GridView ID="gvDetalleProductos" runat="server"
+                        AutoGenerateColumns="False"
+                        CssClass="table table-bordered table-striped text-center shadow-sm detalle-tabla"
+                        GridLines="None">
+                        <Columns>
+                            <asp:BoundField DataField="Producto" HeaderText="Producto" />
+                            <asp:BoundField DataField="Color" HeaderText="Color" />
+                            <asp:BoundField DataField="Talla" HeaderText="Talla" />
+                            <asp:BoundField DataField="SKU" HeaderText="SKU" />
+                            <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                            <asp:BoundField DataField="PrecioUnitario" HeaderText="P. Unitario" DataFormatString="{0:C}" />
+                            <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
+                        </Columns>
+                    </asp:GridView>
+                </div>
+
+                <!-- DESCUENTO APLICADO -->
+                <div class="detalle-section" id="seccionDescuento" runat="server" visible="false">
+                    <h5 class="section-title">
+                        <i class="fas fa-tags me-2 text-danger"></i>Descuento Aplicado
+                    </h5>
+
+                    <div class="detalle-grid">
+                        <div class="col-span-2">
+                            <strong>Descripción:</strong>
+                            <asp:Label ID="lblDescDescripcion" runat="server" />
+                        </div>
+
+                        <div>
+                            <strong>Condición:</strong>
+                            <asp:Label ID="lblDescCondicion" runat="server" />
+                        </div>
+
+                        <div>
+                            <strong>Beneficio:</strong>
+                            <asp:Label ID="lblDescBeneficio" runat="server" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RESUMEN FINAL -->
+                <div class="resumen-columna-derecha">
+
+                    <div class="fila-resumen">
+                        <span class="titulo">Subtotal:</span>
+                        <span class="valor"><asp:Label ID="lblSubtotal" runat="server" /></span>
+                    </div>
+
+                    <div class="fila-resumen">
+                        <span class="titulo">IGV:</span>
+                        <span class="valor"><asp:Label ID="lblIgv" runat="server" /></span>
+                    </div>
+
+                    <div class="fila-resumen">
+                        <span class="titulo">Descuento:</span>
+                        <span class="valor"><asp:Label ID="lblDescuento" runat="server" /></span>
+                    </div>
+
+                    <hr />
+
+                    <div class="fila-total">
+                        <span class="titulo-total">Total:</span>
+                        <span class="valor-total badge bg-success">
+                            <asp:Label ID="lblTotalComprobante" runat="server" />
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer-kawki">
+                <button type="button" class="btn btn-outline-secondary px-4" onclick="cerrarDetalleVenta()">
+                    Cerrar
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+    function abrirDetalleVenta() {
+        document.getElementById("modalDetalleVenta").classList.add("show");
+    }
+    function cerrarDetalleVenta() {
+        document.getElementById("modalDetalleVenta").classList.remove("show");
+    }
+    </script>
 
     <script>
         function animateNumber(elementId, start, end, duration, prefix = "", decimals = 0) {
@@ -268,3 +360,4 @@
     </script>
 
 </asp:Content>
+

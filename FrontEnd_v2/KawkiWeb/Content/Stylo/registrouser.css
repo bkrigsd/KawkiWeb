@@ -366,3 +366,96 @@
         box-shadow: 0 4px 12px rgba(237, 107, 127, 0.3) !important;
         text-decoration: none !important;
     }
+
+/* Ordenar: versión compacta igual que descuentos */
+.filtros-orden {
+    font-size: 12px;
+    margin-left: auto; /* lo lleva a la esquina derecha */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.orden-label {
+    color: #666;
+    font-size: 12px;
+}
+
+.filtros-orden .orden-select {
+    width: auto;
+    min-width: 120px;
+    padding: 2px 8px;
+    font-size: 12px;
+    height: 30px; /* <- esto es lo que lo hace bajito */
+    line-height: 1.2;
+}
+
+/* === Filtros de búsqueda más compactos (solo esta card) === */
+.filtros-card {
+    margin-top: 8px; /* opcional: reduce un poco el espacio superior */
+    margin-bottom: 12px; /* menos espacio debajo de la card */
+}
+
+    /* Header más bajito */
+    .filtros-card .card-header {
+        padding: 8px 18px; /* antes 15px 20px: menos alto */
+    }
+
+    /* Título más pequeño y sin margen extra */
+    .filtros-card .card-title {
+        font-size: 14px; /* antes 16px */
+        margin: 0;
+    }
+
+    /* Body con menos padding arriba/abajo */
+    .filtros-card .card-body {
+        padding: 10px 18px 12px; /* reduce espacio vertical */
+    }
+
+/* Fila de filtros más pegada */
+.filtros-row {
+    margin-bottom: 2px;
+}
+
+.filtros-descripcion,
+.filtros-estado {
+    margin-bottom: 0;
+}
+
+.filtros-orden .orden-select {
+    font-size: 11px;
+    height: 26px;
+    padding: 1px 6px;
+}
+
+/* ---------- Ordenar (misma vista que Descuentos) ---------- */
+
+/* Header un poquito más compacto */
+.filtros-card .card-header {
+    padding: 12px 20px;
+}
+
+/* Contenedor del texto + combos, alineado a la derecha */
+.filtros-orden {
+    margin-left: auto; /* lo manda a la esquina derecha */
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+    /* Texto "Ordenar:" pequeño */
+    .filtros-orden .orden-label {
+        font-size: 12px;
+        color: #777;
+    }
+
+    /* Combos chiquitos */
+    .filtros-orden .orden-select,
+    .filtros-orden .form-select-sm {
+        width: auto;
+        min-width: 110px;
+        padding: 2px 8px;
+        font-size: 12px;
+        height: 30px;
+        line-height: 1.1;
+    }

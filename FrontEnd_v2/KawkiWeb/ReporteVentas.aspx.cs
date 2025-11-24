@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Script.Serialization;
-using System.Web.UI;
-using KawkiWebBusiness;
+﻿using KawkiWebBusiness;
 using KawkiWebBusiness.BO;
 using KawkiWebBusiness.KawkiWebWSComprobantesPago;
 using KawkiWebBusiness.KawkiWebWSDetalleVentas;
 using KawkiWebBusiness.KawkiWebWSProductos;
 using KawkiWebBusiness.KawkiWebWSProductosVariantes;
-using KawkiWebBusiness.KawkiWebWSReportes;
 using KawkiWebBusiness.KawkiWebWSVentas;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Script.Serialization;
+using System.Web.UI;
 
 namespace KawkiWeb
 {
@@ -370,75 +368,6 @@ namespace KawkiWeb
             //ChartVariacionLabelsJson = serializer.Serialize(serie.Select(x => x.Label));
             //ChartVariacionDataJson = serializer.Serialize(serie.Select(x => x.Total));
 
-        }
-
-        // Agregar este método en tu clase ReporteVentas.aspx.cs
-
-        protected void btnExportarPDF_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 1) Validar fechas
-                DateTime fechaInicio, fechaFin;
-                if (!DateTime.TryParse(txtFechaInicio.Text, out fechaInicio))
-                {
-                    lblMensajeFechas.Visible = true;
-                    lblMensajeFechas.Text = "Fecha inicio inválida";
-                    return;
-                }
-                if (!DateTime.TryParse(txtFechaFin.Text, out fechaFin))
-                {
-                    lblMensajeFechas.Visible = true;
-                    lblMensajeFechas.Text = "Fecha fin inválida";
-                    return;
-                }
-
-                // Validación: Desde no puede ser mayor que Hasta
-                if (fechaInicio > fechaFin)
-                {
-                    lblMensajeFechas.Visible = true;
-                    lblMensajeFechas.Text = "La fecha de Inicio debe ser menor o igual que la fecha Fin.";
-                    return;
-                }
-
-                // 2) Convertir a formato ISO 8601
-                string fechaInicioStr = fechaInicio.ToString("yyyy-MM-ddTHH:mm:ss");
-                string fechaFinStr = fechaFin.ToString("yyyy-MM-ddTHH:mm:ss");
-
-                // 3) Llamar al BO para generar el PDF
-                var reportesBO = new ReportesBO();
-                byte[] reportePDF = reportesBO.GenerarReporteVentasYTendencias(fechaInicioStr, fechaFinStr);
-
-                // 4) Validar que se generó correctamente
-                if (reportePDF == null || reportePDF.Length == 0)
-                {
-                    lblMensajeFechas.Visible = true;
-                    lblMensajeFechas.Text = "Error al generar el reporte. Intenta de nuevo.";
-                    return;
-                }
-
-                // 5) Descargar el PDF al navegador
-                Response.Clear();
-                Response.ClearHeaders();
-                Response.ClearContent();
-                Response.ContentType = "application/pdf";
-                Response.AddHeader("content-disposition",
-                    $"attachment;filename=ReporteVentas_{fechaInicio:yyyyMMdd}_{fechaFin:yyyyMMdd}.pdf");
-                Response.BinaryWrite(reportePDF);
-                Response.Flush();
-
-                // IMPORTANTE: Usar HttpContext.Current.ApplicationInstance.CompleteRequest()
-                // en lugar de Response.End() para evitar ThreadAbortException
-                HttpContext.Current.ApplicationInstance.CompleteRequest();
-            }
-            catch (Exception ex)
-            {
-                lblMensajeFechas.Visible = true;
-                lblMensajeFechas.Text = "Error: " + ex.Message;
-                System.Diagnostics.Debug.WriteLine("Error al exportar PDF: " + ex.ToString());
-                // También loguea el StackTrace para más detalles
-                System.Diagnostics.Debug.WriteLine("StackTrace: " + ex.StackTrace);
-            }
         }
     }
 }

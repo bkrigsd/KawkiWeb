@@ -1,4 +1,4 @@
-﻿﻿<%@ Page Title="Reporte de Ventas" Language="C#" MasterPageFile="~/KawkiWeb.master"
+﻿<%@ Page Title="Reporte de Ventas" Language="C#" MasterPageFile="~/KawkiWeb.master"
     AutoEventWireup="true" CodeBehind="ReporteVentas.aspx.cs" Inherits="KawkiWeb.ReporteVentas" %>
 
 <asp:Content ID="HeadExtra" ContentPlaceHolderID="HeadContent" runat="server">
@@ -79,17 +79,6 @@
                     <div class="col-md-4">
                         <asp:Button ID="btnGenerar" runat="server" Text="Generar Reporte"
                             CssClass="btn-kawki-primary w-100" OnClick="btnGenerar_Click" />
-                    </div>
-                </div>
-
-                <!-- NUEVO: Botón para exportar PDF -->
-                <div class="row g-3 mt-2">
-                    <div class="col-md-12">
-                        <asp:Button ID="btnExportarPDF" runat="server" 
-                            Text="Descargar como PDF" 
-                            CssClass="btn btn-success" 
-                            OnClick="btnExportarPDF_Click" 
-                            Style="width: 100%; font-weight: bold;" />
                     </div>
                 </div>
 
@@ -267,10 +256,10 @@
             var catData = <%= ChartCategoriasDataJson %> || [];
 
             var colorLabels = <%= ChartColoresLabelsJson %> || [];
-            var colorData = <%= ChartColoresDataJson %> || [];
+            var colorData   = <%= ChartColoresDataJson %> || [];
 
             var tallaLabels = <%= ChartTallasLabelsJson %> || [];
-            var tallaData = <%= ChartTallasDataJson %> || [];
+            var tallaData   = <%= ChartTallasDataJson %> || [];
 
             <%--var varLabels   = <%= ChartVariacionLabelsJson %> || [];
             var varData = <%= ChartVariacionDataJson %> || [];--%>
