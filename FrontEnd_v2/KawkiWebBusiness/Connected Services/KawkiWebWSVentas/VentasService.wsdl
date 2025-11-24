@@ -5,17 +5,11 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/VentasService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="insertarVenta">
-    <part name="parameters" element="tns:insertarVenta" />
+  <message name="modificarVenta">
+    <part name="parameters" element="tns:modificarVenta" />
   </message>
-  <message name="insertarVentaResponse">
-    <part name="parameters" element="tns:insertarVentaResponse" />
-  </message>
-  <message name="obtenerPorIdVenta">
-    <part name="parameters" element="tns:obtenerPorIdVenta" />
-  </message>
-  <message name="obtenerPorIdVentaResponse">
-    <part name="parameters" element="tns:obtenerPorIdVentaResponse" />
+  <message name="modificarVentaResponse">
+    <part name="parameters" element="tns:modificarVentaResponse" />
   </message>
   <message name="listarTodosVenta">
     <part name="parameters" element="tns:listarTodosVenta" />
@@ -23,42 +17,39 @@
   <message name="listarTodosVentaResponse">
     <part name="parameters" element="tns:listarTodosVentaResponse" />
   </message>
-  <message name="modificarVenta">
-    <part name="parameters" element="tns:modificarVenta" />
+  <message name="obtenerPorIdVenta">
+    <part name="parameters" element="tns:obtenerPorIdVenta" />
   </message>
-  <message name="modificarVentaResponse">
-    <part name="parameters" element="tns:modificarVentaResponse" />
+  <message name="obtenerPorIdVentaResponse">
+    <part name="parameters" element="tns:obtenerPorIdVentaResponse" />
+  </message>
+  <message name="insertarVenta">
+    <part name="parameters" element="tns:insertarVenta" />
+  </message>
+  <message name="insertarVentaResponse">
+    <part name="parameters" element="tns:insertarVentaResponse" />
   </message>
   <portType name="Ventas">
-    <operation name="insertarVenta">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest" message="tns:insertarVenta" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse" message="tns:insertarVentaResponse" />
-    </operation>
-    <operation name="obtenerPorIdVenta">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest" message="tns:obtenerPorIdVenta" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse" message="tns:obtenerPorIdVentaResponse" />
+    <operation name="modificarVenta">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaRequest" message="tns:modificarVenta" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaResponse" message="tns:modificarVentaResponse" />
     </operation>
     <operation name="listarTodosVenta">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/listarTodosVentaRequest" message="tns:listarTodosVenta" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/listarTodosVentaResponse" message="tns:listarTodosVentaResponse" />
     </operation>
-    <operation name="modificarVenta">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaRequest" message="tns:modificarVenta" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/modificarVentaResponse" message="tns:modificarVentaResponse" />
+    <operation name="obtenerPorIdVenta">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaRequest" message="tns:obtenerPorIdVenta" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/obtenerPorIdVentaResponse" message="tns:obtenerPorIdVentaResponse" />
+    </operation>
+    <operation name="insertarVenta">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaRequest" message="tns:insertarVenta" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Ventas/insertarVentaResponse" message="tns:insertarVentaResponse" />
     </operation>
   </portType>
   <binding name="VentasPortBinding" type="tns:Ventas">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="insertarVenta">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="obtenerPorIdVenta">
+    <operation name="modificarVenta">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -76,7 +67,16 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="modificarVenta">
+    <operation name="obtenerPorIdVenta">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="insertarVenta">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

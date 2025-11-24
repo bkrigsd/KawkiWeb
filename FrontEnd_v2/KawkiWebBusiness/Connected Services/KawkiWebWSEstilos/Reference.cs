@@ -29,17 +29,6 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.obtenerPorIdEstiloResponse> obtenerPorIdEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.obtenerPorIdEstiloRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloResponse" +
-            "")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse listarTodosEstilo(KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloResponse" +
-            "")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse> listarTodosEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/insertarEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/insertarEstiloResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
@@ -56,6 +45,17 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/modificarEstiloResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloResponse> modificarEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.modificarEstiloRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloResponse" +
+            "")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse listarTodosEstilo(KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Estilos/listarTodosEstiloResponse" +
+            "")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse> listarTodosEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest request);
     }
     
     /// <remarks/>
@@ -157,34 +157,6 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosEstilo", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosEstiloRequest {
-        
-        public listarTodosEstiloRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosEstiloResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosEstiloResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSEstilos.estilosDTO[] @return;
-        
-        public listarTodosEstiloResponse() {
-        }
-        
-        public listarTodosEstiloResponse(KawkiWebBusiness.KawkiWebWSEstilos.estilosDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="insertarEstilo", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class insertarEstiloRequest {
         
@@ -259,6 +231,34 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosEstilo", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosEstiloRequest {
+        
+        public listarTodosEstiloRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosEstiloResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosEstiloResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSEstilos.estilosDTO[] @return;
+        
+        public listarTodosEstiloResponse() {
+        }
+        
+        public listarTodosEstiloResponse(KawkiWebBusiness.KawkiWebWSEstilos.estilosDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface EstilosChannel : KawkiWebBusiness.KawkiWebWSEstilos.Estilos, System.ServiceModel.IClientChannel {
     }
@@ -310,27 +310,6 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse KawkiWebBusiness.KawkiWebWSEstilos.Estilos.listarTodosEstilo(KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest request) {
-            return base.Channel.listarTodosEstilo(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSEstilos.estilosDTO[] listarTodosEstilo() {
-            KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest();
-            KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse retVal = ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).listarTodosEstilo(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse> KawkiWebBusiness.KawkiWebWSEstilos.Estilos.listarTodosEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest request) {
-            return base.Channel.listarTodosEstiloAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse> listarTodosEstiloAsync() {
-            KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest();
-            return ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).listarTodosEstiloAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloResponse KawkiWebBusiness.KawkiWebWSEstilos.Estilos.insertarEstilo(KawkiWebBusiness.KawkiWebWSEstilos.insertarEstiloRequest request) {
             return base.Channel.insertarEstilo(request);
         }
@@ -376,6 +355,27 @@ namespace KawkiWebBusiness.KawkiWebWSEstilos {
             inValue.estiloId = estiloId;
             inValue.nombreEstilo = nombreEstilo;
             return ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).modificarEstiloAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse KawkiWebBusiness.KawkiWebWSEstilos.Estilos.listarTodosEstilo(KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest request) {
+            return base.Channel.listarTodosEstilo(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSEstilos.estilosDTO[] listarTodosEstilo() {
+            KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest();
+            KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse retVal = ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).listarTodosEstilo(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse> KawkiWebBusiness.KawkiWebWSEstilos.Estilos.listarTodosEstiloAsync(KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest request) {
+            return base.Channel.listarTodosEstiloAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloResponse> listarTodosEstiloAsync() {
+            KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest inValue = new KawkiWebBusiness.KawkiWebWSEstilos.listarTodosEstiloRequest();
+            return ((KawkiWebBusiness.KawkiWebWSEstilos.Estilos)(this)).listarTodosEstiloAsync(inValue);
         }
     }
 }
