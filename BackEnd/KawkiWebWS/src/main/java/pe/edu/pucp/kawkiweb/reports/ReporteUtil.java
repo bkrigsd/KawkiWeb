@@ -3,7 +3,9 @@ package pe.edu.pucp.kawkiweb.reports;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -40,11 +42,23 @@ public class ReporteUtil {
     }
 
     /**
-     * Genera el reporte de ventas y tendencias de productos
+     * Convierte LocalDateTime a java.util.Date (compatible con JasperReports)
+     * Si el parámetro es null, retorna null
+     */
+    private static Date convertirADate(LocalDateTime localDateTime) {
+        if (localDateTime == null) {
+            return null;
+        }
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * Genera el reporte de ventas y tendencias de productos Si fechaInicio y
+     * fechaFin son null, trae TODOS los registros sin filtrar
      *
-     * @param fechaInicio Fecha y hora de inicio del periodo
-     * @param fechaFin Fecha y hora de fin del periodo
-     * @return byte[] con el PDF del reporte
+     * @param fechaInicio Fecha y hora de inicio del periodo (puede ser null)
+     * @param fechaFin Fecha y hora de fin del periodo (puede ser null)
+     * @return byte[] con el PDF del reporte, o null si hay error
      */
     public static byte[] reporteVentasYTendencias(
             LocalDateTime fechaInicio,
@@ -52,24 +66,20 @@ public class ReporteUtil {
     ) {
         HashMap<String, Object> parametros = new HashMap<>();
 
-        // Convertir LocalDateTime a java.sql.Timestamp para JasperReports
-        parametros.put("pFechaInicio", java.sql.Timestamp.valueOf(fechaInicio));
-        parametros.put("pFechaFin", java.sql.Timestamp.valueOf(fechaFin));
-
-        // Parámetros adicionales para mostrar en el reporte
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        parametros.put("pFechaInicioTexto", fechaInicio.format(formatter));
-        parametros.put("pFechaFinTexto", fechaFin.format(formatter));
+        // Usar nombres con prefijo 'p' como está en el Jasper
+        parametros.put("pfechaInicio", convertirADate(fechaInicio));
+        parametros.put("pfechaFin", convertirADate(fechaFin));
 
         return invocarReporte("reporte_ventas_tendencias", parametros);
     }
 
     /**
-     * Genera el reporte de estado de stock y productos en riesgo
+     * Genera el reporte de estado de stock y productos en riesgo Si fechaInicio
+     * y fechaFin son null, incluye todos los movimientos sin filtrar
      *
-     * @param fechaInicio Fecha y hora de inicio del periodo
-     * @param fechaFin Fecha y hora de fin del periodo
-     * @return byte[] con el PDF del reporte
+     * @param fechaInicio Fecha y hora de inicio del periodo (puede ser null)
+     * @param fechaFin Fecha y hora de fin del periodo (puede ser null)
+     * @return byte[] con el PDF del reporte, o null si hay error
      */
     public static byte[] reporteEstadoStock(
             LocalDateTime fechaInicio,
@@ -77,23 +87,11 @@ public class ReporteUtil {
     ) {
         HashMap<String, Object> parametros = new HashMap<>();
 
-        parametros.put("pFechaInicio", java.sql.Timestamp.valueOf(fechaInicio));
-        parametros.put("pFechaFin", java.sql.Timestamp.valueOf(fechaFin));
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        parametros.put("pFechaInicioTexto", fechaInicio.format(formatter));
-        parametros.put("pFechaFinTexto", fechaFin.format(formatter));
+        //Usar nombres con prefijo 'p'
+        parametros.put("pfechaInicio", convertirADate(fechaInicio));
+        parametros.put("pfechaFin", convertirADate(fechaFin));
 
         return invocarReporte("reporte_estado_stock", parametros);
     }
 
-//    public static byte[] reportePorTipoUsuario() {
-//        return invocarReporte("reporte1");
-//    }
-//
-//    public static byte[] reportePorParametros(Integer parametro) {
-//        HashMap parametros = new HashMap();
-//        parametros.put("pParametro", parametro);
-//        return invocarReporte("reporte_parametros", parametros);
-//    }
 }
