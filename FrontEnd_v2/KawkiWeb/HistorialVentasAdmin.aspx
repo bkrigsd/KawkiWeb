@@ -4,6 +4,7 @@
 <asp:Content ID="HeadExtra" ContentPlaceHolderID="HeadContent" runat="server">
     <link href="Content/Stylo/historialventaadmin.css" rel="stylesheet" />
     <link href="Content/Stylo/detallevent.css" rel="stylesheet" />
+    <%--<link href="Content/Stylo/registrodescuent.css" rel="stylesheet" />--%>
 </asp:Content>
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -36,13 +37,40 @@
             </div>
         </div>
 
-        <!-- Filtros -->
+        <!-- Filtros + Ordenamiento -->
         <div class="card-kawki">
             <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-filter"></i> Filtros de búsqueda
-                </h5>
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <h5 class="card-title mb-0 d-flex align-items-center">
+                        <i class="fas fa-filter me-2"></i> Filtros de búsqueda
+                    </h5>
+
+                    <!-- Ordenamiento pequeño a la derecha -->
+                    <div class="filtros-orden d-flex align-items-center">
+                        <span class="orden-label me-1">Ordenar:</span>
+
+                        <asp:DropDownList ID="ddlOrdenarPor" runat="server"
+                            CssClass="form-select form-select-sm orden-select me-1"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="ActualizarOrden">
+                            <asp:ListItem Text="ID"          Value="IdVenta" />
+                            <asp:ListItem Text="Fecha"       Value="Fecha" />
+                            <asp:ListItem Text="Vendedor"    Value="Vendedor" />
+                            <asp:ListItem Text="Canal"       Value="Canal" />
+                            <asp:ListItem Text="Monto Total" Value="MontoTotal" />
+                        </asp:DropDownList>
+
+                        <asp:DropDownList ID="ddlDireccion" runat="server"
+                            CssClass="form-select form-select-sm orden-select"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="ActualizarOrden">
+                            <asp:ListItem Text="Asc"  Value="ASC" />
+                            <asp:ListItem Text="Desc" Value="DESC" />
+                        </asp:DropDownList>
+                    </div>
+                </div>
             </div>
+
             <div class="card-body">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-3">
@@ -85,41 +113,6 @@
                         CssClass="text-danger d-block mt-2"
                         Visible="false" />
                 </div>
-            </div>
-        </div>
-
-        <!-- Ordenamiento -->
-        <div class="card-kawki mb-3">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-sort"></i> Ordenar registros
-                </h5>
-            </div>
-            <div class="card-body row">
-
-                <div class="col-md-4 mb-3">
-                    <label class="form-label">Ordenar por</label>
-                    <asp:DropDownList ID="ddlOrdenarPor" runat="server"
-                        CssClass="form-select" AutoPostBack="true"
-                        OnSelectedIndexChanged="ActualizarOrden">
-                        <asp:ListItem Text="ID" Value="IdVenta" />
-                        <asp:ListItem Text="Fecha" Value="Fecha" />
-                        <asp:ListItem Text="Vendedor" Value="Vendedor" />
-                        <asp:ListItem Text="Canal" Value="Canal" />
-                        <asp:ListItem Text="Monto Total" Value="MontoTotal" />
-                    </asp:DropDownList>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label class="form-label">Dirección</label>
-                    <asp:DropDownList ID="ddlDireccion" runat="server"
-                        CssClass="form-select" AutoPostBack="true"
-                        OnSelectedIndexChanged="ActualizarOrden">
-                        <asp:ListItem Text="Ascendente" Value="ASC" />
-                        <asp:ListItem Text="Descendente" Value="DESC" />
-                    </asp:DropDownList>
-                </div>
-
             </div>
         </div>
 
@@ -321,13 +314,49 @@
 
 
     <script>
-    function abrirDetalleVenta() {
-        document.getElementById("modalDetalleVenta").classList.add("show");
-    }
-    function cerrarDetalleVenta() {
-        document.getElementById("modalDetalleVenta").classList.remove("show");
-    }
+        function abrirDetalleVenta() {
+            document.getElementById("modalDetalleVenta").classList.add("show");
+        }
+        function cerrarDetalleVenta() {
+            document.getElementById("modalDetalleVenta").classList.remove("show");
+        }
+    </script>
+
+    <script>
+        function animateNumber(elementId, start, end, duration, prefix = "", decimals = 0) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+
+            const startTime = performance.now();
+            const range = end - start;
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1); // 0 a 1
+
+                // Interpolación lineal
+                const current = start + (range * progress);
+
+                const value = decimals > 0
+                    ? (current / 100).toFixed(decimals)
+                    : Math.round(current);
+
+                element.innerText = prefix + value;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        // Animación principal al actualizar estadísticas
+        function animarDashboard(total, monto, promedio) {
+            animateNumber("lblTotalVentas", 0, total, 600, "", 0);
+            animateNumber("lblMontoTotal", 0, monto * 100, 700, "S/ ", 2);
+            animateNumber("lblPromedio", 0, promedio * 100, 700, "S/ ", 2);
+        }
     </script>
 
 </asp:Content>
-

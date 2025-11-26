@@ -16,19 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSRedesSociales {
     public interface RedesSociales {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocia" +
-            "lRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocia" +
-            "lResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse listarTodosRedSocial(KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocia" +
-            "lRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocia" +
-            "lResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse> listarTodosRedSocialAsync(KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/obtenerPorIdRedSoci" +
             "alRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/obtenerPorIdRedSoci" +
             "alResponse")]
@@ -40,6 +27,19 @@ namespace KawkiWebBusiness.KawkiWebWSRedesSociales {
             "alRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/obtenerPorIdRedSoci" +
             "alResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSRedesSociales.obtenerPorIdRedSocialResponse> obtenerPorIdRedSocialAsync(KawkiWebBusiness.KawkiWebWSRedesSociales.obtenerPorIdRedSocialRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocia" +
+            "lRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocia" +
+            "lResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse listarTodosRedSocial(KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocia" +
+            "lRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/RedesSociales/listarTodosRedSocia" +
+            "lResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse> listarTodosRedSocialAsync(KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest request);
     }
     
     /// <remarks/>
@@ -105,34 +105,6 @@ namespace KawkiWebBusiness.KawkiWebWSRedesSociales {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosRedSocial", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosRedSocialRequest {
-        
-        public listarTodosRedSocialRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosRedSocialResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosRedSocialResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSRedesSociales.redesSocialesDTO[] @return;
-        
-        public listarTodosRedSocialResponse() {
-        }
-        
-        public listarTodosRedSocialResponse(KawkiWebBusiness.KawkiWebWSRedesSociales.redesSocialesDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdRedSocial", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class obtenerPorIdRedSocialRequest {
         
@@ -166,6 +138,34 @@ namespace KawkiWebBusiness.KawkiWebWSRedesSociales {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosRedSocial", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosRedSocialRequest {
+        
+        public listarTodosRedSocialRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosRedSocialResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosRedSocialResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSRedesSociales.redesSocialesDTO[] @return;
+        
+        public listarTodosRedSocialResponse() {
+        }
+        
+        public listarTodosRedSocialResponse(KawkiWebBusiness.KawkiWebWSRedesSociales.redesSocialesDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface RedesSocialesChannel : KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales, System.ServiceModel.IClientChannel {
     }
@@ -194,27 +194,6 @@ namespace KawkiWebBusiness.KawkiWebWSRedesSociales {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales.listarTodosRedSocial(KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest request) {
-            return base.Channel.listarTodosRedSocial(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSRedesSociales.redesSocialesDTO[] listarTodosRedSocial() {
-            KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest inValue = new KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest();
-            KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse retVal = ((KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales)(this)).listarTodosRedSocial(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse> KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales.listarTodosRedSocialAsync(KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest request) {
-            return base.Channel.listarTodosRedSocialAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse> listarTodosRedSocialAsync() {
-            KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest inValue = new KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest();
-            return ((KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales)(this)).listarTodosRedSocialAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSRedesSociales.obtenerPorIdRedSocialResponse KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales.obtenerPorIdRedSocial(KawkiWebBusiness.KawkiWebWSRedesSociales.obtenerPorIdRedSocialRequest request) {
             return base.Channel.obtenerPorIdRedSocial(request);
         }
@@ -235,6 +214,27 @@ namespace KawkiWebBusiness.KawkiWebWSRedesSociales {
             KawkiWebBusiness.KawkiWebWSRedesSociales.obtenerPorIdRedSocialRequest inValue = new KawkiWebBusiness.KawkiWebWSRedesSociales.obtenerPorIdRedSocialRequest();
             inValue.redSocialId = redSocialId;
             return ((KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales)(this)).obtenerPorIdRedSocialAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales.listarTodosRedSocial(KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest request) {
+            return base.Channel.listarTodosRedSocial(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSRedesSociales.redesSocialesDTO[] listarTodosRedSocial() {
+            KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest inValue = new KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest();
+            KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse retVal = ((KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales)(this)).listarTodosRedSocial(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse> KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales.listarTodosRedSocialAsync(KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest request) {
+            return base.Channel.listarTodosRedSocialAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialResponse> listarTodosRedSocialAsync() {
+            KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest inValue = new KawkiWebBusiness.KawkiWebWSRedesSociales.listarTodosRedSocialRequest();
+            return ((KawkiWebBusiness.KawkiWebWSRedesSociales.RedesSociales)(this)).listarTodosRedSocialAsync(inValue);
         }
     }
 }

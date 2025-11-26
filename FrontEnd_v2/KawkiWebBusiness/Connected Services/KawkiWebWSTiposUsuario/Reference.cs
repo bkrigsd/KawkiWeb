@@ -16,19 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposUsuario {
     public interface TiposUsuario {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/obtenerPorIdTipoUsua" +
-            "rioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/obtenerPorIdTipoUsua" +
-            "rioResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioResponse obtenerPorIdTipoUsuario(KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/obtenerPorIdTipoUsua" +
-            "rioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/obtenerPorIdTipoUsua" +
-            "rioResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioResponse> obtenerPorIdTipoUsuarioAsync(KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/listarTodosTipoUsuar" +
             "ioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/listarTodosTipoUsuar" +
             "ioResponse")]
@@ -40,6 +27,19 @@ namespace KawkiWebBusiness.KawkiWebWSTiposUsuario {
             "ioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/listarTodosTipoUsuar" +
             "ioResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioResponse> listarTodosTipoUsuarioAsync(KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/obtenerPorIdTipoUsua" +
+            "rioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/obtenerPorIdTipoUsua" +
+            "rioResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioResponse obtenerPorIdTipoUsuario(KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/obtenerPorIdTipoUsua" +
+            "rioRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposUsuario/obtenerPorIdTipoUsua" +
+            "rioResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioResponse> obtenerPorIdTipoUsuarioAsync(KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioRequest request);
     }
     
     /// <remarks/>
@@ -105,6 +105,34 @@ namespace KawkiWebBusiness.KawkiWebWSTiposUsuario {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosTipoUsuarioRequest {
+        
+        public listarTodosTipoUsuarioRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoUsuarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosTipoUsuarioResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSTiposUsuario.tiposUsuarioDTO[] @return;
+        
+        public listarTodosTipoUsuarioResponse() {
+        }
+        
+        public listarTodosTipoUsuarioResponse(KawkiWebBusiness.KawkiWebWSTiposUsuario.tiposUsuarioDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdTipoUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class obtenerPorIdTipoUsuarioRequest {
         
@@ -138,34 +166,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposUsuario {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoUsuario", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosTipoUsuarioRequest {
-        
-        public listarTodosTipoUsuarioRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoUsuarioResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosTipoUsuarioResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSTiposUsuario.tiposUsuarioDTO[] @return;
-        
-        public listarTodosTipoUsuarioResponse() {
-        }
-        
-        public listarTodosTipoUsuarioResponse(KawkiWebBusiness.KawkiWebWSTiposUsuario.tiposUsuarioDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface TiposUsuarioChannel : KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario, System.ServiceModel.IClientChannel {
     }
@@ -194,6 +194,27 @@ namespace KawkiWebBusiness.KawkiWebWSTiposUsuario {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioResponse KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario.listarTodosTipoUsuario(KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest request) {
+            return base.Channel.listarTodosTipoUsuario(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSTiposUsuario.tiposUsuarioDTO[] listarTodosTipoUsuario() {
+            KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest();
+            KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario)(this)).listarTodosTipoUsuario(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioResponse> KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario.listarTodosTipoUsuarioAsync(KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest request) {
+            return base.Channel.listarTodosTipoUsuarioAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioResponse> listarTodosTipoUsuarioAsync() {
+            KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest();
+            return ((KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario)(this)).listarTodosTipoUsuarioAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioResponse KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario.obtenerPorIdTipoUsuario(KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioRequest request) {
             return base.Channel.obtenerPorIdTipoUsuario(request);
         }
@@ -214,27 +235,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposUsuario {
             KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposUsuario.obtenerPorIdTipoUsuarioRequest();
             inValue.tipoUsuarioId = tipoUsuarioId;
             return ((KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario)(this)).obtenerPorIdTipoUsuarioAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioResponse KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario.listarTodosTipoUsuario(KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest request) {
-            return base.Channel.listarTodosTipoUsuario(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSTiposUsuario.tiposUsuarioDTO[] listarTodosTipoUsuario() {
-            KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest();
-            KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioResponse retVal = ((KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario)(this)).listarTodosTipoUsuario(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioResponse> KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario.listarTodosTipoUsuarioAsync(KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest request) {
-            return base.Channel.listarTodosTipoUsuarioAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioResponse> listarTodosTipoUsuarioAsync() {
-            KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposUsuario.listarTodosTipoUsuarioRequest();
-            return ((KawkiWebBusiness.KawkiWebWSTiposUsuario.TiposUsuario)(this)).listarTodosTipoUsuarioAsync(inValue);
         }
     }
 }

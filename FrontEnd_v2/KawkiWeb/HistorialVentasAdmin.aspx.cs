@@ -222,6 +222,13 @@ namespace KawkiWeb
                 lblTotalVentas.Text = cantidad.ToString();
                 lblMontoTotal.Text = $"S/ {montoTotal:N2}";
                 lblPromedio.Text = $"S/ {promedio:N2}";
+
+                ScriptManager.RegisterStartupScript(
+                    this, GetType(),
+                    "AnimarDashboard",
+                    $"animarDashboard({cantidad}, {montoTotal}, {promedio});",
+                    true
+                );
             }
             catch (Exception ex)
             {

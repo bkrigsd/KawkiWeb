@@ -161,17 +161,9 @@
                         </a>
                     </asp:PlaceHolder>
 
-                    <%--<button id="toggleDark" class="modo-btn">
-                        <i class="fas fa-moon" id="toggleDark" style="cursor:pointer; font-size:18px;"></i>
-                    </button>--%>
-
                     <!-- Logueado -->
                     <asp:PlaceHolder ID="phSesionUsuario" runat="server" Visible="false">
                         <div class="usuario-logueado">
-                            <%--<asp:LinkButton ID="btnPerfilUsuario" runat="server" CssClass="link-usuario" OnClick="btnPerfilUsuario_Click">
-                            <i class="fas fa-user"></i>
-                                <span><%= Session["Usuario"] ?? "" %></span>
-                            </asp:LinkButton>--%>
                             <asp:HyperLink ID="lnkPerfil" runat="server" CssClass="link-usuario">
                                <i class="fas fa-user"></i>
                                <span><%= Session["Usuario"] ?? "" %></span>
@@ -405,6 +397,7 @@
                 if (evt.persisted) noBack();
             };
 
+            // Agrega este script al final del body de tu Master, DESPUÉS de todos los demás scripts
             $(document).ready(function () {
                 console.log("=== DIAGNÓSTICO DE SCROLL ===");
 
@@ -458,60 +451,6 @@
                 }
             });
         </script>
-
-        <%--<script>
-            document.addEventListener("DOMContentLoaded", () => {
-
-                // Cargar preferencia guardada
-                if (localStorage.getItem("modoOscuro") === "true") {
-                    document.body.classList.add("dark-mode");
-                }
-
-                // Toggle
-                document.getElementById("toggleDark").addEventListener("click", function () {
-                    document.body.classList.toggle("dark-mode");
-
-                    // Guardar preferencia
-                    const activo = document.body.classList.contains("dark-mode");
-                    localStorage.setItem("modoOscuro", activo);
-                });
-            });
-        </script>--%>
-
-        <%--<script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const toggle = document.getElementById("toggleDark");
-                const body = document.body;
-
-                // 1. Aplicar modo oscuro si estaba guardado
-                if (localStorage.getItem("darkMode") === "true") {
-                    body.classList.add("dark-mode");
-                    toggle.classList.remove("fa-moon");
-                    toggle.classList.add("fa-sun");
-                }
-
-                // 2. Alternar modo oscuro
-                toggle.addEventListener("click", function () {
-                    body.classList.toggle("dark-mode");
-
-                    const isDark = body.classList.contains("dark-mode");
-                    localStorage.setItem("darkMode", isDark);
-
-                    toggle.classList.toggle("fa-moon", !isDark);
-                    toggle.classList.toggle("fa-sun", isDark);
-                });
-            });
-        </script>--%>
-
-        <%--if (document.body.classList.contains("dark-mode")) {
-            toggleDark.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-
-        toggleDark.addEventListener("click", () => {
-            const oscuro = document.body.classList.toggle("dark-mode");
-            toggleDark.innerHTML = oscuro ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-            localStorage.setItem("modoOscuro", oscuro);
-        });--%>
 
     </body>
 

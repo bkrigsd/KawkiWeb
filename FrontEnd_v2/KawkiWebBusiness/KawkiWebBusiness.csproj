@@ -101,6 +101,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\KawkiWebWSReportes\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\KawkiWebWSTallas\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -148,6 +153,7 @@
     <Compile Include="ProductosBO.cs" />
     <Compile Include="ProductosVariantesBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportesBO.cs" />
     <Compile Include="TallasBO.cs" />
     <Compile Include="TiposBeneficioBO.cs" />
     <Compile Include="TiposCondicionBO.cs" />
@@ -437,6 +443,16 @@
     <None Include="Connected Services\KawkiWebWSRedesSociales\RedesSocialesService.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\KawkiWebWSReportes\KawkiWebBusiness.KawkiWebWSReportes.generarReporteEstadoStockResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSReportes\KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\KawkiWebWSReportes\ReportesService.wsdl" />
+    <None Include="Connected Services\KawkiWebWSReportes\ReportesService.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\KawkiWebWSTallas\KawkiWebBusiness.KawkiWebWSTallas.insertarTallaResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -584,6 +600,7 @@
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSProductosVariantes\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSProductos\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSRedesSociales\" />
+    <WCFMetadataStorage Include="Connected Services\KawkiWebWSReportes\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSTallas\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSTiposBeneficio\" />
     <WCFMetadataStorage Include="Connected Services\KawkiWebWSTiposComprobante\" />
@@ -817,6 +834,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\KawkiWebWSComprobantesPago\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSReportes\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSReportes\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\KawkiWebWSReportes\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

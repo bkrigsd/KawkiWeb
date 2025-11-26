@@ -25,14 +25,6 @@
       <xs:element minOccurs="0" name="nombre" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="listarTodosColor">
-    <xs:sequence />
-  </xs:complexType>
-  <xs:complexType name="listarTodosColorResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:coloresDTO" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="insertarColor">
     <xs:sequence>
       <xs:element minOccurs="0" name="nombreColor" type="xs:string" />
@@ -41,6 +33,14 @@
   <xs:complexType name="insertarColorResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarTodosColor">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarTodosColorResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:coloresDTO" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="modificarColor">

@@ -32,13 +32,6 @@ namespace KawkiWebBusiness.BO
         public List<detalleVentasDTO> ListarPorVentaId(int ventaId)
         {
             var lista = cliente.listarPorVentaIdDetalleVenta(ventaId);
-
-            // Si el servicio devuelve null, regresamos una lista vacía
-            if (lista == null)
-            {
-                return new List<detalleVentasDTO>();
-            }
-
             return new List<detalleVentasDTO>(lista);
         }
 

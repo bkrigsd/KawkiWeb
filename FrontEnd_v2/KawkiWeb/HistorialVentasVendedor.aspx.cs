@@ -268,20 +268,9 @@ namespace KawkiWeb
 
                     foreach (var d in detallesVenta)
                     {
-                        // d.prodVariante es un int (el ID de la variante)
-                        System.Diagnostics.Debug.WriteLine($"DEBUG: d.prodVariante = {d.prodVariante} (tipo: {d.prodVariante?.GetType().Name})");
 
                         // Obtener el DTO completo
                         var varianteCompleta = productosVariantesBO.ObtenerPorId(d.prodVariante.prod_variante_id);
-
-                        System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta es NULL? {varianteCompleta == null}");
-
-                        if (varianteCompleta != null)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta.producto_id = {varianteCompleta.producto_id}");
-                            System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta.color?.nombre = '{varianteCompleta.color?.nombre}'");
-                            System.Diagnostics.Debug.WriteLine($"DEBUG: varianteCompleta.talla?.nombre = '{varianteCompleta.talla?.numero}'");
-                        }
 
                         string nombreProducto = ObtenerNombreProductoCompleto(varianteCompleta);
 
@@ -444,4 +433,3 @@ namespace KawkiWeb
         }
     }
 }
-

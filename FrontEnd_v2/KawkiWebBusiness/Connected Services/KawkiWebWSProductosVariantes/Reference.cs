@@ -16,30 +16,69 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
     public interface ProductosVariantes {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/insertarProdVa" +
-            "rianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/insertarProdVa" +
-            "rianteResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisp" +
+            "onibleProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisp" +
+            "onibleProdVarianteResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse insertarProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest request);
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse tieneStockDisponibleProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/insertarProdVa" +
-            "rianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/insertarProdVa" +
-            "rianteResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse> insertarProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisp" +
+            "onibleProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisp" +
+            "onibleProdVarianteResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse> tieneStockDisponibleProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarTodosPro" +
-            "dVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarTodosPro" +
-            "dVarianteResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProdu" +
+            "ctoProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProdu" +
+            "ctoProdVarianteResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse listarTodosProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest request);
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse listarPorProductoProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarTodosPro" +
-            "dVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarTodosPro" +
-            "dVarianteResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse> listarTodosProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProdu" +
+            "ctoProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProdu" +
+            "ctoProdVarianteResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse> listarPorProductoProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStoc" +
+            "kProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStoc" +
+            "kProdVarianteResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse actualizarStockProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStoc" +
+            "kProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStoc" +
+            "kProdVarianteResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse> actualizarStockProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStock" +
+            "BajoProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStock" +
+            "BajoProdVarianteResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse listarConStockBajoProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStock" +
+            "BajoProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStock" +
+            "BajoProdVarianteResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse> listarConStockBajoProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/modificarProdV" +
+            "arianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/modificarProdV" +
+            "arianteResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse modificarProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/modificarProdV" +
+            "arianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/modificarProdV" +
+            "arianteResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse> modificarProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/obtenerPorIdPr" +
@@ -81,128 +120,65 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorTallaProdVarianteResponse> listarPorTallaProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorTallaProdVarianteRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/modificarProdV" +
-            "arianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/modificarProdV" +
-            "arianteResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarTodosPro" +
+            "dVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarTodosPro" +
+            "dVarianteResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse modificarProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest request);
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse listarTodosProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/modificarProdV" +
-            "arianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/modificarProdV" +
-            "arianteResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse> modificarProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarTodosPro" +
+            "dVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarTodosPro" +
+            "dVarianteResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse> listarTodosProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProdu" +
-            "ctoProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProdu" +
-            "ctoProdVarianteResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/insertarProdVa" +
+            "rianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/insertarProdVa" +
+            "rianteResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse listarPorProductoProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest request);
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse insertarProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProdu" +
-            "ctoProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarPorProdu" +
-            "ctoProdVarianteResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse> listarPorProductoProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStoc" +
-            "kProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStoc" +
-            "kProdVarianteResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse actualizarStockProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStoc" +
-            "kProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/actualizarStoc" +
-            "kProdVarianteResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse> actualizarStockProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisp" +
-            "onibleProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisp" +
-            "onibleProdVarianteResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse tieneStockDisponibleProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisp" +
-            "onibleProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/tieneStockDisp" +
-            "onibleProdVarianteResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse> tieneStockDisponibleProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStock" +
-            "BajoProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStock" +
-            "BajoProdVarianteResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse listarConStockBajoProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStock" +
-            "BajoProdVarianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/listarConStock" +
-            "BajoProdVarianteResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse> listarConStockBajoProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/insertarProdVa" +
+            "rianteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ProductosVariantes/insertarProdVa" +
+            "rianteResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse> insertarProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest request);
     }
     
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
-    [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class coloresDTO : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="tieneStockDisponibleProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class tieneStockDisponibleProdVarianteRequest {
         
-        private int color_idField;
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int prod_variante_id;
         
-        private bool color_idFieldSpecified;
-        
-        private string nombreField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int color_id {
-            get {
-                return this.color_idField;
-            }
-            set {
-                this.color_idField = value;
-                this.RaisePropertyChanged("color_id");
-            }
+        public tieneStockDisponibleProdVarianteRequest() {
         }
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool color_idSpecified {
-            get {
-                return this.color_idFieldSpecified;
-            }
-            set {
-                this.color_idFieldSpecified = value;
-                this.RaisePropertyChanged("color_idSpecified");
-            }
+        public tieneStockDisponibleProdVarianteRequest(int prod_variante_id) {
+            this.prod_variante_id = prod_variante_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="tieneStockDisponibleProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class tieneStockDisponibleProdVarianteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool @return;
+        
+        public tieneStockDisponibleProdVarianteResponse() {
         }
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public string nombre {
-            get {
-                return this.nombreField;
-            }
-            set {
-                this.nombreField = value;
-                this.RaisePropertyChanged("nombre");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
+        public tieneStockDisponibleProdVarianteResponse(bool @return) {
+            this.@return = @return;
         }
     }
     
@@ -482,61 +458,107 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class tallasDTO : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class coloresDTO : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private int talla_idField;
+        private int color_idField;
         
-        private bool talla_idFieldSpecified;
+        private bool color_idFieldSpecified;
         
-        private int numeroField;
-        
-        private bool numeroFieldSpecified;
+        private string nombreField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int talla_id {
+        public int color_id {
             get {
-                return this.talla_idField;
+                return this.color_idField;
             }
             set {
-                this.talla_idField = value;
-                this.RaisePropertyChanged("talla_id");
+                this.color_idField = value;
+                this.RaisePropertyChanged("color_id");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool talla_idSpecified {
+        public bool color_idSpecified {
             get {
-                return this.talla_idFieldSpecified;
+                return this.color_idFieldSpecified;
             }
             set {
-                this.talla_idFieldSpecified = value;
-                this.RaisePropertyChanged("talla_idSpecified");
+                this.color_idFieldSpecified = value;
+                this.RaisePropertyChanged("color_idSpecified");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public int numero {
+        public string nombre {
             get {
-                return this.numeroField;
+                return this.nombreField;
             }
             set {
-                this.numeroField = value;
-                this.RaisePropertyChanged("numero");
+                this.nombreField = value;
+                this.RaisePropertyChanged("nombre");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
+    public partial class tiposUsuarioDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int tipoUsuarioIdField;
+        
+        private bool tipoUsuarioIdFieldSpecified;
+        
+        private string nombreField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public int tipoUsuarioId {
+            get {
+                return this.tipoUsuarioIdField;
+            }
+            set {
+                this.tipoUsuarioIdField = value;
+                this.RaisePropertyChanged("tipoUsuarioId");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool numeroSpecified {
+        public bool tipoUsuarioIdSpecified {
             get {
-                return this.numeroFieldSpecified;
+                return this.tipoUsuarioIdFieldSpecified;
             }
             set {
-                this.numeroFieldSpecified = value;
-                this.RaisePropertyChanged("numeroSpecified");
+                this.tipoUsuarioIdFieldSpecified = value;
+                this.RaisePropertyChanged("tipoUsuarioIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string nombre {
+            get {
+                return this.nombreField;
+            }
+            set {
+                this.nombreField = value;
+                this.RaisePropertyChanged("nombre");
             }
         }
         
@@ -756,47 +778,61 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/")]
-    public partial class tiposUsuarioDTO : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class tallasDTO : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private int tipoUsuarioIdField;
+        private int talla_idField;
         
-        private bool tipoUsuarioIdFieldSpecified;
+        private bool talla_idFieldSpecified;
         
-        private string nombreField;
+        private int numeroField;
+        
+        private bool numeroFieldSpecified;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int tipoUsuarioId {
+        public int talla_id {
             get {
-                return this.tipoUsuarioIdField;
+                return this.talla_idField;
             }
             set {
-                this.tipoUsuarioIdField = value;
-                this.RaisePropertyChanged("tipoUsuarioId");
+                this.talla_idField = value;
+                this.RaisePropertyChanged("talla_id");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool tipoUsuarioIdSpecified {
+        public bool talla_idSpecified {
             get {
-                return this.tipoUsuarioIdFieldSpecified;
+                return this.talla_idFieldSpecified;
             }
             set {
-                this.tipoUsuarioIdFieldSpecified = value;
-                this.RaisePropertyChanged("tipoUsuarioIdSpecified");
+                this.talla_idFieldSpecified = value;
+                this.RaisePropertyChanged("talla_idSpecified");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public string nombre {
+        public int numero {
             get {
-                return this.nombreField;
+                return this.numeroField;
             }
             set {
-                this.nombreField = value;
-                this.RaisePropertyChanged("nombre");
+                this.numeroField = value;
+                this.RaisePropertyChanged("numero");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool numeroSpecified {
+            get {
+                return this.numeroFieldSpecified;
+            }
+            set {
+                this.numeroFieldSpecified = value;
+                this.RaisePropertyChanged("numeroSpecified");
             }
         }
         
@@ -813,45 +849,155 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarProdVarianteRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarPorProductoProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarPorProductoProdVarianteRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int stock;
+        public int producto_id;
+        
+        public listarPorProductoProdVarianteRequest() {
+        }
+        
+        public listarPorProductoProdVarianteRequest(int producto_id) {
+            this.producto_id = producto_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarPorProductoProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarPorProductoProdVarianteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return;
+        
+        public listarPorProductoProdVarianteResponse() {
+        }
+        
+        public listarPorProductoProdVarianteResponse(KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="actualizarStockProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class actualizarStockProdVarianteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int prod_variante_id;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int stock_minimo;
+        public int nuevo_stock;
+        
+        public actualizarStockProdVarianteRequest() {
+        }
+        
+        public actualizarStockProdVarianteRequest(int prod_variante_id, int nuevo_stock) {
+            this.prod_variante_id = prod_variante_id;
+            this.nuevo_stock = nuevo_stock;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="actualizarStockProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class actualizarStockProdVarianteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool @return;
+        
+        public actualizarStockProdVarianteResponse() {
+        }
+        
+        public actualizarStockProdVarianteResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarConStockBajoProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarConStockBajoProdVarianteRequest {
+        
+        public listarConStockBajoProdVarianteRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarConStockBajoProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarConStockBajoProdVarianteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return;
+        
+        public listarConStockBajoProdVarianteResponse() {
+        }
+        
+        public listarConStockBajoProdVarianteResponse(KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarProdVarianteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int prod_variante_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int stock;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int producto_id;
+        public int stock_minimo;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color;
+        public int producto_id;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla;
+        public KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string url_imagen;
+        public KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=6)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool disponible;
+        public string url_imagen;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=7)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool disponible;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario;
         
-        public insertarProdVarianteRequest() {
+        public modificarProdVarianteRequest() {
         }
         
-        public insertarProdVarianteRequest(int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
+        public modificarProdVarianteRequest(int prod_variante_id, int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
+            this.prod_variante_id = prod_variante_id;
             this.stock = stock;
             this.stock_minimo = stock_minimo;
             this.producto_id = producto_id;
@@ -866,45 +1012,17 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class insertarProdVarianteResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class modificarProdVarianteResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public int @return;
         
-        public insertarProdVarianteResponse() {
+        public modificarProdVarianteResponse() {
         }
         
-        public insertarProdVarianteResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosProdVarianteRequest {
-        
-        public listarTodosProdVarianteRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosProdVarianteResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return;
-        
-        public listarTodosProdVarianteResponse() {
-        }
-        
-        public listarTodosProdVarianteResponse(KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return) {
+        public modificarProdVarianteResponse(int @return) {
             this.@return = @return;
         }
     }
@@ -1020,50 +1138,73 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarProdVarianteRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosProdVarianteRequest {
+        
+        public listarTodosProdVarianteRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosProdVarianteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return;
+        
+        public listarTodosProdVarianteResponse() {
+        }
+        
+        public listarTodosProdVarianteResponse(KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarProdVarianteRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int prod_variante_id;
+        public int stock;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int stock;
+        public int stock_minimo;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=2)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int stock_minimo;
+        public int producto_id;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=3)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int producto_id;
+        public KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=4)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color;
+        public KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=5)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla;
+        public string url_imagen;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=6)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string url_imagen;
+        public bool disponible;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=7)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool disponible;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=8)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario;
         
-        public modificarProdVarianteRequest() {
+        public insertarProdVarianteRequest() {
         }
         
-        public modificarProdVarianteRequest(int prod_variante_id, int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
-            this.prod_variante_id = prod_variante_id;
+        public insertarProdVarianteRequest(int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
             this.stock = stock;
             this.stock_minimo = stock_minimo;
             this.producto_id = producto_id;
@@ -1078,158 +1219,17 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="modificarProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class modificarProdVarianteResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="insertarProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class insertarProdVarianteResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public int @return;
         
-        public modificarProdVarianteResponse() {
+        public insertarProdVarianteResponse() {
         }
         
-        public modificarProdVarianteResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarPorProductoProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarPorProductoProdVarianteRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int producto_id;
-        
-        public listarPorProductoProdVarianteRequest() {
-        }
-        
-        public listarPorProductoProdVarianteRequest(int producto_id) {
-            this.producto_id = producto_id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarPorProductoProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarPorProductoProdVarianteResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return;
-        
-        public listarPorProductoProdVarianteResponse() {
-        }
-        
-        public listarPorProductoProdVarianteResponse(KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="actualizarStockProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class actualizarStockProdVarianteRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int prod_variante_id;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int nuevo_stock;
-        
-        public actualizarStockProdVarianteRequest() {
-        }
-        
-        public actualizarStockProdVarianteRequest(int prod_variante_id, int nuevo_stock) {
-            this.prod_variante_id = prod_variante_id;
-            this.nuevo_stock = nuevo_stock;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="actualizarStockProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class actualizarStockProdVarianteResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool @return;
-        
-        public actualizarStockProdVarianteResponse() {
-        }
-        
-        public actualizarStockProdVarianteResponse(bool @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="tieneStockDisponibleProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class tieneStockDisponibleProdVarianteRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int prod_variante_id;
-        
-        public tieneStockDisponibleProdVarianteRequest() {
-        }
-        
-        public tieneStockDisponibleProdVarianteRequest(int prod_variante_id) {
-            this.prod_variante_id = prod_variante_id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="tieneStockDisponibleProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class tieneStockDisponibleProdVarianteResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool @return;
-        
-        public tieneStockDisponibleProdVarianteResponse() {
-        }
-        
-        public tieneStockDisponibleProdVarianteResponse(bool @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarConStockBajoProdVariante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarConStockBajoProdVarianteRequest {
-        
-        public listarConStockBajoProdVarianteRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarConStockBajoProdVarianteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarConStockBajoProdVarianteResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return;
-        
-        public listarConStockBajoProdVarianteResponse() {
-        }
-        
-        public listarConStockBajoProdVarianteResponse(KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] @return) {
+        public insertarProdVarianteResponse(int @return) {
             this.@return = @return;
         }
     }
@@ -1262,12 +1262,105 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.insertarProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest request) {
-            return base.Channel.insertarProdVariante(request);
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.tieneStockDisponibleProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest request) {
+            return base.Channel.tieneStockDisponibleProdVariante(request);
         }
         
-        public int insertarProdVariante(int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest();
+        public bool tieneStockDisponibleProdVariante(int prod_variante_id) {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest();
+            inValue.prod_variante_id = prod_variante_id;
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).tieneStockDisponibleProdVariante(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.tieneStockDisponibleProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest request) {
+            return base.Channel.tieneStockDisponibleProdVarianteAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse> tieneStockDisponibleProdVarianteAsync(int prod_variante_id) {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest();
+            inValue.prod_variante_id = prod_variante_id;
+            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).tieneStockDisponibleProdVarianteAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarPorProductoProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest request) {
+            return base.Channel.listarPorProductoProdVariante(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] listarPorProductoProdVariante(int producto_id) {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest();
+            inValue.producto_id = producto_id;
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarPorProductoProdVariante(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarPorProductoProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest request) {
+            return base.Channel.listarPorProductoProdVarianteAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse> listarPorProductoProdVarianteAsync(int producto_id) {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest();
+            inValue.producto_id = producto_id;
+            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarPorProductoProdVarianteAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.actualizarStockProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest request) {
+            return base.Channel.actualizarStockProdVariante(request);
+        }
+        
+        public bool actualizarStockProdVariante(int prod_variante_id, int nuevo_stock) {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest();
+            inValue.prod_variante_id = prod_variante_id;
+            inValue.nuevo_stock = nuevo_stock;
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).actualizarStockProdVariante(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.actualizarStockProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest request) {
+            return base.Channel.actualizarStockProdVarianteAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse> actualizarStockProdVarianteAsync(int prod_variante_id, int nuevo_stock) {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest();
+            inValue.prod_variante_id = prod_variante_id;
+            inValue.nuevo_stock = nuevo_stock;
+            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).actualizarStockProdVarianteAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarConStockBajoProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest request) {
+            return base.Channel.listarConStockBajoProdVariante(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] listarConStockBajoProdVariante() {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest();
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarConStockBajoProdVariante(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarConStockBajoProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest request) {
+            return base.Channel.listarConStockBajoProdVarianteAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse> listarConStockBajoProdVarianteAsync() {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest();
+            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarConStockBajoProdVarianteAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.modificarProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest request) {
+            return base.Channel.modificarProdVariante(request);
+        }
+        
+        public int modificarProdVariante(int prod_variante_id, int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest();
+            inValue.prod_variante_id = prod_variante_id;
             inValue.stock = stock;
             inValue.stock_minimo = stock_minimo;
             inValue.producto_id = producto_id;
@@ -1276,17 +1369,18 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
             inValue.url_imagen = url_imagen;
             inValue.disponible = disponible;
             inValue.usuario = usuario;
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).insertarProdVariante(inValue);
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).modificarProdVariante(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.insertarProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest request) {
-            return base.Channel.insertarProdVarianteAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.modificarProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest request) {
+            return base.Channel.modificarProdVarianteAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse> insertarProdVarianteAsync(int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest();
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse> modificarProdVarianteAsync(int prod_variante_id, int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest();
+            inValue.prod_variante_id = prod_variante_id;
             inValue.stock = stock;
             inValue.stock_minimo = stock_minimo;
             inValue.producto_id = producto_id;
@@ -1295,28 +1389,7 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
             inValue.url_imagen = url_imagen;
             inValue.disponible = disponible;
             inValue.usuario = usuario;
-            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).insertarProdVarianteAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarTodosProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest request) {
-            return base.Channel.listarTodosProdVariante(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] listarTodosProdVariante() {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest();
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarTodosProdVariante(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarTodosProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest request) {
-            return base.Channel.listarTodosProdVarianteAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse> listarTodosProdVarianteAsync() {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest();
-            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarTodosProdVarianteAsync(inValue);
+            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).modificarProdVarianteAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1389,13 +1462,33 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.modificarProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest request) {
-            return base.Channel.modificarProdVariante(request);
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarTodosProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest request) {
+            return base.Channel.listarTodosProdVariante(request);
         }
         
-        public int modificarProdVariante(int prod_variante_id, int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest();
-            inValue.prod_variante_id = prod_variante_id;
+        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] listarTodosProdVariante() {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest();
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarTodosProdVariante(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarTodosProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest request) {
+            return base.Channel.listarTodosProdVarianteAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteResponse> listarTodosProdVarianteAsync() {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarTodosProdVarianteRequest();
+            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarTodosProdVarianteAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.insertarProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest request) {
+            return base.Channel.insertarProdVariante(request);
+        }
+        
+        public int insertarProdVariante(int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest();
             inValue.stock = stock;
             inValue.stock_minimo = stock_minimo;
             inValue.producto_id = producto_id;
@@ -1404,18 +1497,17 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
             inValue.url_imagen = url_imagen;
             inValue.disponible = disponible;
             inValue.usuario = usuario;
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).modificarProdVariante(inValue);
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).insertarProdVariante(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.modificarProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest request) {
-            return base.Channel.modificarProdVarianteAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.insertarProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest request) {
+            return base.Channel.insertarProdVarianteAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteResponse> modificarProdVarianteAsync(int prod_variante_id, int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.modificarProdVarianteRequest();
-            inValue.prod_variante_id = prod_variante_id;
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteResponse> insertarProdVarianteAsync(int stock, int stock_minimo, int producto_id, KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO color, KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO talla, string url_imagen, bool disponible, KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO usuario) {
+            KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.insertarProdVarianteRequest();
             inValue.stock = stock;
             inValue.stock_minimo = stock_minimo;
             inValue.producto_id = producto_id;
@@ -1424,99 +1516,7 @@ namespace KawkiWebBusiness.KawkiWebWSProductosVariantes {
             inValue.url_imagen = url_imagen;
             inValue.disponible = disponible;
             inValue.usuario = usuario;
-            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).modificarProdVarianteAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarPorProductoProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest request) {
-            return base.Channel.listarPorProductoProdVariante(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] listarPorProductoProdVariante(int producto_id) {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest();
-            inValue.producto_id = producto_id;
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarPorProductoProdVariante(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarPorProductoProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest request) {
-            return base.Channel.listarPorProductoProdVarianteAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteResponse> listarPorProductoProdVarianteAsync(int producto_id) {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarPorProductoProdVarianteRequest();
-            inValue.producto_id = producto_id;
-            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarPorProductoProdVarianteAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.actualizarStockProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest request) {
-            return base.Channel.actualizarStockProdVariante(request);
-        }
-        
-        public bool actualizarStockProdVariante(int prod_variante_id, int nuevo_stock) {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest();
-            inValue.prod_variante_id = prod_variante_id;
-            inValue.nuevo_stock = nuevo_stock;
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).actualizarStockProdVariante(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.actualizarStockProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest request) {
-            return base.Channel.actualizarStockProdVarianteAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteResponse> actualizarStockProdVarianteAsync(int prod_variante_id, int nuevo_stock) {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.actualizarStockProdVarianteRequest();
-            inValue.prod_variante_id = prod_variante_id;
-            inValue.nuevo_stock = nuevo_stock;
-            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).actualizarStockProdVarianteAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.tieneStockDisponibleProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest request) {
-            return base.Channel.tieneStockDisponibleProdVariante(request);
-        }
-        
-        public bool tieneStockDisponibleProdVariante(int prod_variante_id) {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest();
-            inValue.prod_variante_id = prod_variante_id;
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).tieneStockDisponibleProdVariante(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.tieneStockDisponibleProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest request) {
-            return base.Channel.tieneStockDisponibleProdVarianteAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteResponse> tieneStockDisponibleProdVarianteAsync(int prod_variante_id) {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.tieneStockDisponibleProdVarianteRequest();
-            inValue.prod_variante_id = prod_variante_id;
-            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).tieneStockDisponibleProdVarianteAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarConStockBajoProdVariante(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest request) {
-            return base.Channel.listarConStockBajoProdVariante(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO[] listarConStockBajoProdVariante() {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest();
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse retVal = ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarConStockBajoProdVariante(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse> KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes.listarConStockBajoProdVarianteAsync(KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest request) {
-            return base.Channel.listarConStockBajoProdVarianteAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteResponse> listarConStockBajoProdVarianteAsync() {
-            KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest inValue = new KawkiWebBusiness.KawkiWebWSProductosVariantes.listarConStockBajoProdVarianteRequest();
-            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).listarConStockBajoProdVarianteAsync(inValue);
+            return ((KawkiWebBusiness.KawkiWebWSProductosVariantes.ProductosVariantes)(this)).insertarProdVarianteAsync(inValue);
         }
     }
 }

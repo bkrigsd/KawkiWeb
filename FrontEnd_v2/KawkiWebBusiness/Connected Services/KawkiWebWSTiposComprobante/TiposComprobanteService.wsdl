@@ -5,31 +5,31 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/TiposComprobanteService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="listarTodosTipoComprobante">
-    <part name="parameters" element="tns:listarTodosTipoComprobante" />
-  </message>
-  <message name="listarTodosTipoComprobanteResponse">
-    <part name="parameters" element="tns:listarTodosTipoComprobanteResponse" />
-  </message>
   <message name="obtenerPorIdTipoComprobante">
     <part name="parameters" element="tns:obtenerPorIdTipoComprobante" />
   </message>
   <message name="obtenerPorIdTipoComprobanteResponse">
     <part name="parameters" element="tns:obtenerPorIdTipoComprobanteResponse" />
   </message>
+  <message name="listarTodosTipoComprobante">
+    <part name="parameters" element="tns:listarTodosTipoComprobante" />
+  </message>
+  <message name="listarTodosTipoComprobanteResponse">
+    <part name="parameters" element="tns:listarTodosTipoComprobanteResponse" />
+  </message>
   <portType name="TiposComprobante">
-    <operation name="listarTodosTipoComprobante">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/listarTodosTipoComprobanteRequest" message="tns:listarTodosTipoComprobante" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/listarTodosTipoComprobanteResponse" message="tns:listarTodosTipoComprobanteResponse" />
-    </operation>
     <operation name="obtenerPorIdTipoComprobante">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/obtenerPorIdTipoComprobanteRequest" message="tns:obtenerPorIdTipoComprobante" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/obtenerPorIdTipoComprobanteResponse" message="tns:obtenerPorIdTipoComprobanteResponse" />
     </operation>
+    <operation name="listarTodosTipoComprobante">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/listarTodosTipoComprobanteRequest" message="tns:listarTodosTipoComprobante" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/listarTodosTipoComprobanteResponse" message="tns:listarTodosTipoComprobanteResponse" />
+    </operation>
   </portType>
   <binding name="TiposComprobantePortBinding" type="tns:TiposComprobante">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="listarTodosTipoComprobante">
+    <operation name="obtenerPorIdTipoComprobante">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -38,7 +38,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerPorIdTipoComprobante">
+    <operation name="listarTodosTipoComprobante">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

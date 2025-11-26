@@ -5,31 +5,31 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/TiposMovimientoService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="obtenerPorIdTipoMovimiento">
-    <part name="parameters" element="tns:obtenerPorIdTipoMovimiento" />
-  </message>
-  <message name="obtenerPorIdTipoMovimientoResponse">
-    <part name="parameters" element="tns:obtenerPorIdTipoMovimientoResponse" />
-  </message>
   <message name="listarTodosTipoMovimiento">
     <part name="parameters" element="tns:listarTodosTipoMovimiento" />
   </message>
   <message name="listarTodosTipoMovimientoResponse">
     <part name="parameters" element="tns:listarTodosTipoMovimientoResponse" />
   </message>
+  <message name="obtenerPorIdTipoMovimiento">
+    <part name="parameters" element="tns:obtenerPorIdTipoMovimiento" />
+  </message>
+  <message name="obtenerPorIdTipoMovimientoResponse">
+    <part name="parameters" element="tns:obtenerPorIdTipoMovimientoResponse" />
+  </message>
   <portType name="TiposMovimiento">
-    <operation name="obtenerPorIdTipoMovimiento">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoMovimientoRequest" message="tns:obtenerPorIdTipoMovimiento" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoMovimientoResponse" message="tns:obtenerPorIdTipoMovimientoResponse" />
-    </operation>
     <operation name="listarTodosTipoMovimiento">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/listarTodosTipoMovimientoRequest" message="tns:listarTodosTipoMovimiento" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/listarTodosTipoMovimientoResponse" message="tns:listarTodosTipoMovimientoResponse" />
     </operation>
+    <operation name="obtenerPorIdTipoMovimiento">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoMovimientoRequest" message="tns:obtenerPorIdTipoMovimiento" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposMovimiento/obtenerPorIdTipoMovimientoResponse" message="tns:obtenerPorIdTipoMovimientoResponse" />
+    </operation>
   </portType>
   <binding name="TiposMovimientoPortBinding" type="tns:TiposMovimiento">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="obtenerPorIdTipoMovimiento">
+    <operation name="listarTodosTipoMovimiento">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -38,7 +38,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarTodosTipoMovimiento">
+    <operation name="obtenerPorIdTipoMovimiento">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

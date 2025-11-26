@@ -16,17 +16,17 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     public interface ComprobantesPago {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/listarTodosCompr" +
-            "obantePagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/listarTodosCompr" +
-            "obantePagoResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
+            "robPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
+            "robPagoResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse listarTodosComprobantePago(KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest request);
+        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse obtenerPorIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/listarTodosCompr" +
-            "obantePagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/listarTodosCompr" +
-            "obantePagoResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse> listarTodosComprobantePagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
+            "robPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
+            "robPagoResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> obtenerPorIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/modificarComprob" +
@@ -55,17 +55,17 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.insertarComprobPagoResponse> insertarComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.insertarComprobPagoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
-            "robPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
-            "robPagoResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/listarTodosCompr" +
+            "obantePagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/listarTodosCompr" +
+            "obantePagoResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse obtenerPorIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request);
+        KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse listarTodosComprobantePago(KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
-            "robPagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorIdComp" +
-            "robPagoResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> obtenerPorIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/listarTodosCompr" +
+            "obantePagoRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/listarTodosCompr" +
+            "obantePagoResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse> listarTodosComprobantePagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/ComprobantesPago/obtenerPorVentaI" +
@@ -82,7 +82,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -366,7 +366,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -426,7 +426,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -486,7 +486,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -560,7 +560,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -620,7 +620,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -890,7 +890,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1090,7 +1090,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1150,7 +1150,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1322,7 +1322,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1382,7 +1382,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1442,7 +1442,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1502,7 +1502,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1702,7 +1702,7 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1876,27 +1876,35 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosComprobantePago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosComprobantePagoRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdComprobPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdComprobPagoRequest {
         
-        public listarTodosComprobantePagoRequest() {
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int comprobante_pago_id;
+        
+        public obtenerPorIdComprobPagoRequest() {
+        }
+        
+        public obtenerPorIdComprobPagoRequest(int comprobante_pago_id) {
+            this.comprobante_pago_id = comprobante_pago_id;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosComprobantePagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosComprobantePagoResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdComprobPagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerPorIdComprobPagoResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO[] @return;
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO @return;
         
-        public listarTodosComprobantePagoResponse() {
+        public obtenerPorIdComprobPagoResponse() {
         }
         
-        public listarTodosComprobantePagoResponse(KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO[] @return) {
+        public obtenerPorIdComprobPagoResponse(KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO @return) {
             this.@return = @return;
         }
     }
@@ -2071,35 +2079,27 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdComprobPago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdComprobPagoRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosComprobantePago", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosComprobantePagoRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int comprobante_pago_id;
-        
-        public obtenerPorIdComprobPagoRequest() {
-        }
-        
-        public obtenerPorIdComprobPagoRequest(int comprobante_pago_id) {
-            this.comprobante_pago_id = comprobante_pago_id;
+        public listarTodosComprobantePagoRequest() {
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdComprobPagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class obtenerPorIdComprobPagoResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosComprobantePagoResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosComprobantePagoResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO @return;
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO[] @return;
         
-        public obtenerPorIdComprobPagoResponse() {
+        public listarTodosComprobantePagoResponse() {
         }
         
-        public obtenerPorIdComprobPagoResponse(KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO @return) {
+        public listarTodosComprobantePagoResponse(KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO[] @return) {
             this.@return = @return;
         }
     }
@@ -2168,24 +2168,26 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.listarTodosComprobantePago(KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest request) {
-            return base.Channel.listarTodosComprobantePago(request);
+        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request) {
+            return base.Channel.obtenerPorIdComprobPago(request);
         }
         
-        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO[] listarTodosComprobantePago() {
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest();
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).listarTodosComprobantePago(inValue);
+        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO obtenerPorIdComprobPago(int comprobante_pago_id) {
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest();
+            inValue.comprobante_pago_id = comprobante_pago_id;
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorIdComprobPago(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse> KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.listarTodosComprobantePagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest request) {
-            return base.Channel.listarTodosComprobantePagoAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request) {
+            return base.Channel.obtenerPorIdComprobPagoAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse> listarTodosComprobantePagoAsync() {
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest();
-            return ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).listarTodosComprobantePagoAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> obtenerPorIdComprobPagoAsync(int comprobante_pago_id) {
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest();
+            inValue.comprobante_pago_id = comprobante_pago_id;
+            return ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorIdComprobPagoAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2273,26 +2275,24 @@ namespace KawkiWebBusiness.KawkiWebWSComprobantesPago {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorIdComprobPago(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request) {
-            return base.Channel.obtenerPorIdComprobPago(request);
+        KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.listarTodosComprobantePago(KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest request) {
+            return base.Channel.listarTodosComprobantePago(request);
         }
         
-        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO obtenerPorIdComprobPago(int comprobante_pago_id) {
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest();
-            inValue.comprobante_pago_id = comprobante_pago_id;
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorIdComprobPago(inValue);
+        public KawkiWebBusiness.KawkiWebWSComprobantesPago.comprobantesPagoDTO[] listarTodosComprobantePago() {
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest();
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse retVal = ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).listarTodosComprobantePago(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.obtenerPorIdComprobPagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest request) {
-            return base.Channel.obtenerPorIdComprobPagoAsync(request);
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse> KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago.listarTodosComprobantePagoAsync(KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest request) {
+            return base.Channel.listarTodosComprobantePagoAsync(request);
         }
         
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoResponse> obtenerPorIdComprobPagoAsync(int comprobante_pago_id) {
-            KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.obtenerPorIdComprobPagoRequest();
-            inValue.comprobante_pago_id = comprobante_pago_id;
-            return ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).obtenerPorIdComprobPagoAsync(inValue);
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoResponse> listarTodosComprobantePagoAsync() {
+            KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest inValue = new KawkiWebBusiness.KawkiWebWSComprobantesPago.listarTodosComprobantePagoRequest();
+            return ((KawkiWebBusiness.KawkiWebWSComprobantesPago.ComprobantesPago)(this)).listarTodosComprobantePagoAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

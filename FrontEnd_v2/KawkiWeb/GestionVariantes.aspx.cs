@@ -7,10 +7,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using KawkiWebBusiness;
 using KawkiWebBusiness.KawkiWebWSCategorias;
+using KawkiWebBusiness.KawkiWebWSMovimientosInventario;
 using KawkiWebBusiness.KawkiWebWSProductos;
 using KawkiWebBusiness.KawkiWebWSProductosVariantes;
 using KawkiWebBusiness.KawkiWebWSTallas;
 using coloresDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO;
+using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO;
 using tallasDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO;
 using usuariosDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.usuariosDTO;
 
@@ -22,6 +24,7 @@ namespace KawkiWeb
         private ProductosBO productosBO;
         private ColoresBO coloresBO;
         private TallasBO tallasBO;
+        private MovimientosInventarioBO movimientosBO;
         private int productoId = 0;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,6 +33,7 @@ namespace KawkiWeb
             productosBO = new ProductosBO();
             coloresBO = new ColoresBO();
             tallasBO = new TallasBO();
+            movimientosBO = new MovimientosInventarioBO();
 
             if (string.IsNullOrEmpty(Request.QueryString["productoId"]))
             {
@@ -361,6 +365,7 @@ namespace KawkiWeb
                         MantenerModalAbierto();
                         return;
                     }
+                    insertadas++;
                 }
 
                 LimpiarFormulario();
@@ -549,6 +554,199 @@ namespace KawkiWeb
                 lblMensajeModificaciones.CssClass = "text-danger d-block mb-2";
                 lblMensajeModificaciones.Text = "Error: " + ex.Message;
                 MantenerModalModificacionesAbierto(Convert.ToInt32(hfVarianteId.Value));
+            }
+        }
+
+        protected void btnGuardarAbast_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Obtener datos del formulario
+                int varianteId = int.Parse(hfVarianteIdAbast.Value);
+                string tipoMovimiento = Request.Form["hdnTipoMovimiento"];
+                string descripcion = txtDescripcionAbast.Text.Trim();
+
+                // Validar que se seleccionó tipo de movimiento
+                if (string.IsNullOrEmpty(tipoMovimiento))
+                {
+                    lblMensajeAbast.Text = "<span style='color: #dc3545;'><i class='fas fa-exclamation-circle'></i> Debe seleccionar un tipo de movimiento</span>";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "mantenerModal",
+                        "mantenerModalAbastecimientoAbierto();", true);
+                    return;
+                }
+
+                // Obtener usuario actual
+                usuariosDTO usuario = ObtenerUsuario();
+                if (usuario == null)
+                {
+                    lblMensajeAbast.Text = "<span style='color: #dc3545;'><i class='fas fa-exclamation-circle'></i> Error: Usuario no identificado</span>";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "mantenerModal",
+                        "mantenerModalAbastecimientoAbierto();", true);
+                    return;
+                }
+
+                // === DTOs ===
+                // Convertir usuario al tipo que espera MovInventarioBO
+                var usuarioActual = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.usuariosDTO
+                {
+                    usuarioId = usuario.usuarioId,
+                };
+                usuarioActual.usuarioIdSpecified = true;
+                usuario.usuarioIdSpecified = true;
+
+                productosVariantesDTO variante = ObtenerVarianteProducto(varianteId);
+                if (variante == null)
+                {
+                    lblMensajeAbast.Text = "<span style='color: #dc3545;'><i class='fas fa-exclamation-circle'></i> No se encontró la variante</span>";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "mantenerModal",
+                        "mantenerModalAbastecimientoAbierto();", true);
+                    return;
+                }
+
+                // === DTOs ===
+                // Convertir variante al tipo que espera MovInventarioBO
+                var varianteActual = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.productosVariantesDTO
+                {
+                    prod_variante_id = variante.prod_variante_id,
+                };
+                varianteActual.prod_variante_idSpecified = true;
+
+                int resultado = 0;
+
+                if (tipoMovimiento == "INGRESO")
+                {
+                    // Validar cantidad
+                    if (!int.TryParse(txtCantidadIngreso.Text, out int cantidad) || cantidad <= 0)
+                    {
+                        lblMensajeAbast.Text = "<span style='color: #dc3545;'><i class='fas fa-exclamation-circle'></i> Ingrese una cantidad mayor a 0</span>";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "mantenerModal",
+                            "mantenerModalAbastecimientoAbierto();", true);
+                        return;
+                    }
+
+                    // Registrar ingreso (la descripción es opcional)
+                    resultado = movimientosBO.RegistrarIngresoMovInventario(
+                        varianteActual,
+                        cantidad,
+                        descripcion,
+                        usuarioActual
+                    );
+
+                    if (resultado > 0)
+                    {
+                        lblMensajeAbast.Text = "<span style='color: #28a745;'><i class='fas fa-check-circle'></i> Ingreso registrado exitosamente (+" + cantidad + " unidades)</span>";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "exito",
+                            "mostrarMensajeExito('Ingreso de " + cantidad + " unidades registrado correctamente');", true);
+                    }
+                    else
+                    {
+                        lblMensajeAbast.Text = "<span style='color: #dc3545;'><i class='fas fa-exclamation-circle'></i> Error al registrar el ingreso</span>";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "mantenerModal",
+                            "mantenerModalAbastecimientoAbierto();", true);
+                        return;
+                    }
+                }
+                else if (tipoMovimiento == "AJUSTE")
+                {
+                    // Validar nuevo stock
+                    if (!int.TryParse(txtNuevoStock.Text, out int nuevoStock) || nuevoStock < 0)
+                    {
+                        lblMensajeAbast.Text = "<span style='color: #dc3545;'><i class='fas fa-exclamation-circle'></i> Ingrese un nuevo stock válido (mayor o igual a 0)</span>";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "mantenerModal",
+                            "mantenerModalAbastecimientoAbierto();", true);
+                        return;
+                    }
+
+                    // Validar descripción obligatoria para AJUSTE
+                    if (string.IsNullOrWhiteSpace(descripcion))
+                    {
+                        lblMensajeAbast.Text = "<span style='color: #dc3545;'><i class='fas fa-exclamation-circle'></i> La descripción es obligatoria para ajustes. Explique el motivo del cambio</span>";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "mantenerModal",
+                            "mantenerModalAbastecimientoAbierto();", true);
+                        return;
+                    }
+
+                    // Crear ajuste
+                    resultado = movimientosBO.CrearAjusteInventarioMovInventario(
+                        varianteActual,
+                        nuevoStock,
+                        descripcion,
+                        usuarioActual
+                    );
+
+                    if (resultado > 0)
+                    {
+                        lblMensajeAbast.Text = "<span style='color: #28a745;'><i class='fas fa-check-circle'></i> Ajuste de inventario registrado exitosamente</span>";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "exito",
+                            "mostrarMensajeExito('Ajuste de inventario registrado correctamente');", true);
+                    }
+                    else
+                    {
+                        lblMensajeAbast.Text = "<span style='color: #dc3545;'><i class='fas fa-exclamation-circle'></i> Error al registrar el ajuste</span>";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "mantenerModal",
+                            "mantenerModalAbastecimientoAbierto();", true);
+                        return;
+                    }
+                }
+
+                // Si fue exitoso, recarga la tabla y cierra el modal
+                if (resultado > 0)
+                {
+                    CargarVariantes(); // Usa tu método existente para recargar
+                    ScriptManager.RegisterStartupScript(this, GetType(), "cerrarModal",
+                        "setTimeout(function(){ cerrarModalAbastecimiento(); }, 1500);", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensajeAbast.Text = "<span style='color: #dc3545;'><i class='fas fa-exclamation-circle'></i> Error: " + ex.Message + "</span>";
+                ScriptManager.RegisterStartupScript(this, GetType(), "mantenerModal",
+                    "mantenerModalAbastecimientoAbierto();", true);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene el usuario actual de la sesión
+        /// </summary>
+        private usuariosDTO ObtenerUsuario()
+        {
+            try
+            {
+                // Intenta obtener del objeto de sesión
+                if (Session["UsuarioActual"] != null)
+                {
+                    return (usuariosDTO)Session["UsuarioActual"];
+                }
+
+                // Si no existe, intenta crear uno con el ID de la sesión
+                if (Session["UsuarioId"] != null && int.TryParse(Session["UsuarioId"].ToString(), out int usuarioId))
+                {
+                    return new usuariosDTO { usuarioId = usuarioId };
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Obtiene una variante específica del producto por su ID
+        /// </summary>
+        private productosVariantesDTO ObtenerVarianteProducto(int varianteId)
+        {
+            try
+            {
+                // Obtener variante
+                var varianteBO = new ProductosVariantesBO();
+
+                return varianteBO.ObtenerPorId(varianteId);
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -1012,6 +1210,12 @@ namespace KawkiWeb
 
                 html.AppendFormat(@"
             <td>
+                    <button type='button' class='btn-abastecimiento btn-sm' 
+                        onclick='abrirModalAbastecimiento(""{0}"", ""{1} - Talla: {2}"", ""{5}"")' 
+                        title='Registrar movimiento de inventario'>
+                        <i class='fas fa-plus-circle'></i> Abastecimiento
+                </button>
+
                 <button type='button' class='btn-editar btn-sm' 
                     onclick='abrirModalModificaciones(""{0}"", ""{1}"", ""{2}"", ""{3}"", ""{4}"", ""{5}"", ""{6}"")'>
                     <i class='fas fa-edit'></i> Editar

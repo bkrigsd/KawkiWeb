@@ -5,31 +5,31 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/TiposBeneficioService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="listarTodosTipoBeneficio">
-    <part name="parameters" element="tns:listarTodosTipoBeneficio" />
-  </message>
-  <message name="listarTodosTipoBeneficioResponse">
-    <part name="parameters" element="tns:listarTodosTipoBeneficioResponse" />
-  </message>
   <message name="obtenerPorIdTipoBeneficio">
     <part name="parameters" element="tns:obtenerPorIdTipoBeneficio" />
   </message>
   <message name="obtenerPorIdTipoBeneficioResponse">
     <part name="parameters" element="tns:obtenerPorIdTipoBeneficioResponse" />
   </message>
+  <message name="listarTodosTipoBeneficio">
+    <part name="parameters" element="tns:listarTodosTipoBeneficio" />
+  </message>
+  <message name="listarTodosTipoBeneficioResponse">
+    <part name="parameters" element="tns:listarTodosTipoBeneficioResponse" />
+  </message>
   <portType name="TiposBeneficio">
-    <operation name="listarTodosTipoBeneficio">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBeneficioRequest" message="tns:listarTodosTipoBeneficio" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBeneficioResponse" message="tns:listarTodosTipoBeneficioResponse" />
-    </operation>
     <operation name="obtenerPorIdTipoBeneficio">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/obtenerPorIdTipoBeneficioRequest" message="tns:obtenerPorIdTipoBeneficio" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/obtenerPorIdTipoBeneficioResponse" message="tns:obtenerPorIdTipoBeneficioResponse" />
     </operation>
+    <operation name="listarTodosTipoBeneficio">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBeneficioRequest" message="tns:listarTodosTipoBeneficio" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposBeneficio/listarTodosTipoBeneficioResponse" message="tns:listarTodosTipoBeneficioResponse" />
+    </operation>
   </portType>
   <binding name="TiposBeneficioPortBinding" type="tns:TiposBeneficio">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="listarTodosTipoBeneficio">
+    <operation name="obtenerPorIdTipoBeneficio">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -38,7 +38,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerPorIdTipoBeneficio">
+    <operation name="listarTodosTipoBeneficio">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

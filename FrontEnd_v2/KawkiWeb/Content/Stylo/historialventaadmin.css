@@ -246,3 +246,20 @@
         flex-direction: column;
     }
 }
+
+.filtros-orden {
+    font-size: 12px;
+    margin-left: auto; /* lo manda a la derecha */
+}
+
+.orden-label {
+    color: #666;
+}
+
+.orden-select {
+    width: auto;
+    min-width: 110px;
+    padding: 2px 8px;
+    font-size: 12px;
+    height: 30px;
+}

@@ -4,7 +4,49 @@
 <asp:Content ID="HeadExtra" ContentPlaceHolderID="HeadContent" runat="server">
     <link href="Content/Stylo/gestionproductos.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Contenedores de charts con alturas más cómodas */
+        .chart-pie {
+            min-height: 260px;
+        }
+
+        .chart-small {
+            min-height: 220px;
+        }
+
+        .chart-medium {
+            min-height: 240px;
+        }
+
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Tabla del detalle más compacta */
+        .table-detalle-productos {
+            font-size: 0.9rem;
+        }
+
+        .table-detalle-productos thead {
+            background-color: #f7f7f7;
+            font-weight: 600;
+        }
+
+        /* Categorías más grande */
+        .chart-categorias {
+            min-height: 280px !important;
+        }
+
+        /* Colores más pequeño o normal */
+        .chart-colores {
+            min-height: 200px !important;
+        }
+
+    </style>
 </asp:Content>
+
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="ventas-container">
@@ -23,28 +65,39 @@
                 <div class="card-title"><i class="fas fa-filter"></i> Filtros de período</div>
             </div>
             <div class="card-body">
+
                 <div class="row g-3 align-items-end">
-                    <div class="col-md-3">
-                        <label class="form-label">Tipo de período</label>
-                        <asp:DropDownList ID="ddlPeriodo" runat="server" CssClass="form-select">
-                            <asp:ListItem Text="Diario" Value="diario" />
-                            <asp:ListItem Text="Semanal" Value="semanal" />
-                            <asp:ListItem Text="Mensual" Value="mensual" />
-                            <asp:ListItem Text="Personalizado" Value="personalizado" />
-                        </asp:DropDownList>
+                    <div class="col-md-4">
+                        <label class="form-label">Fecha Inicio</label>
+                        <asp:TextBox ID="txtFechaInicio" runat="server"
+                            TextMode="Date" CssClass="form-control" />
                     </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Desde</label>
-                        <asp:TextBox ID="txtFechaInicio" runat="server" TextMode="Date" CssClass="form-control" />
+                    <div class="col-md-4">
+                        <label class="form-label">Fecha Fin</label>
+                        <asp:TextBox ID="txtFechaFin" runat="server"
+                            TextMode="Date" CssClass="form-control" />
                     </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Hasta</label>
-                        <asp:TextBox ID="txtFechaFin" runat="server" TextMode="Date" CssClass="form-control" />
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <asp:Button ID="btnGenerar" runat="server" Text="Generar Reporte"
                             CssClass="btn-kawki-primary w-100" OnClick="btnGenerar_Click" />
                     </div>
+                </div>
+
+                <!-- NUEVO: Botón para exportar PDF -->
+                <div class="row g-3 mt-2">
+                    <div class="col-md-12">
+                        <asp:Button ID="btnExportarPDF" runat="server" 
+                            Text="Descargar como PDF" 
+                            CssClass="btn btn-kawki-outline me-2" 
+                            OnClick="btnExportarPDF_Click" 
+                            Style="width: 100%; font-weight: bold;" />
+                    </div>
+                </div>
+
+                <!-- Mensaje de error de fechas -->
+                <div class="mt-2">
+                    <asp:Label ID="lblMensajeFechas" runat="server"
+                        CssClass="text-danger" Visible="false" />
                 </div>
             </div>
         </div>
@@ -79,46 +132,122 @@
 
         <!-- GRÁFICOS -->
         <div class="row g-4">
-            <div class="col-lg-6">
-                <div class="card-kawki">
+
+            <!-- Productos más vendidos (más compacto) -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="card-kawki h-100">
                     <div class="card-header">
-                        <div class="card-title"><i class="fas fa-cube"></i> Productos más vendidos</div>
+                        <div class="card-title">
+                            <i class="fas fa-cube"></i> Productos más vendidos
+                        </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body chart-md">
                         <canvas id="chartProductos"></canvas>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="card-kawki">
+            <!-- Categorías y colores -->
+            <div class="col-xl-8 col-lg-7">
+                <div class="card-kawki h-100">
                     <div class="card-header">
-                        <div class="card-title"><i class="fas fa-palette"></i> Categorías y colores más demandados</div>
+                        <div class="card-title">
+                            <i class="fas fa-palette"></i> Categorías y colores más demandados
+                        </div>
                     </div>
                     <div class="card-body">
-                        <canvas id="chartCategorias"></canvas>
+                        <div class="row g-3">
+
+                            <div class="col-md-6 chart-categorias">
+                                <h6 class="mb-2">Categorías</h6>
+                                <canvas id="chartCategorias"></canvas>
+                            </div>
+
+                            <div class="col-md-6 chart-colores">
+                                <h6 class="mb-2">Colores</h6>
+                                <canvas id="chartColores"></canvas>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
 
+        </div>
+
+        <div class="row g-4 mt-1">
+
+            <!-- Comparativa por talla -->
             <div class="col-lg-6">
-                <div class="card-kawki">
+                <div class="card-kawki h-100">
                     <div class="card-header">
-                        <div class="card-title"><i class="fas fa-ruler-combined"></i> Comparativa por talla</div>
+                        <div class="card-title">
+                            <i class="fas fa-ruler-combined"></i> Comparativa por talla
+                        </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body chart-md">
                         <canvas id="chartTallas"></canvas>
                     </div>
                 </div>
             </div>
 
+            <!-- Variación de ventas -->
+            <%--<div class="col-lg-6">
+                <div class="card-kawki h-100">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-chart-area"></i> Variación de ventas
+                        </div>
+                    </div>
+                    <div class="card-body chart-md">
+                        <canvas id="chartVariacion"></canvas>
+                    </div>
+                </div>
+            </div>--%>
+
+            <!-- Top 3 clientes que más compraron -->
             <div class="col-lg-6">
+                <div class="card-kawki h-100">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-user-tie"></i> Top 3 clientes que más compraron
+                        </div>
+                    </div>
+                    <div class="card-body chart-md">
+                        <canvas id="chartTopClientes"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- NUEVO: tabla resumen de productos del período -->
+        <div class="row g-4 mt-1">
+            <div class="col-12">
                 <div class="card-kawki">
                     <div class="card-header">
-                        <div class="card-title"><i class="fas fa-chart-area"></i> Variación de ventas</div>
+                        <div class="card-title">
+                            <i class="fas fa-list-ul"></i> Detalle de productos del período
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <canvas id="chartVariacion"></canvas>
+                    <div class="card-body px-4 py-2">
+                        <asp:GridView ID="gvTopProductos" runat="server"
+                            CssClass="table table-striped table-hover kawki-grid"
+                            AutoGenerateColumns="False"
+                            GridLines="None">
+    
+                            <HeaderStyle CssClass="kawki-grid-header" />
+                            <RowStyle CssClass="kawki-grid-row" />
+                            <AlternatingRowStyle CssClass="kawki-grid-row-alt" />
+
+                            <Columns>
+                                <asp:BoundField DataField="Producto" HeaderText="Producto" />
+                                <asp:BoundField DataField="Cantidad" HeaderText="Unidades" />
+                                <asp:BoundField DataField="Participacion"
+                                    HeaderText="% participación"
+                                    DataFormatString="{0:N1} %" />
+                            </Columns>
+                        </asp:GridView>
                     </div>
                 </div>
             </div>
@@ -126,69 +255,161 @@
 
     </div>
 
-    <!-- JS: CARGA DE GRÁFICOS -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
             renderCharts();
         });
 
         function renderCharts() {
-            const ctxProductos = document.getElementById("chartProductos");
+            var prodLabels = <%= ChartProductosLabelsJson %> || [];
+            var prodData = <%= ChartProductosDataJson %> || [];
+
+            var catLabels = <%= ChartCategoriasLabelsJson %> || [];
+            var catData = <%= ChartCategoriasDataJson %> || [];
+
+            var colorLabels = <%= ChartColoresLabelsJson %> || [];
+            var colorData   = <%= ChartColoresDataJson %> || [];
+
+            var tallaLabels = <%= ChartTallasLabelsJson %> || [];
+            var tallaData   = <%= ChartTallasDataJson %> || [];
+
+            <%--var varLabels   = <%= ChartVariacionLabelsJson %> || [];
+            var varData = <%= ChartVariacionDataJson %> || [];--%>
+
+            var topCliLabels = <%= ChartTopClientesLabelsJson %> || [];
+            var topCliData = <%= ChartTopClientesDataJson %> || [];
+
+            // === Productos: gráfico pastel ===
+            var ctxProductos = document.getElementById("chartProductos");
             new Chart(ctxProductos, {
+                type: "pie",   // 👈 pastel
+                data: {
+                    labels: prodLabels,
+                    datasets: [{
+                        data: prodData,
+                        backgroundColor: [
+                            "#ED6B7F", "#f9a8b1", "#ffc3ca", "#fca5a5", "#fecaca",
+                            "#f97373", "#fb7185", "#fda4af", "#fed7e2", "#fecdd3"
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true, position: "bottom" }
+                    }
+                }
+            });
+
+            // === Categorías (doughnut) ===
+            var ctxCategorias = document.getElementById("chartCategorias");
+            if (ctxCategorias && catLabels.length > 0) {
+                new Chart(ctxCategorias, {
+                    type: "doughnut",
+                    data: {
+                        labels: catLabels,
+                        datasets: [{
+                            data: catData,
+                            backgroundColor: ["#ED6B7F", "#f9a8b1", "#ffc3ca", "#fca5a5", "#fecaca"]
+                        }]
+                    },
+                    options: { responsive: true }
+                });
+            }
+
+            // === Colores (bar, por ejemplo) ===
+            var ctxColores = document.getElementById("chartColores");
+            if (ctxColores && colorLabels.length > 0) {
+                new Chart(ctxColores, {
+                    type: "bar",
+                    data: {
+                        labels: colorLabels,
+                        datasets: [{
+                            label: "Unidades",
+                            data: colorData,
+                            backgroundColor: "#ED6B7F"
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+
+            // === Tallas (igual que antes, de barras) ===
+            var ctxTallas = document.getElementById("chartTallas");
+            new Chart(ctxTallas, {
                 type: "bar",
                 data: {
-                    labels: ["Oxford Clásico", "Derby Elegante", "Casual Negro"],
+                    labels: tallaLabels,
                     datasets: [{
-                        label: "Unidades vendidas",
-                        data: [120, 90, 70],
+                        label: "Ventas por talla",
+                        data: tallaData,
                         backgroundColor: "#ED6B7F"
                     }]
                 },
                 options: { responsive: true, plugins: { legend: { display: false } } }
             });
 
-            const ctxCategorias = document.getElementById("chartCategorias");
-            new Chart(ctxCategorias, {
-                type: "doughnut",
-                data: {
-                    labels: ["Oxford", "Derby", "Casual"],
-                    datasets: [{
-                        data: [50, 30, 20],
-                        backgroundColor: ["#ED6B7F", "#f9a8b1", "#ffc3ca"]
-                    }]
-                },
-                options: { responsive: true }
-            });
+            // === Variación de ventas (línea) ===
+            //var ctxVariacion = document.getElementById("chartVariacion");
+            //new Chart(ctxVariacion, {
+            //    type: "line",
+            //    data: {
+            //        labels: varLabels,
+            //        datasets: [{
+            //            label: "Ventas",
+            //            data: varData,
+            //            borderColor: "#ED6B7F",
+            //            tension: 0.4,
+            //            fill: false
+            //        }]
+            //    },
+            //    options: { responsive: true, plugins: { legend: { display: false } } }
+            //});
 
-            const ctxTallas = document.getElementById("chartTallas");
-            new Chart(ctxTallas, {
-                type: "bar",
-                data: {
-                    labels: ["35", "36", "37", "38", "39", "40"],
-                    datasets: [{
-                        label: "Ventas por talla",
-                        data: [10, 15, 30, 25, 20, 12],
-                        backgroundColor: "#ed6b7f"
-                    }]
-                },
-                options: { responsive: true, plugins: { legend: { display: false } } }
-            });
+            // === Top 3 clientes que más compraron (barras) ===
+            var ctxTopCli = document.getElementById("chartTopClientes");
+            if (ctxTopCli && topCliLabels.length > 0) {
+                new Chart(ctxTopCli, {
+                    type: "bar",
+                    data: {
+                        labels: topCliLabels,
+                        datasets: [{
+                            label: "Total comprado (S/.)",
+                            data: topCliData,
+                            backgroundColor: "#ED6B7F"
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (ctx) {
+                                        return "S/. " + ctx.parsed.y.toFixed(2);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function (value) {
+                                        return "S/. " + value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
 
-            const ctxVariacion = document.getElementById("chartVariacion");
-            new Chart(ctxVariacion, {
-                type: "line",
-                data: {
-                    labels: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
-                    datasets: [{
-                        label: "Ventas diarias",
-                        data: [400, 600, 450, 700, 800, 650, 900],
-                        borderColor: "#ed6b7f",
-                        tension: 0.4,
-                        fill: false
-                    }]
-                },
-                options: { responsive: true, plugins: { legend: { display: false } } }
-            });
         }
+
     </script>
+
 </asp:Content>

@@ -3,7 +3,6 @@ using KawkiWebBusiness.BO;
 using KawkiWebBusiness.KawkiWebWSDetalleVentas;
 using KawkiWebBusiness.KawkiWebWSProductos;
 using KawkiWebBusiness.KawkiWebWSVentas;
-using KawkiWebBusiness.KawkiWebWSMovimientosInventario;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -730,7 +729,7 @@ namespace KawkiWeb
 
             // Validar total
             decimal total = 0m;
-            if (!decimal.TryParse(lblTotal.Text.Replace("S/", "").Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out total) || total <= 0)
+            if (!decimal.TryParse(lblTotal.Text.Replace("S/", "").Trim(),NumberStyles.Any,CultureInfo.InvariantCulture,out total) || total <= 0)
             {
                 lblMensaje.Text = "El total de la venta debe ser mayor a cero.";
                 return;
@@ -757,20 +756,6 @@ namespace KawkiWeb
                     activoSpecified = true
                 };
 
-
-                // Usuario para movimientos de inventario (WS de inventario)
-                var usuarioInventario = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.usuariosDTO
-                {
-                    usuarioId = usuarioId,
-                    usuarioIdSpecified = true,
-                    activo = true,
-                    activoSpecified = true
-                };
-
-                // BO de movimientos de inventario
-                var movInvBO = new MovimientosInventarioBO();
-
-
                 // 3. Obtener datos del formulario
                 string nombreCliente = txtNombreCliente.Text.Trim();
                 string telefono = txtTelefono.Text.Trim();
@@ -793,7 +778,7 @@ namespace KawkiWeb
                     nombre = ddlCanal.SelectedItem.Text
                 };
 
-
+                
                 // CREAR DESCUENTO SI SELECCIONÓ UNO
                 KawkiWebBusiness.KawkiWebWSVentas.descuentosDTO descuento = null;
 
@@ -898,7 +883,6 @@ namespace KawkiWeb
                     return;
                 }
 
-
                 // 6. Registrar detalles de venta
                 DetalleVentasBO detalleBO = new DetalleVentasBO();
 
@@ -916,33 +900,29 @@ namespace KawkiWeb
                         CultureInfo.InvariantCulture
                     );
 
-                    // ===== Detalle de venta (WS DetalleVentas) =====
-                    var productoVarDetalle = new KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO
+
+                    // Crear objeto productosVariantesDTO para DetalleVentasService
+                    var productoVar = new KawkiWebBusiness.KawkiWebWSDetalleVentas.productosVariantesDTO
                     {
                         prod_variante_id = prodVarId,
                         prod_variante_idSpecified = true
                     };
 
-                    detalleBO.InsertarDetalleVenta(productoVarDetalle, ventaId, cantidad, precio, subtotal);
+                    lblMensaje.Text =
+                    $"Debug:<br/>" +
+                    $"ProductoId = {prodVarId}<br/>" +
+                    $"Cantidad = {cantidad}<br/>" +
+                    $"Precio = '{row["PrecioUnitario"]}'<br/>" +
+                    $"Subtotal = '{row["Subtotal"]}'<br/>" +
+                    $"PrecioParseado = {precio}<br/>" +
+                    $"SubtotalParseado = {subtotal}<br/>" +
+                    $"Canal = '{ddlCanal.SelectedValue}'";
+                    
 
-                    // ===== Movimiento de inventario: SALIDA (WS MovimientosInventario) =====
-                    var productoVarInv = new KawkiWebBusiness.KawkiWebWSMovimientosInventario.productosVariantesDTO
-                    {
-                        prod_variante_id = prodVarId,
-                        prod_variante_idSpecified = true
-                    };
+                    detalleBO.InsertarDetalleVenta(productoVar, ventaId, cantidad, precio, subtotal);
 
-                    string observacion = $"Salida por venta #{ventaId}";
-
-                    // Llama a tu BO, que a su vez llama al método registrarSalidaMovInventario del WS Java
-                    movInvBO.RegistrarSalidaMovInventario(
-                        productoVarInv,
-                        cantidad,
-                        observacion,
-                        usuarioInventario
-                    );
+                    return;
                 }
-
 
                 // 6. Todo OK
                 lblMensaje.CssClass = "text-success mb-2 d-block";
@@ -995,4 +975,3 @@ namespace KawkiWeb
         }
     }
 }
-
