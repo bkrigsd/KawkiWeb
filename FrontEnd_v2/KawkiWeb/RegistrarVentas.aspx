@@ -76,11 +76,11 @@
                                     CssClass="text-danger"
                                     Display="Dynamic" />
 
-                                <asp:RequiredFieldValidator ID="rfvTelefono" runat="server"
+                                <%--<asp:RequiredFieldValidator ID="rfvTelefono" runat="server"
                                     ControlToValidate="txtTelefono"
                                     ErrorMessage="Este campo es obligatorio."
                                     CssClass="text-danger"
-                                    Display="Dynamic" />
+                                    Display="Dynamic" />--%>
                             </div>
 
                             <!-- DNI -->

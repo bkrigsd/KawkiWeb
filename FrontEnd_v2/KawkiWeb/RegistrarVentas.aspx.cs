@@ -194,11 +194,11 @@ namespace KawkiWeb
         {
             mensajeError = string.Empty;
 
-            if (string.IsNullOrWhiteSpace(telefono))
-            {
-                mensajeError = "El teléfono es obligatorio.";
-                return false;
-            }
+            //if (string.IsNullOrWhiteSpace(telefono))
+            //{
+            //    mensajeError = "El teléfono es obligatorio.";
+            //    return false;
+            //}
 
             // Remover espacios y guiones
             telefono = telefono.Replace(" ", "").Replace("-", "");
