@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <!-- NOMBRE DEL CLIENTE -->
-                            <div id="grupoNombreCliente" runat="server" class="col-md-6" visible="false">
+                            <div id="grupoNombreCliente" runat="server" class="col-md-6" visible="true">
                                 <label class="form-label" for="<%= txtNombreCliente.ClientID %>">
                                     Nombre completo <span class="text-danger">*</span>
                                 </label>
@@ -58,9 +58,9 @@
                             </div>
 
                             <!-- TELEFONO -->
-                            <div id="grupoTelefono" runat="server" class="col-md-3" visible="false">
+                            <div id="grupoTelefono" runat="server" class="col-md-3" visible="true">
                                 <label class="form-label" for="<%= txtTelefono.ClientID %>">
-                                    Teléfono <span class="text-danger">*</span>
+                                    Teléfono <span class="text-danger"></span>
                                 </label>
 
                                 <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"
@@ -85,7 +85,7 @@
 
                             <!-- DNI -->
                             <div id="grupoDNI" runat="server" class="col-md-3" visible="false">
-                                <label class="form-label">DNI</label>
+                                <label class="form-label">DNI<span class="text-danger">*</span></label>
                                 <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" MaxLength="8"></asp:TextBox>
                                 <asp:RegularExpressionValidator 
                                     ID="revDNI" 
@@ -99,13 +99,13 @@
 
                             <!-- RUC -->
                             <div id="grupoRUC" runat="server" class="col-md-3" visible="false">
-                                <label class="form-label">RUC</label>
+                                <label class="form-label">RUC<span class="text-danger">*</span></label>
                                 <asp:TextBox ID="txtRUC" runat="server" CssClass="form-control" MaxLength="11"></asp:TextBox>
                             </div>
 
                             <!-- Razón Social -->
                             <div id="grupoRazonSocial" runat="server" class="col-md-6" visible="false">
-                                <label class="form-label">Razón Social</label>
+                                <label class="form-label">Razón Social<span class="text-danger">*</span></label>
                                 <asp:TextBox ID="txtRazonSocial" runat="server" CssClass="form-control"></asp:TextBox>
                             <asp:RequiredFieldValidator 
                                 ID="rfvRazonSocial" 
@@ -118,7 +118,7 @@
 
                             <!-- Dirección Fiscal -->
                             <div id="grupoDireccionFiscal" runat="server" class="col-md-6" visible="false">
-                                <label class="form-label">Dirección Fiscal</label>
+                                <label class="form-label">Dirección Fiscal<span class="text-danger">*</span></label>
                                 <asp:TextBox ID="txtDireccionFiscal" runat="server" CssClass="form-control"></asp:TextBox>
                             <asp:RequiredFieldValidator 
                                 ID="rfvDireccionFiscal" 

@@ -141,7 +141,13 @@ namespace KawkiWeb
                 }
 
                 ListItem item = new ListItem(textoTalla, talla);
-                item.Enabled = true;
+                item.Enabled = stock > 0;
+
+                // Clases CSS para el estilo visual
+                if (agotado)
+                    item.Attributes.Add("class", "talla-agotada");
+                else if (stockBajo)
+                    item.Attributes.Add("class", "talla-stock-bajo");
 
                 rblTallas.Items.Add(item);
             }
@@ -259,8 +265,13 @@ namespace KawkiWeb
                 }
 
                 ListItem item = new ListItem(textoTalla, variante.prod_variante_id.ToString());
+                item.Enabled = stock > 0;
 
-                item.Enabled = true;
+                if (agotado)
+                    item.Attributes.Add("class", "talla-agotada");
+                else if (stockBajo)
+                    item.Attributes.Add("class", "talla-stock-bajo");
+
                 rblTallas.Items.Add(item);
             }
 
@@ -275,7 +286,7 @@ namespace KawkiWeb
             }
             else if (tallasConStockBajo > 0 && tallasAgotadas == 0)
             {
-                MostrarMensaje($"Algunas tallas tienen stock limitado.", "warning");
+                MostrarMensaje($"Algunas tallas tienen stock limitado. ¡Reserva pronto!", "warning");
             }
             else if (tallasAgotadas > 0 && stockTotal > 0)
             {

@@ -30,7 +30,12 @@ namespace KawkiWeb
         public string ChartColoresLabelsJson { get; set; } = "[]";
         public string ChartColoresDataJson { get; set; } = "[]";
 
-
+        public class ProductoVentaResumen
+        {
+            public string Producto { get; set; }
+            public int Cantidad { get; set; }
+            public double Participacion { get; set; }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -42,91 +47,115 @@ namespace KawkiWeb
 
             if (!IsPostBack)
             {
-                txtFechaInicio.Text = DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd");
-                txtFechaFin.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                // Si quieres que salgan vacías, descomenta estas dos líneas:
+                txtFechaInicio.Text = string.Empty;
+                txtFechaFin.Text = string.Empty;
 
-                GenerarReporte();
+                // Rango automático según ventas registradas
+                DateTime fechaInicio, fechaFin;
+                ObtenerRangoAutomatico(out fechaInicio, out fechaFin);
+
+                // Para TextMode="Date" → formato yyyy-MM-dd
+                //txtFechaInicio.Text = fechaInicio.ToString("yyyy-MM-dd");
+                //txtFechaFin.Text = fechaFin.Date.ToString("yyyy-MM-dd");
+
+                // Generar reporte inicial
+                GenerarReporte(fechaInicio, fechaFin);
             }
         }
 
-        public class ProductoVentaResumen
+        /// <summary>
+        /// Obtiene el rango [primera venta, última venta] según la tabla de ventas.
+        /// Si hay error o no hay ventas, usa hoy como rango.
+        /// </summary>
+        private void ObtenerRangoAutomatico(out DateTime fechaInicio, out DateTime fechaFin)
         {
-            public string Producto { get; set; }
-            public int Cantidad { get; set; }
-            public double Participacion { get; set; }
-        }
+            DateTime hoy = DateTime.Today;
+            fechaInicio = hoy;
+            fechaFin = hoy.AddDays(1).AddSeconds(-1); // fin del día
 
+            try
+            {
+                var ventasBO = new VentasBO();
+                var ventas = ventasBO.ListarTodosVenta()
+                             ?? new List<KawkiWebBusiness.KawkiWebWSVentas.ventasDTO>();
+
+                var fechas = ventas
+                    .Select(v =>
+                    {
+                        DateTime f;
+                        return DateTime.TryParse(v.fecha_hora_creacion, out f) ? f : DateTime.MinValue;
+                    })
+                    .Where(f => f != DateTime.MinValue)
+                    .ToList();
+
+                if (fechas.Any())
+                {
+                    var min = fechas.Min().Date;
+                    var max = fechas.Max().Date;
+
+                    fechaInicio = min;
+                    fechaFin = max.AddDays(1).AddSeconds(-1); // fin del día
+                }
+            }
+            catch
+            {
+                // Si hay error, nos quedamos con hoy
+            }
+        }
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
-            GenerarReporte();
-        }
+            lblMensajeFechas.Visible = false;
+            lblMensajeFechas.Text = string.Empty;
 
-        private void GenerarReporte()
-        {
-            // 1) Leer fechas
-            DateTime fechaInicio, fechaFin;
-
-            if (!DateTime.TryParse(txtFechaInicio.Text, out fechaInicio))
-                fechaInicio = DateTime.Now.AddDays(-7);
-
-            if (!DateTime.TryParse(txtFechaFin.Text, out fechaFin))
-                fechaFin = DateTime.Now;
-
-            // Normalizamos solo fecha (sin hora) para validar
-            fechaInicio = fechaInicio.Date;
-            fechaFin = fechaFin.Date;
-
-            // Validación: Desde no puede ser mayor que Hasta
-            if (fechaInicio > fechaFin)
+            // Si algún campo está vacío, usamos el rango automático
+            if (string.IsNullOrWhiteSpace(txtFechaInicio.Text) ||
+                string.IsNullOrWhiteSpace(txtFechaFin.Text))
             {
-                lblMensajeFechas.Visible = true;
-                lblMensajeFechas.Text = "La fecha de Inicio debe ser menor o igual que la fecha Fin.";
-
-                // Dejamos los totales en cero y no calculamos nada
-                lblVentasTotales.Text = "S/. 0.00";
-                lblProductosVendidos.Text = "0";
-                lblClientes.Text = "0";
-                lblPromedioDiario.Text = "S/. 0.00";
-
-                // Vaciar datos de gráficos para no mostrar información vieja
-                ChartProductosLabelsJson = "[]";
-                ChartProductosDataJson = "[]";
-                ChartCategoriasLabelsJson = "[]";
-                ChartCategoriasDataJson = "[]";
-                ChartColoresLabelsJson = "[]";
-                ChartColoresDataJson = "[]";
-                ChartTallasLabelsJson = "[]";
-                ChartTallasDataJson = "[]";
-                //ChartVariacionLabelsJson = "[]";
-                //ChartVariacionDataJson = "[]";
-                ChartTopClientesLabelsJson = "[]";
-                ChartTopClientesDataJson = "[]";
-
-
-                gvTopProductos.DataSource = null;
-                gvTopProductos.DataBind();
-
+                DateTime fIni, fFin;
+                ObtenerRangoAutomatico(out fIni, out fFin);
+                GenerarReporte(fIni, fFin);
                 return;
             }
 
-            // Si las fechas son válidas, ocultamos el mensaje
-            lblMensajeFechas.Visible = false;
+            // Si hay texto, validar formato y rango
+            DateTime fechaInicio, fechaFin;
+            if (!DateTime.TryParse(txtFechaInicio.Text, out fechaInicio) ||
+                !DateTime.TryParse(txtFechaFin.Text, out fechaFin))
+            {
+                lblMensajeFechas.Visible = true;
+                lblMensajeFechas.Text = "Las fechas ingresadas no son válidas.";
+                return;
+            }
 
-            // Incluir todo el día final (23:59:59)
-            fechaFin = fechaFin.AddDays(1).AddTicks(-1);
+            if (fechaInicio > fechaFin)
+            {
+                lblMensajeFechas.Visible = true;
+                lblMensajeFechas.Text = "La fecha de Inicio no puede ser mayor que la fecha Fin.";
+                return;
+            }
+
+            // Asegurar que tomamos TODO el día fin
+            fechaInicio = fechaInicio.Date;                       // 00:00:00
+            fechaFin = fechaFin.Date.AddDays(1).AddTicks(-1);  // 23:59:59.999...
+
+            GenerarReporte(fechaInicio, fechaFin);
+        }
+
+        private void GenerarReporte(DateTime fechaInicio, DateTime fechaFin)
+        {
+            lblMensajeFechas.Visible = false;
+            lblMensajeFechas.Text = string.Empty;
 
             var serializer = new JavaScriptSerializer();
-
-            // 2) Instanciar BO
             var ventasBO = new VentasBO();
             var detalleBO = new DetalleVentasBO();
             var prodVarBO = new ProductosVariantesBO();
             var productosBO = new ProductosBO();
             var comprobantesBO = new ComprobantesPagoBO();
 
-            // 3) Ventas válidas dentro del rango
-            // 3) Ventas dentro del rango (primero sin esValida para probar)
+            // 1) Ventas dentro del rango
             var ventas = ventasBO.ListarTodosVenta()
                 .Select(v =>
                 {
@@ -143,34 +172,51 @@ namespace KawkiWeb
                 .Select(x => x.Venta)
                 .ToList();
 
-            // DEBUG rápido
             System.Diagnostics.Debug.WriteLine($"Ventas en rango: {ventas.Count}");
 
             if (!ventas.Any())
             {
+                // Reset de totales
                 lblVentasTotales.Text = "S/. 0.00";
                 lblProductosVendidos.Text = "0";
                 lblClientes.Text = "0";
                 lblPromedioDiario.Text = "S/. 0.00";
+
+                // Reset de gráficos
+                ChartProductosLabelsJson = "[]";
+                ChartProductosDataJson = "[]";
+                ChartCategoriasLabelsJson = "[]";
+                ChartCategoriasDataJson = "[]";
+                ChartColoresLabelsJson = "[]";
+                ChartColoresDataJson = "[]";
+                ChartTallasLabelsJson = "[]";
+                ChartTallasDataJson = "[]";
+                ChartTopClientesLabelsJson = "[]";
+                ChartTopClientesDataJson = "[]";
+
+                // Reset de tabla
+                gvTopProductos.DataSource = null;
+                gvTopProductos.DataBind();
+
                 return;
             }
 
             var ventasIds = ventas.Select(v => v.venta_id).ToList();
 
-            // 4) Detalles de esas ventas
+            // 2) Detalles de esas ventas
             var detalles = detalleBO.ListarTodos()
                 .Where(d => ventasIds.Contains(d.venta_id))
                 .ToList();
 
             System.Diagnostics.Debug.WriteLine($"Detalles en rango: {detalles.Count}");
 
-            // 5) Totales
+            // 3) Totales
             double totalVentas = ventas.Sum(v => v.total);
             int productosVendidos = detalles.Sum(d => d.cantidad);
             int diasPeriodo = (fechaFin.Date - fechaInicio.Date).Days + 1;
             double promedioDiario = diasPeriodo > 0 ? totalVentas / diasPeriodo : 0;
 
-            // Clientes distintos desde comprobantes de las ventas del rango
+            // 4) Clientes distintos según comprobantes asociados a esas ventas
             var comprobantes = comprobantesBO.ListarTodosComprobantes()
                 .Where(c => c.venta != null && ventasIds.Contains(c.venta.venta_id))
                 .ToList();
@@ -178,13 +224,63 @@ namespace KawkiWeb
             int clientesDistintos = comprobantes
                 .Select(c =>
                 {
-                    // priorizamos DNI; si está vacío, usamos RUC
-                    var doc = !string.IsNullOrWhiteSpace(c.dni_cliente)
-                                ? c.dni_cliente
-                                : c.ruc_cliente;
-                    return doc;
+                    // tipo_comprobante_id:
+                    // 1 = Boleta simple
+                    // 2 = Boleta con DNI
+                    // 3 = Factura
+                    int tipoId = (c.tipo_comprobante != null)
+                                    ? c.tipo_comprobante.tipo_comprobante_id
+                                    : 0;
+
+                    string key = null;
+
+                    switch (tipoId)
+                    {
+                        case 3: // FACTURA
+                            if (!string.IsNullOrWhiteSpace(c.ruc_cliente))
+                            {
+                                // clave principal por RUC
+                                key = "RUC|" + c.ruc_cliente.Trim();
+                            }
+                            else if (!string.IsNullOrWhiteSpace(c.razon_social_cliente))
+                            {
+                                // fallback por razón social
+                                var rs = c.razon_social_cliente.Trim().ToUpper();
+                                key = "RS|" + rs;
+                            }
+                            break;
+
+                        case 2: // BOLETA CON DNI
+                            if (!string.IsNullOrWhiteSpace(c.dni_cliente))
+                            {
+                                key = "DNI|" + c.dni_cliente.Trim();
+                            }
+                            else if (!string.IsNullOrWhiteSpace(c.nombre_cliente))
+                            {
+                                // por si acaso hay algún dato mal grabado
+                                var nom = System.Text.RegularExpressions.Regex
+                                    .Replace(c.nombre_cliente.Trim().ToUpper(), @"\s+", " ");
+                                key = "NOM_DNI_FALTANTE|" + nom;
+                            }
+                            break;
+
+                        case 1: // BOLETA SIMPLE (sin DNI, con nombre obligatorio)
+                        default:
+                            if (!string.IsNullOrWhiteSpace(c.nombre_cliente))
+                            {
+                                var nom = System.Text.RegularExpressions.Regex
+                                    .Replace(c.nombre_cliente.Trim().ToUpper(), @"\s+", " ");
+                                key = "NOM|" + nom;
+                            }
+                            break;
+                    }
+
+                    // DEBUG opcional:
+                    // System.Diagnostics.Debug.WriteLine($"Comprobante {c.comprobante_id} → tipo={tipoId}, key={key}");
+
+                    return key;
                 })
-                .Where(doc => !string.IsNullOrWhiteSpace(doc))
+                .Where(k => !string.IsNullOrWhiteSpace(k))
                 .Distinct()
                 .Count();
 
@@ -209,7 +305,6 @@ namespace KawkiWeb
                         Total = c.total
                     };
                 })
-                // agrupamos por cliente + documento por si tiene varios comprobantes
                 .GroupBy(x => new { x.Nombre, x.Documento })
                 .Select(g => new
                 {
@@ -222,21 +317,20 @@ namespace KawkiWeb
                 .Take(3)
                 .ToList();
 
-            // Serializamos para el gráfico
             ChartTopClientesLabelsJson = serializer.Serialize(topClientes.Select(x => x.Cliente));
             ChartTopClientesDataJson = serializer.Serialize(topClientes.Select(x => x.Total));
 
+            // KPIs
             lblVentasTotales.Text = $"S/. {totalVentas:N2}";
             lblProductosVendidos.Text = productosVendidos.ToString();
             lblClientes.Text = clientesDistintos.ToString();
             lblPromedioDiario.Text = $"S/. {promedioDiario:N2}";
 
-
-            // 6) Cargar productos y variantes una sola vez
+            // 5) Cargar productos y variantes una sola vez
             var productos = productosBO.ListarTodosProducto().ToList();
             var variantes = prodVarBO.ListarTodos().ToList();
 
-            // ========== GRÁFICO 1: Productos más vendidos (para gráfico pastel) ==========
+            // ========== GRÁFICO 1: Productos más vendidos ==========
             var ventasPorProducto = (from d in detalles
                                      where d.prodVariante != null
                                      join v in variantes
@@ -253,28 +347,19 @@ namespace KawkiWeb
                                      .OrderByDescending(x => x.Cantidad)
                                      .ToList();
 
-            // DEBUG opcional
-            //System.Diagnostics.Debug.WriteLine("=== Ventas por producto ===");
-            //foreach (var v in ventasPorProducto)
-            //{
-            //    System.Diagnostics.Debug.WriteLine($"{v.Producto}: {v.Cantidad}");
-            //}
-
-            // === TABLA: detalle de productos del período ===
             var tablaProductos = ventasPorProducto
                 .Select(x => new ProductoVentaResumen
                 {
                     Producto = x.Producto,
                     Cantidad = x.Cantidad,
                     Participacion = productosVendidos > 0
-                        ? (x.Cantidad * 100.0 / productosVendidos)
-                        : 0
+                                    ? (x.Cantidad * 100.0 / productosVendidos)
+                                    : 0
                 })
                 .ToList();
 
             gvTopProductos.DataSource = tablaProductos;
             gvTopProductos.DataBind();
-
 
             ChartProductosLabelsJson = serializer.Serialize(
                 ventasPorProducto.Select(x => x.Producto)
@@ -325,7 +410,7 @@ namespace KawkiWeb
             // ========== GRÁFICO 3: Comparativa por talla ==========
             var tallas = (from d in detalles
                           where d.prodVariante != null && d.prodVariante.talla != null
-                          group d by d.prodVariante.talla.numero into g   // cambia 'numero' si tu propiedad se llama distinto
+                          group d by d.prodVariante.talla.numero into g
                           select new
                           {
                               Talla = g.Key.ToString(),
@@ -336,38 +421,22 @@ namespace KawkiWeb
 
             ChartTallasLabelsJson = serializer.Serialize(tallas.Select(x => x.Talla));
             ChartTallasDataJson = serializer.Serialize(tallas.Select(x => x.Cantidad));
+        }
 
-            //// ========== GRÁFICO 4: Variación de ventas (diario) ==========
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            // limpiar textos
+            txtFechaInicio.Text = string.Empty;
+            txtFechaFin.Text = string.Empty;
 
-            //// Proyectamos ventas a un objeto con Fecha (DateTime) + Total
-            //var ventasConFecha = ventas
-            //    .Select(v =>
-            //    {
-            //        DateTime fecha;
-            //        DateTime.TryParse(v.fecha_hora_creacion, out fecha);
+            // ocultar errores
+            lblMensajeFechas.Visible = false;
+            lblMensajeFechas.Text = string.Empty;
 
-            //        return new
-            //        {
-            //            Fecha = fecha,
-            //            Total = v.total
-            //        };
-            //    })
-            //    .Where(x => x.Fecha != DateTime.MinValue)
-            //    .ToList();
-
-            //var serie = ventasConFecha
-            //    .GroupBy(x => x.Fecha.Date)
-            //    .Select(g => new
-            //    {
-            //        Label = g.Key.ToString("dd/MM"),
-            //        Total = g.Sum(x => x.Total)
-            //    })
-            //    .OrderBy(x => x.Label)
-            //    .ToList();
-
-            //ChartVariacionLabelsJson = serializer.Serialize(serie.Select(x => x.Label));
-            //ChartVariacionDataJson = serializer.Serialize(serie.Select(x => x.Total));
-
+            // volver al rango automático y regenerar
+            DateTime fIni, fFin;
+            ObtenerRangoAutomatico(out fIni, out fFin);
+            GenerarReporte(fIni, fFin);
         }
 
         protected void btnExportarPDF_Click(object sender, EventArgs e)
@@ -393,7 +462,6 @@ namespace KawkiWeb
                 {
                     DateTime fechaInicio, fechaFin;
 
-                    // Intentar convertir a DateTime
                     if (!DateTime.TryParse(fechaInicioStr, out fechaInicio))
                     {
                         lblMensajeFechas.Visible = true;
@@ -408,7 +476,6 @@ namespace KawkiWeb
                         return;
                     }
 
-                    // Comparar fechas: inicio debe ser MENOR O IGUAL a fin
                     if (fechaInicio > fechaFin)
                     {
                         lblMensajeFechas.Visible = true;
@@ -419,11 +486,10 @@ namespace KawkiWeb
                     // Convertir a formato ISO 8601
                     fechaInicioStr = fechaInicio.ToString("yyyy-MM-ddTHH:mm:ss");
                     fechaFinStr = fechaFin.ToString("yyyy-MM-ddTHH:mm:ss");
-
                 }
                 else
                 {
-                    // Si ambas están vacías
+                    // Si ambas están vacías, mandamos null → rango completo en el reporte
                     fechaInicioStr = null;
                     fechaFinStr = null;
                 }

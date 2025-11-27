@@ -27,7 +27,7 @@
 
 .productos-controles {
     background-color: white;
-    padding: 20px 20px 10px 20px;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     margin-bottom: 20px;
@@ -42,9 +42,9 @@
 
 .filtros-section {
     display: grid;
-    grid-template-columns: 200px 200px 150px 120px 300px;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 15px;
-    margin-bottom: 5px;
+    margin-bottom: 0;
 }
 
 .filtro-group {
@@ -76,7 +76,7 @@
         }
 
 .acciones-filtros {
-    margin-top: 0;
+    margin-top: 15px;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;

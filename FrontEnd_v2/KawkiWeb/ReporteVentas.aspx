@@ -77,10 +77,21 @@
                         <asp:TextBox ID="txtFechaFin" runat="server"
                             TextMode="Date" CssClass="form-control" />
                     </div>
+
                     <div class="col-md-4">
+                        <div class="d-flex gap-2">
+                            <asp:Button ID="btnGenerar" runat="server" Text="Generar Reporte"
+                                CssClass="btn-kawki-primary flex-fill" OnClick="btnGenerar_Click" />
+
+                            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar filtros"
+                                CssClass="btn-kawki-secondary flex-fill" OnClick="btnLimpiar_Click" />
+                        </div>
+                    </div>
+
+                   <%-- <div class="col-md-4">
                         <asp:Button ID="btnGenerar" runat="server" Text="Generar Reporte"
                             CssClass="btn-kawki-primary w-100" OnClick="btnGenerar_Click" />
-                    </div>
+                    </div>--%>
                 </div>
 
                 <!-- NUEVO: Botón para exportar PDF -->
@@ -262,46 +273,55 @@
 
         function renderCharts() {
             var prodLabels = <%= ChartProductosLabelsJson %> || [];
-            var prodData = <%= ChartProductosDataJson %> || [];
+        var prodData = <%= ChartProductosDataJson %> || [];
 
-            var catLabels = <%= ChartCategoriasLabelsJson %> || [];
-            var catData = <%= ChartCategoriasDataJson %> || [];
+        var catLabels = <%= ChartCategoriasLabelsJson %> || [];
+        var catData = <%= ChartCategoriasDataJson %> || [];
 
-            var colorLabels = <%= ChartColoresLabelsJson %> || [];
-            var colorData   = <%= ChartColoresDataJson %> || [];
+        var colorLabels = <%= ChartColoresLabelsJson %> || [];
+        var colorData   = <%= ChartColoresDataJson %> || [];
 
-            var tallaLabels = <%= ChartTallasLabelsJson %> || [];
-            var tallaData   = <%= ChartTallasDataJson %> || [];
+        var tallaLabels = <%= ChartTallasLabelsJson %> || [];
+        var tallaData   = <%= ChartTallasDataJson %> || [];
 
-            <%--var varLabels   = <%= ChartVariacionLabelsJson %> || [];
-            var varData = <%= ChartVariacionDataJson %> || [];--%>
+        var topCliLabels = <%= ChartTopClientesLabelsJson %> || [];
+        var topCliData = <%= ChartTopClientesDataJson %> || [];
 
-            var topCliLabels = <%= ChartTopClientesLabelsJson %> || [];
-            var topCliData = <%= ChartTopClientesDataJson %> || [];
+            // ====== OPCIONAL: animación global por defecto ======
+            if (window.Chart && Chart.defaults) {
+                Chart.defaults.animation.duration = 1000;   // 1 segundo
+                Chart.defaults.animation.easing = 'easeOutQuart';
+            }
 
-            // === Productos: gráfico pastel ===
+            // ====== Productos: gráfico pastel ======
             var ctxProductos = document.getElementById("chartProductos");
-            new Chart(ctxProductos, {
-                type: "pie",   // 👈 pastel
-                data: {
-                    labels: prodLabels,
-                    datasets: [{
-                        data: prodData,
-                        backgroundColor: [
-                            "#ED6B7F", "#f9a8b1", "#ffc3ca", "#fca5a5", "#fecaca",
-                            "#f97373", "#fb7185", "#fda4af", "#fed7e2", "#fecdd3"
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { display: true, position: "bottom" }
+            if (ctxProductos && prodLabels.length > 0) {
+                new Chart(ctxProductos, {
+                    type: "pie",
+                    data: {
+                        labels: prodLabels,
+                        datasets: [{
+                            data: prodData,
+                            backgroundColor: [
+                                "#ED6B7F", "#f9a8b1", "#ffc3ca", "#fca5a5", "#fecaca",
+                                "#f97373", "#fb7185", "#fda4af", "#fed7e2", "#fecdd3"
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        animation: {
+                            duration: 1300,
+                            easing: 'easeOutBack',  // entrada suave
+                        },
+                        plugins: {
+                            legend: { display: true, position: "bottom" }
+                        }
                     }
-                }
-            });
+                });
+            }
 
-            // === Categorías (doughnut) ===
+            // ====== Categorías (doughnut) ======
             var ctxCategorias = document.getElementById("chartCategorias");
             if (ctxCategorias && catLabels.length > 0) {
                 new Chart(ctxCategorias, {
@@ -313,11 +333,23 @@
                             backgroundColor: ["#ED6B7F", "#f9a8b1", "#ffc3ca", "#fca5a5", "#fecaca"]
                         }]
                     },
-                    options: { responsive: true }
+                    options: {
+                        responsive: true,
+                        cutout: '55%',
+                        animation: {
+                            duration: 1200,
+                            easing: 'easeOutQuart',
+                            animateRotate: true,
+                            animateScale: true
+                        },
+                        plugins: {
+                            legend: { display: true, position: "bottom" }
+                        }
+                    }
                 });
             }
 
-            // === Colores (bar, por ejemplo) ===
+            // ====== Colores (barras) ======
             var ctxColores = document.getElementById("chartColores");
             if (ctxColores && colorLabels.length > 0) {
                 new Chart(ctxColores, {
@@ -332,44 +364,60 @@
                     },
                     options: {
                         responsive: true,
-                        plugins: { legend: { display: false } }
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeOutCubic'
+                        },
+                        animations: {
+                            y: {
+                                from: 0   // las barras suben desde 0
+                            }
+                        },
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
                     }
                 });
             }
 
-            // === Tallas (igual que antes, de barras) ===
+            // ====== Tallas (barras) ======
             var ctxTallas = document.getElementById("chartTallas");
-            new Chart(ctxTallas, {
-                type: "bar",
-                data: {
-                    labels: tallaLabels,
-                    datasets: [{
-                        label: "Ventas por talla",
-                        data: tallaData,
-                        backgroundColor: "#ED6B7F"
-                    }]
-                },
-                options: { responsive: true, plugins: { legend: { display: false } } }
-            });
+            if (ctxTallas && tallaLabels.length > 0) {
+                new Chart(ctxTallas, {
+                    type: "bar",
+                    data: {
+                        labels: tallaLabels,
+                        datasets: [{
+                            label: "Ventas por talla",
+                            data: tallaData,
+                            backgroundColor: "#ED6B7F"
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeOutCubic'
+                        },
+                        animations: {
+                            y: {
+                                from: 0
+                            }
+                        },
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
 
-            // === Variación de ventas (línea) ===
-            //var ctxVariacion = document.getElementById("chartVariacion");
-            //new Chart(ctxVariacion, {
-            //    type: "line",
-            //    data: {
-            //        labels: varLabels,
-            //        datasets: [{
-            //            label: "Ventas",
-            //            data: varData,
-            //            borderColor: "#ED6B7F",
-            //            tension: 0.4,
-            //            fill: false
-            //        }]
-            //    },
-            //    options: { responsive: true, plugins: { legend: { display: false } } }
-            //});
-
-            // === Top 3 clientes que más compraron (barras) ===
+            // ====== Top 3 clientes (barras) ======
             var ctxTopCli = document.getElementById("chartTopClientes");
             if (ctxTopCli && topCliLabels.length > 0) {
                 new Chart(ctxTopCli, {
@@ -384,6 +432,15 @@
                     },
                     options: {
                         responsive: true,
+                        animation: {
+                            duration: 1200,
+                            easing: 'easeOutQuart'
+                        },
+                        animations: {
+                            y: {
+                                from: 0
+                            }
+                        },
                         plugins: {
                             legend: { display: false },
                             tooltip: {
@@ -407,9 +464,7 @@
                     }
                 });
             }
-
         }
-
     </script>
 
 </asp:Content>

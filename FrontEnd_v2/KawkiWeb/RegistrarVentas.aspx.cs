@@ -44,6 +44,9 @@ namespace KawkiWeb
         {
             if (!IsPostBack)
             {
+                // Inputs VACÍOS al entrar
+                //txtFechaInicio.Text = string.Empty;
+                //txtFechaFin.Text = string.Empty;
                 // Primera carga
                 CargarProductos();
                 CargarDescuentos();
@@ -685,7 +688,6 @@ namespace KawkiWeb
             lblTotal.Text = total.ToString("0.00");
         }
 
-
         protected void btnRegistrarVenta_Click(object sender, EventArgs e)
         {
             lblMensaje.Text = string.Empty;
@@ -900,7 +902,7 @@ namespace KawkiWeb
 
                     detalleBO.InsertarDetalleVenta(productoVar, ventaId, cantidad, precio, subtotal);
 
-                    return;
+                    //return;
                 }
 
                 // 6. Todo OK

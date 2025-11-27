@@ -17,30 +17,29 @@
         <div class="productos-controles">
             <h3>Filtrar productos</h3>
 
-            <div class="filtros-section">
-                 <div class="filtro-group">
-                    <label for="ddlCategoria">Categoría</label>
-                    <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select">
-                    </asp:DropDownList>
-                </div>
+            <div class="filtro-group">
+                <label for="ddlCategoria">Categoría</label>
+                <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select">
+                </asp:DropDownList>
+            </div>
         
-                <div class="filtro-group">
-                    <label for="ddlEstilo">Estilo</label>
-                    <asp:DropDownList ID="ddlEstilo" runat="server" CssClass="form-select">
-                    </asp:DropDownList>
-                </div>
+            <div class="filtro-group">
+                <label for="ddlEstilo">Estilo</label>
+                <asp:DropDownList ID="ddlEstilo" runat="server" CssClass="form-select">
+                </asp:DropDownList>
+            </div>
         
-                <div class="filtro-group">
-                    <label for="ddlColor">Color</label>
-                    <asp:DropDownList ID="ddlColor" runat="server" CssClass="form-select">
-                    </asp:DropDownList>
-                </div>
-    
-                <div class="filtro-group">
-                    <label for="ddlTalla">Talla</label>
-                    <asp:DropDownList ID="ddlTalla" runat="server" CssClass="form-select">
-                    </asp:DropDownList>
-                </div>
+            <div class="filtro-group">
+                <label for="ddlColor">Color</label>
+                <asp:DropDownList ID="ddlColor" runat="server" CssClass="form-select">
+                </asp:DropDownList>
+            </div>
+        
+            <div class="filtro-group">
+                <label for="ddlTalla">Talla</label>
+                <asp:DropDownList ID="ddlTalla" runat="server" CssClass="form-select">
+                </asp:DropDownList>
+            </div>
 
                 <div class="filtro-group">
                     <label for="txtBuscar">Buscar</label>
@@ -49,8 +48,8 @@
             </div>
 
             <div class="acciones-filtros">
-                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn-buscar" OnClick="btnBuscar_Click" />
-                    <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn-limpiar" OnClick="btnLimpiar_Click" />
+                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn-buscar" OnClick="btnBuscar_Click" />
+                <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar filtros" CssClass="btn-limpiar" OnClick="btnLimpiar_Click" />
             </div>
         </div>
 
@@ -95,11 +94,11 @@
                                     <%# MostrarTallas(Eval("TallasDisponibles").ToString()) %>
                                 </div>
 
-                                    <!-- Alerta de stock bajo por tallas -->
-                                    <%# MostrarAlertaStockBajo(
-                                        Eval("TallasDisponibles").ToString(), 
-                                        Eval("Stock").ToString(),
-                                        Eval("StockMinimo").ToString()) %>
+                                <!-- Alerta de stock bajo por tallas -->
+                                <%# MostrarAlertaStockBajo(
+                                    Eval("TallasDisponibles").ToString(), 
+                                    Eval("Stock").ToString(),
+                                    Eval("StockMinimo").ToString()) %>
 
                                 <div class="producto-precio">S/ <%# Eval("Precio", "{0:N2}") %></div>
                             </div>

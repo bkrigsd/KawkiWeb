@@ -180,82 +180,138 @@
         const sinStockData = <%= JsonSinStock %>;
         const stockBajoData = <%= JsonStockBajo %>;
         const stockCategoriaData = <%= JsonStockCategoria %>;
-        <%--const bajaRotacionData = <%= JsonBajaRotacion %>;--%>
+    <%--const bajaRotacionData = <%= JsonBajaRotacion %>;--%>
 
         function renderCharts() {
-            // Productos sin stock
-            new Chart(document.getElementById("chartSinStock"), {
-                type: "bar",
-                data: {
-                    labels: sinStockData.labels,
-                    datasets: [{
-                        label: "Unidades agotadas",
-                        data: sinStockData.data
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,   // <<< IMPORTANTE
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true }
+
+            // OPCIONAL: animación global por defecto
+            if (window.Chart && Chart.defaults) {
+                Chart.defaults.animation.duration = 1000;   // 1 segundo
+                Chart.defaults.animation.easing = 'easeOutQuart';
+            }
+
+            // Productos sin stock (barras) 
+            var ctxSinStock = document.getElementById("chartSinStock");
+            if (ctxSinStock && sinStockData && sinStockData.labels) {
+                new Chart(ctxSinStock, {
+                    type: "bar",
+                    data: {
+                        labels: sinStockData.labels,
+                        datasets: [{
+                            label: "Unidades agotadas",
+                            data: sinStockData.data
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeOutCubic'
+                        },
+                        animations: {
+                            y: {
+                                from: 0 // barras suben desde 0
+                            }
+                        },
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
                     }
-                }
-            });
+                });
+            }
 
-            // Productos con stock bajo
-            new Chart(document.getElementById("chartStockBajo"), {
-                type: "bar",
-                data: {
-                    labels: stockBajoData.labels,
-                    datasets: [{
-                        label: "Unidades disponibles",
-                        data: stockBajoData.data
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,   // <<< IMPORTANTE
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true }
+            //  Productos con stock bajo (barras) 
+            var ctxStockBajo = document.getElementById("chartStockBajo");
+            if (ctxStockBajo && stockBajoData && stockBajoData.labels) {
+                new Chart(ctxStockBajo, {
+                    type: "bar",
+                    data: {
+                        labels: stockBajoData.labels,
+                        datasets: [{
+                            label: "Unidades disponibles",
+                            data: stockBajoData.data
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeOutCubic'
+                        },
+                        animations: {
+                            y: {
+                                from: 0
+                            }
+                        },
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
                     }
-                }
-            });
+                });
+            }
 
-            // Stock total por categoría (gráfico principal)
-            new Chart(document.getElementById("chartStockCategoria"), {
-                type: "doughnut",
-                data: {
-                    labels: stockCategoriaData.labels,
-                    datasets: [{
-                        data: stockCategoriaData.data
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false   // usa todo el alto de .chart-main
-                }
-            });
-
-            // Productos con baja rotación
-            //new Chart(document.getElementById("chartBajaRotacion"), {
-            //    type: "line",
-            //    data: {
-            //        labels: bajaRotacionData.labels,
-            //        datasets: [{
-            //            label: "Días en almacén",
-            //            data: bajaRotacionData.data,
-            //            tension: 0.4,
-            //            fill: false
-            //        }]
-            //    },
-            //    options: { responsive: true }
-            //});
+            //  Stock total por categoría (doughnut) 
+            var ctxStockCategoria = document.getElementById("chartStockCategoria");
+            if (ctxStockCategoria && stockCategoriaData && stockCategoriaData.labels) {
+                new Chart(ctxStockCategoria, {
+                    type: "doughnut",
+                    data: {
+                        labels: stockCategoriaData.labels,
+                        datasets: [{
+                            data: stockCategoriaData.data
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false, // usa todo el alto de .chart-main
+                        cutout: '55%',
+                        animation: {
+                            duration: 1200,
+                            easing: 'easeOutBack',
+                            animateRotate: true,
+                            animateScale: true
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+            /*
+            var ctxBajaRot = document.getElementById("chartBajaRotacion");
+            if (ctxBajaRot && bajaRotacionData && bajaRotacionData.labels) {
+                new Chart(ctxBajaRot, {
+                    type: "line",
+                    data: {
+                        labels: bajaRotacionData.labels,
+                        datasets: [{
+                            label: "Días en almacén",
+                            data: bajaRotacionData.data,
+                            tension: 0.4,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeOutQuart'
+                        }
+                    }
+                });
+            }
+            */
         }
 
-        renderCharts();
-
+        // Ejecutar cuando el DOM esté listo
+        document.addEventListener("DOMContentLoaded", renderCharts);
     </script>
 
 </asp:Content>

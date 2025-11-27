@@ -162,14 +162,13 @@
                     </asp:PlaceHolder>
 
                     <!-- Logueado -->
-                    <asp:PlaceHolder ID="phSesionUsuario" runat="server" Visible="false">
-                        <div class="usuario-logueado">
-                            <asp:HyperLink ID="lnkPerfil" runat="server" CssClass="link-usuario">
-                               <i class="fas fa-user"></i>
-                               <span><%= Session["Usuario"] ?? "" %></span>
-                            </asp:HyperLink>
-                        </div>
-                    </asp:PlaceHolder>
+                <asp:PlaceHolder ID="phSesionUsuario" runat="server" Visible="false">
+                    <div class="usuario-logueado">
+                        <asp:LinkButton ID="btnPerfilUsuario" runat="server" CssClass="link-usuario" OnClick="btnPerfilUsuario_Click">
+                        <%= Session["Usuario"] ?? "" %>
+                        </asp:LinkButton>
+                    </div>
+                </asp:PlaceHolder>
 
                 </div>
 
