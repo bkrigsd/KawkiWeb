@@ -7,12 +7,15 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using KawkiWebBusiness;
 using KawkiWebBusiness.KawkiWebWSCategorias;
+using KawkiWebBusiness.KawkiWebWSColores;
 using KawkiWebBusiness.KawkiWebWSEstilos;
 using KawkiWebBusiness.KawkiWebWSProductos;
 using KawkiWebBusiness.KawkiWebWSProductosVariantes;
-using coloresDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.coloresDTO;
+using categoriasDTO = KawkiWebBusiness.KawkiWebWSCategorias.categoriasDTO;
+using coloresDTO = KawkiWebBusiness.KawkiWebWSColores.coloresDTO;
+using tallasDTO = KawkiWebBusiness.KawkiWebWSTallas.tallasDTO;
+using estilosDTO = KawkiWebBusiness.KawkiWebWSEstilos.estilosDTO;
 using productosVariantesDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.productosVariantesDTO;
-using tallasDTO = KawkiWebBusiness.KawkiWebWSProductosVariantes.tallasDTO;
 
 namespace KawkiWeb
 {
@@ -20,20 +23,135 @@ namespace KawkiWeb
     {
         private ProductosBO productosBO;
         private ProductosVariantesBO variantesBO;
+        private CategoriasBO categoriasBO;
+        private EstilosBO estilosBO;  
+        private ColoresBO coloresBO;  
+        private TallasBO tallasBO;
 
         public Productos()
         {
             this.productosBO = new ProductosBO();
             this.variantesBO = new ProductosVariantesBO();
+            categoriasBO = new CategoriasBO();
+            estilosBO = new EstilosBO();
+            coloresBO = new ColoresBO();
+            tallasBO = new TallasBO();
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                CargarFiltros();
                 CargarProductos();
             }
         }
+
+        private void CargarCategorias()
+        {
+            try
+            {
+                ddlCategoria.Items.Clear();
+                ddlCategoria.Items.Add(new ListItem("Todas", ""));
+
+                // Usar tu BO
+                IList<categoriasDTO> categorias = categoriasBO.ListarTodosCategoria();
+
+                if (categorias != null && categorias.Count > 0)
+                {
+                    foreach (var categoria in categorias)
+                    {
+                        ddlCategoria.Items.Add(new ListItem(
+                            categoria.nombre,
+                            categoria.nombre
+                        ));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error cargando categorías: " + ex.Message);
+            }
+        }
+
+        private void CargarEstilos()
+        {
+            try
+            {
+                ddlEstilo.Items.Clear();
+                ddlEstilo.Items.Add(new ListItem("Todos", ""));
+
+                // Si tienes EstilosBO
+                IList<estilosDTO> estilos = estilosBO.ListarTodosEstilo();
+                if (estilos != null && estilos.Count > 0)
+                {
+                    foreach (var estilo in estilos)
+                    {
+                        ddlEstilo.Items.Add(new ListItem(estilo.nombre, estilo.nombre));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error cargando estilos: " + ex.Message);
+            }
+        }
+
+        private void CargarColores()
+        {
+            try
+            {
+                ddlColor.Items.Clear();
+                ddlColor.Items.Add(new ListItem("Todos", ""));
+
+                // Si tienes ColoresBO
+                IList<coloresDTO> colores = coloresBO.ListarTodosColor();
+
+                if (colores != null && colores.Count > 0)
+                {
+                    foreach (var color in colores)
+                    {
+                        ddlColor.Items.Add(new ListItem(color.nombre, color.nombre));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error cargando colores: " + ex.Message);
+            }
+        }
+
+        private void CargarTallas()
+        {
+            try
+            {
+                ddlTalla.Items.Clear();
+                ddlTalla.Items.Add(new ListItem("Todas", ""));
+
+                //Si tienes TallasBO
+                IList<tallasDTO> tallas = tallasBO.ListarTodosTalla();
+
+                // Ordenar numéricamente
+                var tallasOrdenadas = tallas.OrderBy(t => t.numero);
+
+                if (tallas != null && tallas.Count() > 0)
+                {
+                    foreach (var talla in tallasOrdenadas)
+                    {
+                        ddlTalla.Items.Add(new ListItem(
+                        talla.numero.ToString(),
+                        talla.numero.ToString()
+                    ));
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error cargando tallas: " + ex.Message);
+            }
+        }
+
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -140,6 +258,13 @@ namespace KawkiWeb
             return html;
         }
 
+        private void CargarFiltros()
+        {
+            CargarCategorias();
+            CargarEstilos();
+            CargarColores();
+            CargarTallas();
+        }
 
         private void CargarProductos()
         {

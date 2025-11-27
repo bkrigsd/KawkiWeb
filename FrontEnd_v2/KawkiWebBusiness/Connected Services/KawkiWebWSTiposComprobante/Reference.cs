@@ -16,19 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposComprobante {
     public interface TiposComprobante {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/obtenerPorIdTipo" +
-            "ComprobanteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/obtenerPorIdTipo" +
-            "ComprobanteResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteResponse obtenerPorIdTipoComprobante(KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/obtenerPorIdTipo" +
-            "ComprobanteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/obtenerPorIdTipo" +
-            "ComprobanteResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteResponse> obtenerPorIdTipoComprobanteAsync(KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/listarTodosTipoC" +
             "omprobanteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/listarTodosTipoC" +
             "omprobanteResponse")]
@@ -40,6 +27,19 @@ namespace KawkiWebBusiness.KawkiWebWSTiposComprobante {
             "omprobanteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/listarTodosTipoC" +
             "omprobanteResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteResponse> listarTodosTipoComprobanteAsync(KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/obtenerPorIdTipo" +
+            "ComprobanteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/obtenerPorIdTipo" +
+            "ComprobanteResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteResponse obtenerPorIdTipoComprobante(KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/obtenerPorIdTipo" +
+            "ComprobanteRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/TiposComprobante/obtenerPorIdTipo" +
+            "ComprobanteResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteResponse> obtenerPorIdTipoComprobanteAsync(KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteRequest request);
     }
     
     /// <remarks/>
@@ -105,6 +105,34 @@ namespace KawkiWebBusiness.KawkiWebWSTiposComprobante {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoComprobante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosTipoComprobanteRequest {
+        
+        public listarTodosTipoComprobanteRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoComprobanteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarTodosTipoComprobanteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public KawkiWebBusiness.KawkiWebWSTiposComprobante.tiposComprobanteDTO[] @return;
+        
+        public listarTodosTipoComprobanteResponse() {
+        }
+        
+        public listarTodosTipoComprobanteResponse(KawkiWebBusiness.KawkiWebWSTiposComprobante.tiposComprobanteDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerPorIdTipoComprobante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
     public partial class obtenerPorIdTipoComprobanteRequest {
         
@@ -138,34 +166,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposComprobante {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoComprobante", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosTipoComprobanteRequest {
-        
-        public listarTodosTipoComprobanteRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarTodosTipoComprobanteResponse", WrapperNamespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarTodosTipoComprobanteResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KawkiWebBusiness.KawkiWebWSTiposComprobante.tiposComprobanteDTO[] @return;
-        
-        public listarTodosTipoComprobanteResponse() {
-        }
-        
-        public listarTodosTipoComprobanteResponse(KawkiWebBusiness.KawkiWebWSTiposComprobante.tiposComprobanteDTO[] @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface TiposComprobanteChannel : KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante, System.ServiceModel.IClientChannel {
     }
@@ -194,6 +194,27 @@ namespace KawkiWebBusiness.KawkiWebWSTiposComprobante {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteResponse KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante.listarTodosTipoComprobante(KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest request) {
+            return base.Channel.listarTodosTipoComprobante(request);
+        }
+        
+        public KawkiWebBusiness.KawkiWebWSTiposComprobante.tiposComprobanteDTO[] listarTodosTipoComprobante() {
+            KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest();
+            KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteResponse retVal = ((KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante)(this)).listarTodosTipoComprobante(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteResponse> KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante.listarTodosTipoComprobanteAsync(KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest request) {
+            return base.Channel.listarTodosTipoComprobanteAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteResponse> listarTodosTipoComprobanteAsync() {
+            KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest();
+            return ((KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante)(this)).listarTodosTipoComprobanteAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteResponse KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante.obtenerPorIdTipoComprobante(KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteRequest request) {
             return base.Channel.obtenerPorIdTipoComprobante(request);
         }
@@ -214,27 +235,6 @@ namespace KawkiWebBusiness.KawkiWebWSTiposComprobante {
             KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposComprobante.obtenerPorIdTipoComprobanteRequest();
             inValue.tipoComprobanteId = tipoComprobanteId;
             return ((KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante)(this)).obtenerPorIdTipoComprobanteAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteResponse KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante.listarTodosTipoComprobante(KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest request) {
-            return base.Channel.listarTodosTipoComprobante(request);
-        }
-        
-        public KawkiWebBusiness.KawkiWebWSTiposComprobante.tiposComprobanteDTO[] listarTodosTipoComprobante() {
-            KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest();
-            KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteResponse retVal = ((KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante)(this)).listarTodosTipoComprobante(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteResponse> KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante.listarTodosTipoComprobanteAsync(KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest request) {
-            return base.Channel.listarTodosTipoComprobanteAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteResponse> listarTodosTipoComprobanteAsync() {
-            KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest inValue = new KawkiWebBusiness.KawkiWebWSTiposComprobante.listarTodosTipoComprobanteRequest();
-            return ((KawkiWebBusiness.KawkiWebWSTiposComprobante.TiposComprobante)(this)).listarTodosTipoComprobanteAsync(inValue);
         }
     }
 }

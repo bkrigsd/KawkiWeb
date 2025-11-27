@@ -16,17 +16,6 @@ namespace KawkiWebBusiness.KawkiWebWSReportes {
     public interface Reportes {
         
         // CODEGEN: Se está generando un contrato de mensaje, ya que el nombre de elemento fechaInicio del espacio de nombres  no está marcado para aceptar valores nil.
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTen" +
-            "denciasRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTen" +
-            "denciasResponse")]
-        KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse generarReporteVentasYTendencias(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTen" +
-            "denciasRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTen" +
-            "denciasResponse")]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse> generarReporteVentasYTendenciasAsync(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest request);
-        
-        // CODEGEN: Se está generando un contrato de mensaje, ya que el nombre de elemento fechaInicio del espacio de nombres  no está marcado para aceptar valores nil.
         [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteEstadoStoc" +
             "kRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteEstadoStoc" +
             "kResponse")]
@@ -36,78 +25,17 @@ namespace KawkiWebBusiness.KawkiWebWSReportes {
             "kRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteEstadoStoc" +
             "kResponse")]
         System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSReportes.generarReporteEstadoStockResponse> generarReporteEstadoStockAsync(KawkiWebBusiness.KawkiWebWSReportes.generarReporteEstadoStockRequest request);
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class generarReporteVentasYTendenciasRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="generarReporteVentasYTendencias", Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        public KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequestBody Body;
+        // CODEGEN: Se está generando un contrato de mensaje, ya que el nombre de elemento fechaInicio del espacio de nombres  no está marcado para aceptar valores nil.
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTen" +
+            "denciasRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTen" +
+            "denciasResponse")]
+        KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse generarReporteVentasYTendencias(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest request);
         
-        public generarReporteVentasYTendenciasRequest() {
-        }
-        
-        public generarReporteVentasYTendenciasRequest(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequestBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
-    public partial class generarReporteVentasYTendenciasRequestBody {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string fechaInicio;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
-        public string fechaFin;
-        
-        public generarReporteVentasYTendenciasRequestBody() {
-        }
-        
-        public generarReporteVentasYTendenciasRequestBody(string fechaInicio, string fechaFin) {
-            this.fechaInicio = fechaInicio;
-            this.fechaFin = fechaFin;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class generarReporteVentasYTendenciasResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="generarReporteVentasYTendenciasResponse", Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
-        public KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponseBody Body;
-        
-        public generarReporteVentasYTendenciasResponse() {
-        }
-        
-        public generarReporteVentasYTendenciasResponse(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponseBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
-    public partial class generarReporteVentasYTendenciasResponseBody {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
-        public byte[] @return;
-        
-        public generarReporteVentasYTendenciasResponseBody() {
-        }
-        
-        public generarReporteVentasYTendenciasResponseBody(byte[] @return) {
-            this.@return = @return;
-        }
+        [System.ServiceModel.OperationContractAttribute(Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTen" +
+            "denciasRequest", ReplyAction="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTen" +
+            "denciasResponse")]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse> generarReporteVentasYTendenciasAsync(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -182,6 +110,78 @@ namespace KawkiWebBusiness.KawkiWebWSReportes {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class generarReporteVentasYTendenciasRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="generarReporteVentasYTendencias", Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        public KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequestBody Body;
+        
+        public generarReporteVentasYTendenciasRequest() {
+        }
+        
+        public generarReporteVentasYTendenciasRequest(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class generarReporteVentasYTendenciasRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string fechaInicio;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string fechaFin;
+        
+        public generarReporteVentasYTendenciasRequestBody() {
+        }
+        
+        public generarReporteVentasYTendenciasRequestBody(string fechaInicio, string fechaFin) {
+            this.fechaInicio = fechaInicio;
+            this.fechaFin = fechaFin;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class generarReporteVentasYTendenciasResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="generarReporteVentasYTendenciasResponse", Namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/", Order=0)]
+        public KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponseBody Body;
+        
+        public generarReporteVentasYTendenciasResponse() {
+        }
+        
+        public generarReporteVentasYTendenciasResponse(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class generarReporteVentasYTendenciasResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public byte[] @return;
+        
+        public generarReporteVentasYTendenciasResponseBody() {
+        }
+        
+        public generarReporteVentasYTendenciasResponseBody(byte[] @return) {
+            this.@return = @return;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface ReportesChannel : KawkiWebBusiness.KawkiWebWSReportes.Reportes, System.ServiceModel.IClientChannel {
     }
@@ -210,33 +210,6 @@ namespace KawkiWebBusiness.KawkiWebWSReportes {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse KawkiWebBusiness.KawkiWebWSReportes.Reportes.generarReporteVentasYTendencias(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest request) {
-            return base.Channel.generarReporteVentasYTendencias(request);
-        }
-        
-        public byte[] generarReporteVentasYTendencias(string fechaInicio, string fechaFin) {
-            KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest inValue = new KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest();
-            inValue.Body = new KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequestBody();
-            inValue.Body.fechaInicio = fechaInicio;
-            inValue.Body.fechaFin = fechaFin;
-            KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse retVal = ((KawkiWebBusiness.KawkiWebWSReportes.Reportes)(this)).generarReporteVentasYTendencias(inValue);
-            return retVal.Body.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse> KawkiWebBusiness.KawkiWebWSReportes.Reportes.generarReporteVentasYTendenciasAsync(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest request) {
-            return base.Channel.generarReporteVentasYTendenciasAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse> generarReporteVentasYTendenciasAsync(string fechaInicio, string fechaFin) {
-            KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest inValue = new KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest();
-            inValue.Body = new KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequestBody();
-            inValue.Body.fechaInicio = fechaInicio;
-            inValue.Body.fechaFin = fechaFin;
-            return ((KawkiWebBusiness.KawkiWebWSReportes.Reportes)(this)).generarReporteVentasYTendenciasAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         KawkiWebBusiness.KawkiWebWSReportes.generarReporteEstadoStockResponse KawkiWebBusiness.KawkiWebWSReportes.Reportes.generarReporteEstadoStock(KawkiWebBusiness.KawkiWebWSReportes.generarReporteEstadoStockRequest request) {
             return base.Channel.generarReporteEstadoStock(request);
         }
@@ -261,6 +234,33 @@ namespace KawkiWebBusiness.KawkiWebWSReportes {
             inValue.Body.fechaInicio = fechaInicio;
             inValue.Body.fechaFin = fechaFin;
             return ((KawkiWebBusiness.KawkiWebWSReportes.Reportes)(this)).generarReporteEstadoStockAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse KawkiWebBusiness.KawkiWebWSReportes.Reportes.generarReporteVentasYTendencias(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest request) {
+            return base.Channel.generarReporteVentasYTendencias(request);
+        }
+        
+        public byte[] generarReporteVentasYTendencias(string fechaInicio, string fechaFin) {
+            KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest inValue = new KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest();
+            inValue.Body = new KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequestBody();
+            inValue.Body.fechaInicio = fechaInicio;
+            inValue.Body.fechaFin = fechaFin;
+            KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse retVal = ((KawkiWebBusiness.KawkiWebWSReportes.Reportes)(this)).generarReporteVentasYTendencias(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse> KawkiWebBusiness.KawkiWebWSReportes.Reportes.generarReporteVentasYTendenciasAsync(KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest request) {
+            return base.Channel.generarReporteVentasYTendenciasAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasResponse> generarReporteVentasYTendenciasAsync(string fechaInicio, string fechaFin) {
+            KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest inValue = new KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequest();
+            inValue.Body = new KawkiWebBusiness.KawkiWebWSReportes.generarReporteVentasYTendenciasRequestBody();
+            inValue.Body.fechaInicio = fechaInicio;
+            inValue.Body.fechaFin = fechaFin;
+            return ((KawkiWebBusiness.KawkiWebWSReportes.Reportes)(this)).generarReporteVentasYTendenciasAsync(inValue);
         }
     }
 }

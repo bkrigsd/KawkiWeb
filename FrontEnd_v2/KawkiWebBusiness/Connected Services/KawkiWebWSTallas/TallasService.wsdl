@@ -5,11 +5,11 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/TallasService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="listarTodosTalla">
-    <part name="parameters" element="tns:listarTodosTalla" />
+  <message name="modificarTalla">
+    <part name="parameters" element="tns:modificarTalla" />
   </message>
-  <message name="listarTodosTallaResponse">
-    <part name="parameters" element="tns:listarTodosTallaResponse" />
+  <message name="modificarTallaResponse">
+    <part name="parameters" element="tns:modificarTallaResponse" />
   </message>
   <message name="obtenerPorIdTalla">
     <part name="parameters" element="tns:obtenerPorIdTalla" />
@@ -17,39 +17,39 @@
   <message name="obtenerPorIdTallaResponse">
     <part name="parameters" element="tns:obtenerPorIdTallaResponse" />
   </message>
-  <message name="modificarTalla">
-    <part name="parameters" element="tns:modificarTalla" />
-  </message>
-  <message name="modificarTallaResponse">
-    <part name="parameters" element="tns:modificarTallaResponse" />
-  </message>
   <message name="insertarTalla">
     <part name="parameters" element="tns:insertarTalla" />
   </message>
   <message name="insertarTallaResponse">
     <part name="parameters" element="tns:insertarTallaResponse" />
   </message>
+  <message name="listarTodosTalla">
+    <part name="parameters" element="tns:listarTodosTalla" />
+  </message>
+  <message name="listarTodosTallaResponse">
+    <part name="parameters" element="tns:listarTodosTallaResponse" />
+  </message>
   <portType name="Tallas">
-    <operation name="listarTodosTalla">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/listarTodosTallaRequest" message="tns:listarTodosTalla" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/listarTodosTallaResponse" message="tns:listarTodosTallaResponse" />
+    <operation name="modificarTalla">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaRequest" message="tns:modificarTalla" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaResponse" message="tns:modificarTallaResponse" />
     </operation>
     <operation name="obtenerPorIdTalla">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/obtenerPorIdTallaRequest" message="tns:obtenerPorIdTalla" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/obtenerPorIdTallaResponse" message="tns:obtenerPorIdTallaResponse" />
     </operation>
-    <operation name="modificarTalla">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaRequest" message="tns:modificarTalla" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/modificarTallaResponse" message="tns:modificarTallaResponse" />
-    </operation>
     <operation name="insertarTalla">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/insertarTallaRequest" message="tns:insertarTalla" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/insertarTallaResponse" message="tns:insertarTallaResponse" />
     </operation>
+    <operation name="listarTodosTalla">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/listarTodosTallaRequest" message="tns:listarTodosTalla" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Tallas/listarTodosTallaResponse" message="tns:listarTodosTallaResponse" />
+    </operation>
   </portType>
   <binding name="TallasPortBinding" type="tns:Tallas">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="listarTodosTalla">
+    <operation name="modificarTalla">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -67,7 +67,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="modificarTalla">
+    <operation name="insertarTalla">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -76,7 +76,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="insertarTalla">
+    <operation name="listarTodosTalla">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

@@ -11,23 +11,17 @@
   <message name="calcularStockTotalProductoResponse">
     <part name="parameters" element="tns:calcularStockTotalProductoResponse" />
   </message>
-  <message name="listarPorCategoriaProducto">
-    <part name="parameters" element="tns:listarPorCategoriaProducto" />
-  </message>
-  <message name="listarPorCategoriaProductoResponse">
-    <part name="parameters" element="tns:listarPorCategoriaProductoResponse" />
-  </message>
   <message name="listarTodosProducto">
     <part name="parameters" element="tns:listarTodosProducto" />
   </message>
   <message name="listarTodosProductoResponse">
     <part name="parameters" element="tns:listarTodosProductoResponse" />
   </message>
-  <message name="listarConStockBajoProducto">
-    <part name="parameters" element="tns:listarConStockBajoProducto" />
+  <message name="listarPorCategoriaProducto">
+    <part name="parameters" element="tns:listarPorCategoriaProducto" />
   </message>
-  <message name="listarConStockBajoProductoResponse">
-    <part name="parameters" element="tns:listarConStockBajoProductoResponse" />
+  <message name="listarPorCategoriaProductoResponse">
+    <part name="parameters" element="tns:listarPorCategoriaProductoResponse" />
   </message>
   <message name="listarPorEstiloProducto">
     <part name="parameters" element="tns:listarPorEstiloProducto" />
@@ -41,17 +35,17 @@
   <message name="obtenerPorIdProductoResponse">
     <part name="parameters" element="tns:obtenerPorIdProductoResponse" />
   </message>
+  <message name="listarConStockBajoProducto">
+    <part name="parameters" element="tns:listarConStockBajoProducto" />
+  </message>
+  <message name="listarConStockBajoProductoResponse">
+    <part name="parameters" element="tns:listarConStockBajoProductoResponse" />
+  </message>
   <message name="tieneStockDisponibleProducto">
     <part name="parameters" element="tns:tieneStockDisponibleProducto" />
   </message>
   <message name="tieneStockDisponibleProductoResponse">
     <part name="parameters" element="tns:tieneStockDisponibleProductoResponse" />
-  </message>
-  <message name="insertarProducto">
-    <part name="parameters" element="tns:insertarProducto" />
-  </message>
-  <message name="insertarProductoResponse">
-    <part name="parameters" element="tns:insertarProductoResponse" />
   </message>
   <message name="modificarProducto">
     <part name="parameters" element="tns:modificarProducto" />
@@ -59,22 +53,24 @@
   <message name="modificarProductoResponse">
     <part name="parameters" element="tns:modificarProductoResponse" />
   </message>
+  <message name="insertarProducto">
+    <part name="parameters" element="tns:insertarProducto" />
+  </message>
+  <message name="insertarProductoResponse">
+    <part name="parameters" element="tns:insertarProductoResponse" />
+  </message>
   <portType name="Productos">
     <operation name="calcularStockTotalProducto">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProductoRequest" message="tns:calcularStockTotalProducto" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/calcularStockTotalProductoResponse" message="tns:calcularStockTotalProductoResponse" />
     </operation>
-    <operation name="listarPorCategoriaProducto">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorCategoriaProductoRequest" message="tns:listarPorCategoriaProducto" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorCategoriaProductoResponse" message="tns:listarPorCategoriaProductoResponse" />
-    </operation>
     <operation name="listarTodosProducto">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarTodosProductoRequest" message="tns:listarTodosProducto" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarTodosProductoResponse" message="tns:listarTodosProductoResponse" />
     </operation>
-    <operation name="listarConStockBajoProducto">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarConStockBajoProductoRequest" message="tns:listarConStockBajoProducto" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarConStockBajoProductoResponse" message="tns:listarConStockBajoProductoResponse" />
+    <operation name="listarPorCategoriaProducto">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorCategoriaProductoRequest" message="tns:listarPorCategoriaProducto" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorCategoriaProductoResponse" message="tns:listarPorCategoriaProductoResponse" />
     </operation>
     <operation name="listarPorEstiloProducto">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarPorEstiloProductoRequest" message="tns:listarPorEstiloProducto" />
@@ -84,17 +80,21 @@
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoRequest" message="tns:obtenerPorIdProducto" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/obtenerPorIdProductoResponse" message="tns:obtenerPorIdProductoResponse" />
     </operation>
+    <operation name="listarConStockBajoProducto">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarConStockBajoProductoRequest" message="tns:listarConStockBajoProducto" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/listarConStockBajoProductoResponse" message="tns:listarConStockBajoProductoResponse" />
+    </operation>
     <operation name="tieneStockDisponibleProducto">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponibleProductoRequest" message="tns:tieneStockDisponibleProducto" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/tieneStockDisponibleProductoResponse" message="tns:tieneStockDisponibleProductoResponse" />
     </operation>
-    <operation name="insertarProducto">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRequest" message="tns:insertarProducto" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoResponse" message="tns:insertarProductoResponse" />
-    </operation>
     <operation name="modificarProducto">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoRequest" message="tns:modificarProducto" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/modificarProductoResponse" message="tns:modificarProductoResponse" />
+    </operation>
+    <operation name="insertarProducto">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoRequest" message="tns:insertarProducto" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Productos/insertarProductoResponse" message="tns:insertarProductoResponse" />
     </operation>
   </portType>
   <binding name="ProductosPortBinding" type="tns:Productos">
@@ -108,15 +108,6 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarPorCategoriaProducto">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
     <operation name="listarTodosProducto">
       <soap:operation soapAction="" />
       <input>
@@ -126,7 +117,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarConStockBajoProducto">
+    <operation name="listarPorCategoriaProducto">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -153,6 +144,15 @@
         <soap:body use="literal" />
       </output>
     </operation>
+    <operation name="listarConStockBajoProducto">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="tieneStockDisponibleProducto">
       <soap:operation soapAction="" />
       <input>
@@ -162,7 +162,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="insertarProducto">
+    <operation name="modificarProducto">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -171,7 +171,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="modificarProducto">
+    <operation name="insertarProducto">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

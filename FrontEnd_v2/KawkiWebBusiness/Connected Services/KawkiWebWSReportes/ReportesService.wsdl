@@ -5,31 +5,31 @@
       <xsd:import schemaLocation="http://localhost:8080/KawkiWebWS/ReportesService?xsd=1" namespace="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="generarReporteVentasYTendencias">
-    <part name="parameters" element="tns:generarReporteVentasYTendencias" />
-  </message>
-  <message name="generarReporteVentasYTendenciasResponse">
-    <part name="parameters" element="tns:generarReporteVentasYTendenciasResponse" />
-  </message>
   <message name="generarReporteEstadoStock">
     <part name="parameters" element="tns:generarReporteEstadoStock" />
   </message>
   <message name="generarReporteEstadoStockResponse">
     <part name="parameters" element="tns:generarReporteEstadoStockResponse" />
   </message>
+  <message name="generarReporteVentasYTendencias">
+    <part name="parameters" element="tns:generarReporteVentasYTendencias" />
+  </message>
+  <message name="generarReporteVentasYTendenciasResponse">
+    <part name="parameters" element="tns:generarReporteVentasYTendenciasResponse" />
+  </message>
   <portType name="Reportes">
-    <operation name="generarReporteVentasYTendencias">
-      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTendenciasRequest" message="tns:generarReporteVentasYTendencias" />
-      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTendenciasResponse" message="tns:generarReporteVentasYTendenciasResponse" />
-    </operation>
     <operation name="generarReporteEstadoStock">
       <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteEstadoStockRequest" message="tns:generarReporteEstadoStock" />
       <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteEstadoStockResponse" message="tns:generarReporteEstadoStockResponse" />
     </operation>
+    <operation name="generarReporteVentasYTendencias">
+      <input wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTendenciasRequest" message="tns:generarReporteVentasYTendencias" />
+      <output wsam:Action="http://kawkiwebws.services.kawkiweb.pucp.edu.pe/Reportes/generarReporteVentasYTendenciasResponse" message="tns:generarReporteVentasYTendenciasResponse" />
+    </operation>
   </portType>
   <binding name="ReportesPortBinding" type="tns:Reportes">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="generarReporteVentasYTendencias">
+    <operation name="generarReporteEstadoStock">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -38,7 +38,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="generarReporteEstadoStock">
+    <operation name="generarReporteVentasYTendencias">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
