@@ -147,8 +147,6 @@ namespace KawkiWeb
                 MostrarError("Error al cargar variantes: " + ex.Message);
             }
         }
-
-        // ⭐ AGREGAR ESTE MÉTODO NUEVO:
         private void ActualizarDisponibilidad(string data)
         {
             try

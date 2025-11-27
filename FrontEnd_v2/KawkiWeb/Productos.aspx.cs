@@ -24,8 +24,8 @@ namespace KawkiWeb
         private ProductosBO productosBO;
         private ProductosVariantesBO variantesBO;
         private CategoriasBO categoriasBO;
-        private EstilosBO estilosBO;  
-        private ColoresBO coloresBO;  
+        private EstilosBO estilosBO;
+        private ColoresBO coloresBO;
         private TallasBO tallasBO;
 
         public Productos()
