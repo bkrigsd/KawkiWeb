@@ -1,0 +1,321 @@
+﻿:root {
+    --primary-color: #ED6B7F;
+    --success-color: #3BB273;
+    --danger-color: #dc3545;
+}
+
+/* ============ CONTENEDOR PRINCIPAL ============ */
+.ventas-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 60px);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ============ ENCABEZADO ============ */
+.ventas-header {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+    .ventas-header h1 {
+        color: #333;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .ventas-header p {
+        color: #666;
+        margin: 0;
+        font-size: 14px;
+    }
+
+/* ============ TARJETAS ============ */
+.card-kawki {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    border: 1px solid #f0f0f0;
+}
+
+    .card-kawki .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid #f3f4f6;
+        padding: 15px 20px;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .card-kawki .card-body {
+        padding: 15px 20px 20px 20px;
+    }
+
+    .card-kawki .card-title {
+        font-size: 16px;
+        color: #333;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .card-kawki .card-title i {
+            color: var(--primary-color);
+        }
+
+/* ============ TABLA DE PRODUCTOS ============ */
+.table-detalle {
+    width: 100%;
+    margin-top: 0px;
+    border-collapse: collapse;
+}
+
+    .table-detalle th {
+        font-size: 13px;
+        color: #666;
+        background-color: #f8f9fa;
+        font-weight: 500;
+        border-bottom: 1px solid #eaeaea;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .table-detalle td {
+        font-size: 13px;
+        padding: 10px;
+        vertical-align: middle;
+        border-bottom: 1px solid #f3f3f3;
+    }
+
+    /* Resaltar filas al pasar el mouse */
+    .table-detalle tr:hover {
+        background-color: #fff3f5;
+    }
+
+    .table-header th {
+        background-color: #f5f6fa;
+        color: #333;
+        padding: 12px;
+        text-align: center;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table-row td {
+        padding: 10px;
+        vertical-align: middle;
+    }
+
+    .table-row-alt td {
+        background-color: #fafafa;
+    }
+
+    .badge-rol.badge-activo {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 3px 8px;
+        border-radius: 8px;
+    }
+
+    .badge-rol.badge-inactivo {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 3px 8px;
+        border-radius: 8px;
+    }
+
+/* Estado del stock */
+.stock-low {
+    color: var(--danger-color);
+    font-weight: 600;
+}
+
+/* ============ BOTONES ============ */
+.btn-kawki-primary {
+    background-color: var(--primary-color);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    transition: all 0.3s;
+}
+
+    .btn-kawki-primary:hover {
+        background-color: #d85769;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(237, 107, 127, 0.3);
+    }
+
+.btn-kawki-outline {
+    border: 1px solid #ced4da;
+    color: #555;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    background-color: white;
+    transition: all 0.3s;
+}
+
+    .btn-kawki-outline:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(237, 107, 127, 0.15);
+    }
+
+/* Botones de acción en tabla */
+.table-detalle .btn-kawki-outline {
+    margin-right: 4px;
+    min-width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============ FORMULARIOS ============ */
+.form-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.form-control,
+.form-select {
+    padding: 8px 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.15rem rgba(237, 107, 127, 0.25);
+    }
+
+/* ============ MODAL ============ */
+.kp-modal-mask {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+}
+
+.kp-modal {
+    width: min(800px, 90vw);
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.kp-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.kp-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.kp-close {
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+}
+
+    .kp-close:hover {
+        color: var(--primary-color);
+    }
+
+/* ============ CAMPOS DE FORMULARIO MODAL ============ */
+.row2,
+.row3 {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.row2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.row3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* ============ ESTADOS ============ */
+.badge-activo {
+    background-color: #e7f8f0;
+    color: var(--success-color);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.badge-inactivo {
+    background-color: #fbeaea;
+    color: var(--danger-color);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+/* ============ VALIDADORES ============ */
+.text-danger {
+    font-size: 12px;
+    color: var(--danger-color);
+}
+
+/* ============ ANIMACIÓN MODAL ============ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============ RESPONSIVO ============ */
+@media (max-width: 768px) {
+    .ventas-container {
+        padding: 15px;
+    }
+
+    .ventas-header h1 {
+        font-size: 20px;
+    }
+
+    .btn-kawki-primary,
+    .btn-kawki-outline {
+        width: 100%;
+    }
+
+    .row2,
+    .row3 {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,64 @@
+﻿
+/* Barra lateral: gráficos pequeños en columna */
+.sidebar-stats {
+    /* ya tiene display:flex / gap desde el aspx, pero por si acaso */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cards más compactas para la barra lateral */
+.card-mini-chart .card-header {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+
+.card-mini-chart .card-body {
+    padding: 0.75rem 0.75rem 0.5rem 0.75rem;
+}
+
+/* Cards más compactas para la barra lateral */
+.card-mini-chart .card-header {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+
+.card-mini-chart .card-body {
+    padding: 0.75rem;
+}
+
+/* ===== Layout Reporte Stock ===== */
+
+/* CONTENEDOR DEL GRÁFICO PRINCIPAL (IZQUIERDA) */
+.chart-main {
+    height: 320px; /* alto fijo razonable */
+}
+
+    /* Lienzo del gráfico principal */
+    .chart-main canvas {
+        width: 100% !important;
+        height: 100% !important; /* ocupa todo el alto del contenedor */
+    }
+
+/* BARRA LATERAL: CARDS PEQUEÑAS (DERECHA) */
+.sidebar-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Card pequeña para cada mini-gráfico */
+.card-mini-chart {
+    height: 230px; /* todas las cards de la derecha misma altura */
+}
+
+    /* Contenedor del mini-gráfico dentro de la card */
+    .card-mini-chart .chart-mini {
+        height: 160px; /* un poco menos que la card */
+    }
+
+        /* Lienzo de los mini-gráficos */
+        .card-mini-chart .chart-mini canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
