@@ -148,7 +148,6 @@ namespace KawkiWeb
             }
         }
 
-        // ⭐ AGREGAR ESTE MÉTODO NUEVO:
         private void ActualizarDisponibilidad(string data)
         {
             try
