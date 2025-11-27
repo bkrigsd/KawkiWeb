@@ -21,7 +21,7 @@ public class ProductosDTO {
     private CategoriasDTO categoria;
     private EstilosDTO estilo;
     private Double precio_venta;
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class) 
     private LocalDateTime fecha_hora_creacion;
     private UsuariosDTO usuario;
     private List<ProductosVariantesDTO> variantes;

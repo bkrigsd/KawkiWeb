@@ -9,7 +9,6 @@ import pe.edu.pucp.kawkiweb.daoImp.UsuariosDAOImpl;
 import pe.edu.pucp.kawkiweb.model.utilUsuario.TiposUsuarioDTO;
 import pe.edu.pucp.kawkiweb.model.UsuariosDTO;
 import pe.edu.pucp.kawkiweb.dao.UsuariosDAO;
-import pe.edu.pucp.kawkiweb.daoImp.util.ResultadoSP;
 
 public class UsuariosBO {
 
@@ -327,7 +326,7 @@ public class UsuariosBO {
             // HASHEAR LA NUEVA CONTRASEÑA
             String nuevaHasheada = BCrypt.hashpw(contrasenhaNueva, BCrypt.gensalt(12));
 
-            // ACTUALIZAR EN LA BD (ya no usamos el SP de cambiar contraseña)
+            // ACTUALIZAR EN LA BD 
             usuario.setContrasenha(nuevaHasheada);
             Integer resultado = this.usuarioDAO.modificar(usuario);
 

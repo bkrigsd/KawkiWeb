@@ -337,7 +337,8 @@ public class ProductosVariantesDAOImpl extends BaseDAOImpl implements ProductosV
      * usando Stored Procedure
      */
     @Override
-    public boolean existeVariante(Integer productoId, Integer colorId, Integer tallaId) {
+    public boolean existeVariante(Integer productoId, Integer colorId, 
+            Integer tallaId) {
         return super.ejecutarSPConOutBoolean(
                 "SP_EXISTE_VARIANTE",
                 3,

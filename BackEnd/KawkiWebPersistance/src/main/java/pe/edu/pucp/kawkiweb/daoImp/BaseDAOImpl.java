@@ -496,7 +496,7 @@ public abstract class BaseDAOImpl {
             this.ejecutarSelectEnDB();
 
             if (this.resultSet.next()) {
-                // CLAVE: Usa el método OPTIMIZADO para JOINs
+                // Usa el método OPTIMIZADO para JOINs
                 this.instanciarObjetoDelResultSetDesdeJoin();
             } else {
                 this.limpiarObjetoDelResultSet();
