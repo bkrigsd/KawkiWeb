@@ -1,0 +1,91 @@
+SELECT 
+    -- Agrupadores (para grupos de quiebre)
+    c.NOMBRE AS CATEGORIA,
+    e.NOMBRE AS ESTILO,
+    col.NOMBRE AS COLOR,
+    t.NUMERO AS TALLA,
+    
+    -- Datos del producto
+    p.PRODUCTO_ID,
+    p.DESCRIPCION AS PRODUCTO,
+    pv.SKU,
+    
+    -- Métricas de venta
+    SUM(dv.CANTIDAD) AS CANTIDAD_VENDIDA,
+    SUM(dv.SUBTOTAL) AS MONTO_TOTAL,
+    COUNT(DISTINCT v.VENTA_ID) AS NUM_VENTAS,
+    p.PRECIO_VENTA AS PRECIO_UNITARIO
+    
+FROM DETALLE_VENTAS dv
+INNER JOIN VENTAS v ON dv.VENTA_ID = v.VENTA_ID
+INNER JOIN PRODUCTOS_VARIANTES pv ON dv.PROD_VARIANTE_ID = pv.PROD_VARIANTE_ID
+INNER JOIN PRODUCTOS p ON pv.PRODUCTO_ID = p.PRODUCTO_ID
+INNER JOIN CATEGORIAS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
+INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
+INNER JOIN COLORES col ON pv.COLOR_ID = col.COLOR_ID
+INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+WHERE v.ES_VALIDA = 1
+  AND (
+    ($P{pfechaInicio} IS NULL AND $P{pfechaFin} IS NULL)
+    OR 
+    (v.FECHA_HORA_CREACION BETWEEN $P{pfechaInicio} AND $P{pfechaFin})
+  )
+GROUP BY 
+    c.NOMBRE, 
+    e.NOMBRE, 
+    col.NOMBRE, 
+    t.NUMERO,
+    p.PRODUCTO_ID,
+    p.DESCRIPCION,
+    pv.SKU
+-- IMPORTANTE: Ordenar por los campos de agrupación
+ORDER BY 
+    c.NOMBRE ASC,      -- Grupo 1: Categoría
+    e.NOMBRE ASC,      -- Grupo 2: Estilo
+    col.NOMBRE ASC,    -- Grupo 3: Color
+    t.NUMERO ASC 
+
+-- ============================================================================
+
+SELECT 
+    p.PRODUCTO_ID,
+    p.DESCRIPCION AS PRODUCTO,
+    c.NOMBRE AS CATEGORIA,
+    e.NOMBRE AS ESTILO,
+    col.NOMBRE AS COLOR,
+    t.NUMERO AS TALLA,
+    pv.SKU,
+    pv.STOCK AS STOCK_ACTUAL,
+    pv.STOCK_MINIMO,
+    CASE 
+        WHEN pv.STOCK = 0 THEN 'SIN STOCK'
+        WHEN pv.STOCK <= pv.STOCK_MINIMO THEN 'STOCK BAJO'
+        ELSE 'STOCK NORMAL'
+    END AS ESTADO_STOCK,
+    COALESCE(SUM(CASE WHEN mi.TIPO_MOVIMIENTO_ID = 1 THEN mi.CANTIDAD ELSE 0 END), 0) AS INGRESOS,
+    COALESCE(SUM(CASE WHEN mi.TIPO_MOVIMIENTO_ID = 2 THEN mi.CANTIDAD ELSE 0 END), 0) AS SALIDAS,
+    COALESCE(SUM(CASE WHEN mi.TIPO_MOVIMIENTO_ID = 3 THEN mi.CANTIDAD ELSE 0 END), 0) AS AJUSTES
+FROM PRODUCTOS_VARIANTES pv
+INNER JOIN PRODUCTOS p ON pv.PRODUCTO_ID = p.PRODUCTO_ID
+INNER JOIN CATEGORIAS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
+INNER JOIN ESTILOS e ON p.ESTILO_ID = e.ESTILO_ID
+INNER JOIN COLORES col ON pv.COLOR_ID = col.COLOR_ID
+INNER JOIN TALLAS t ON pv.TALLA_ID = t.TALLA_ID
+LEFT JOIN MOVIMIENTOS_INVENTARIO mi ON pv.PROD_VARIANTE_ID = mi.PROD_VARIANTE_ID
+    AND (
+        -- Si las fechas son NULL, incluye todos los movimientos
+        ($P{pfechaInicio} IS NULL AND $P{pfechaFin} IS NULL)
+        OR 
+        -- Si las fechas NO son NULL, filtra por el rango
+        (mi.FECHA_HORA_MOV BETWEEN $P{pfechaInicio} AND $P{pfechaFin})
+    )
+WHERE pv.DISPONIBLE = 1
+GROUP BY p.PRODUCTO_ID, p.DESCRIPCION, c.NOMBRE, e.NOMBRE, col.NOMBRE, 
+         t.NUMERO, pv.SKU, pv.STOCK, pv.STOCK_MINIMO
+ORDER BY 
+    CASE 
+        WHEN pv.STOCK = 0 THEN 1
+        WHEN pv.STOCK <= pv.STOCK_MINIMO THEN 2
+        ELSE 3
+    END,
+    p.DESCRIPCION

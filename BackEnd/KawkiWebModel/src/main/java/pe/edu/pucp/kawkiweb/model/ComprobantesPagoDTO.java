@@ -22,7 +22,7 @@ public class ComprobantesPagoDTO {
     //ATRIBUTOS
     private Integer comprobante_pago_id;
 
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class) 
     private LocalDateTime fecha_hora_creacion;
 
     private TiposComprobanteDTO tipo_comprobante;
