@@ -66,7 +66,7 @@
             <div class="mb-3">
                 <label class="form-label">Valor de la Talla *</label>
                 <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control" 
-                    placeholder="Ej: 36" />
+                    placeholder="Ej: 36" TextMode ="Number"/>
                 <asp:Label ID="lblErrorNumero" runat="server" CssClass="text-danger small d-block mt-1" />
             </div>
 

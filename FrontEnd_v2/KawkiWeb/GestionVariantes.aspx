@@ -282,14 +282,20 @@
                     <asp:Label ID="lblErrorStocksMinimos" runat="server" CssClass="text-danger small d-block mt-1" />
                 </div>
 
+                <!-- En el modal de AGREGAR VARIANTE -->
                 <div class="mb-3">
-                    <label class="form-label">URL de Imagen</label>
-                    <div class="input-group">
-                        <span class="input-group-text">/Images/Productos/</span>
-                        <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" 
-                            placeholder="nombre.jpg" />
+                    <label class="form-label">Imagen del Producto:</label>
+                    <button type="button" id="btnSubirImagen" class="btn btn-outline-primary w-100">
+                        Seleccionar Imagen desde tu PC
+                    </button>
+                    <asp:HiddenField ID="hdnUrlImagenCloudinary" runat="server" />
+                    <div id="imagenPreview" style="display:none; margin-top: 10px; text-align: center;">
+                        <img id="imgPreview" src="" style="max-width: 200px; max-height: 200px; border-radius: 8px;" class="img-thumbnail">
+                        <p class="text-success mt-2 mb-0">
+                            <i class="fas fa-check-circle"></i> Imagen cargada correctamente
+                        </p>
                     </div>
-                    <small class="text-muted">Ejemplo: producto.jpg o imagen.png</small>
+                    <asp:Label ID="lblErrorImagen" runat="server" CssClass="text-danger small"></asp:Label>
                 </div>
 
                 <div class="mb-3">
@@ -331,7 +337,7 @@
 
                     <asp:Label ID="lblMensajeModif" runat="server" CssClass="text-warning d-block mb-2"></asp:Label>
 
-                     <!-- Campo Talla -->
+                    <!-- Campo Talla -->
                     <div class="form-group">
                         <label>Talla</label>
                         <asp:DropDownList ID="ddlTallaModif" runat="server" CssClass="form-control">
@@ -355,15 +361,25 @@
                         <asp:Label ID="lblErrorStockMinimoEditar" runat="server" CssClass="text-danger small"></asp:Label>
                     </div>
 
-                    <!-- Campo URL Imagen (-->
+                    <!-- En el modal de MODIFICACIONES -->
                     <div class="form-group">
-                        <label>URL de imagen</label>
-                        <div class="input-group">
-                            <span class="input-group-text">/Images/Productos/</span>
-                            <asp:TextBox ID="txtUrlImagenModif" runat="server" CssClass="form-control" 
-                                placeholder="nombre.jpg" />
+                        <label>Cambiar Imagen (opcional)</label>
+                        <button type="button" id="btnCambiarImagenModif" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-image me-2"></i> Cambiar Imagen
+                        </button>
+    
+                        <asp:HiddenField ID="hdnUrlImagenActualModif" runat="server" />
+                        <asp:HiddenField ID="hdnUrlImagenNuevaModif" runat="server" />
+    
+                        <div id="imagenActualModif" style="margin-top: 10px; text-align: center;">
+                            <p class="text-muted small">Imagen actual:</p>
+                            <img id="imgActualModif" src="" style="max-width: 150px; max-height: 150px; border-radius: 8px; border: 2px solid #ddd;" />
                         </div>
-                        <small class="text-muted">Ejemplo: producto.jpg o imagen.png</small>
+
+                        <div id="imagenNuevaModif" style="display:none; margin-top: 10px; text-align: center; padding: 10px; background: #f0f8ff; border-radius: 8px;">
+                            <p class="text-info small"><i class="fas fa-check-circle me-2"></i>Nueva imagen:</p>
+                            <img id="imgNuevaModif" src="" style="max-width: 150px; max-height: 150px; border-radius: 8px; border: 2px solid #4caf50;" />
+                        </div>
                     </div>
                 </div>
 
@@ -532,7 +548,9 @@
             document.getElementById("<%= txtTallas.ClientID %>").value = "";
             document.getElementById("<%= txtStocks.ClientID %>").value = "";
             document.getElementById("<%= txtStocksMinimos.ClientID %>").value = "";
-            document.getElementById("<%= txtUrlImagen.ClientID %>").value = "";
+            document.getElementById('<%= hdnUrlImagenCloudinary.ClientID %>').value = '';
+            document.getElementById('imagenPreview').style.display = 'none';
+            document.getElementById('imgPreview').src = '';
             document.getElementById('<%= lblErrorStockEditar.ClientID %>').innerText = '';
             document.getElementById('<%= lblErrorStockMinimoEditar.ClientID %>').innerText = '';
             document.getElementById('<%= lblErrorColor.ClientID %>').innerText = '';
@@ -584,12 +602,13 @@
 
         // Para abrir el modal la primera vez (carga datos de BD)
         function abrirModalModificaciones(varianteId, colorNombre, tallaNombre, tallaId, urlImagen, stock, stockMinimo) {
-            // Limpiar SOLO errores, mantener datos
+            // Limpiar errores
             document.getElementById('<%= lblMensajeModificaciones.ClientID %>').innerText = '';
             document.getElementById('<%= lblErrorStockEditar.ClientID %>').innerText = '';
             document.getElementById('<%= lblErrorStockMinimoEditar.ClientID %>').innerText = '';
             document.getElementById('<%= lblErrorTallaModif.ClientID %>').innerText = '';
 
+            // Llenar datos
             document.getElementById('<%= hfVarianteId.ClientID %>').value = varianteId;
             document.getElementById('<%= lblVarianteInfo.ClientID %>').textContent =
                 `Color: ${colorNombre} | Talla: ${tallaNombre}`;
@@ -599,15 +618,16 @@
                 ddlTallaModificaciones.value = tallaId;
             }
 
-            // CARGAR valores de BD
+            // Cargar valores
             document.getElementById('<%= txtStockEditar.ClientID %>').value = stock || '';
             document.getElementById('<%= txtStockMinimoEditar.ClientID %>').value = stockMinimo || '';
-    
-            let nombreArchivo = '';
-            if (urlImagen) {
-                nombreArchivo = urlImagen.replace('/Images/Productos/', '');
-            }
-            document.getElementById('<%= txtUrlImagenModif.ClientID %>').value = nombreArchivo;
+
+            document.getElementById('<%= hdnUrlImagenActualModif.ClientID %>').value = urlImagen;
+            document.getElementById('imgActualModif').src = urlImagen || 'https://via.placeholder.com/150?text=Sin+Imagen';
+
+            // Limpiar URL nueva
+            document.getElementById('<%= hdnUrlImagenNuevaModif.ClientID %>').value = '';
+            document.getElementById('imagenNuevaModif').style.display = 'none';
 
             document.getElementById("modalModificaciones").classList.add("show");
         }
@@ -625,7 +645,11 @@
         function limpiarFormularioModificaciones() {
             document.getElementById('<%= txtStockEditar.ClientID %>').value = '';
             document.getElementById('<%= txtStockMinimoEditar.ClientID %>').value = '';
-            document.getElementById('<%= txtUrlImagenModif.ClientID %>').value = '';
+            document.getElementById('urlImagenNuevaModif').value = '';
+
+            // Limpiar previews
+            document.getElementById('imagenNuevaModif').style.display = 'none';
+            document.getElementById('imgNuevaModif').src = '';
 
             const ddlTallaModificaciones = document.getElementById('<%= ddlTallaModif.ClientID %>');
             if (ddlTallaModificaciones) ddlTallaModificaciones.selectedIndex = 0;
@@ -855,5 +879,78 @@
             limpiarFormularioAbastecimiento();
         }
 
+    </script>
+
+    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+
+    <script>
+        const CLOUDINARY_CLOUD_NAME = 'dlkbckbdm';
+        const CLOUDINARY_UPLOAD_PRESET = 'productos';
+
+        // WIDGET PARA AGREGAR VARIANTE
+        var uploadWidget = cloudinary.createUploadWidget({
+            cloudName: CLOUDINARY_CLOUD_NAME,
+            uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+            sources: ['local'],
+            multiple: false,
+            maxFiles: 1,
+            maxFileSize: 5000000,
+            clientAllowedFormats: ['png', 'jpg', 'jpeg', 'webp'],
+            folder: 'productos',
+            language: 'es'
+        },
+            function (error, result) {
+                if (!error && result && result.event === "success") {
+                    var imageUrl = result.info.secure_url;
+                    console.log('✓ Imagen subida:', imageUrl);
+
+                    // CORRECCIÓN: Usar ClientID
+                    document.getElementById('<%= hdnUrlImagenCloudinary.ClientID %>').value = imageUrl;
+                    document.getElementById('imgPreview').src = imageUrl;
+                    document.getElementById('imagenPreview').style.display = 'block';
+                }
+                if (error) {
+                    console.error('✗ Error:', error);
+                    alert('Error al subir la imagen.');
+                }
+            });
+
+        document.getElementById('btnSubirImagen').addEventListener('click', function (e) {
+            e.preventDefault();
+            uploadWidget.open();
+        });
+
+        // WIDGET PARA MODIFICAR VARIANTE
+        var uploadWidgetModif = cloudinary.createUploadWidget({
+            cloudName: CLOUDINARY_CLOUD_NAME,
+            uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+            sources: ['local'],
+            multiple: false,
+            maxFiles: 1,
+            maxFileSize: 5000000,
+            clientAllowedFormats: ['png', 'jpg', 'jpeg', 'webp'],
+            folder: 'productos',
+            language: 'es'
+        },
+            function (error, result) {
+                if (!error && result && result.event === "success") {
+                    var imageUrl = result.info.secure_url;
+                    console.log('✓ Nueva imagen:', imageUrl);
+
+                    // CORRECCIÓN: Usar ClientID
+                    document.getElementById('<%= hdnUrlImagenNuevaModif.ClientID %>').value = imageUrl;
+                    document.getElementById('imgPreview').src = imageUrl;
+                    document.getElementById('imagenPreview').style.display = 'block';
+                }
+                if (error) {
+                    console.error('✗ Error:', error);
+                    alert('Error al subir la imagen.');
+                }
+            });
+
+        document.getElementById('btnCambiarImagenModif').addEventListener('click', function (e) {
+            e.preventDefault();
+            uploadWidgetModif.open();
+        });
     </script>
 </asp:Content>

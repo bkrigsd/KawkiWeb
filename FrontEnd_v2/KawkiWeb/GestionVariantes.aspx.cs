@@ -220,7 +220,11 @@ namespace KawkiWeb
             try
             {
                 int colorId = Convert.ToInt32(ddlColor.SelectedValue);
-                string urlImagen = txtUrlImagen.Text.Trim();
+                string urlImagen = hdnUrlImagenCloudinary.Value;
+                if (string.IsNullOrEmpty(urlImagen))
+                {
+                    urlImagen = "https://via.placeholder.com/300?text=Sin+Imagen";
+                }
                 bool disponible = Request.Form["hdnDisponible"] == "true";
                 var usuario = ObtenerUsuarioSesion();
 
@@ -323,12 +327,13 @@ namespace KawkiWeb
                 };
                 color.color_idSpecified = true;
 
-                if (string.IsNullOrEmpty(urlImagen))
-                {
-                    urlImagen = "";
-                }
+                // La URL ya viene completa de Cloudinary, usar directamente
+                string urlCompleta = urlImagen;
 
-                string urlCompleta = "/Images/Productos/" + urlImagen;
+                if (string.IsNullOrEmpty(urlCompleta))
+                {
+                    urlCompleta = "https://via.placeholder.com/300?text=Sin+Imagen";
+                }
 
                 int insertadas = 0;
                 List<string> errores = new List<string>();
@@ -407,9 +412,18 @@ namespace KawkiWeb
             {
                 int varianteId = Convert.ToInt32(hfVarianteId.Value);
 
+                var variante = variantesBO.ObtenerPorId(varianteId);
+
                 string stockText = txtStockEditar.Text?.Trim() ?? "";
                 string stockMinimoText = txtStockMinimoEditar.Text?.Trim() ?? "";
-                string nuevoUrl = txtUrlImagenModif.Text?.Trim() ?? "";
+                string urlImagenModif = hdnUrlImagenActualModif.Value; // Usar la actual por defecto
+
+                // 2. Verificar si se subió una nueva imagen
+                if (!string.IsNullOrEmpty(hdnUrlImagenNuevaModif.Value))
+                {
+                    // Si hay una nueva URL, se usa esa para la modificación
+                    urlImagenModif = hdnUrlImagenNuevaModif.Value;
+                }
                 int nuevaTallaId = Convert.ToInt32(ddlTallaModif.SelectedValue);
                 bool hayErrores = false;
                 int nuevoStock = 0;
@@ -471,7 +485,6 @@ namespace KawkiWeb
                     usuarioIdSpecified = true
                 };
 
-                var variante = variantesBO.ObtenerPorId(varianteId);
                 if (variante == null)
                 {
                     lblMensajeModificaciones.Text = "Variante no encontrada.";
@@ -503,16 +516,8 @@ namespace KawkiWeb
                     numeroSpecified = true
                 };
 
-                string urlCompleta;
-
-                if (string.IsNullOrEmpty(nuevoUrl))
-                {
-                    urlCompleta = "";
-                }
-                else
-                {
-                    urlCompleta = "/Images/Productos/" + nuevoUrl;
-                }
+                // La URL ya viene completa de Cloudinary, usar directamente
+                string urlCompleta = string.IsNullOrEmpty(urlImagenModif) ? "" : urlImagenModif;
 
                 // Capturar y verificar el resultado
                 int? resultado = variantesBO.Modificar(
@@ -1095,7 +1100,6 @@ namespace KawkiWeb
             txtTallas.Text = "";
             txtStocks.Text = "";
             txtStocksMinimos.Text = "";
-            txtUrlImagen.Text = "";
             lblErrorColor.Text = "";
             lblErrorTallas.Text = "";
             lblErrorStocks.Text = "";
@@ -1143,9 +1147,8 @@ namespace KawkiWeb
 
                 if (i == 0)
                 {
-                    string urlImagen = string.IsNullOrEmpty(talla.UrlImagen.ToString())
-                        ? "images/no-image.png"
-                        : talla.UrlImagen.ToString();
+                    // CORRECTO - Usar la URL directamente
+                    string urlImagen = ObtenerUrlImagenCorrecta(talla.UrlImagen.ToString());
 
                     html.AppendFormat(@"
                 <td rowspan='{0}' style='text-align: center;'>
@@ -1233,7 +1236,25 @@ namespace KawkiWeb
 
             return html.ToString();
         }
+
+        protected string ObtenerUrlImagenCorrecta(string urlImagen)
+        {
+            if (string.IsNullOrEmpty(urlImagen))
+                return "https://via.placeholder.com/300?text=Sin+Imagen";
+
+            // Si ya es una URL completa (de Cloudinary), usarla directamente
+            if (urlImagen.StartsWith("http://") || urlImagen.StartsWith("https://"))
+                return urlImagen;
+
+            // Si es una ruta local vieja (compatibilidad con imágenes anteriores)
+            if (urlImagen.StartsWith("/Images/"))
+                return ResolveUrl(urlImagen);
+
+            // Si es solo el nombre del archivo (muy viejo)
+            return ResolveUrl("~/Images/Productos/" + urlImagen);
+        }
     }
+
 
     public class TallaStockItem
     {

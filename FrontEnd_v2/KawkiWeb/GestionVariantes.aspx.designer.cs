@@ -150,13 +150,22 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.Label lblErrorStocksMinimos;
 
         /// <summary>
-        /// Control txtUrlImagen.
+        /// Control hdnUrlImagenCloudinary.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUrlImagen;
+        protected global::System.Web.UI.WebControls.HiddenField hdnUrlImagenCloudinary;
+
+        /// <summary>
+        /// Control lblErrorImagen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorImagen;
 
         /// <summary>
         /// Control lblMensaje.
@@ -258,13 +267,22 @@ namespace KawkiWeb
         protected global::System.Web.UI.WebControls.Label lblErrorStockMinimoEditar;
 
         /// <summary>
-        /// Control txtUrlImagenModif.
+        /// Control hdnUrlImagenActualModif.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUrlImagenModif;
+        protected global::System.Web.UI.WebControls.HiddenField hdnUrlImagenActualModif;
+
+        /// <summary>
+        /// Control hdnUrlImagenNuevaModif.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnUrlImagenNuevaModif;
 
         /// <summary>
         /// Control lblMensajeModificaciones.
