@@ -371,14 +371,17 @@
                         <asp:HiddenField ID="hdnUrlImagenActualModif" runat="server" />
                         <asp:HiddenField ID="hdnUrlImagenNuevaModif" runat="server" />
     
-                        <div id="imagenActualModif" style="margin-top: 10px; text-align: center;">
-                            <p class="text-muted small">Imagen actual:</p>
-                            <img id="imgActualModif" src="" style="max-width: 150px; max-height: 150px; border-radius: 8px; border: 2px solid #ddd;" />
-                        </div>
+                        <div class="form-group">
+                            <div id="imagenActualModif" style="margin-top: 10px; text-align: center;"> 
+                                <p class="text-muted small">Imagen actual:</p>
+                                <img id="imgActualModif" src="" style="max-width: 150px; max-height: 150px; border-radius: 8px; border: 2px solid #ddd;" />
+                            </div>
 
-                        <div id="imagenNuevaModif" style="display:none; margin-top: 10px; text-align: center; padding: 10px; background: #f0f8ff; border-radius: 8px;">
-                            <p class="text-info small"><i class="fas fa-check-circle me-2"></i>Nueva imagen:</p>
-                            <img id="imgNuevaModif" src="" style="max-width: 150px; max-height: 150px; border-radius: 8px; border: 2px solid #4caf50;" />
+                            <div id="imagenNuevaModif" 
+                                 style="display:none; margin-top: 10px; text-align: center; padding: 10px; background: #f0f8ff; border-radius: 8px;">
+                                <p class="text-info small"><i class="fas fa-check-circle me-2"></i>Nueva imagen:</p>
+                                <img id="imgNuevaModif" src="" style="max-width: 150px; max-height: 150px; border-radius: 8px; border: 2px solid #4caf50;" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -622,12 +625,16 @@
             document.getElementById('<%= txtStockEditar.ClientID %>').value = stock || '';
             document.getElementById('<%= txtStockMinimoEditar.ClientID %>').value = stockMinimo || '';
 
+            // Cargar la URL de la imagen actual y mostrarla
             document.getElementById('<%= hdnUrlImagenActualModif.ClientID %>').value = urlImagen;
             document.getElementById('imgActualModif').src = urlImagen || 'https://via.placeholder.com/150?text=Sin+Imagen';
+    
+            // **Asegurarse de que la Imagen Actual esté visible (por si se ocultó antes)**
+            document.getElementById('imagenActualModif').style.display = 'block'; 
 
-            // Limpiar URL nueva
+            // Limpiar y OCULTAR la sección de la URL nueva al abrir el modal
             document.getElementById('<%= hdnUrlImagenNuevaModif.ClientID %>').value = '';
-            document.getElementById('imagenNuevaModif').style.display = 'none';
+            document.getElementById('imagenNuevaModif').style.display = 'none'; // <-- CLAVE
 
             document.getElementById("modalModificaciones").classList.add("show");
         }
@@ -937,10 +944,14 @@
                     var imageUrl = result.info.secure_url;
                     console.log('✓ Nueva imagen:', imageUrl);
 
-                    // CORRECCIÓN: Usar ClientID
+                    // 1. Guardar la URL de la nueva imagen
                     document.getElementById('<%= hdnUrlImagenNuevaModif.ClientID %>').value = imageUrl;
-                    document.getElementById('imgPreview').src = imageUrl;
-                    document.getElementById('imagenPreview').style.display = 'block';
+
+                    // 2. Cargar el preview en el elemento
+                    document.getElementById('imgNuevaModif').src = imageUrl;
+
+                    // 3. HACER VISIBLE el contenedor de la nueva imagen (sin tocar la actual)
+                    document.getElementById('imagenNuevaModif').style.display = 'block';
                 }
                 if (error) {
                     console.error('✗ Error:', error);
