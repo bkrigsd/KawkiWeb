@@ -2212,9 +2212,6 @@
     <Content Include="HistorialVentasVendedor.aspx" />
     <Content Include="Images\kawki.png" />
     <Content Include="Images\material.png" />
-    <Content Include="Images\Productos\derbyCasualCrema.jpeg" />
-    <Content Include="Images\Productos\derbyEleganteMarron.jpeg" />
-    <Content Include="Images\Productos\OxfordClasicoBeige.jpeg" />
     <Content Include="Images\taller.png" />
     <Content Include="RegistrarVentas.aspx" />
     <Content Include="Descuentos.aspx" />
@@ -2451,6 +2448,9 @@
       <Project>{9ea6588b-b633-4a64-82d5-825887e462e2}</Project>
       <Name>KawkiWebBusiness</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\Productos\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
